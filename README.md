@@ -48,3 +48,73 @@ app/data/content.ts
 ```
 
 新增内容时，向 `stories`、`experiments` 或 `tools` 数组添加一条数据即可。
+
+## 新增一篇 Notes 文章
+
+在 `content/notes/` 新建一个 `.md` 文件：
+
+```md
+---
+title: "文章标题"
+slug: "article-slug"
+category: "AI TIPS"
+issue: "005"
+date: "2026-08-24"
+description: "一句话摘要"
+cover: "tips-yellow"
+featured: false
+tags: ["PROMPT", "IMAGE"]
+readingTime: "6 分钟"
+demo: false
+sourceTitle: "JING NOTES"
+sourceNote: "原创笔记"
+relatedNotes: ["另一篇文章的-slug"]
+---
+
+从这里开始写 Markdown 正文。
+```
+
+保存后，Notes 列表、搜索筛选、文章详情页和 Related Notes 会自动生成，不需要再写页面。
+
+可用分类：`AI TIPS`、`AI EVAL`、`MAKING OF`、`AI BRIEFING`。
+
+提示卡写法：
+
+```md
+> [!TIP]
+> 这里填写提示内容。
+```
+
+同时支持 `[!KEY POINT]`、`[!BAD CASE]` 和 `[!JING'S NOTE]`。
+
+## 收藏一个 B站视频
+
+编辑 `app/data/library.ts`，向 `libraryItems` 添加一条数据：
+
+```ts
+{
+  id: 'lib-video-003',
+  title: '视频标题',
+  type: 'VIDEO',
+  source: 'Bilibili',
+  topic: 'AI Video',
+  description: '视频讲了什么',
+  whyISavedIt: '为什么收藏',
+  jingTake: '我的一句话判断',
+  tags: ['AI VIDEO'],
+  dateAdded: '2026-08-24',
+  featured: false,
+  jingPick: true,
+  visual: 'video-blue',
+  url: 'https://www.bilibili.com/video/真实BV号',
+  creator: 'UP主名称',
+  duration: '12:30',
+  demo: false,
+}
+```
+
+网站只保存介绍、判断和原始链接，不下载或重新托管视频。
+
+## 收藏一篇文章或 PDF
+
+仍然编辑 `app/data/library.ts`。文章使用 `type: 'ARTICLE'`，PDF 使用 `type: 'PDF'`，把 `url` 设置为原始页面或 PDF 的公开链接，并填写真实来源、收藏理由和 `jingTake`。

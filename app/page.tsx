@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { ExperimentCard } from './components/experiment-card';
+import { LibraryCard } from './components/library-card';
+import { NoteCard } from './components/note-card';
 import { ProjectVisual } from './components/project-visual';
 import { Reveal } from './components/reveal';
 import { SiteFooter } from './components/site-footer';
@@ -7,9 +9,13 @@ import { SiteHeader } from './components/site-header';
 import { StoryCard } from './components/story-card';
 import { ToolCard } from './components/tool-card';
 import { currentlyPlaying, experiments, stories, tools } from './data/content';
+import { libraryItems } from './data/library';
+import { getAllNotes } from '../lib/notes';
 
 export default function Home() {
   const featured = stories[0];
+  const latestNotes = getAllNotes().slice(0, 4);
+  const jingPicks = libraryItems.filter((item) => item.jingPick).slice(0, 4);
   return (
     <main>
       <SiteHeader />
@@ -64,6 +70,11 @@ export default function Home() {
         <div className="experiment-preview-grid">{experiments.slice(0, 3).map((experiment, index) => <ExperimentCard experiment={experiment} index={index} key={experiment.id} />)}</div>
       </div></section></Reveal>
 
+      <Reveal><section className="home-notes section-shell">
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近的笔记</p><h2>做过的留下来，<br />想明白的也留下来。</h2></div><div className="home-notes-intro"><p>AI 技巧、评测方法和真实制作过程。不是传统博客，是正在生长的个人知识库。</p><Link className="text-link" href="/notes/">查看全部笔记 ↗</Link></div></div>
+        <div className="home-notes-grid">{latestNotes.map((note, index) => <NoteCard note={note} size={index === 0 ? 'large' : index === 1 ? 'tall' : index === 2 ? 'small' : 'wide'} key={note.slug} />)}</div>
+      </section></Reveal>
+
       <Reveal><section className="tools-preview section-shell">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Little tools</p><h2>顺手做点<br />有用的小东西。</h2></div><p>不是产品中心，只是把重复的小麻烦做成按钮。</p></div>
         <div className="tool-grid">{tools.map((tool, index) => <ToolCard tool={tool} index={index} key={tool.id} />)}</div>
@@ -73,6 +84,11 @@ export default function Home() {
       <Reveal><section className="playing section-shell">
         <div className="playing-title"><p className="eyebrow mono">Currently playing with</p><h2>最近在折腾</h2><span className="hand-note">持续更新中 ↘</span></div>
         <div className="playing-list">{currentlyPlaying.map(([icon, title, detail], index) => <div className="playing-row" key={title}><span className="mono">0{index + 1}</span><b>{icon}</b><h3>{title}</h3><p>{detail}</p><i>↗</i></div>)}</div>
+      </section></Reveal>
+
+      <Reveal><section className="home-picks section-shell">
+        <div className="section-title-row compact"><div><p className="eyebrow mono">JING PICKS / 荆选</p><h2>最近收藏的，<br />四个值得看的东西。</h2></div><div className="home-notes-intro"><p>一条视频、一篇文章、一份 PDF 和一个工具。每条都有我为什么保存它。</p><Link className="text-link" href="/library/">打开收藏夹 ↗</Link></div></div>
+        <div className="home-picks-grid">{jingPicks.map((item) => <LibraryCard item={item} compact key={item.id} />)}</div>
       </section></Reveal>
 
       <Reveal><section className="about-preview section-shell">
