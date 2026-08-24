@@ -8,7 +8,7 @@ import '@fontsource/ibm-plex-mono/400.css';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://jing-ai-playground.qww0512.chatgpt.site'),
   title: 'JING AI PLAYGROUND — 荆的 AI 创作游乐场',
   description: '用 AI 做故事、影像、工具，以及一些有意思的小东西。',
   openGraph: {
