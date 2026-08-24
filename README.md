@@ -118,3 +118,13 @@ relatedNotes: ["另一篇文章的-slug"]
 ## 收藏一篇文章或 PDF
 
 仍然编辑 `app/data/library.ts`。文章使用 `type: 'ARTICLE'`，PDF 使用 `type: 'PDF'`，把 `url` 设置为原始页面或 PDF 的公开链接，并填写真实来源、收藏理由和 `jingTake`。
+
+## 新增一条 Prompt
+
+Prompt 数据集中维护在：
+
+```text
+app/data/prompts.ts
+```
+
+向 `promptItems` 数组添加一条数据，Prompt 工作台、搜索、分类和复制功能会自动更新。外部公众号内容不作为一个 Library 栏目展示；可以把正文、截图或 Prompt 发给我，提炼为可复用结构后再放进 Prompt 工作台或 Notes。

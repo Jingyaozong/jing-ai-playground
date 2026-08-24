@@ -58,13 +58,6 @@ export const libraryItems: LibraryItem[] = [
     tags: ['AI VIDEO', 'CAMERA'], dateAdded: '2026-08-12', featured: false, jingPick: false, visual: 'video-coral', url: null,
     creator: '示例影像频道', duration: '12:08', demo: true,
   },
-  {
-    id: 'lib-article-002', title: '从失败样片里建立 Prompt 词典', type: 'ARTICLE', source: '示例公众号', topic: 'AIGC',
-    description: '不只收藏成功案例，而是把失败表现和可能原因建立对应关系。',
-    whyISavedIt: '这个方法比无限叠加正向描述更适合长期积累。',
-    jingTake: '失败样片不是废片，它们是最便宜的评测集。',
-    tags: ['AIGC', 'PROMPT'], dateAdded: '2026-08-09', featured: false, jingPick: false, visual: 'article-sky', url: null, demo: true,
-  },
 ];
 
 export const libraryFilters = ['全部', 'VIDEO', 'ARTICLE', 'PDF', 'TOOL', 'JING PICKS'];

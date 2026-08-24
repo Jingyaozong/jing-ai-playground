@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { NoteBrowser } from '../components/note-browser';
-import { NoteCard } from '../components/note-card';
 import { NoteVisual } from '../components/note-visual';
 import { Reveal } from '../components/reveal';
 import { SiteFooter } from '../components/site-footer';
@@ -39,6 +38,13 @@ export default function NotesPage() {
       <Reveal><section className="note-categories section-shell">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Four shelves / 四个栏目</p><h2>写技巧，也留下<br />判断和过程。</h2></div><p>四个栏目对应四种不同的记录方式，但都来自同一个创作现场。</p></div>
         <div className="note-category-grid">{noteCategories.map((category, index) => <a href="#all-notes" className={`note-category-card category-${category.color}`} key={category.id}><span className="mono">0{index + 1}</span><strong>{category.id}</strong><h3>{category.chinese}</h3><p>{category.description}</p><i>查看栏目 ↓</i></a>)}</div>
+      </section></Reveal>
+
+      <Reveal><section className="prompt-entry section-shell">
+        <Link href="/prompts/" className="prompt-entry-card">
+          <div><span className="mono">New shelf / Prompt 工作台</span><h2>好用的 Prompt，<br />不应该只剩一句咒语。</h2><p>我会把外部素材重新梳理成可复用结构，标出变量、适用场景和实际使用时的判断。</p><i>打开 Prompt 板块 ↗</i></div>
+          <span className="prompt-entry-brace" aria-hidden="true">{'{ }'}</span>
+        </Link>
       </section></Reveal>
 
       <section className="latest-notes section-shell" id="all-notes">
