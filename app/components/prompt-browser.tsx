@@ -27,15 +27,15 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
         <span className="prompt-brace" aria-hidden="true">{'{ }'}</span>
       </div>
       <p className="prompt-description">{item.description}</p>
-      <div className="prompt-sheet">
-        <span className="mono">Prompt / 可直接替换括号里的内容</span>
+      <details className="prompt-sheet">
+        <summary><span className="mono">完整 Prompt / 点击展开</span><i>展开 ↓</i></summary>
         <p>{item.prompt}</p>
-      </div>
-      <div className="prompt-variables">
+      </details>
+      {item.variables.length > 0 && <div className="prompt-variables">
         <span className="mono">可替换变量</span>
         <div>{item.variables.map((variable) => <span key={variable}>【{variable}】</span>)}</div>
-      </div>
-      <blockquote><span className="mono">JING&apos;S NOTE</span>{item.jingNote}</blockquote>
+      </div>}
+      <blockquote><span className="mono">使用提示 / HOW TO USE</span>{item.usageNote}</blockquote>
       <div className="prompt-card-bottom">
         <div className="note-tags">{item.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
         <button type="button" onClick={copyPrompt} aria-live="polite">{copied ? '已复制 ✓' : '复制 Prompt'}</button>

@@ -421,6 +421,11 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .prompt-rule-grid span { color: var(--blue); }
 .prompt-rule-grid h3 { margin: auto 0 15px; font-family: var(--display); font-size: 2.25rem; font-weight: 700; }
 .prompt-rule-grid p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.prompt-source-note { display: grid; grid-template-columns: 130px 1fr auto; align-items: start; gap: 30px; margin-top: 70px; padding: 27px; border: 2px solid var(--ink); border-radius: 23px; background: var(--sky); }
+.prompt-source-note > span { color: var(--blue); }
+.prompt-source-note h3 { margin: 8px 0 12px; font-family: var(--display); font-size: clamp(1.5rem,2.5vw,2.5rem); line-height: 1.05; }
+.prompt-source-note p { margin: 0 0 7px; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.prompt-source-note a { padding: 10px 14px; border: 2px solid var(--ink); border-radius: 99px; background: var(--white); color: var(--blue); font-size: 10px; font-weight: 750; white-space: nowrap; }
 .prompt-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 19px; align-items: start; }
 .prompt-card { overflow: hidden; border: 2px solid var(--ink); border-radius: 29px; background: var(--white); box-shadow: 0 0 0 var(--ink); transition: transform .25s ease, box-shadow .25s ease; }
 .prompt-card:hover { transform: translateY(-6px); box-shadow: 8px 8px 0 var(--ink); }
@@ -435,7 +440,13 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .prompt-brace { color: var(--blue); font-family: var(--display); font-size: 3.5rem; font-weight: 800; line-height: .8; letter-spacing: -.18em; transform: rotate(6deg); }
 .prompt-description { margin: 23px 28px 30px; color: var(--muted); font-size: 13px; line-height: 1.7; }
 .prompt-sheet { margin: 0 18px; padding: 22px; border: 2px solid var(--ink); border-radius: 20px; background: var(--paper); box-shadow: 5px 5px 0 var(--blue); }
-.prompt-sheet > span { color: var(--blue); }
+.prompt-sheet summary { display: flex; justify-content: space-between; align-items: center; gap: 18px; list-style: none; cursor: pointer; }
+.prompt-sheet summary::-webkit-details-marker { display: none; }
+.prompt-sheet summary span { color: var(--blue); }
+.prompt-sheet summary i { color: var(--blue); font-size: 10px; font-style: normal; font-weight: 750; white-space: nowrap; }
+.prompt-sheet[open] summary { padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.prompt-sheet[open] summary i { transform: rotate(180deg); }
+.prompt-sheet summary:focus-visible { outline: 3px solid var(--coral); outline-offset: 7px; }
 .prompt-sheet p { margin: 22px 0 0; white-space: pre-wrap; font-size: 14px; font-weight: 630; line-height: 1.85; }
 .prompt-variables { padding: 28px; }
 .prompt-variables > span { color: var(--blue); }
@@ -612,6 +623,8 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .prompt-title-lockup > span { position: static; display: block; width: fit-content; margin: -15px 0 35px auto; font-size: 5.5rem; }
   .prompt-rule-grid, .prompt-grid { grid-template-columns: 1fr; }
   .prompt-rule-grid article:nth-child(2) { transform: none; }
+  .prompt-source-note { grid-template-columns: 1fr; }
+  .prompt-source-note a { width: fit-content; }
   .prompt-card-heading { grid-template-columns: 1fr; }
   .prompt-brace { display: none; }
   .prompt-card-bottom { align-items: flex-start; flex-direction: column; }
