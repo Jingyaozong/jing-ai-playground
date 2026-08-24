@@ -44,7 +44,7 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
   );
 }
 
-export function PromptBrowser({ items }: { items: PromptItem[] }) {
+export function PromptBrowser({ items, showToolbar = true }: { items: PromptItem[]; showToolbar?: boolean }) {
   const [active, setActive] = useState('全部');
   const [query, setQuery] = useState('');
   const visible = useMemo(() => {
@@ -58,7 +58,7 @@ export function PromptBrowser({ items }: { items: PromptItem[] }) {
 
   return (
     <section className="content-browser" aria-label="筛选 Prompt">
-      <div className="browser-toolbar">
+      {showToolbar && <div className="browser-toolbar">
         <label className="search-field">
           <span className="mono">搜索 / Search</span>
           <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="输入用途、模型或关键词" />
@@ -66,7 +66,7 @@ export function PromptBrowser({ items }: { items: PromptItem[] }) {
         <div className="filter-row" aria-label="Prompt 分类">
           {promptFilters.map((filter) => <button type="button" className={active === filter ? 'is-active' : ''} onClick={() => setActive(filter)} key={filter}>{filter}</button>)}
         </div>
-      </div>
+      </div>}
       <div className="prompt-grid">{visible.map((item, index) => <PromptCard item={item} index={index} key={item.id} />)}</div>
       {visible.length === 0 && <div className="empty-result"><b>暂时没有匹配的 Prompt。</b><span>换一个关键词，或者查看“全部”。</span></div>}
     </section>
