@@ -14,12 +14,23 @@ export default function Home() {
     <main>
       <SiteHeader />
       <section className="hero" id="top">
-        <div className="hero-kicker mono"><span>Personal AI creative studio</span><span>Issue 001 · 2026</span></div>
-        <h1 aria-label="JING AI PLAYGROUND"><span className="hero-jing">JING</span><span className="hero-playground">AI PLAYGROUND</span></h1>
-        <div className="hero-bottom">
-          <p className="hero-en">Stories, visuals, tools and weird little things made with AI.</p>
-          <div className="hero-orbit" aria-hidden="true"><span className="orbit-dot" /><span className="orbit-label mono">PLAY / MAKE / REPEAT</span></div>
-          <p className="hero-zh">用 AI 做故事、影像、工具，<br />以及一些有意思的小东西。</p>
+        <div className="hero-kicker mono"><span>JING / 荆</span><span>AI creator · Since 2026</span></div>
+        <div className="hero-layout">
+          <div className="hero-main">
+            <p className="hero-name mono">JING AI PLAYGROUND</p>
+            <h1><span>把奇怪的想法，</span><span><em>认真</em>做出来。</span></h1>
+          </div>
+          <aside className="hero-card">
+            <span className="hero-card-sun" aria-hidden="true">✦</span>
+            <p>Stories, visuals, tools and weird little things made with AI.</p>
+            <small>一个持续更新的个人 AI 创作现场。</small>
+          </aside>
+        </div>
+        <div className="letter-board" aria-label="JING">
+          <span className="letter-j">J<small>stories</small></span>
+          <span className="letter-i">I<small>images</small></span>
+          <span className="letter-n">N<small>new ideas</small></span>
+          <span className="letter-g">G<small>good work</small></span>
         </div>
       </section>
       <div className="live-strip" aria-label="最近动态">
@@ -28,7 +39,7 @@ export default function Home() {
       </div>
 
       <Reveal><section className="featured">
-        <div className="section-heading"><div><p className="eyebrow mono">Featured / 本期主角</p><h2>一觉醒来，<br />世界少了一天。</h2></div><p className="featured-intro">一个关于记忆、遗忘和重复告别的 AI 影像实验。目前正在制作中。</p></div>
+        <div className="section-heading"><div><p className="eyebrow mono">Featured / 本期主角</p><h2>这次，先认真<br />做完一个故事。</h2></div><p className="featured-intro">《她每天醒来都会忘记昨天》——一个关于记忆、遗忘和重复告别的 AI 影像实验。目前正在制作中。</p></div>
         <article className="feature-card"><ProjectVisual variant="memory feature" label={featured.title} /><div className="feature-meta"><div><p className="mono">AI SHORT FILM · COMING SOON</p><h3>{featured.title}</h3></div><Link className="round-link" href="/stories#story-001" aria-label="查看作品详情">Watch <span>↗</span></Link></div></article>
       </section></Reveal>
 
