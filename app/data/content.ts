@@ -1,5 +1,6 @@
 export type Story = {
   id: string;
+  slug?: string;
   title: string;
   englishTitle: string;
   description: string;
@@ -34,6 +35,7 @@ export type Tool = {
 export const stories: Story[] = [
   {
     id: 'story-001',
+    slug: 'she-forgets-yesterday',
     title: '她每天醒来都会忘记昨天',
     englishTitle: 'She Forgets Yesterday',
     description: '一个关于记忆、遗忘和重复告别的短片。她每天醒来，桌上都会多一封自己写给自己的信。',

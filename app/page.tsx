@@ -46,7 +46,7 @@ export default function Home() {
 
       <Reveal><section className="featured">
         <div className="section-heading"><div><p className="eyebrow mono">Featured / 本期主角</p><h2>这次，先认真<br />做完一个故事。</h2></div><p className="featured-intro">《她每天醒来都会忘记昨天》——一个关于记忆、遗忘和重复告别的 AI 影像实验。目前正在制作中。</p></div>
-        <article className="feature-card"><ProjectVisual variant="memory feature" label={featured.title} /><div className="feature-meta"><div><p className="mono">AI SHORT FILM · COMING SOON</p><h3>{featured.title}</h3></div><Link className="round-link" href="/stories#story-001" aria-label="查看作品详情">Watch <span>↗</span></Link></div></article>
+        <article className="feature-card"><ProjectVisual variant="memory feature" label={featured.title} /><div className="feature-meta"><div><p className="mono">AI SHORT FILM · COMING SOON</p><h3>{featured.title}</h3></div><Link className="round-link" href="/stories/she-forgets-yesterday/" aria-label="查看作品详情">View <span>↗</span></Link></div></article>
       </section></Reveal>
 
       <Reveal><section className="latest section-shell">
