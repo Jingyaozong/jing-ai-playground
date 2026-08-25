@@ -12,6 +12,7 @@ export type Story = {
 
 export type Experiment = {
   id: string;
+  slug?: string;
   title: string;
   description: string;
   category: string;
@@ -69,11 +70,12 @@ export const stories: Story[] = [
 export const experiments: Experiment[] = [
   {
     id: 'experiment-001',
+    slug: 'forty-shots-one-character',
     title: '同一个她，四十个镜头',
-    description: '跨景别、光线和情绪测试角色一致性，记录哪些细节最先“漂走”。',
+    description: '跨景别、光线和情绪测试角色一致性。当前先公开实验记录模板，真实样本会逐步替换进去。',
     category: 'Character Study',
     date: '2026.08.18',
-    status: '记录已公开',
+    status: 'Demo 记录已公开',
     visual: 'faces',
   },
   {

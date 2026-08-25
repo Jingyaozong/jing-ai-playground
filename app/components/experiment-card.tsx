@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { Experiment } from '../data/content';
 import { ProjectVisual } from './project-visual';
 
@@ -12,6 +13,7 @@ export function ExperimentCard({ experiment, index }: { experiment: Experiment; 
       <h3>{experiment.title}</h3>
       <p>{experiment.description}</p>
       <div className="card-footer mono"><span>{experiment.date}</span><span>{experiment.status}</span></div>
+      {experiment.slug && <Link className="experiment-card-link" href={`/experiments/${experiment.slug}/`}>打开实验记录 <span>↗</span></Link>}
     </article>
   );
 }
