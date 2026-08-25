@@ -5,7 +5,9 @@ const outputDirectory = join(process.cwd(), 'out');
 const repositoryName = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? '';
 const isUserSite = repositoryName.endsWith('.github.io');
 const basePath = repositoryName && !isUserSite ? `/${repositoryName}` : '';
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
+const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000')
+  .toString()
+  .replace(/\/$/, '');
 
 const requiredFiles = [
   'index.html',
