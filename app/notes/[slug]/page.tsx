@@ -38,13 +38,13 @@ export default async function NoteDetailPage({ params }: { params: Promise<{ slu
       <header className="note-detail-hero">
         <div className="note-detail-rail mono"><Link href="/notes/">← 返回笔记</Link><span>JING NOTES · {note.date.slice(0, 7).replace('-', ' / ')}</span></div>
         <div className="note-detail-grid">
-          <div className="note-detail-title"><div className="note-detail-labels"><span>{note.category}</span><span>ISSUE {note.issue}</span>{note.demo && <b>DEMO</b>}</div><h1>{note.title}</h1><p>{note.description}</p><div className="note-detail-meta mono"><span>{note.date.replaceAll('-', ' / ')}</span><span>{note.readingTime}</span><span>BY JING</span></div></div>
+          <div className="note-detail-title"><div className="note-detail-labels"><span>{note.category}</span><span>ISSUE {note.issue}</span>{note.demo && <b>DEMO</b>}{note.editorialStatus === 'draft' && <b>EDITING DRAFT</b>}</div><h1>{note.title}</h1><p>{note.description}</p><div className="note-detail-meta mono"><span>{note.date.replaceAll('-', ' / ')}</span><span>{note.readingTime}</span><span>{note.editorialStatus === 'draft' ? 'EDITED FOR JING' : 'BY JING'}</span></div></div>
           <NoteVisual variant={note.cover} label={note.title} />
         </div>
       </header>
 
       <div className="article-layout">
-        <aside className="article-sidebar"><span className="mono">这篇笔记</span><div>{note.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>{note.demo && <p><b>Demo 提醒</b>当前正文用于展示内容系统和文章版式，不代表正式发布内容。</p>}</aside>
+        <aside className="article-sidebar"><span className="mono">这篇笔记</span><div>{note.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>{note.demo && <p><b>Demo 提醒</b>当前正文用于展示内容系统和文章版式，不代表正式发布内容。</p>}{note.editorialStatus === 'draft' && <p><b>编辑稿 · 待荆确认</b>资料来源已经核对，但框架、权重和判断仍需要荆结合真实评测经验确认。</p>}</aside>
         <article><MarkdownContent content={note.content} />
           <section className="article-source"><span className="mono">来源信息 / Sources</span><h2>{note.sourceTitle ?? 'JING NOTES'}</h2><p>{note.sourceNote ?? '本页为荆的原创笔记。'}</p>{note.sourceUrl && <a href={note.sourceUrl} target="_blank" rel="noreferrer">查看原始来源 ↗</a>}</section>
         </article>

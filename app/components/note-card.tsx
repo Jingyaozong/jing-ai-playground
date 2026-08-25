@@ -8,7 +8,7 @@ export function NoteCard({ note, size = 'medium' }: { note: NoteMeta; size?: 'la
       <Link href={`/notes/${note.slug}/`} className="note-card-link" aria-label={`阅读：${note.title}`}>
         <NoteVisual variant={note.cover} label={note.title} />
         <div className="note-card-copy">
-          <div className="note-card-meta mono"><span>{note.category} / {note.issue}</span><span>{note.date.replaceAll('-', ' / ')}</span></div>
+          <div className="note-card-meta mono"><span>{note.category} / {note.issue}</span><span>{note.editorialStatus === 'draft' ? '编辑稿 · 待确认' : note.date.replaceAll('-', ' / ')}</span></div>
           <h3>{note.title}</h3>
           <p>{note.description}</p>
           <div className="note-card-bottom">

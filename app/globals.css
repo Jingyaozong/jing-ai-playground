@@ -404,6 +404,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .note-detail-meta { display: flex; gap: 24px; margin-top: 45px; color: var(--muted); }
 .note-detail-grid > .note-visual { aspect-ratio: 4/5; box-shadow: 10px 10px 0 var(--ink); }
 .article-layout { width: min(100% - 56px,1180px); margin-inline: auto; display: grid; grid-template-columns: 230px minmax(0,760px); justify-content: space-between; gap: 7vw; padding: 95px 0 130px; border-top: 2px solid var(--ink); }
+.article-layout > * { min-width: 0; }
 .article-sidebar { position: sticky; top: 30px; align-self: start; }
 .article-sidebar > span { color: var(--blue); }
 .article-sidebar > div { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 35px; }
