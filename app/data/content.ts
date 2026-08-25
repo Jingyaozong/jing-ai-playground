@@ -27,6 +27,7 @@ export type Tool = {
   label: string;
   status: string;
   symbol: string;
+  href?: string;
 };
 
 export const stories: Story[] = [
@@ -106,6 +107,15 @@ export const experiments: Experiment[] = [
 
 export const tools: Tool[] = [
   {
+    id: 'tool-003',
+    title: 'Review Pace',
+    description: '输入团队人数、有效工时、单条耗时与返工率，快速估算评测任务的日产能和交付节奏。',
+    label: '评测排期计算器',
+    status: 'Ready',
+    symbol: '≋',
+    href: '/tools/review-pace/',
+  },
+  {
     id: 'tool-001',
     title: 'Random Story Seed',
     description: '随机抽取一个人物、一件麻烦事和一个不太对劲的结尾。',
@@ -120,14 +130,6 @@ export const tools: Tool[] = [
     label: '分镜整理器',
     status: 'Building',
     symbol: '⌁',
-  },
-  {
-    id: 'tool-003',
-    title: 'Review Pace',
-    description: '快速估算标注与内容评测任务的工时、产能和交付节奏。',
-    label: '评测产能计算器',
-    status: 'Sketch',
-    symbol: '≋',
   },
 ];
 
