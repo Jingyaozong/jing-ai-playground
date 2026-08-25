@@ -127,10 +127,11 @@ export const tools: Tool[] = [
   {
     id: 'tool-002',
     title: 'Shot List Cleaner',
-    description: '把散乱的分镜笔记整理成可以直接开工的镜头表。',
+    description: '把每行一镜的散乱笔记，整理成可以编辑和复制的景别、画面、运镜、对白与声音表。',
     label: '分镜整理器',
-    status: 'Building',
+    status: 'Ready',
     symbol: '⌁',
+    href: '/tools/shot-list-cleaner/',
   },
 ];
 
