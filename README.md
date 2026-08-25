@@ -21,11 +21,15 @@ npm run build
 
 ## 发布到 GitHub Pages
 
-1. 在 GitHub 新建一个仓库。
+当前本地仓库尚未绑定 GitHub remote。发布时：
+
+1. 在 GitHub 新建一个空仓库，不要额外生成 README。
 2. 将这个项目推送到仓库的 `main` 分支。
 3. 打开仓库的 **Settings → Pages**。
 4. 在 **Build and deployment → Source** 中选择 **GitHub Actions**。
 5. 项目自带的 `.github/workflows/deploy-pages.yml` 会自动构建并发布网站。
+
+工作流会依次执行代码检查、静态构建和 Pages 路径检查；只有全部通过才会部署。
 
 普通项目仓库的访问地址通常是：
 
@@ -41,13 +45,26 @@ https://你的用户名.github.io/
 
 ## 修改内容
 
-作品、实验和工具数据集中维护在：
+首页卡片摘要与工具数据集中维护在：
 
 ```text
 app/data/content.ts
 ```
 
-新增内容时，向 `stories`、`experiments` 或 `tools` 数组添加一条数据即可。
+故事详情数据维护在 `app/data/stories.ts`，实验详情数据维护在 `app/data/experiments.ts`。新增详情时，在对应数组中添加数据，并在 `app/data/content.ts` 的摘要卡片里填写相同 `slug`。
+
+Library 收藏数据位于 `app/data/library.ts`，Prompt 位于 `app/data/prompts.ts`。
+
+## 发布前自检
+
+普通本地静态构建：
+
+```bash
+npm run build
+npm run verify:pages
+```
+
+项目仓库发布时，Actions 会自动根据仓库名加入 `basePath`。例如仓库名为 `jing-ai-playground`，页面和静态资源都会从 `/jing-ai-playground/` 加载；用户主页仓库 `用户名.github.io` 则保持根路径。
 
 ## 新增一篇 Notes 文章
 
