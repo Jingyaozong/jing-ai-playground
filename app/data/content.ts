@@ -118,10 +118,11 @@ export const tools: Tool[] = [
   {
     id: 'tool-001',
     title: 'Random Story Seed',
-    description: '随机抽取一个人物、一件麻烦事和一个不太对劲的结尾。',
+    description: '抽取人物、意外、地点和规则；锁住喜欢的卡片，只重抽还没有感觉的部分。',
     label: '故事种子生成器',
-    status: 'Prototype',
+    status: 'Ready',
     symbol: '↯',
+    href: '/tools/story-seed/',
   },
   {
     id: 'tool-002',
