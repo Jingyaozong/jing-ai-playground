@@ -9,12 +9,13 @@ export type LibraryItem = {
   description: string;
   whyISavedIt: string;
   jingTake: string;
+  takeStatus: 'confirmed' | 'draft';
   tags: string[];
   dateAdded: string;
   featured: boolean;
   jingPick: boolean;
   visual: string;
-  url: string | null;
+  url: string;
   creator?: string;
   duration?: string;
   demo: boolean;
@@ -22,41 +23,88 @@ export type LibraryItem = {
 
 export const libraryItems: LibraryItem[] = [
   {
-    id: 'lib-video-001', title: '人物一致性：从参考图到连续镜头', type: 'VIDEO', source: 'Bilibili', topic: 'AI Video',
-    description: '一个从角色设定到镜头连续性的完整演示，重点放在实际制作流程。',
-    whyISavedIt: '没有只展示结果，而是把参考图、提示词和失败镜头放在一起比较。',
-    jingTake: '人物一致性部分讲得非常清楚，适合刚开始做 AI 漫剧的人。',
-    tags: ['AI VIDEO', 'CHARACTER'], dateAdded: '2026-08-23', featured: true, jingPick: true, visual: 'video-blue', url: null,
-    creator: '示例 UP 主', duration: '18:42', demo: true,
+    id: 'runway-gen4-intro-video',
+    title: 'Introducing Runway Gen-4',
+    type: 'VIDEO',
+    source: 'YouTube · Runway',
+    topic: 'AI Video',
+    description: 'Runway 官方发布的 Gen-4 能力展示，重点呈现跨场景的角色、地点与物体一致性。',
+    whyISavedIt: '适合快速建立对模型视觉方向和一致性能力的直观认识，也可以作为继续阅读提示指南前的入口。',
+    jingTake: '更适合用来确认 Gen-4 能做什么，不是详细操作教程；看完以后还需要回到真实项目里测试。',
+    takeStatus: 'draft',
+    tags: ['AI VIDEO', 'CONSISTENCY', 'RUNWAY'],
+    dateAdded: '2026-08-25', featured: true, jingPick: true, visual: 'video-blue',
+    url: 'https://www.youtube.com/watch?v=uRkfzKYFOxc', creator: 'Runway', demo: false,
   },
   {
-    id: 'lib-article-001', title: '如何写出可执行的镜头描述', type: 'ARTICLE', source: '示例创作博客', topic: 'Prompt',
-    description: '从景别、机位、运动到时间变化，拆解一条镜头描述真正需要的信息。',
-    whyISavedIt: '结构清楚，适合在写视频 Prompt 前快速复习。',
-    jingTake: '最值得看的是“动作”和“摄影机运动”分开写这一点。',
-    tags: ['PROMPT', 'CAMERA'], dateAdded: '2026-08-21', featured: false, jingPick: true, visual: 'article-yellow', url: null, demo: true,
+    id: 'google-veo-prompt-guide',
+    title: 'Veo 视频生成提示指南',
+    type: 'ARTICLE',
+    source: 'Google Cloud',
+    topic: 'Prompt',
+    description: 'Google 官方中文指南，解释如何用主体、动作、场景、镜头、光线和视觉风格组织 Veo 视频提示。',
+    whyISavedIt: '结构清楚，而且有中文版本，适合写视频 Prompt 时逐项检查有没有遗漏关键画面信息。',
+    jingTake: '可以直接把六个构成要素做成 Prompt 自检清单；不必每次全部写满，先保留真正影响镜头的部分。',
+    takeStatus: 'draft',
+    tags: ['AI VIDEO', 'PROMPT', 'VEO'],
+    dateAdded: '2026-08-25', featured: false, jingPick: true, visual: 'article-yellow',
+    url: 'https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/video-gen-prompt-guide?hl=zh-CN', demo: false,
   },
   {
-    id: 'lib-pdf-001', title: '生成式视频质量评测框架（示例报告）', type: 'PDF', source: '示例研究机构', topic: 'Evaluation',
-    description: '围绕画面质量、时序一致性、动作合理性和文本遵循展开的评测框架。',
-    whyISavedIt: '维度比较完整，可以帮助我校准自己的评测表。',
-    jingTake: '适合搭框架，但真正用于项目时仍然需要补充业务场景和坏例定义。',
-    tags: ['EVALUATION', 'AI VIDEO'], dateAdded: '2026-08-19', featured: false, jingPick: true, visual: 'pdf-coral', url: null, demo: true,
+    id: 'vbench-cvpr-paper',
+    title: 'VBench：视频生成模型综合评测基准',
+    type: 'PDF',
+    source: 'CVPR 2024',
+    topic: 'Evaluation',
+    description: '将视频生成质量拆成 16 个细分维度，并为不同维度设计提示集、评测方法与人类偏好校准。',
+    whyISavedIt: '它提供了一套可以追溯的评测维度，非常适合用来校准人物一致性、运动流畅度、闪烁和 Prompt 遵循等判断。',
+    jingTake: '最值得借鉴的不是一个总分，而是把“视频好不好”拆成多个可以单独解释、单独复盘的维度。',
+    takeStatus: 'draft',
+    tags: ['EVALUATION', 'AI VIDEO', 'BENCHMARK'],
+    dateAdded: '2026-08-25', featured: false, jingPick: true, visual: 'pdf-coral',
+    url: 'https://openaccess.thecvf.com/content/CVPR2024/papers/Huang_VBench_Comprehensive_Benchmark_Suite_for_Video_Generative_Models_CVPR_2024_paper.pdf', demo: false,
   },
   {
-    id: 'lib-tool-001', title: '分镜参考整理工具（示例）', type: 'TOOL', source: '示例工具站', topic: 'Tools',
-    description: '把零散参考图按场景、景别和角色整理成一张可共享的分镜板。',
-    whyISavedIt: '减少素材散落在多个文件夹里的麻烦。',
-    jingTake: '功能不复杂，但很贴近真实创作工作流。',
-    tags: ['TOOLS', 'WORKFLOW'], dateAdded: '2026-08-16', featured: false, jingPick: true, visual: 'tool-mint', url: null, demo: true,
+    id: 'vbench-open-source-toolkit',
+    title: 'VBench 开源评测工具与 Prompt Suite',
+    type: 'TOOL',
+    source: 'GitHub · Vchitect',
+    topic: 'Evaluation',
+    description: 'VBench 系列论文的开源实现，包含评测代码、标准提示集、生成样例和多个视频模型的对比入口。',
+    whyISavedIt: '论文给出方法，仓库则能看到具体维度名称、标准提示和实际使用方式，方便把概念落到工作流。',
+    jingTake: '适合研究标准化模型对比；个人项目不需要完整照搬，但维度定义和 Prompt Suite 很值得参考。',
+    takeStatus: 'draft',
+    tags: ['EVALUATION', 'OPEN SOURCE', 'WORKFLOW'],
+    dateAdded: '2026-08-25', featured: false, jingPick: true, visual: 'tool-mint',
+    url: 'https://github.com/Vchitect/VBench', demo: false,
   },
   {
-    id: 'lib-video-002', title: '七种常用运镜的视觉区别', type: 'VIDEO', source: 'Bilibili', topic: 'Camera',
-    description: '用同一场景对比推、拉、摇、移、跟、升降与环绕。',
-    whyISavedIt: '很适合直接对照着修改视频 Prompt。',
-    jingTake: '比单纯背术语有效，关键是看每种运镜改变了什么情绪。',
-    tags: ['AI VIDEO', 'CAMERA'], dateAdded: '2026-08-12', featured: false, jingPick: false, visual: 'video-coral', url: null,
-    creator: '示例影像频道', duration: '12:08', demo: true,
+    id: 'runway-gen4-prompt-guide',
+    title: 'Gen-4 Video Prompting Guide',
+    type: 'ARTICLE',
+    source: 'Runway',
+    topic: 'Prompt',
+    description: 'Runway 官方 Gen-4 视频提示指南，围绕输入图、运动描述、正向表达和提示结构给出示例。',
+    whyISavedIt: '它把图生视频里“图片负责什么、文字负责什么”说得很直接，能减少在 Prompt 中重复描述静态画面的情况。',
+    jingTake: '输入图已经决定了外观时，文字提示更应该把注意力放在主体运动、环境变化和摄影机运动。',
+    takeStatus: 'draft',
+    tags: ['AI VIDEO', 'PROMPT', 'RUNWAY'],
+    dateAdded: '2026-08-25', featured: false, jingPick: false, visual: 'article-yellow',
+    url: 'https://help.runwayml.com/hc/en-us/articles/39789879462419-Gen-4-Video-Prompting-Guide', demo: false,
+  },
+  {
+    id: 'openai-sora-examples',
+    title: 'Sora：从文字生成视频的官方示例',
+    type: 'ARTICLE',
+    source: 'OpenAI',
+    topic: 'AI Video',
+    description: 'OpenAI 的 Sora 介绍与生成示例页，可以对照查看较长提示如何组织人物、动作、镜头、环境和质感。',
+    whyISavedIt: '适合把提示原文与结果放在一起观察，理解一条描述里哪些信息负责内容、哪些信息负责镜头和氛围。',
+    jingTake: '适合学习长描述的信息组织方式，但不能直接把示例当成所有视频模型都通用的 Prompt 模板。',
+    takeStatus: 'draft',
+    tags: ['AI VIDEO', 'PROMPT', 'SORA'],
+    dateAdded: '2026-08-25', featured: false, jingPick: false, visual: 'article-yellow',
+    url: 'https://openai.com/index/sora/', demo: false,
   },
 ];
 

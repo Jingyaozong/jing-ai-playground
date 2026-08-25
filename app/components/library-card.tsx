@@ -10,16 +10,17 @@ export function LibraryCard({ item, compact = false }: { item: LibraryItem; comp
       </div>
       <div className="library-copy">
         <div className="library-meta mono"><span>{item.type} · {item.source}</span><span>{item.topic}</span></div>
+        {item.takeStatus === 'draft' && <span className="take-status mono">编辑初选 · 待荆确认</span>}
         <h3>{item.title}</h3>
-        {item.creator && <p className="library-creator">UP 主 / {item.creator}</p>}
+        {item.creator && <p className="library-creator">发布者 / {item.creator}</p>}
         {!compact && <>
           <p>{item.description}</p>
           <div className="saved-reason"><span className="mono">为什么收藏</span><p>{item.whyISavedIt}</p></div>
-          <blockquote><span className="mono">JING&apos;S TAKE</span>{item.jingTake}</blockquote>
+          <blockquote><span className="mono">JING&apos;S TAKE {item.takeStatus === 'draft' && '· 待确认'}</span>{item.jingTake}</blockquote>
         </>}
         <div className="library-bottom">
           <div className="note-tags">{item.tags.slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}</div>
-          {item.url ? <a href={item.url} target="_blank" rel="noreferrer">查看原内容 ↗</a> : <span className="demo-link">Demo · 原链接待添加</span>}
+          <a href={item.url} target="_blank" rel="noreferrer">查看原内容 ↗</a>
         </div>
       </div>
     </article>
