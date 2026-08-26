@@ -6,7 +6,7 @@ import { SiteHeader } from '../../components/site-header';
 
 export const metadata: Metadata = {
   title: '分镜整理器 — JING AI PLAYGROUND',
-  description: '把散乱的分镜笔记整理成可编辑、可复制的镜头表。',
+  description: '把散乱的分镜笔记整理成带时长、完整度和 Prompt 骨架的可编辑镜头表。',
 };
 
 export default function ShotListCleanerPage() {
@@ -20,7 +20,7 @@ export default function ShotListCleanerPage() {
             <p className="eyebrow mono">Shot list cleaner / 分镜整理</p>
             <h1>乱写没关系，<br /><em>开拍前排整齐。</em></h1>
           </div>
-          <p>把脑子里跳来跳去的画面先写下来，再整理成镜号、景别、动作、运镜和声音都清楚的工作表。</p>
+          <p>把脑子里跳来跳去的画面先写下来，再整理成包含镜号、景别、时长、动作、运镜和声音的工作表，并导出逐镜 Prompt 骨架。</p>
         </div>
       </header>
 
