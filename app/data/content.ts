@@ -42,7 +42,7 @@ export const stories: Story[] = [
     type: 'AI Short Film',
     date: '2026.08',
     duration: '01:38',
-    status: '制作中',
+    status: 'AI 共创概念稿',
     visual: 'memory',
   },
   {
@@ -74,10 +74,10 @@ export const experiments: Experiment[] = [
     id: 'experiment-001',
     slug: 'forty-shots-one-character',
     title: '同一个她，四十个镜头',
-    description: '跨景别、光线和情绪测试角色一致性。当前先公开实验记录模板，真实样本会逐步替换进去。',
+    description: '跨景别、光线、情绪和动作测试角色一致性。已完成首轮四格静态样本，四十镜正式测试仍待继续。',
     category: 'Character Study',
     date: '2026.08.18',
-    status: 'Demo 记录已公开',
+    status: '4 / 40 首轮样本',
     visual: 'faces',
   },
   {

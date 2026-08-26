@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import storyKeyframes from '../../assets/generated/she-forgets-yesterday-keyframes.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 import { getStoryBySlug, storyDetails } from '../../data/stories';
@@ -46,7 +47,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         </div>
       </header>
 
-      {story.draft && <aside className="story-draft-notice"><span className="mono">DEVELOPMENT DRAFT</span><p>这个故事仍在制作中。以下剧情结构和画面方向是创作草案，剧照位置均为概念占位，不代表已经完成的成片。</p></aside>}
+      {story.draft && <aside className="story-draft-notice"><span className="mono">AI-ASSISTED DRAFT</span><p>这是由 AI 编辑与图像生成工具完成的原创概念稿，尚未由荆确认或进入正式制作。四张画面是 2026-08-25 生成的视觉开发素材，不代表已经完成的成片或个人制作经历。</p></aside>}
 
       <section className="story-premise section-shell">
         <p className="eyebrow mono">The heart of the story / 故事真正想问</p>
@@ -71,9 +72,9 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
 
       <section className="story-stills">
         <div className="story-section-inner">
-          <div className="story-section-heading"><div><p className="eyebrow mono">03 / Key frames</p><h2>四张图，先把<br />故事的呼吸定下来。</h2></div><p>这里不会用假成片填满页面。等真实关键帧完成后，再替换下面对应的概念画面。</p></div>
+          <div className="story-section-heading"><div><p className="eyebrow mono">03 / Key frames</p><h2>四张图，先把<br />故事的呼吸定下来。</h2></div><p>下面是首轮 AI 概念关键帧。它们用于建立人物锚点、光线和情绪节奏，明确标注为视觉开发素材，不冒充成片剧照。</p></div>
           <div className="story-still-grid">
-            {story.stills.map((still, index) => <article className="story-still-card" key={still.shot}><div className={`story-still-placeholder tone-${still.tone}`}><span className="story-frame-corner corner-a" /><span className="story-frame-corner corner-b" /><i className="story-figure" /><b className="mono">待替换真实画面</b></div><div className="story-still-copy"><div className="mono"><span>{still.shot}</span><span>{still.status}</span></div><h3>{still.title}</h3><p>{still.direction}</p><small className="mono">FRAME {String(index + 1).padStart(2, '0')} / 04</small></div></article>)}
+            {story.stills.map((still, index) => <article className="story-still-card" key={still.shot}><div className={`story-still-placeholder tone-${still.tone} has-generated-frame`} aria-label={`${still.title} AI 概念关键帧`} style={{ backgroundImage: `url("${storyKeyframes.src}")`, backgroundPosition: still.framePosition }}><span className="story-frame-corner corner-a" /><span className="story-frame-corner corner-b" /><b className="mono">AI 概念关键帧</b></div><div className="story-still-copy"><div className="mono"><span>{still.shot}</span><span>{still.status}</span></div><h3>{still.title}</h3><p>{still.direction}</p><small className="mono">FRAME {String(index + 1).padStart(2, '0')} / 04</small></div></article>)}
           </div>
         </div>
       </section>

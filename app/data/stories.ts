@@ -26,6 +26,7 @@ export type StoryDetail = {
     title: string;
     direction: string;
     status: string;
+    framePosition: 'left top' | 'right top' | 'left bottom' | 'right bottom';
     tone: 'blue' | 'yellow' | 'coral' | 'mint';
   }>;
   production: Array<{
@@ -45,7 +46,7 @@ export const storyDetails: StoryDetail[] = [
     type: 'AI Short Film',
     date: '2026.08',
     duration: '01:38',
-    status: '制作中',
+    status: 'AI 共创概念稿',
     draft: true,
     logline: '她每天醒来都会失去昨天的记忆，只能依靠桌上那封由“昨天的自己”留下的信，重新认识正在告别的人。',
     premise: '这不是一个关于恢复记忆的故事，而是关于：如果每天都要重新选择一次，你还会不会继续爱同一个人。',
@@ -63,24 +64,24 @@ export const storyDetails: StoryDetail[] = [
       { label: 'THE CLOCK', title: '一天是完整的倒计时', copy: '从醒来到睡去，所有关系必须在记忆再次清零前重新建立。' },
     ],
     stills: [
-      { shot: 'SCENE 01', title: '清晨醒来', direction: '高亮但陌生的卧室；人物与环境之间留出很大空白。', status: '待生成关键帧', tone: 'yellow' },
-      { shot: 'SCENE 02', title: '桌上的信', direction: '信封、合照与时钟形成三个视觉锚点；手尚未碰到信。', status: '待生成关键帧', tone: 'blue' },
-      { shot: 'SCENE 03', title: '傍晚见面', direction: '两个人处于同一画面，却被门框或玻璃分隔。', status: '待生成关键帧', tone: 'coral' },
-      { shot: 'SCENE 04', title: '写给明天', direction: '夜晚台灯下，她写信的手与清晨读信的手形成首尾呼应。', status: '待生成关键帧', tone: 'mint' },
+      { shot: 'SCENE 01', title: '清晨醒来', direction: '明亮但陌生的蓝色卧室；她坐在床沿望向窗外，黄色外套成为第一处身份锚点。', status: 'AI 概念关键帧', framePosition: 'left top', tone: 'yellow' },
+      { shot: 'SCENE 02', title: '桌上的信', direction: '俯拍把空白信封、照片、时钟和迟疑的手放进同一条证据链。', status: 'AI 概念关键帧', framePosition: 'right top', tone: 'blue' },
+      { shot: 'SCENE 03', title: '傍晚见面', direction: '玻璃门把两个人分在画面两侧；暖色光让距离看起来更像告别。', status: 'AI 概念关键帧', framePosition: 'left bottom', tone: 'coral' },
+      { shot: 'SCENE 04', title: '写给明天', direction: '夜晚台灯下，她低头写信；蓝色发夹、红色耳饰和黄色外套继续维持人物身份。', status: 'AI 概念关键帧', framePosition: 'right bottom', tone: 'mint' },
     ],
     production: [
-      { phase: '故事梗概', status: '完成草案', note: '核心设定与情感问题已经确定，仍可继续压缩。' },
-      { phase: '90 秒剧本', status: '制作中', note: '正在调整见面段落，让信息更少、情绪更清楚。' },
-      { phase: '人物设定', status: '制作中', note: '需要固定发型、服装、年龄感与关键配饰。' },
-      { phase: '分镜与关键帧', status: '待开始', note: '剧本锁定后按六个时间节点拆镜。' },
+      { phase: '故事梗概', status: '完成草案', note: '由 AI 编辑完成首版核心设定与一天时间线，尚未由荆确认。' },
+      { phase: '人物设定', status: '完成草案', note: '已建立短发、蓝色发夹、红色三角耳饰和黄色外套四个视觉锚点。' },
+      { phase: '概念关键帧', status: '完成草案', note: '已生成首轮四格视觉板，用于检查一天中的光线与情绪节奏。' },
+      { phase: '90 秒剧本', status: '制作中', note: '当前只有结构和场景方向，下一轮需要写成可拍摄、可配音的完整文本。' },
       { phase: '视频生成', status: '待开始', note: '优先保证表演与人物一致性，再处理复杂运镜。' },
       { phase: '剪辑与声音', status: '待开始', note: '以信件旁白和清晨/夜晚的环境声构建循环感。' },
     ],
     nextSteps: [
-      '确认 90 秒版本的最终剧本与结尾句。',
-      '完成女主角和另一人物的视觉设定图。',
-      '为六个时间节点拆出第一版分镜表。',
-      '用同一套人物锚点生成四张关键场景图。',
+      '把六个时间节点写成第一版 90 秒完整剧本。',
+      '围绕四张概念关键帧拆出 12—16 镜分镜表。',
+      '选择一个视频模型完成 3 个短镜头的动作测试。',
+      '记录角色一致性与情绪表演问题，再决定是否进入完整制作。',
     ],
   },
 ];

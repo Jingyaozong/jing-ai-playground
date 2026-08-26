@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import experimentPilotSamples from '../../assets/generated/forty-shots-pilot-samples.png';
+import characterAnchor from '../../assets/generated/she-forgets-yesterday-character-anchor.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 import { experimentDetails, getExperimentBySlug } from '../../data/experiments';
@@ -40,7 +42,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
             <div className="experiment-detail-labels mono">
               <span>{experiment.category}</span>
               <span>{experiment.date.replaceAll('.', ' / ')}</span>
-              {experiment.demo && <b>DEMO · 待真实样本</b>}
+              {experiment.demo && <b>PILOT · 4 / 40</b>}
             </div>
             <h1>{experiment.title}</h1>
             <p>{experiment.summary}</p>
@@ -61,8 +63,8 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
 
       {experiment.demo && (
         <aside className="experiment-demo-notice">
-          <span className="mono">DEMO NOTICE</span>
-          <p>这是实验记录的首版模板。页面里的假设、分组和观察位用于展示记录方法，不代表已经完成真实测试，也不包含任何模型排名。</p>
+          <span className="mono">PILOT NOTICE</span>
+          <p>页面已放入 2026-08-25 生成的四格静态样本，用来验证角色锚点与记录方法；尚未按 A—D 四组完成 40 镜视频测试。以下观察只针对这张样本板，不代表模型排名或正式结论。</p>
         </aside>
       )}
 
@@ -100,15 +102,18 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
       <section className="experiment-samples section-shell">
         <div className="experiment-section-heading">
           <div><p className="eyebrow mono">02 / Sample wall</p><h2>不是展示最好看，<br />而是留下变化。</h2></div>
-          <p>真实实验开始后，每组放入代表性样本，同时保留最稳定与最容易漂移的结果。</p>
+          <p>首轮先放入四格静态样本。正式实验会继续扩展到四十镜，并同时保留最稳定与最容易漂移的结果。</p>
         </div>
+        <article className="experiment-reference-card">
+          <div className="experiment-reference-image" aria-label="实验角色锚点图" style={{ backgroundImage: `url("${characterAnchor.src}")` }} />
+          <div><span className="mono">IDENTITY ANCHOR · 2026-08-25</span><h3>先固定“她是谁”。</h3><p>黑色齐下巴短发、右侧蓝色发夹、红色三角耳饰、黄色针织外套和象牙白上衣，是这轮测试要求保留的五个视觉锚点。角色为 AI 生成的虚构人物。</p></div>
+        </article>
         <div className="experiment-sample-grid">
           {experiment.samples.map((sample, index) => (
             <article className="experiment-sample-card" key={sample.shot}>
-              <div className={`experiment-sample-visual tone-${sample.tone}`}>
+              <div className={`experiment-sample-visual tone-${sample.tone} has-generated-frame`} aria-label={`${sample.title} AI 生成首轮样本`} style={{ backgroundImage: `url("${experimentPilotSamples.src}")`, backgroundPosition: sample.framePosition }}>
                 <span className="sample-crosshair" />
-                <span className="sample-silhouette" />
-                <b className="mono">替换为真实样本</b>
+                <b className="mono">AI 首轮样本</b>
                 <i className="mono">{String(index + 1).padStart(2, '0')} / 04</i>
               </div>
               <div className="experiment-sample-copy">
@@ -143,7 +148,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
       <section className="experiment-next section-shell">
         <div className="experiment-next-title"><span className="mono">NEXT RUN</span><strong>→</strong><h2>下一轮怎么做</h2></div>
         <ol>{experiment.nextSteps.map((step, index) => <li key={step}><span className="mono">{String(index + 1).padStart(2, '0')}</span><p>{step}</p></li>)}</ol>
-        <div className="experiment-open-ending"><span className="mono">CURRENT CONCLUSION</span><p>尚未开始真实测试，因此暂不下结论。</p><b>等待真实样本。</b></div>
+        <div className="experiment-open-ending"><span className="mono">CURRENT CONCLUSION</span><p>四格静态样本证明这套身份锚点与观察表可以工作；四十镜正式测试尚未开始。</p><b>不做模型排名</b></div>
       </section>
 
       <nav className="experiment-detail-back"><Link href="/experiments/">← 查看全部实验</Link><Link href="/notes/">去读 AI 笔记 ↗</Link></nav>

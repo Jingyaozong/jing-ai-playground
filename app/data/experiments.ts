@@ -24,6 +24,7 @@ export type ExperimentDetail = {
     setting: string;
     observation: string;
     status: string;
+    framePosition: 'left top' | 'right top' | 'left bottom' | 'right bottom';
     tone: 'blue' | 'yellow' | 'coral' | 'mint';
   }>;
   checks: Array<{
@@ -43,12 +44,12 @@ export const experimentDetails: ExperimentDetail[] = [
     englishTitle: 'One Character, Forty Shots',
     category: 'Character Study',
     date: '2026.08.18',
-    status: 'Demo 记录框架',
+    status: '首轮 4 格静态样本',
     demo: true,
-    summary: '用四组镜头逐步增加变量，观察同一个角色的脸、发型、服装和气质会从哪里开始漂移。',
+    summary: '先用四格静态样本验证角色锚点和记录方法，再逐步扩展为四组、四十镜的正式一致性测试。',
     question: '当景别、光线、情绪和动作不断变化时，哪些角色特征最容易先失去一致性？',
     hypothesis: '比起颜色和服装，脸部比例、发际线与局部配饰可能更早发生漂移；变量叠加越多，身份感越难保持。',
-    constants: ['同一张角色参考图', '同一套基础人物描述', '同一画幅与生成时长', '每组只增加一个主要变量'],
+    constants: ['同一张角色锚点图', '同一套服装、发夹与耳饰', '同一次生成任务中的四格静态画面', '每格只增加一类主要挑战'],
     groups: [
       { code: 'A', title: '只换景别', shots: '01—10', variable: '远景 → 特写', tone: 'blue' },
       { code: 'B', title: '加入光线', shots: '11—20', variable: '日光 / 逆光 / 夜景', tone: 'yellow' },
@@ -56,10 +57,10 @@ export const experimentDetails: ExperimentDetail[] = [
       { code: 'D', title: '加入动作', shots: '31—40', variable: '转身 / 奔跑 / 回头', tone: 'mint' },
     ],
     samples: [
-      { shot: 'SHOT 03', title: '正面近景', setting: '柔和日光 · 表情平静', observation: '等待替换真实输出后记录脸型与五官锚点。', status: '待放入样本', tone: 'blue' },
-      { shot: 'SHOT 14', title: '侧逆光中景', setting: '强逆光 · 轻微侧脸', observation: '重点检查发际线、耳饰与侧脸轮廓。', status: '待放入样本', tone: 'yellow' },
-      { shot: 'SHOT 26', title: '哭泣特写', setting: '室内冷光 · 明显情绪', observation: '重点检查表情变化是否改变人物年龄和身份感。', status: '待放入样本', tone: 'coral' },
-      { shot: 'SHOT 37', title: '奔跑回头', setting: '室外夜景 · 快速动作', observation: '重点检查运动中脸部、发型与服装细节的稳定性。', status: '待放入样本', tone: 'mint' },
+      { shot: 'PILOT 01', title: '正面近景', setting: '柔和日光 · 表情平静', observation: '脸型、发型、蓝色发夹、红色耳饰和黄色外套都与角色锚点保持一致。', status: '已生成 · 首轮样本', framePosition: 'left top', tone: 'blue' },
+      { shot: 'PILOT 02', title: '侧逆光中景', setting: '强逆光 · 完整侧脸', observation: '侧脸比例仍可辨认，发夹与耳饰保留；逆光主要改变皮肤对比和鼻梁轮廓。', status: '已生成 · 首轮样本', framePosition: 'right top', tone: 'yellow' },
+      { shot: 'PILOT 03', title: '哭泣特写', setting: '室内冷光 · 明显情绪', observation: '强情绪改变眼周和皮肤纹理，但年龄感、发际线与主要身份锚点没有明显漂移。', status: '已生成 · 首轮样本', framePosition: 'left bottom', tone: 'coral' },
+      { shot: 'PILOT 04', title: '奔跑回头', setting: '室外暮色 · 快速动作', observation: '运动让短发轮廓变化最大；发夹、耳饰、服装颜色和脸部辨识度仍然保留。', status: '已生成 · 首轮样本', framePosition: 'right bottom', tone: 'mint' },
     ],
     checks: [
       { label: 'IDENTITY', question: '第一眼还像同一个人吗？', note: '先判断整体身份感，再看局部细节，避免只盯着单个五官。', tone: 'blue' },
@@ -67,10 +68,10 @@ export const experimentDetails: ExperimentDetail[] = [
       { label: 'DRIFT', question: '漂移从哪个变量开始？', note: '不要只写“崩了”，要标明发生在景别、光线、情绪还是动作之后。', tone: 'coral' },
     ],
     nextSteps: [
-      '放入同一角色的真实参考图，并补全基础人物描述。',
-      '按 A—D 四组生成 40 个镜头，保留模型与参数信息。',
-      '挑出每组最稳定和最不稳定的样本，补写观察。',
-      '完成后再发布结论；Demo 阶段不对任何模型作真实判断。',
+      '把首轮四格样本拆成独立 Prompt，并保存完整生成参数。',
+      '按 A—D 四组扩展到 40 个静态或视频镜头。',
+      '每组挑出最稳定和最不稳定的结果，使用同一张表记录锚点。',
+      '完成正式测试后再写模型结论；当前样本只验证记录方法。',
     ],
   },
 ];
