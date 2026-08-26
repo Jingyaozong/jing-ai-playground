@@ -39,6 +39,13 @@ export default function PromptsPage() {
         <PromptBrowser items={featuredPrompts} showToolbar={false} />
       </section></Reveal>
 
+      <Reveal><section className="prompt-story-bridge section-shell">
+        <div className="prompt-story-bridge-card">
+          <div><span className="mono">PROMPT IN PRODUCTION / 来自真实项目</span><h2>十四镜不是十四句咒语，<br />而是十四个清楚的动作。</h2><p>从 90 秒剧本出发，为每一镜分别锁定人物、动作、画面风格和失败边界。当前是可复制的制作草案，尚未产生视频模型输出。</p></div>
+          <div className="prompt-story-bridge-links"><Link href="/stories/she-forgets-yesterday/#generation-pack"><span className="mono">GENERATION PACK</span><b>打开十四镜 Prompt ↗</b></Link><Link href="/notes/ninety-second-storyboard/"><span className="mono">MAKING OF NOTE</span><b>阅读拆镜方法 ↗</b></Link></div>
+        </div>
+      </section></Reveal>
+
       <Reveal><section className="prompt-categories section-shell">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Five drawers / 五个抽屉</p><h2>先选场景，<br />再找 Prompt。</h2></div><p>完整目录里可以继续搜索和筛选，不需要在这一页一次看完。</p></div>
         <div className="prompt-category-map">{categoryCopy.map((category) => {

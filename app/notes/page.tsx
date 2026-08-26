@@ -48,7 +48,7 @@ export default function NotesPage() {
       </section></Reveal>
 
       <section className="latest-notes section-shell" id="all-notes">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近更新</p><h2>最近记下来的<br />一些东西。</h2></div><p>所有第一阶段正文都已明确标注 Demo，后续可以直接替换为正式内容。</p></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近更新</p><h2>最近记下来的<br />一些东西。</h2></div><p>Demo、编辑稿和正式内容都会明确标注；真实制作过程会随着项目推进继续更新。</p></div>
         <NoteBrowser notes={latest} />
       </section>
       <SiteFooter />

@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import type { NoteMeta } from '../../lib/notes';
 import { NoteCard } from './note-card';
 
-const filters = ['全部', 'AI TIPS', 'AI EVAL', 'MAKING OF', 'AI BRIEFING', 'AI VIDEO', 'PROMPT', 'EVALUATION'];
+const filters = ['全部', 'AI TIPS', 'AI EVAL', 'MAKING OF', 'AI BRIEFING', 'AI VIDEO', 'STORYBOARD', 'PROMPT', 'EVALUATION'];
 const sizes: Array<'large' | 'medium' | 'small' | 'wide' | 'tall'> = ['large', 'small', 'tall', 'wide', 'medium'];
 
 export function NoteBrowser({ notes }: { notes: NoteMeta[] }) {

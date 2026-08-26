@@ -41,7 +41,7 @@ export const stories: Story[] = [
     description: '一个关于记忆、遗忘和重复告别的短片。她每天醒来，桌上都会多一封自己写给自己的信。',
     type: 'AI Short Film',
     date: '2026.08',
-    duration: '01:38',
+    duration: '01:30',
     status: 'AI 共创概念稿',
     visual: 'memory',
   },

@@ -21,6 +21,13 @@ export type NoteMeta = {
   sourceUrl?: string;
   sourceNote?: string;
   relatedNotes: string[];
+  connections: Array<{
+    label: string;
+    title: string;
+    description: string;
+    href: string;
+    tone: 'yellow' | 'sky' | 'mint' | 'coral' | 'blue';
+  }>;
 };
 
 export type NoteDocument = NoteMeta & { content: string };
@@ -50,6 +57,13 @@ function parseNote(filename: string): NoteDocument {
     sourceUrl: data.sourceUrl ? String(data.sourceUrl) : undefined,
     sourceNote: data.sourceNote ? String(data.sourceNote) : undefined,
     relatedNotes: Array.isArray(data.relatedNotes) ? data.relatedNotes.map(String) : [],
+    connections: Array.isArray(data.connections) ? data.connections.map((item) => ({
+      label: String(item.label ?? ''),
+      title: String(item.title ?? ''),
+      description: String(item.description ?? ''),
+      href: String(item.href ?? '#'),
+      tone: ['yellow', 'sky', 'mint', 'coral', 'blue'].includes(String(item.tone)) ? item.tone : 'yellow',
+    })) : [],
     content,
   };
 }

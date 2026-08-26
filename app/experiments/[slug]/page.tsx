@@ -151,7 +151,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         <div className="experiment-open-ending"><span className="mono">CURRENT CONCLUSION</span><p>四格静态样本证明这套身份锚点与观察表可以工作；四十镜正式测试尚未开始。</p><b>不做模型排名</b></div>
       </section>
 
-      <nav className="experiment-detail-back"><Link href="/experiments/">← 查看全部实验</Link><Link href="/notes/">去读 AI 笔记 ↗</Link></nav>
+      <nav className="experiment-detail-back"><Link href="/experiments/">← 查看全部实验</Link><Link href="/notes/ninety-second-storyboard/">阅读拆镜方法 ↗</Link></nav>
       <SiteFooter />
     </main>
   );

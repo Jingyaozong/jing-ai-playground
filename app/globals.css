@@ -558,6 +558,14 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .article-source p { color: var(--muted); line-height: 1.7; }
 .article-source a { color: var(--blue); font-weight: 750; }
 .related-notes { border-top: 1px solid var(--line); }
+.note-connections { border-top: 2px solid var(--ink); background: var(--yellow); }
+.note-connection-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.note-connection-card { min-height: 330px; display: flex; flex-direction: column; padding: 25px; border: 2px solid var(--ink); border-radius: 27px; box-shadow: 7px 7px 0 var(--ink); transition: transform .2s ease, box-shadow .2s ease; }
+.note-connection-card:hover { transform: translate(-2px,-2px); box-shadow: 10px 10px 0 var(--ink); }
+.note-connection-card > span { color: var(--blue); }
+.note-connection-card h3 { margin: auto 0 15px; font-family: var(--display); font-size: clamp(2rem,3vw,3.3rem); line-height: .95; }
+.note-connection-card p { margin: 0 0 28px; font-size: 12px; line-height: 1.7; }
+.note-connection-card i { color: var(--blue); font-size: 11px; font-style: normal; font-weight: 750; }
 .related-note-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
 .related-note-grid .note-card { grid-column: auto; }
 
@@ -578,6 +586,17 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .prompt-all-hero .page-intro-top a { color: var(--blue); font-weight: 650; }
 .prompt-all-hero h1 { max-width: 1000px; line-height: .76; }
 .prompt-featured { border-bottom: 1px solid var(--line); }
+.prompt-story-bridge { border-bottom: 1px solid var(--line); }
+.prompt-story-bridge-card { display: grid; grid-template-columns: 1.25fr .75fr; overflow: hidden; border: 2px solid var(--ink); border-radius: 32px; background: var(--mint); box-shadow: 9px 9px 0 var(--coral); }
+.prompt-story-bridge-card > div:first-child { min-height: 480px; display: flex; flex-direction: column; justify-content: center; padding: clamp(30px,6vw,75px); }
+.prompt-story-bridge-card > div:first-child > span { color: var(--blue); }
+.prompt-story-bridge-card h2 { margin: 45px 0 23px; font-family: var(--display); font-size: clamp(3rem,5.6vw,5.7rem); line-height: .92; letter-spacing: -.05em; }
+.prompt-story-bridge-card p { max-width: 690px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.75; }
+.prompt-story-bridge-links { display: grid; grid-template-rows: 1fr 1fr; border-left: 2px solid var(--ink); }
+.prompt-story-bridge-links a { display: flex; flex-direction: column; justify-content: space-between; padding: 30px; background: var(--yellow); }
+.prompt-story-bridge-links a + a { border-top: 2px solid var(--ink); background: var(--sky); }
+.prompt-story-bridge-links span { color: var(--blue); }
+.prompt-story-bridge-links b { font-family: var(--display); font-size: clamp(1.8rem,3vw,3.1rem); line-height: 1; }
 .prompt-manifesto { border-bottom: 1px solid var(--line); }
 .prompt-rule-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 13px; }
 .prompt-rule-grid article { min-height: 280px; display: flex; flex-direction: column; padding: 25px; border: 2px solid var(--ink); border-radius: 25px; background: var(--white); }
@@ -729,6 +748,10 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .hero-layout { grid-template-columns: 1fr; }
   .hero-card { width: min(100%,520px); min-height: 220px; justify-self: end; }
   .section-heading, .section-title-row { grid-template-columns: 1fr; gap: 28px; }
+  .note-connection-grid { grid-template-columns: 1fr; }
+  .note-connection-card { min-height: 280px; }
+  .prompt-story-bridge-card { grid-template-columns: 1fr; }
+  .prompt-story-bridge-links { min-height: 360px; border-top: 2px solid var(--ink); border-left: 0; }
   .latest-grid { grid-template-columns: 1fr 1fr; }
   .latest-lead { grid-row: auto; }
   .latest-small { grid-column: 2; grid-row: 1; }

@@ -124,7 +124,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
-      <nav className="story-detail-back"><Link href="/stories/">← 查看全部故事</Link><Link href="/notes/">阅读制作笔记 ↗</Link></nav>
+      <nav className="story-detail-back"><Link href="/stories/">← 查看全部故事</Link><Link href="/notes/ninety-second-storyboard/">阅读拆镜方法 ↗</Link></nav>
       <SiteFooter />
     </main>
   );

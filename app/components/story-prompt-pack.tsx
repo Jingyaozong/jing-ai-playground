@@ -52,7 +52,7 @@ export function StoryPromptPack({ promptGuide, prompts, motionTests }: PromptPac
 
   return (
     <>
-      <section className="story-prompts">
+      <section className="story-prompts" id="generation-pack">
         <div className="story-section-inner">
           <div className="story-section-heading"><div><p className="eyebrow mono">06 / Generation pack</p><h2>每一镜，<br />都有自己的约束。</h2></div><p>Prompt 使用英文描述模型动作，中文说明风险。复制时会自动带上统一的人物锚点、画面风格和负面约束。</p></div>
 
