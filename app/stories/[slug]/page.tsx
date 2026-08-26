@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import storyKeyframes from '../../assets/generated/she-forgets-yesterday-keyframes.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
+import { StoryPromptPack } from '../../components/story-prompt-pack';
 import { getStoryBySlug, storyDetails } from '../../data/stories';
 
 export const dynamicParams = false;
@@ -106,8 +107,10 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
+      <StoryPromptPack promptGuide={story.promptGuide} prompts={story.prompts} motionTests={story.motionTests} />
+
       <section className="story-production section-shell">
-        <div className="story-section-heading"><div><p className="eyebrow mono">06 / Making of</p><h2>现在做到哪了？</h2></div><p>不是把“制作中”当成一句模糊状态，而是公开每个阶段已经完成什么、接下来缺什么。</p></div>
+        <div className="story-section-heading"><div><p className="eyebrow mono">08 / Making of</p><h2>现在做到哪了？</h2></div><p>不是把“制作中”当成一句模糊状态，而是公开每个阶段已经完成什么、接下来缺什么。</p></div>
         <div className="story-production-board">
           {story.production.map((item, index) => <article key={item.phase}><span className="mono">{String(index + 1).padStart(2, '0')}</span><h3>{item.phase}</h3><p>{item.note}</p><b className={`status-${item.status === '完成草案' ? 'done' : item.status === '制作中' ? 'active' : 'waiting'}`}>{item.status}</b></article>)}
         </div>
