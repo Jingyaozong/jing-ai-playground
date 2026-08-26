@@ -79,8 +79,35 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
+      <section className="story-script">
+        <div className="story-section-inner">
+          <div className="story-section-heading"><div><p className="eyebrow mono">04 / Screenplay draft</p><h2>九十秒，<br />把一天留给明天。</h2></div><p>第一版原创短片剧本，按成片时间码编排。对白、旁白与节奏均为 AI 共创草案，等待荆确认后再进入制作。</p></div>
+          <div className="story-script-list">
+            {story.script.map((scene, index) => <article key={scene.timecode}>
+              <div className="story-script-time"><b>{String(index + 1).padStart(2, '0')}</b><span className="mono">{scene.timecode}</span></div>
+              <div className="story-script-scene"><span className="mono">SCENE</span><h3>{scene.scene}</h3><p>{scene.visual}</p></div>
+              <div className="story-script-voice"><span className="mono">VOICE / 对白</span><p>{scene.voice}</p><small>{scene.sound}</small></div>
+            </article>)}
+          </div>
+        </div>
+      </section>
+
+      <section className="story-shots section-shell">
+        <div className="story-section-heading"><div><p className="eyebrow mono">05 / Shot list</p><h2>十四个镜头，<br />刚好九十秒。</h2></div><p>镜头表把叙事意图换成可以执行的画面、运镜和声音。当前只锁定节奏，不假装已经完成视频测试。</p></div>
+        <div className="story-shot-summary mono"><span>14 SHOTS</span><span>90 SECONDS</span><span>1 DAY</span><span>DRAFT 01</span></div>
+        <div className="story-shot-board">
+          {story.shotList.map((shot) => <article key={shot.shot}>
+            <div className="story-shot-number"><b>{shot.shot}</b><span className="mono">{shot.duration} SEC</span></div>
+            <div><span className="mono">景别</span><strong>{shot.size}</strong></div>
+            <div className="story-shot-visual"><span className="mono">画面与动作</span><p>{shot.visual}</p></div>
+            <div><span className="mono">运镜</span><strong>{shot.camera}</strong></div>
+            <div><span className="mono">对白与声音</span><p>{shot.sound}</p></div>
+          </article>)}
+        </div>
+      </section>
+
       <section className="story-production section-shell">
-        <div className="story-section-heading"><div><p className="eyebrow mono">04 / Making of</p><h2>现在做到哪了？</h2></div><p>不是把“制作中”当成一句模糊状态，而是公开每个阶段已经完成什么、接下来缺什么。</p></div>
+        <div className="story-section-heading"><div><p className="eyebrow mono">06 / Making of</p><h2>现在做到哪了？</h2></div><p>不是把“制作中”当成一句模糊状态，而是公开每个阶段已经完成什么、接下来缺什么。</p></div>
         <div className="story-production-board">
           {story.production.map((item, index) => <article key={item.phase}><span className="mono">{String(index + 1).padStart(2, '0')}</span><h3>{item.phase}</h3><p>{item.note}</p><b className={`status-${item.status === '完成草案' ? 'done' : item.status === '制作中' ? 'active' : 'waiting'}`}>{item.status}</b></article>)}
         </div>
