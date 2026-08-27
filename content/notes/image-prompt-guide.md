@@ -14,7 +14,7 @@ editorialStatus: "source-backed"
 sourceTitle: "Adobe Firefly / Google Imagen 官方图片提示指南"
 sourceUrl: "https://helpx.adobe.com/firefly/web/work-with-images/generate-images/writing-effective-text-prompts.html"
 sourceNote: "事实部分依据官方产品指南核对；模板与迭代流程是本站面向创作者的编辑转译，不代表所有模型共享同一语法或参考图能力。"
-relatedNotes: ["shot-size-guide", "video-vs-image-prompt", "camera-movement-guide"]
+relatedNotes: ["ai-video-character-consistency", "shot-size-guide", "video-vs-image-prompt"]
 connections:
   - label: "COMPOSITION"
     title: "AI 视频景别与构图指南"

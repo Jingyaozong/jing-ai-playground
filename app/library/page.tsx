@@ -4,7 +4,6 @@ import { LibraryCard } from '../components/library-card';
 import { Reveal } from '../components/reveal';
 import { SiteFooter } from '../components/site-footer';
 import { SiteHeader } from '../components/site-header';
-import { TruthMethodLink } from '../components/truth-method-link';
 import { libraryItems } from '../data/library';
 
 export const metadata: Metadata = {
@@ -58,7 +57,7 @@ export default function LibraryPage() {
       </section>
 
       <Reveal><section className="library-routes section-shell" aria-labelledby="library-routes-title">
-        <aside className="archive-truth-note library-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>资源标题、摘要和原始链接已经核对；推荐理由与 JING&apos;S TAKE 多数仍是编辑初稿，只有荆确认后才会成为正式个人观点。</p><TruthMethodLink /></aside>
+        <aside className="archive-truth-note library-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>资源标题、摘要和原始链接已经核对；推荐理由与 JING&apos;S TAKE 多数仍是编辑初稿，只有荆确认后才会成为正式个人观点。</p></aside>
         <div className="section-title-row compact"><div><p className="eyebrow mono">Choose by purpose / 按用途开始</p><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条路线依据资源内容和官方用途编排。需要查单项时，仍可使用下方搜索与筛选。</p></div>
         <div className="library-route-grid">
           {libraryRoutes.map((route) => (
