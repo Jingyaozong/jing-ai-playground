@@ -149,9 +149,39 @@ export const tools: Tool[] = [
 ];
 
 export const currentlyPlaying = [
-  ['🎬', '第一部 AI 漫剧', '把 90 秒的故事真正做完'],
-  ['🎭', '人物一致性', '让同一个角色熬过四十个镜头'],
-  ['🎥', '视频模型', '寻找更像“镜头”而不只是“会动图片”的结果'],
-  ['🧪', '自动分镜', '试着让工作流留下一点创作者的直觉'],
-  ['🛠', '新的小工具', '解决一个每天都在重复的小麻烦'],
+  {
+    icon: '🎬',
+    title: '第一部 AI 短片',
+    detail: '故事、剧本、分镜与生成包草案已整理；真实视频尚未生成。',
+    status: '草案有记录',
+    href: '/stories/she-forgets-yesterday/',
+  },
+  {
+    icon: '🎭',
+    title: '人物一致性',
+    detail: '现有四格静态 Pilot；正式四十镜测试仍未开始。',
+    status: 'Pilot 4 / 40',
+    href: '/experiments/forty-shots-one-character/',
+  },
+  {
+    icon: '🎥',
+    title: 'AI 视频怎么评',
+    detail: '把主体、运动、镜头、时序与可用性整理成一套评测路径。',
+    status: '重点笔记',
+    href: '/notes/ai-video-evaluation/',
+  },
+  {
+    icon: '🧪',
+    title: '分镜整理工作流',
+    detail: '把每行一镜的散乱文字整理成可编辑、可排序的镜头表。',
+    status: '工具可用',
+    href: '/tools/shot-list-cleaner/',
+  },
+  {
+    icon: '🔖',
+    title: '值得留下的来源',
+    detail: '原始链接已经核对；推荐理由与个人观点仍等待荆确认。',
+    status: '来源已核对',
+    href: '/library/',
+  },
 ];

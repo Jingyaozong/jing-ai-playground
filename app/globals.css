@@ -187,12 +187,15 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .playing-title { position: sticky; top: 32px; align-self: start; }
 .playing-title h2 { margin: 0; font-family: var(--display); font-size: clamp(4rem,6.8vw,6.8rem); font-weight: 700; line-height: .92; }
 .hand-note { display: inline-block; margin: 32px 0 0 45%; padding: 8px 12px; border-radius: 99px; background: var(--yellow); color: var(--ink); font-size: 12px; font-weight: 700; transform: rotate(-5deg); }
-.playing-row { display: grid; grid-template-columns: 34px 44px minmax(150px,.72fr) 1fr 20px; align-items: center; gap: 17px; min-height: 108px; border-top: 1px solid var(--line); transition: padding .25s ease, background .25s ease; }
+.playing-row { display: grid; grid-template-columns: 34px 44px minmax(170px,.72fr) 1fr 20px; align-items: center; gap: 17px; min-height: 118px; border-top: 1px solid var(--line); color: inherit; transition: padding .25s ease, background .25s ease; }
 .playing-row:last-child { border-bottom: 1px solid var(--line); }
 .playing-row:hover { padding-inline: 14px; background: var(--sky); }
+.playing-row:focus-visible { outline: 3px solid var(--coral); outline-offset: 5px; }
 .playing-row > span { color: var(--blue); }
 .playing-row b { font-size: 1.3rem; }
+.playing-row-title { display: flex; align-items: flex-start; flex-direction: column; gap: 9px; }
 .playing-row h3 { margin: 0; font-family: var(--display); font-size: 1.6rem; font-weight: 650; }
+.playing-row-title small { display: inline-flex; padding: 5px 8px; border: 1px solid var(--line); border-radius: 99px; background: var(--white); color: var(--blue); font-size: 8px; font-weight: 750; }
 .playing-row p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
 .playing-row i { color: var(--blue); font-style: normal; }
 
@@ -947,7 +950,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .experiment-preview-grid .experiment-card:nth-child(2), .experiment-preview-grid .experiment-card:nth-child(3), .archive-grid .reveal:nth-child(even) { margin-top: 0; }
   .story-grid.archive-grid .reveal:last-child { grid-column: auto; }
   .playing-row { grid-template-columns: 25px 38px 1fr 16px; padding: 18px 0; }
-  .playing-row p { grid-column: 3/5; }
+  .playing-row p { grid-column: 3/5; margin-top: 3px; }
   .playing-row i { grid-column: 4; grid-row: 1; }
   .about-preview { grid-template-columns: 1fr; }
   .about-stamp { width: 85%; }

@@ -41,7 +41,7 @@ export default function Home() {
       </section>
       <div className="live-strip" aria-label="最近动态">
         <span className="live-label mono"><i /> ON THE DESK</span>
-        <div className="ticker-track"><span>正在尝试第一部 AI 漫剧</span><b>✦</b><span>测试人物一致性</span><b>✦</b><span>研究不同视频模型</span><b>✦</b><span>做一些没用但有趣的东西</span><b>✦</b><span>正在尝试第一部 AI 漫剧</span></div>
+        <div className="ticker-track"><span>整理第一部 AI 短片草案</span><b>✦</b><span>记录角色一致性 Pilot</span><b>✦</b><span>完善 AI 视频评测方法</span><b>✦</b><span>打磨本地创作工具</span><b>✦</b><span>整理第一部 AI 短片草案</span></div>
       </div>
 
       <Reveal><section className="featured">
@@ -82,8 +82,8 @@ export default function Home() {
       </section></Reveal>
 
       <Reveal><section className="playing section-shell">
-        <div className="playing-title"><p className="eyebrow mono">Currently playing with</p><h2>最近在折腾</h2><span className="hand-note">持续更新中 ↘</span></div>
-        <div className="playing-list">{currentlyPlaying.map(([icon, title, detail], index) => <div className="playing-row" key={title}><span className="mono">0{index + 1}</span><b>{icon}</b><h3>{title}</h3><p>{detail}</p><i>↗</i></div>)}</div>
+        <div className="playing-title"><p className="eyebrow mono">Currently playing with</p><h2>最近在折腾</h2><span className="hand-note">点击进入真实记录 ↘</span></div>
+        <div className="playing-list">{currentlyPlaying.map((item, index) => <Link className="playing-row" href={item.href} key={item.title}><span className="mono">0{index + 1}</span><b aria-hidden="true">{item.icon}</b><div className="playing-row-title"><h3>{item.title}</h3><small className="mono">{item.status}</small></div><p>{item.detail}</p><i aria-hidden="true">↗</i></Link>)}</div>
       </section></Reveal>
 
       <Reveal><section className="home-picks section-shell">
