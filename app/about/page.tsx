@@ -1,14 +1,89 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { PageIntro } from '../components/page-intro';
 import { Reveal } from '../components/reveal';
 import { SiteFooter } from '../components/site-footer';
 import { SiteHeader } from '../components/site-header';
+import { tools } from '../data/content';
+import { libraryItems } from '../data/library';
+import { promptItems } from '../data/prompts';
+import { getAllNotes } from '../../lib/notes';
 
-export const metadata: Metadata = { title: 'About JING — JING AI PLAYGROUND', description: '关于荆，以及这个持续生长的 AI 创作游乐场。' };
+export const metadata: Metadata = {
+  title: 'About JING — JING AI PLAYGROUND',
+  description: '关于荆，以及这个持续生长的 AI 创作工作台。',
+};
 
 export default function AboutPage() {
-  return <main><SiteHeader active="About" /><PageIntro eyebrow="About / 荆" count="A curious human with AI" title="Hello, I’m JING." description="一个很会用 AI 做各种有意思东西的人。" />
-    <section className="about-page section-shell"><Reveal><div className="about-manifesto"><span className="mono">A small manifesto</span><p>我喜欢研究 AI 能不能把脑子里那些奇怪、有趣，或者没来得及实现的想法真正做出来。</p><p>我关心的不只是“生成了什么”，也关心一个想法怎样被写成故事、变成镜头，再被人真正看见。</p></div></Reveal>
-    <Reveal><div className="about-columns"><div><span className="mono">Now</span><h2>现在，先把第一部<br />AI 漫剧做完。</h2></div><div><span className="mono">Later</span><p>这里会慢慢长出短片、角色、Prompt 实验、工作流和小工具。它不是一份写完就不动的简历，而是一间一直亮着灯的工作室。</p></div></div></Reveal>
-    <Reveal><div className="principles"><div><span>01</span><h3>好奇比熟练更重要</h3><p>工具会变，想追着问题跑的习惯可以留下。</p></div><div><span>02</span><h3>作品比术语更诚实</h3><p>少讲“赋能”，多做一个真的能看、能玩、能用的东西。</p></div><div><span>03</span><h3>过程也值得存档</h3><p>把试错、偏差和没成功的版本也留下来。</p></div></div></Reveal></section><SiteFooter /></main>;
+  const notes = getAllNotes();
+  const answers = [
+    {
+      label: 'WHAT I MAKE',
+      title: '我做了什么',
+      copy: '从故事种子、90 秒剧本和十四镜分镜开始，搭出一支 AI 短片真正进入制作前需要的结构；同时把重复工作做成浏览器本地工具。',
+      evidence: '1 个故事制作系统 · 3 个可用工具',
+      href: '/stories/she-forgets-yesterday/',
+      action: '查看故事现场',
+      tone: 'yellow',
+    },
+    {
+      label: 'WHAT I KNOW',
+      title: '我懂什么',
+      copy: '把 Prompt、景别、运镜、失败现象和视频评测拆成可以学习、执行和复核的方法，不把复杂术语当成答案。',
+      evidence: `${notes.length} 篇方法与制作笔记`,
+      href: '/notes/',
+      action: '进入笔记路线',
+      tone: 'sky',
+    },
+    {
+      label: 'WHAT I STUDY',
+      title: '最近研究什么',
+      copy: '角色身份怎样穿过不同景别、光线、情绪和动作仍保持一致；以及真实生成开始后，应该怎样记录变量、失败和下一轮。',
+      evidence: '1 个开放实验 · 正式四十镜待开始',
+      href: '/experiments/forty-shots-one-character/',
+      action: '查看实验记录板',
+      tone: 'coral',
+    },
+    {
+      label: 'WHAT IS WORTH SEEING',
+      title: '什么值得看',
+      copy: '只保存能追溯到原始来源、能改变创作方法的文章、视频、论文和工具；编辑观点与荆已确认观点始终分开。',
+      evidence: `${libraryItems.length} 条来源已核对资源`,
+      href: '/library/',
+      action: '打开收藏路线',
+      tone: 'mint',
+    },
+  ] as const;
+
+  return (
+    <main>
+      <SiteHeader active="About" />
+      <PageIntro eyebrow="About / 荆" count="A living creative workspace" title="This is JING’s working desk." description="这里不是写完就不动的简历，而是一张持续更新的 AI 创作工作台。" />
+
+      <section className="about-page section-shell">
+        <Reveal><div className="about-manifesto"><span className="mono">Why this site exists</span><p>我想把脑子里的想法做成故事，也把它们怎样变成镜头、工具和判断的过程留下来。</p><p>完成的作品会被展示；还在制作的内容会标注状态；没有真实样本支持的判断，不会被写成结论。</p></div></Reveal>
+
+        <Reveal><section className="about-answers" aria-labelledby="about-answers-title">
+          <div className="section-title-row compact"><div><p className="eyebrow mono">Four answers / 四个回答</p><h2 id="about-answers-title">认识这个网站，<br />先看它留下什么。</h2></div><p>每张工作单都连接到已经存在的页面和可检查内容，而不是一段无法验证的自我介绍。</p></div>
+          <div className="about-answer-grid">
+            {answers.map((answer) => <article className={`about-answer-card about-answer-${answer.tone}`} key={answer.label}><span className="mono">{answer.label}</span><h3>{answer.title}</h3><p>{answer.copy}</p><div><b className="mono">Evidence / 当前证据</b><strong>{answer.evidence}</strong></div><Link href={answer.href}>{answer.action} ↗</Link></article>)}
+          </div>
+        </section></Reveal>
+
+        <Reveal><section className="about-status" aria-labelledby="about-status-title">
+          <div className="about-status-heading"><div><span className="mono">On the desk now / 当前工作台</span><h2 id="about-status-title">现在进行到哪里？</h2></div><p>状态只描述网站里已经留下的文件、结构和记录，不把计划写成完成。</p></div>
+          <div className="about-status-grid">
+            <article><span className="status-chip status-draft mono">结构已完成</span><small className="mono">STORY 001</small><h3>她每天醒来都会忘记昨天</h3><p>六段时间剧本、十四镜分镜、人物锚点和三条动作测试方案已经就位；真实视频生成、剪辑和声音仍待开始。</p><Link href="/stories/she-forgets-yesterday/#generation-pack">查看生成包 ↗</Link></article>
+            <article><span className="status-chip status-open mono">记录板开放</span><small className="mono">EXPERIMENT 001</small><h3>同一个她，四十个镜头</h3><p>变量分组、观察方法和结果记录台已经完成；正式四十镜测试尚未形成可发布的模型结论。</p><Link href="/experiments/forty-shots-one-character/#record-desk">进入记录台 ↗</Link></article>
+            <article><span className="status-chip status-source mono">来源已核对</span><small className="mono">CONTENT SYSTEM</small><h3>方法、Prompt 与收藏</h3><p>{notes.length} 篇笔记、{promptItems.length} 个 Prompt、{libraryItems.length} 条收藏和 {tools.length} 个工具已经进入网站；编辑稿与待确认观点仍保留状态标签。</p><Link href="/notes/">从笔记开始 ↗</Link></article>
+          </div>
+        </section></Reveal>
+
+        <Reveal><div className="about-boundaries"><span className="mono">Editorial boundaries / 内容边界</span><div><p>占位素材不会冒充成片。</p><p>编辑初稿不会冒充荆的观点。</p><p>单个样本不会冒充模型结论。</p><p>外部文章只保存摘要、理由和原链接。</p></div></div></Reveal>
+
+        <Reveal><div className="principles"><div><span>01</span><h3>好奇比熟练更重要</h3><p>工具会变，持续追问问题、验证结果的习惯可以留下。</p></div><div><span>02</span><h3>作品比术语更诚实</h3><p>少讲空泛概念，多完成一个真的能看、能玩、能用的东西。</p></div><div><span>03</span><h3>过程也值得存档</h3><p>把试错、偏差、条件和没成功的版本一起留下来。</p></div></div></Reveal>
+      </section>
+      <SiteFooter />
+    </main>
+  );
 }
