@@ -1059,6 +1059,77 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .experiment-check-card > span { font-weight: 700; }
 .experiment-check-card h3 { max-width: 360px; margin: auto 0 20px; font-family: var(--display); font-size: clamp(2rem,3.2vw,3.4rem); line-height: .96; }
 .experiment-check-card p { margin: 0; font-size: 13px; line-height: 1.75; }
+.experiment-record-board { width: min(100% - 56px,1420px); margin-inline: auto; padding-block: 130px; }
+.experiment-record-top { display: grid; grid-template-columns: minmax(0,1.3fr) minmax(300px,.7fr); gap: 8vw; align-items: end; }
+.experiment-record-top h2 { margin: 0; font-family: var(--display); font-size: clamp(3.5rem,6.4vw,6.6rem); font-weight: 680; line-height: .92; letter-spacing: -.055em; }
+.experiment-record-intro p { margin: 0 0 22px; color: var(--muted); font-size: 14px; line-height: 1.8; }
+.experiment-record-intro span { display: inline-flex; padding: 8px 11px; border: 1px solid var(--ink); border-radius: 99px; background: var(--mint); color: var(--blue); }
+.experiment-record-summary { display: grid; grid-template-columns: repeat(4,1fr); margin: 68px 0 26px; overflow: hidden; border: 2px solid var(--ink); border-radius: 28px; box-shadow: 8px 8px 0 var(--ink); }
+.experiment-record-summary article { min-height: 210px; display: flex; flex-direction: column; padding: 22px; border-right: 1px solid var(--ink); background: var(--white); }
+.experiment-record-summary article:nth-child(2) { background: var(--yellow); }
+.experiment-record-summary article:nth-child(3) { background: var(--mint); }
+.experiment-record-summary article:nth-child(4) { border-right: 0; background: var(--coral); }
+.experiment-record-summary span { color: var(--blue); }
+.experiment-record-summary strong { margin: auto 0 12px; font-family: var(--display); font-size: clamp(3.6rem,5vw,5.5rem); line-height: .75; }
+.experiment-record-summary strong i { margin-left: 4px; font-family: var(--mono); font-size: 10px; font-style: normal; }
+.experiment-record-summary p { margin: 0; color: var(--muted); font-size: 10px; }
+.experiment-record-workspace { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(430px,.95fr); gap: 18px; align-items: start; }
+.experiment-contact-sheet, .experiment-record-editor { border: 2px solid var(--ink); border-radius: 30px; background: var(--white); box-shadow: 7px 7px 0 var(--blue); }
+.experiment-contact-sheet { padding: 24px; }
+.experiment-record-filters { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 24px; }
+.experiment-record-filters > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.experiment-record-filters button, .experiment-record-filters select { min-height: 38px; padding: 8px 12px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--white); color: var(--ink); font: 750 9px var(--body); cursor: pointer; }
+.experiment-record-filters button.is-active { background: var(--blue); color: var(--white); }
+.experiment-record-filters label { display: flex; align-items: center; gap: 9px; }
+.experiment-record-filters label span { color: var(--blue); }
+.experiment-contact-grid { display: grid; grid-template-columns: repeat(8,1fr); gap: 7px; }
+.record-cell { position: relative; aspect-ratio: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 5px; border: 1.5px solid var(--ink); border-radius: 9px; background: var(--white); color: var(--ink); cursor: pointer; transition: opacity .2s ease, transform .2s ease, box-shadow .2s ease; }
+.record-cell.status-generated { background: var(--yellow); }
+.record-cell.status-reviewed { background: var(--mint); }
+.record-cell.is-active { z-index: 1; box-shadow: 0 0 0 3px var(--coral), 4px 4px 0 var(--ink); transform: translate(-2px,-2px); }
+.record-cell.is-muted { opacity: .16; }
+.record-cell > span { position: absolute; left: 5px; top: 4px; color: var(--blue); font-size: 6px; }
+.record-cell b { font-family: var(--display); font-size: clamp(1.2rem,2.1vw,2.1rem); line-height: .8; }
+.record-cell i { font-family: var(--mono); font-size: 7px; font-style: normal; }
+.experiment-record-legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 22px; color: var(--muted); }
+.experiment-record-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.experiment-record-legend i { width: 11px; aspect-ratio: 1; border: 1px solid var(--ink); border-radius: 3px; background: var(--white); }
+.experiment-record-legend i.status-generated { background: var(--yellow); }
+.experiment-record-legend i.status-reviewed { background: var(--mint); }
+.experiment-record-editor { overflow: hidden; box-shadow: 7px 7px 0 var(--coral); }
+.experiment-record-editor > header { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 24px; border-bottom: 2px solid var(--ink); background: var(--coral); }
+.experiment-record-editor > header > div { display: flex; align-items: end; gap: 15px; }
+.experiment-record-editor > header strong { font-family: var(--display); font-size: 5.4rem; line-height: .62; }
+.experiment-record-editor > header label { display: grid; gap: 7px; }
+.experiment-record-editor select, .experiment-record-editor input, .experiment-record-editor textarea { width: 100%; border: 1.5px solid var(--ink); outline: 0; background: var(--white); color: var(--ink); font: 650 11px/1.5 var(--body); }
+.experiment-record-editor select { min-height: 40px; padding: 8px 12px; border-radius: 99px; }
+.experiment-record-editor input { min-height: 45px; padding: 10px 12px; border-radius: 12px; }
+.experiment-record-editor textarea { min-height: 135px; padding: 13px; border-radius: 14px; resize: vertical; }
+.experiment-record-editor select:focus, .experiment-record-editor input:focus, .experiment-record-editor textarea:focus { box-shadow: 0 0 0 3px var(--blue); }
+.experiment-record-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 22px 22px 0; }
+.experiment-record-meta label, .experiment-record-note { display: grid; gap: 8px; font-size: 10px; font-weight: 750; }
+.experiment-score-fields, .experiment-failure-fields { margin: 22px; padding: 20px 0 0; border: 0; border-top: 1px solid var(--ink); }
+.experiment-score-fields legend, .experiment-failure-fields legend { padding: 0 10px 0 0; color: var(--blue); }
+.experiment-score-row { display: grid; grid-template-columns: minmax(130px,1fr) auto; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.experiment-score-row > div:first-child { display: grid; gap: 4px; }
+.experiment-score-row small { color: var(--muted); font-size: 8px; }
+.experiment-score-row > div:last-child { display: flex; gap: 4px; }
+.experiment-score-row button { width: 29px; aspect-ratio: 1; border: 1px solid var(--ink); border-radius: 50%; background: var(--white); color: var(--ink); font: 700 9px var(--mono); cursor: pointer; }
+.experiment-score-row button.is-active { background: var(--blue); color: var(--white); }
+.experiment-failure-fields > div { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+.experiment-failure-fields button { padding: 8px 10px; border: 1px solid var(--ink); border-radius: 99px; background: var(--white); color: var(--ink); font: 700 9px var(--body); cursor: pointer; }
+.experiment-failure-fields button.is-active { background: var(--yellow); box-shadow: 2px 2px 0 var(--ink); }
+.experiment-record-note { margin: 0 22px 24px; }
+.experiment-record-export { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 25px 40px; align-items: end; margin-top: 26px; padding: 30px; border: 2px solid var(--ink); border-radius: 26px; background: var(--sky); box-shadow: 7px 7px 0 var(--ink); }
+.experiment-record-export > div:first-child { display: grid; gap: 12px; }
+.experiment-record-export > div:first-child span { color: var(--blue); }
+.experiment-record-export > div:first-child strong { font-family: var(--display); font-size: clamp(1.8rem,3vw,3rem); line-height: 1; }
+.experiment-record-export > div:first-child p { max-width: 700px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.experiment-export-actions { display: flex; flex-direction: column; gap: 8px; }
+.experiment-export-actions button { min-width: 210px; padding: 12px 15px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--yellow); color: var(--ink); font: 750 10px var(--body); box-shadow: 4px 4px 0 var(--ink); cursor: pointer; }
+.experiment-export-actions .experiment-reset-button { background: var(--white); box-shadow: none; }
+.experiment-record-export > textarea { grid-column: 1/-1; width: 100%; min-height: 250px; padding: 16px; border: 2px solid var(--ink); border-radius: 15px; outline: 0; background: var(--white); font: 500 10px/1.65 var(--mono); resize: vertical; }
+.experiment-record-filters button:focus-visible, .record-cell:focus-visible, .experiment-score-row button:focus-visible, .experiment-failure-fields button:focus-visible, .experiment-export-actions button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
 .experiment-next { padding-block: 130px; }
 .experiment-next-title { display: grid; grid-template-columns: 130px 90px 1fr; align-items: end; gap: 15px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }
 .experiment-next-title span { color: var(--blue); font-weight: 700; }
@@ -1083,10 +1154,12 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .experiment-sample-card { grid-template-columns: 1fr; }
   .experiment-sample-visual { min-height: 320px; border-right: 0; border-bottom: 2px solid var(--ink); }
   .experiment-sample-copy { min-height: 300px; }
+  .experiment-record-workspace { grid-template-columns: 1fr; }
+  .experiment-contact-grid { grid-template-columns: repeat(10,1fr); }
 }
 
 @media (max-width: 760px) {
-  .experiment-detail-hero, .experiment-demo-notice, .experiment-section-inner, .experiment-detail-back { width: min(100% - 32px,1420px); }
+  .experiment-detail-hero, .experiment-demo-notice, .experiment-section-inner, .experiment-detail-back, .experiment-record-board { width: min(100% - 32px,1420px); }
   .experiment-detail-hero { padding: 34px 0 68px; }
   .experiment-detail-rail { align-items: flex-start; flex-direction: column; gap: 12px; }
   .experiment-detail-hero-grid { grid-template-columns: 1fr; padding-top: 50px; }
@@ -1101,7 +1174,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .experiment-question { padding-block: 90px; }
   .experiment-question h2 { font-size: clamp(3rem,14vw,4.7rem); }
   .experiment-hypothesis { gap: 18px; margin-top: 65px; }
-  .experiment-section-inner, .experiment-samples, .experiment-next { padding-block: 90px; }
+  .experiment-section-inner, .experiment-samples, .experiment-record-board, .experiment-next { padding-block: 90px; }
   .experiment-section-heading { grid-template-columns: 1fr; gap: 30px; margin-bottom: 52px; }
   .experiment-section-heading h2 { font-size: clamp(3rem,14vw,4.8rem); }
   .experiment-reference-card { grid-template-columns: 1fr; }
@@ -1112,6 +1185,25 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .experiment-sample-card { grid-template-columns: 1fr; }
   .experiment-sample-visual { min-height: 330px; }
   .experiment-check-card { min-height: 320px; }
+  .experiment-record-top { grid-template-columns: 1fr; gap: 30px; }
+  .experiment-record-top h2 { font-size: clamp(3rem,14vw,4.8rem); }
+  .experiment-record-summary { grid-template-columns: 1fr 1fr; }
+  .experiment-record-summary article { min-height: 170px; }
+  .experiment-record-summary article:nth-child(2) { border-right: 0; }
+  .experiment-record-summary article:nth-child(-n+2) { border-bottom: 1px solid var(--ink); }
+  .experiment-contact-sheet { padding: 16px; }
+  .experiment-record-filters { align-items: flex-start; flex-direction: column; }
+  .experiment-contact-grid { grid-template-columns: repeat(5,1fr); gap: 6px; }
+  .record-cell b { font-size: 1.75rem; }
+  .experiment-record-editor > header { align-items: flex-start; }
+  .experiment-record-editor > header strong { font-size: 4.6rem; }
+  .experiment-record-meta { grid-template-columns: 1fr; }
+  .experiment-score-row { grid-template-columns: 1fr; }
+  .experiment-score-row > div:last-child { justify-content: space-between; }
+  .experiment-score-row button { width: 36px; }
+  .experiment-record-export { grid-template-columns: 1fr; padding: 22px; }
+  .experiment-export-actions button { width: 100%; min-width: 0; }
+  .experiment-record-export > textarea { grid-column: auto; }
   .experiment-next-title { grid-template-columns: 1fr auto; }
   .experiment-next-title strong { grid-column: 2; grid-row: 1; }
   .experiment-next-title h2 { grid-column: 1/-1; margin-top: 20px; font-size: clamp(3.7rem,18vw,5.7rem); }

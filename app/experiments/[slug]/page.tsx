@@ -5,6 +5,7 @@ import experimentPilotSamples from '../../assets/generated/forty-shots-pilot-sam
 import characterAnchor from '../../assets/generated/she-forgets-yesterday-character-anchor.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
+import { ExperimentRecordBoard } from '../../components/experiment-record-board';
 import { experimentDetails, getExperimentBySlug } from '../../data/experiments';
 
 export const dynamicParams = false;
@@ -144,6 +145,8 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
           </div>
         </div>
       </section>
+
+      <ExperimentRecordBoard />
 
       <section className="experiment-next section-shell">
         <div className="experiment-next-title"><span className="mono">NEXT RUN</span><strong>→</strong><h2>下一轮怎么做</h2></div>
