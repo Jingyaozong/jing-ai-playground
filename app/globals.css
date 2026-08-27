@@ -736,6 +736,30 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .prompt-card-bottom button:focus-visible, .filter-row button:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
 
 /* Library */
+.library-routes { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); }
+.library-route-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 17px; align-items: start; padding-top: 22px; }
+.library-route-card { position: relative; min-width: 0; padding: 36px 25px 25px; border: 2px solid var(--ink); border-radius: 15px 30px 30px 30px; box-shadow: 8px 8px 0 var(--ink); }
+.library-route-card:nth-child(2) { margin-top: 55px; }
+.library-route-card:nth-child(3) { margin-top: 22px; }
+.library-route-yellow { background: var(--yellow); }
+.library-route-mint { background: var(--mint); }
+.library-route-coral { background: var(--coral); }
+.library-route-tab { position: absolute; left: -2px; bottom: calc(100% - 16px); min-width: 150px; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 2px 15px; padding: 10px 14px 8px; border: 2px solid var(--ink); border-bottom: 0; border-radius: 16px 16px 0 0; background: inherit; }
+.library-route-tab > span { color: var(--blue); font-weight: 700; }
+.library-route-tab b { grid-row: 1/3; grid-column: 2; font-family: var(--display); font-size: 2.15rem; line-height: .8; }
+.library-route-tab small { font-size: 7px; }
+.library-route-card > .mono { min-height: 25px; margin: 18px 0 12px; color: var(--blue); line-height: 1.55; }
+.library-route-card h3 { margin: 0 0 17px; font-family: var(--display); font-size: clamp(2.45rem,3.4vw,4rem); font-weight: 720; line-height: .94; letter-spacing: -.04em; }
+.library-route-card > p:not(.mono) { min-height: 68px; margin: 0 0 32px; color: var(--muted); font-size: 12px; line-height: 1.65; }
+.library-route-card ol { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.library-route-card li { display: grid; grid-template-columns: 30px minmax(0,1fr); gap: 8px; align-items: start; }
+.library-route-card li > span { padding-top: 15px; color: var(--blue); font-weight: 700; }
+.library-route-card li a { min-width: 0; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 5px 10px; padding: 13px 14px; border: 1.5px solid var(--ink); border-radius: 14px; background: rgba(255,255,255,.76); transition: transform .2s ease, background .2s ease; }
+.library-route-card li a:hover { transform: translateX(4px); background: var(--white); }
+.library-route-card li a:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.library-route-card li small { grid-column: 1/-1; overflow: hidden; color: var(--blue); font-size: 6.5px; text-overflow: ellipsis; white-space: nowrap; }
+.library-route-card li strong { min-width: 0; font-family: var(--display); font-size: .98rem; line-height: 1.16; }
+.library-route-card li i { color: var(--blue); font-size: 8px; font-style: normal; font-weight: 750; white-space: nowrap; }
 .library-shelf-grid { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; }
 .library-shelf { grid-column: span 3; min-height: 310px; }
 .library-shelf:nth-child(3), .library-shelf:nth-child(4) { grid-column: span 2; }
@@ -926,6 +950,11 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .article-video i { grid-column: 2; }
   .related-note-grid, .library-grid, .home-picks-grid { grid-template-columns: 1fr; }
   .featured-library > .library-card .library-cover { min-height: 390px; }
+  .library-route-grid { grid-template-columns: 1fr; gap: 58px; }
+  .library-route-card, .library-route-card:nth-child(2), .library-route-card:nth-child(3) { margin-top: 0; padding: 30px 20px 21px; border-radius: 14px 24px 24px 24px; box-shadow: 6px 6px 0 var(--ink); }
+  .library-route-card h3 { font-size: 2.55rem; }
+  .library-route-card > p:not(.mono) { min-height: 0; }
+  .library-route-tab { min-width: 138px; }
   .prompt-entry-card { grid-template-columns: 1fr; min-height: 0; }
   .prompt-entry-card > div { min-height: 470px; }
   .prompt-entry-brace { min-height: 230px; border-top: 2px solid var(--ink); border-left: 0; }

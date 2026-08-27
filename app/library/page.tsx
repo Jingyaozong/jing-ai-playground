@@ -18,6 +18,33 @@ const shelves = [
   ['TOOLS', '工具', '不是工具墙，只留下真正可能会用的东西。', 'mint'],
 ];
 
+const libraryRoutes = [
+  {
+    id: 'WATCH',
+    title: '先看懂 AI 视频',
+    question: '它现在能做什么，边界又在哪里？',
+    description: '先看官方示例和短教程，建立对生成画面、角色一致性与提示结构的直观认识。',
+    tone: 'yellow',
+    resourceIds: ['runway-gen4-intro-video', 'openai-sora-examples', 'kling-character-consistency-bilibili', 'adobe-structuring-video-prompts'],
+  },
+  {
+    id: 'MAKE',
+    title: '开始搭制作流程',
+    question: '怎样从清楚的任务走到可运行工作流？',
+    description: '先定义成功标准，再进入视频 Prompt 与节点工作流；不从巨大模板或复杂技巧开始。',
+    tone: 'mint',
+    resourceIds: ['openai-prompt-engineering-best-practices', 'anthropic-prompt-engineering-overview', 'google-veo-prompt-guide', 'runway-gen4-prompt-guide', 'comfyui-official-docs'],
+  },
+  {
+    id: 'EVALUATE',
+    title: '学会评估输出',
+    question: '“视频好不好”怎样变成可以解释的判断？',
+    description: '从评测维度、标准提示集到开源工具，对照三套一手资料建立自己的验收表。',
+    tone: 'coral',
+    resourceIds: ['vbench-cvpr-paper', 'vbench-open-source-toolkit', 'evalcrafter-cvpr-paper'],
+  },
+] as const;
+
 export default function LibraryPage() {
   const featured = libraryItems.find((item) => item.featured) ?? libraryItems[0];
   return (
@@ -28,6 +55,27 @@ export default function LibraryPage() {
         <div className="library-title-lockup"><h1>LIBRARY</h1><span className="library-pick-stamp">荆选<br />JING PICKS</span></div>
         <div className="notes-hero-bottom"><p>不是把链接堆在一起，<br />而是留下我为什么觉得它值得看。</p><span className="mono">Articles / Videos / Papers / Tools</span></div>
       </section>
+
+      <Reveal><section className="library-routes section-shell" aria-labelledby="library-routes-title">
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Choose by purpose / 按用途开始</p><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条路线只依据资源内容和官方用途编排，不代表 JING&apos;S TAKE 已经确认。需要查单项时，仍可使用下方搜索与筛选。</p></div>
+        <div className="library-route-grid">
+          {libraryRoutes.map((route) => (
+            <article className={`library-route-card library-route-${route.tone}`} key={route.id}>
+              <div className="library-route-tab"><span className="mono">{route.id}</span><b>{String(route.resourceIds.length).padStart(2, '0')}</b><small className="mono">resources</small></div>
+              <p className="mono">{route.question}</p>
+              <h3>{route.title}</h3>
+              <p>{route.description}</p>
+              <ol>
+                {route.resourceIds.map((resourceId, index) => {
+                  const item = libraryItems.find((candidate) => candidate.id === resourceId);
+                  if (!item) return null;
+                  return <li key={item.id}><span className="mono">{String(index + 1).padStart(2, '0')}</span><a href={item.url} target="_blank" rel="noreferrer"><small className="mono">{item.type} · {item.source}</small><strong>{item.title}</strong><i>原内容 ↗</i></a></li>;
+                })}
+              </ol>
+            </article>
+          ))}
+        </div>
+      </section></Reveal>
 
       <Reveal><section className="featured-library section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">This week&apos;s candidate / 本周候选</p><h2>先看一个可能<br />值得花时间的内容。</h2></div><p>我先核对来源并写出推荐理由；等你确认判断后，它才会成为正式“荆选”。</p></div><LibraryCard item={featured} /></section></Reveal>
 
