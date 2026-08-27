@@ -14,7 +14,7 @@ editorialStatus: "source-backed"
 sourceTitle: "VBench / EvalCrafter / VBench 2.0 / T2V-CompBench"
 sourceUrl: "https://github.com/Vchitect/VBench"
 sourceNote: "事实部分依据原始论文、CVPR 页面与官方代码仓库核对；实用评测流程是本站面向创作者的编辑转译，不包含模型排名，也不冒充荆已经确认的个人观点。"
-relatedNotes: ["video-failure-cases", "ninety-second-storyboard", "video-vs-image-prompt"]
+relatedNotes: ["draft-pilot-conclusion", "video-failure-cases", "ninety-second-storyboard"]
 connections:
   - label: "EXPERIMENT"
     title: "同一个她，四十个镜头"
