@@ -13,6 +13,45 @@ export const metadata: Metadata = {
   description: '关于 AI、创作、评测，以及荆最近学到的东西。',
 };
 
+const readingPaths = [
+  {
+    id: 'A',
+    label: 'BUILD THE FRAME',
+    title: '先学会控制画面',
+    description: '从一张参考图开始，依次理解画面描述、人物景别和摄影机运动。',
+    tone: 'yellow',
+    steps: [
+      { title: 'AI 图片 Prompt，到底写什么？', href: '/notes/image-prompt-guide/', meta: '画面元素' },
+      { title: 'AI 视频景别：人物该占多大？', href: '/notes/shot-size-guide/', meta: '人物边界' },
+      { title: '镜头为什么会乱跑？', href: '/notes/camera-movement-guide/', meta: '摄影机运动' },
+    ],
+  },
+  {
+    id: 'B',
+    label: 'READ THE RESULT',
+    title: '再学会诊断视频',
+    description: '先分清生成方式，再识别失败现象，最后建立可以复核的评测流程。',
+    tone: 'sky',
+    steps: [
+      { title: '图生视频和文生视频，差在哪？', href: '/notes/video-vs-image-prompt/', meta: '选择入口' },
+      { title: 'AI 视频翻车词典', href: '/notes/video-failure-cases/', meta: '描述问题' },
+      { title: 'AI 视频到底应该怎么评？', href: '/notes/ai-video-evaluation/', meta: '形成判断' },
+    ],
+  },
+  {
+    id: 'C',
+    label: 'MAKE THE STORY',
+    title: '把方法带进一支作品',
+    description: '从 90 秒时间结构进入完整制作路线，最后抵达已经准备好的故事生成包。',
+    tone: 'coral',
+    steps: [
+      { title: '把 90 秒故事拆成 14 镜', href: '/notes/ninety-second-storyboard/', meta: '拆分故事' },
+      { title: '第一支 AI 漫剧，怎么做？', href: '/notes/making-first-ai-comic/', meta: '串起流程' },
+      { title: '进入「她忘记昨天」生成包', href: '/stories/she-forgets-yesterday/#generation-pack', meta: '开始制作' },
+    ],
+  },
+] as const;
+
 export default function NotesPage() {
   const notes = getAllNotes();
   const featured = notes.find((note) => note.featured) ?? notes[0];
@@ -26,6 +65,27 @@ export default function NotesPage() {
         <div className="notes-title-lockup"><h1>NOTES</h1><span className="notes-title-sticker">学到的<br />先记下来</span></div>
         <div className="notes-hero-bottom"><p>关于 AI、创作、评测，<br />以及我最近学到的东西。</p><span className="mono">Thoughts / Tips / Experiments / AI</span></div>
       </section>
+
+      <Reveal><section className="reading-paths section-shell" aria-labelledby="reading-paths-title">
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Start here / 从这里开始</p><h2 id="reading-paths-title">不用全部看完，<br />先选一条路。</h2></div><p>九篇笔记已经可以组成三种入口。按顺序阅读，也可以从你眼下最需要解决的问题开始。</p></div>
+        <div className="reading-path-grid">
+          {readingPaths.map((path) => (
+            <article className={`reading-path-card path-${path.tone}`} key={path.id}>
+              <div className="reading-path-heading"><span className="reading-path-letter mono">PATH {path.id}</span><span className="mono">{path.label}</span></div>
+              <h3>{path.title}</h3>
+              <p>{path.description}</p>
+              <ol>
+                {path.steps.map((step, index) => (
+                  <li key={step.href}>
+                    <span className="reading-step-number mono">{String(index + 1).padStart(2, '0')}</span>
+                    <Link href={step.href}><small className="mono">{step.meta}</small><strong>{step.title}</strong><i>阅读 ↗</i></Link>
+                  </li>
+                ))}
+              </ol>
+            </article>
+          ))}
+        </div>
+      </section></Reveal>
 
       <Reveal><section className="featured-note section-shell">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Featured note / 重点笔记</p><h2>先从一个真正<br />需要判断的问题开始。</h2></div><p>不是给模型打一个笼统的“好看分”，而是建立可以解释、可以复用的评测框架。</p></div>

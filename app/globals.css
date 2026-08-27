@@ -446,6 +446,35 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .notes-hero-bottom > p { max-width: 610px; margin: 0; font-family: var(--display); font-size: clamp(1.5rem,3vw,2.9rem); font-weight: 620; line-height: 1.12; }
 .notes-hero-bottom > span { color: var(--muted); }
 
+.reading-paths { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--line); }
+.reading-path-grid { display: grid; grid-template-columns: repeat(12,1fr); gap: 16px; align-items: stretch; }
+.reading-path-card { grid-column: span 6; display: flex; flex-direction: column; min-height: 610px; padding: clamp(24px,3vw,38px); overflow: hidden; border: 2px solid var(--ink); border-radius: 30px; box-shadow: 8px 8px 0 var(--ink); }
+.reading-path-card:nth-child(3) { grid-column: 2/span 10; min-height: 0; }
+.path-yellow { background: var(--yellow); }
+.path-sky { background: var(--sky); }
+.path-coral { background: var(--coral); }
+.reading-path-heading { display: flex; align-items: center; justify-content: space-between; gap: 18px; color: var(--blue); }
+.reading-path-letter { padding: 8px 11px; border: 2px solid var(--ink); border-radius: 99px; background: var(--white); color: var(--ink); }
+.reading-path-card h3 { max-width: 580px; margin: 65px 0 14px; font-family: var(--display); font-size: clamp(2.5rem,4.3vw,4.8rem); font-weight: 720; line-height: .94; letter-spacing: -.045em; }
+.reading-path-card > p { max-width: 610px; margin: 0 0 44px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.reading-path-card ol { position: relative; display: grid; gap: 0; margin: auto 0 0; padding: 0; list-style: none; }
+.reading-path-card ol::before { content: ''; position: absolute; z-index: 0; left: 17px; top: 18px; bottom: 18px; border-left: 2px dashed var(--ink); }
+.reading-path-card li { position: relative; z-index: 1; display: grid; grid-template-columns: 36px minmax(0,1fr); gap: 13px; align-items: stretch; }
+.reading-step-number { width: 36px; height: 36px; display: grid; place-items: center; align-self: center; border: 2px solid var(--ink); border-radius: 50%; background: var(--white); color: var(--blue); font-weight: 700; }
+.reading-path-card li + li { margin-top: 10px; }
+.reading-path-card li a { min-width: 0; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 5px 14px; padding: 14px 16px; border: 1.5px solid var(--ink); border-radius: 17px; background: rgba(255,255,255,.72); transition: transform .2s ease, background .2s ease; }
+.reading-path-card li a:hover { transform: translateX(5px); background: var(--white); }
+.reading-path-card li a:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.reading-path-card li small { grid-column: 1/-1; color: var(--blue); font-size: 7px; }
+.reading-path-card li strong { min-width: 0; font-family: var(--display); font-size: 1.08rem; line-height: 1.15; }
+.reading-path-card li i { color: var(--blue); font-size: 9px; font-style: normal; font-weight: 750; white-space: nowrap; }
+.reading-path-card:nth-child(3) ol { grid-template-columns: repeat(3,1fr); gap: 34px; }
+.reading-path-card:nth-child(3) ol::before { left: 9%; right: 9%; top: 17px; bottom: auto; border-top: 2px dashed var(--ink); border-left: 0; }
+.reading-path-card:nth-child(3) li { grid-template-columns: 1fr; grid-template-rows: 36px 1fr; gap: 12px; }
+.reading-path-card:nth-child(3) li + li { margin-top: 0; }
+.reading-path-card:nth-child(3) .reading-step-number { justify-self: center; }
+.reading-path-card:nth-child(3) li a { align-content: end; min-height: 118px; }
+
 .featured-note { border-bottom: 1px solid var(--line); }
 .featured-note-card { display: grid; grid-template-columns: 1.18fr .82fr; min-height: 570px; overflow: hidden; border: 2px solid var(--ink); border-radius: 34px; background: var(--yellow); box-shadow: 10px 10px 0 var(--ink); transition: transform .25s ease, box-shadow .25s ease; }
 .featured-note-card:hover { transform: translate(-2px,-2px); box-shadow: 13px 13px 0 var(--ink); }
@@ -862,6 +891,16 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .notes-title-sticker, .library-pick-stamp { width: 84px; right: 0; bottom: 8%; font-size: .72rem; box-shadow: 4px 4px 0 var(--ink); }
   .notes-hero-bottom { align-items: flex-start; flex-direction: column; }
   .notes-hero-bottom > p { font-size: 1.45rem; }
+  .reading-path-grid { grid-template-columns: 1fr; }
+  .reading-path-card, .reading-path-card:nth-child(3) { grid-column: auto; min-height: 0; padding: 24px; border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); }
+  .reading-path-card h3 { margin-top: 48px; font-size: 2.35rem; }
+  .reading-path-card > p { margin-bottom: 35px; }
+  .reading-path-card:nth-child(3) ol { grid-template-columns: 1fr; gap: 0; }
+  .reading-path-card:nth-child(3) ol::before { left: 17px; right: auto; top: 18px; bottom: 18px; border-top: 0; border-left: 2px dashed var(--ink); }
+  .reading-path-card:nth-child(3) li { grid-template-columns: 36px minmax(0,1fr); grid-template-rows: auto; gap: 13px; }
+  .reading-path-card:nth-child(3) li + li { margin-top: 10px; }
+  .reading-path-card:nth-child(3) .reading-step-number { justify-self: auto; }
+  .reading-path-card:nth-child(3) li a { min-height: 0; }
   .featured-note-card, .featured-library > .library-card { grid-template-columns: 1fr; }
   .featured-note-card .note-visual, .featured-library > .library-card .library-cover { min-height: 360px; height: auto; border-right: 0; border-bottom: 2px solid var(--ink); }
   .featured-note-copy { min-height: 430px; }
