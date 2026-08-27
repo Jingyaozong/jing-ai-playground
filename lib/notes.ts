@@ -16,7 +16,7 @@ export type NoteMeta = {
   tags: string[];
   readingTime: string;
   demo: boolean;
-  editorialStatus: 'draft' | 'published';
+  editorialStatus: 'draft' | 'source-backed' | 'published';
   sourceTitle?: string;
   sourceUrl?: string;
   sourceNote?: string;
@@ -52,7 +52,7 @@ function parseNote(filename: string): NoteDocument {
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     readingTime: String(data.readingTime ?? '5 分钟'),
     demo: data.demo !== false,
-    editorialStatus: data.editorialStatus === 'draft' ? 'draft' : 'published',
+    editorialStatus: data.editorialStatus === 'draft' ? 'draft' : data.editorialStatus === 'source-backed' ? 'source-backed' : 'published',
     sourceTitle: data.sourceTitle ? String(data.sourceTitle) : undefined,
     sourceUrl: data.sourceUrl ? String(data.sourceUrl) : undefined,
     sourceNote: data.sourceNote ? String(data.sourceNote) : undefined,

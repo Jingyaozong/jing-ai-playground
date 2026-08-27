@@ -3,148 +3,189 @@ title: "AI 视频到底应该怎么评？"
 slug: "ai-video-evaluation"
 category: "AI EVAL"
 issue: "001"
-date: "2026-08-25"
-description: "把“好不好看”拆成六个可以检查、解释和复盘的评测层级。"
+date: "2026-08-27"
+description: "从四套公开评测基准出发，把 AI 视频判断整理成可执行的验收、观察、标记与复盘流程。"
 cover: "eval-blue"
 featured: true
-tags: ["AI VIDEO", "EVALUATION", "AIGC"]
-readingTime: "12 分钟"
+tags: ["AI VIDEO", "EVALUATION", "VBench", "WORKFLOW"]
+readingTime: "16 分钟"
 demo: false
-editorialStatus: "draft"
-sourceTitle: "VBench / EvalCrafter / 官方提示指南"
-sourceUrl: "https://openaccess.thecvf.com/content/CVPR2024/papers/Huang_VBench_Comprehensive_Benchmark_Suite_for_Video_Generative_Models_CVPR_2024_paper.pdf"
-sourceNote: "本文是基于公开研究和官方指南形成的编辑整理稿。六层框架与权重是本站草案，等待荆结合真实项目经验确认。"
-relatedNotes: ["video-failure-cases", "shot-size-guide", "video-vs-image-prompt"]
+editorialStatus: "source-backed"
+sourceTitle: "VBench / EvalCrafter / VBench 2.0 / T2V-CompBench"
+sourceUrl: "https://github.com/Vchitect/VBench"
+sourceNote: "事实部分依据原始论文、CVPR 页面与官方代码仓库核对；实用评测流程是本站面向创作者的编辑转译，不包含模型排名，也不冒充荆已经确认的个人观点。"
+relatedNotes: ["video-failure-cases", "ninety-second-storyboard", "video-vs-image-prompt"]
+connections:
+  - label: "EXPERIMENT"
+    title: "同一个她，四十个镜头"
+    description: "进入可填写的四十镜记录板，用真实样本验证身份、动作、物理与镜头表现。"
+    href: "/experiments/forty-shots-one-character/#record-desk"
+    tone: "yellow"
+  - label: "TOOL"
+    title: "分镜整理器"
+    description: "生成前先把景别、时长、动作、运镜和声音整理成可验收的镜头要求。"
+    href: "/tools/shot-list-cleaner/"
+    tone: "mint"
+  - label: "GLOSSARY"
+    title: "AI 视频翻车词典"
+    description: "不知道问题叫什么时，从身份漂移、闪烁、物理穿帮等失败类型继续排查。"
+    href: "/notes/video-failure-cases/"
+    tone: "coral"
 ---
 
-评 AI 视频，最容易掉进两个极端：一种只看“第一眼漂不漂亮”，另一种把所有问题压成一个总分。前者会忽略人物漂移、动作断裂和 Prompt 没完成；后者虽然方便排序，却很难告诉创作者下一步应该改什么。
+评 AI 视频，先别问“好不好看”。先问两件事：**它有没有完成这次生成任务？它在哪一层开始失去可信度？**
 
-[VBench](https://openaccess.thecvf.com/content/CVPR2024/papers/Huang_VBench_Comprehensive_Benchmark_Suite_for_Video_Generative_Models_CVPR_2024_paper.pdf) 把评测分成 **视频本身的质量** 与 **视频对生成条件的遵循** 两个大方向，再拆成 16 个维度。[EvalCrafter](https://openaccess.thecvf.com/content/CVPR2024/papers/Liu_EvalCrafter_Benchmarking_and_Evaluating_Large_Video_Generation_Models_CVPR_2024_paper.pdf) 也强调视觉、内容、运动和文图一致性不能只靠单一指标概括。
+一个漂亮的错误答案仍然是错误答案；一个技术上干净、但无法用于当前镜头的结果，也不等于可交付素材。可靠的评测需要把 Prompt 遵循、时间连续性、物理合理性和实际用途分开记录。
 
 > [!KEY POINT]
-> 先判断视频有没有完成任务，再判断它完成得漂不漂亮；最后一定要说明问题出现在哪一层。
+> 先设验收门槛，再做分层评分。致命问题单独标记，不允许被其他维度的高分抵消。
 
-## 评测之前：先写清楚“这条视频要完成什么”
+## 四套公开基准，分别在回答什么
 
-没有验收目标，就没有可靠的评测。开始播放之前，先把 Prompt 和制作需求拆成可检查项目。
+公开 Benchmark 不是一张万能评分表。它们选择的测试对象、Prompt 集与自动指标不同，适合回答的问题也不同。
 
-[Google 的 Veo 提示指南](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/video-gen-prompt-guide?hl=zh-CN) 建议从主体、动作、场景、摄影机、光线和风格等组成部分理解视频提示；[Runway 的 Gen-4 指南](https://help.runwayml.com/hc/en-us/articles/39789879462419-Gen-4-Video-Prompting-Guide) 则提醒图生视频时让输入图承担外观信息，让文字更集中地描述运动。
-
-```prompt
-近景。一名短发女性站在雨后的公交站，先看向道路尽头，
-然后缓慢回头看向镜头。摄影机轻微向前推进，清晨自然光。
-```
-
-把这条 Prompt 拆开，可以得到五个验收点：
-
-1. 主体仍然是同一名短发女性；
-2. 场景是雨后的公交站；
-3. 先看道路尽头，再回头看镜头；
-4. 摄影机发生轻微推进；
-5. 光线呈现清晨的自然感。
-
-如果“回头”是这条视频的核心动作，而结果里完全没有发生，那么即使画面漂亮，也不能算任务完成。
-
-## 六层评测框架
-
-### 01 任务完成度
-
-逐项核对主体、动作、场景、镜头、时长、画幅、风格和声音要求。这里评的是 **有没有按要求生成**，不是审美偏好。
-
-| 检查项 | 可以问的问题 | 常见失败 |
+| 基准 | 公开设计 | 更适合回答 |
 | --- | --- | --- |
-| 主体与数量 | 人物、物体和数量是否正确？ | 少人、多物、主体变成另一类 |
-| 动作与顺序 | 动作发生了吗？先后顺序正确吗？ | 漏动作、反向、动作同时发生 |
-| 场景与属性 | 地点、时间、天气、颜色是否匹配？ | 场景混合、属性丢失 |
-| 镜头要求 | 景别、机位和运镜是否实现？ | 人物在动，但摄影机没有动 |
+| [VBench（CVPR 2024）](https://openaccess.thecvf.com/content/CVPR2024/papers/Huang_VBench_Comprehensive_Benchmark_Suite_for_Video_Generative_Models_CVPR_2024_paper.pdf) | 将视频质量拆为 16 个维度，分为视频本身质量与生成条件一致性两大方向，并逐维度做人工偏好对齐 | 一个模型在哪些基础能力上稳定，短板具体是什么 |
+| [EvalCrafter（CVPR 2024）](https://openaccess.thecvf.com/content/CVPR2024/html/Liu_EvalCrafter_Benchmarking_and_Evaluating_Large_Video_Generation_Models_CVPR_2024_paper.html) | 使用 700 条 Prompt、17 个客观指标，覆盖视觉、内容、运动与文图一致性，再用用户意见拟合汇总方式 | 多种客观指标怎样更接近人的整体判断 |
+| [VBench 2.0（2025）](https://arxiv.org/abs/2503.21755) | 从表层可信度继续扩展到人体、可控性、创造性、物理与常识五大方向，共 18 个细分能力 | 视频看起来真实之外，发生的事情是否真正说得通 |
+| [T2V-CompBench（CVPR 2025）](https://openaccess.thecvf.com/content/CVPR2025/html/Sun_T2V-CompBench_A_Comprehensive_Benchmark_for_Compositional_Text-to-video_Generation_CVPR_2025_paper.html) | 使用 1,400 条 Prompt 检查属性、数量、空间关系、动作绑定、物体互动等七类组合能力 | Prompt 中有多个对象、属性和动作时，模型有没有正确绑定 |
 
-> [!BAD CASE]
-> 不要因为结果“意外地很好看”，就忽略它没有完成核心指令。意外结果可以收藏，但不能冒充 Prompt 遵循。
-
-### 02 主体与世界一致性
-
-视频需要让主体和环境在时间里持续成立。人物一致性不只是“脸差不多”，还包括发型、服装、配饰、体型，以及遮挡之后能否恢复成同一个人。
-
-- 人物身份有没有漂移；
-- 衣服、道具、文字和背景结构有没有无故变化；
-- 同一个物体被遮挡后重新出现时，形状和位置是否合理；
-- 多镜头内容里，角色关系和空间方向是否延续。
-
-### 03 时间、运动与连续性
-
-图片只需要一个瞬间成立，视频必须在一段时间里持续成立。重点观察：
-
-- 是否出现闪烁、跳帧或纹理沸腾；
-- 运动速度是否忽快忽慢；
-- 动作的起点、过程和终点是否完整；
-- 主体运动与摄影机运动能否区分；
-- 镜头切换或遮挡有没有造成身份、位置突变。
+VBench 明确反对只用一个总分掩盖模型的长处与短板；EvalCrafter 也发现，直接平均多个指标不如经过人类意见对齐的汇总方式。对创作者来说，这给出一个很实用的原则：**保留分项结果，比急着排出总名次更重要。**
 
 > [!TIP]
-> 第一遍按正常速度看整体，第二遍只看主体和动作，第三遍再检查背景边缘、手部和遮挡处。不要一开始就逐帧找瑕疵，否则容易失去对整体运动的判断。
+> Benchmark 比较的是规定协议下的模型能力；制作验收判断的是一条素材能否完成当前任务。两者可以借用同一套维度，但不能把公开榜单分数直接当成项目结论。
 
-### 04 物理、人体与常识
+## 第一步：生成之前，先写验收合同
 
-[VBench 2.0](https://arxiv.org/abs/2503.21755) 把评测继续推进到“内在可信度”，覆盖人体、可控性、创造性、物理和常识等方向。也就是说，画面看起来连贯还不够，它发生的事情还要说得通。
+没有事先写清楚的目标，评测很容易变成“结果出来以后再解释”。每条测试至少固定以下信息：
 
-需要重点检查：
+| 项目 | 必须记录什么 |
+| --- | --- |
+| 输入条件 | 文生视频、图生视频、首尾帧、参考角色或其他控制方式 |
+| 模型条件 | 模型与版本、生成日期、时长、画幅、分辨率和可见参数 |
+| 核心任务 | 这条视频最重要、不能漏掉的一个动作或叙事变化 |
+| 身份锚点 | 必须持续保留的人物、服装、配饰或物体特征 |
+| 镜头要求 | 景别、机位、摄影机运动以及主体运动 |
+| 允许偏差 | 哪些细节可以变化，哪些变化会让镜头直接不可用 |
 
-- 关节、手指、步态和重心是否合理；
-- 重力、碰撞、惯性、液体和布料反应是否可信；
-- 前因与后果能否连接；
-- 人物是否在没有触碰的情况下操纵物体；
-- 影子、反射、遮挡关系有没有违反空间逻辑。
+例如，“短发女性在雨后公交站缓慢回头，摄影机轻微推进”至少包含五个可检查项：人物身份、场景、回头动作、动作速度和摄影机推进。只有先拆出这些项目，才能判断失败来自 Prompt、模型还是测试设计。
 
-### 05 画面、声音与技术质量
-
-这一层关注视频作为成品是否能够被使用：清晰度、压缩、噪点、曝光、色彩、字幕与音频都属于这里。
-
-有声音时，单独检查对白是否清楚、口型是否同步、环境声是否连续、音乐和音效是否盖住重要信息。没有声音的模型，不应该因为“没有音频”被扣除本来就不承诺的能力。
-
-### 06 镜头表达与使用价值
-
-最后才进入“它是不是一个好镜头”：景别有没有帮助叙事，摄影机运动有没有动机，构图能否把注意力放到正确的位置，情绪是否符合用途。
-
-这一层必须结合场景判断。广告、漫剧、模型 Benchmark 和概念短片的目标不同，不能共用一套固定审美权重。
-
-## 一张可以试跑的评分表
-
-下面不是行业标准，而是一份用于小批量试跑的 **本站编辑草案**：
-
-| 维度 | 建议权重 | 低分意味着什么 |
-| --- | ---: | --- |
-| 任务完成度 | 25% | Prompt 或业务要求没有完成 |
-| 主体与世界一致性 | 20% | 人物、物体或空间关系漂移 |
-| 时间、运动与连续性 | 20% | 闪烁、跳变、动作不完整 |
-| 物理、人体与常识 | 15% | 看似流畅但事情不成立 |
-| 画面、声音与技术质量 | 10% | 成品清晰度或声音不可用 |
-| 镜头表达与使用价值 | 10% | 能生成，但不适合真实用途 |
-
-> [!KEY POINT]
-> 权重只能帮助汇总，不能掩盖致命问题。核心动作缺失、主体身份无法确认、严重人体崩坏等情况，应该单独标记为“关键失败”，而不是用其他维度的高分抵消。
-
-## 记录问题时，不要只写“崩了”
-
-一个可复盘的问题记录至少包含四部分：
-
-```text
-时间位置：00:03.2—00:04.1
-问题层级：主体与世界一致性
-可见现象：人物转身后耳环消失，发型由短发变为披肩发
-影响判断：主体身份连续性被破坏，关键镜头不可用
+```prompt
+核心任务：人物先看向道路尽头，再缓慢回头看向镜头。
+身份锚点：齐下巴短发、右侧蓝色发夹、红色三角耳饰、黄色外套。
+镜头要求：近景；摄影机轻微向前推进；人物位置保持稳定。
+关键失败：没有回头 / 人物身份漂移 / 推镜变成主体前移。
 ```
 
-这样记录以后，团队才能判断下一步是修改 Prompt、加强参考图、减少复杂动作、换模型，还是把问题留给后期处理。
+## 第二步：用四遍观看代替一次印象
+
+### 第一遍：正常速度，只看任务
+
+不要暂停，不先找手指。回答：核心动作发生了吗？先后顺序对吗？主体、场景和镜头要求有没有完成？
+
+如果核心任务缺失，先标记 **任务失败**。画面再漂亮，也不进入“可直接使用”。
+
+### 第二遍：正常速度，只看时间
+
+把注意力放在连续性：
+
+- 主体和背景有没有闪烁、纹理沸腾或突然跳变；
+- 动作是否有起点、过程和终点；
+- 速度是否无原因地忽快忽慢；
+- 遮挡前后的身份、物体和空间位置是否接得上；
+- 主体运动与摄影机运动能否被清楚区分。
+
+这对应 VBench 中的主体一致性、背景一致性、时间闪烁、运动平滑度和动态程度等基础维度。
+
+### 第三遍：暂停关键帧，只看结构与物理
+
+在动作开始、遮挡发生、接触物体和动作结束处暂停。检查人体、手部、重心、物体形状、碰撞、重力、反射和遮挡关系。
+
+VBench 2.0 将这类问题纳入人体可信度、物理和常识等“内在可信度”。它提醒我们：**连贯不等于合理**。一个动作可以很流畅，却仍然违反人体结构或因果关系。
+
+### 第四遍：回到成片，只看用途
+
+最后才判断构图、光线、情绪、节奏、声音和可剪辑性。广告镜头、漫剧、概念片和 Benchmark 样本的用途不同，不应该共享一套固定审美权重。
+
+## 第三步：把判断拆成六层
+
+| 层级 | 核心问题 | 典型记录 |
+| --- | --- | --- |
+| 任务完成度 | Prompt 和制作要求完成了吗？ | 漏动作、顺序错误、数量错误、运镜缺失 |
+| 主体与世界一致性 | 时间里还是同一个人、物体和空间吗？ | 脸型漂移、配饰消失、背景结构跳变 |
+| 时间与运动 | 动作是否连续、完整且速度合理？ | 闪烁、跳帧、瞬移、动作没有结束 |
+| 人体、物理与常识 | 发生的事情是否成立？ | 多指、重心错误、无接触操物、碰撞无结果 |
+| 技术质量 | 素材在技术上能否使用？ | 模糊、压缩、曝光、字幕、口型或声音问题 |
+| 镜头表达与用途 | 这个镜头是否服务叙事和交付？ | 注意力错误、运镜无动机、情绪或节奏不匹配 |
+
+T2V-CompBench 进一步提醒：当 Prompt 同时出现多个对象、颜色、数量、动作和空间关系时，要检查“绑定”是否正确。生成了红球和蓝杯，不代表模型理解了“红球在蓝杯左侧”；人物和动作都出现，也不代表动作属于正确的人。
+
+## 第四步：分数之外，再加严重度
+
+分数适合比较程度，严重度适合决定去留。建议同时使用两套标记：
+
+| 标记 | 定义 | 建议处理 |
+| --- | --- | --- |
+| PASS | 没有影响用途的可见问题 | 进入候选素材 |
+| MINOR | 有瑕疵，但正常观看不影响核心任务 | 保留，视用途决定后期处理 |
+| MAJOR | 明显影响连续性、可信度或剪辑 | 返工或重新生成 |
+| CRITICAL | 核心动作缺失、身份不可确认、严重人体崩坏等 | 直接判定本次任务失败 |
+
+如果需要 1—5 分，可以固定三个锚点，减少不同评审者之间的漂移：
+
+- **1 分**：核心能力失败，素材不可用；
+- **3 分**：任务基本完成，但问题清晰可见，需要取舍或后期；
+- **5 分**：在目标时长内稳定完成要求，没有影响用途的问题。
+
+2 分和 4 分只表示介于相邻锚点之间。不要先给总分再倒推理由，也不要让审美高分抵消 CRITICAL 问题。
+
+> [!BAD CASE]
+> “模型 A：87 分，模型 B：84 分”并不足以支持制作选择。至少还需要分项结果、关键失败率、可用镜头率、测试 Prompt 和生成条件。
+
+## 第五步：用可复盘的句子记录问题
+
+“这条崩了”没有告诉下一轮该改什么。一个可复盘记录至少包含：时间位置、问题层级、可见现象、任务影响和下一步假设。
+
+```text
+镜头：A-07
+时间位置：00:03.2—00:04.1
+问题层级：主体与世界一致性
+严重度：MAJOR
+可见现象：人物转身并经过遮挡后，右侧蓝色发夹消失，短发变为披肩发。
+任务影响：身份连续性被破坏，不能与前一镜直接连接。
+下一步假设：减少遮挡；强化身份锚点；保持其他变量不变后重新测试。
+```
+
+注意“下一步假设”仍然是假设，不是已经证明的原因。只有控制变量并重复测试之后，才能判断问题究竟来自 Prompt、参考图、模型能力还是随机性。
+
+## 自动指标和人工评审怎样配合
+
+VBench、EvalCrafter、VBench 2.0 和 T2V-CompBench 都在尝试让自动指标更细，并通过人工偏好或人工评测验证对齐程度。但“与人类判断相关”不等于“可以替代每个项目的人工验收”。
+
+更稳妥的分工是：
+
+1. 自动指标用于大批量初筛、重复检查和模型级趋势；
+2. 人工评审负责核心任务、叙事用途、严重度和可剪辑性；
+3. 分歧样本单独复核，不用总分强行消除分歧；
+4. 对外发布结论时，同时保留 Prompt、参数、样本数量和评审规则。
+
+## 把方法放回这座网站
+
+本站的[四十镜实验记录板](/experiments/forty-shots-one-character/#record-desk)目前只记录身份、动作、物理与镜头四项，因为那次实验的目标是观察同一角色在变量叠加时怎样漂移。它不是通用行业榜单，也不会预先填入任何模型分数。
+
+真正开始测试后，每个样本应保存模型版本、结果文件、四项人工评分、失败标签和观察原句。对外写结论之前，至少报告完整样本数、关键失败数和未完成项。
 
 > [!JING'S NOTE]
-> 待荆确认：真正有用的评测，不只告诉我们哪条视频更好，还应该告诉创作者下一次应该改 Prompt、换模型，还是调整制作流程。
+> 待荆确认：对创作最有价值的评测，不是给模型排一个永久名次，而是帮助下一轮决定——改 Prompt、换参考、降低动作复杂度、换模型，还是调整制作流程。
 
 ## 参考来源
 
-- [VBench：视频生成模型综合评测基准（CVPR 2024）](https://openaccess.thecvf.com/content/CVPR2024/papers/Huang_VBench_Comprehensive_Benchmark_Suite_for_Video_Generative_Models_CVPR_2024_paper.pdf)
+- [VBench：视频生成模型综合评测基准（CVPR 2024 论文）](https://openaccess.thecvf.com/content/CVPR2024/papers/Huang_VBench_Comprehensive_Benchmark_Suite_for_Video_Generative_Models_CVPR_2024_paper.pdf)
+- [VBench 官方代码仓库与 16 个评测维度](https://github.com/Vchitect/VBench)
+- [EvalCrafter：大型视频生成模型评测框架（CVPR 2024）](https://openaccess.thecvf.com/content/CVPR2024/html/Liu_EvalCrafter_Benchmarking_and_Evaluating_Large_Video_Generation_Models_CVPR_2024_paper.html)
+- [EvalCrafter 官方代码、Prompt 与人工反馈说明](https://github.com/evalcrafter/EvalCrafter)
 - [VBench 2.0：面向内在可信度的视频生成评测](https://arxiv.org/abs/2503.21755)
-- [EvalCrafter：大型视频生成模型的多维评测框架（CVPR 2024）](https://openaccess.thecvf.com/content/CVPR2024/papers/Liu_EvalCrafter_Benchmarking_and_Evaluating_Large_Video_Generation_Models_CVPR_2024_paper.pdf)
-- [Google Cloud：Veo 视频生成提示指南](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/video-gen-prompt-guide?hl=zh-CN)
-- [Runway：Gen-4 Video Prompting Guide](https://help.runwayml.com/hc/en-us/articles/39789879462419-Gen-4-Video-Prompting-Guide)
+- [T2V-CompBench：组合式文生视频评测基准（CVPR 2025）](https://openaccess.thecvf.com/content/CVPR2025/html/Sun_T2V-CompBench_A_Comprehensive_Benchmark_for_Compositional_Text-to-video_Generation_CVPR_2025_paper.html)
 
-当前版本是 **编辑整理稿**。下一步需要加入荆自己的真实坏例、项目权重和评分习惯，再转为正式发布。
+本文是 **资料文章**：来源事实已经核对，实用流程是本站的编辑转译。没有真实样本支持的模型排名、权重与经验判断，不会在这里被写成既定结论。
