@@ -45,17 +45,17 @@ export default function Home() {
       </div>
 
       <Reveal><section className="featured">
-        <div className="section-heading"><div><p className="eyebrow mono">Featured / 本期主角</p><h2>这次，先认真<br />做完一个故事。</h2></div><p className="featured-intro">《她每天醒来都会忘记昨天》——一个关于记忆、遗忘和重复告别的 AI 影像实验。目前正在制作中。</p></div>
-        <article className="feature-card"><ProjectVisual variant="memory feature" label={featured.title} /><div className="feature-meta"><div><p className="mono">AI SHORT FILM · COMING SOON</p><h3>{featured.title}</h3></div><Link className="round-link" href="/stories/she-forgets-yesterday/" aria-label="查看作品详情">View <span>↗</span></Link></div></article>
+        <div className="section-heading"><div><p className="eyebrow mono">Featured / 本期主角</p><h2>这次，先认真<br />做完一个故事。</h2></div><p className="featured-intro">《她每天醒来都会忘记昨天》已经完成故事、剧本、分镜和生成包草案；真实视频、剪辑与声音仍待开始。</p></div>
+        <article className="feature-card"><ProjectVisual variant="memory feature" label={featured.title} /><div className="feature-meta"><div><p className="mono">AI SHORT FILM · DRAFT / VIDEO NOT GENERATED</p><h3>{featured.title}</h3></div><Link className="round-link" href="/stories/she-forgets-yesterday/" aria-label="查看作品详情">View <span>↗</span></Link></div></article>
       </section></Reveal>
 
       <Reveal><section className="latest section-shell">
         <div className="section-title-row"><div><p className="eyebrow mono">Latest experiments</p><h2>最近又<br />折腾了什么？</h2></div><p>故事还没完全长成，测试也不一定有结论。这里先留下过程里的碎片、偏差和意外。</p></div>
         <div className="latest-grid">
-          <article className="latest-lead"><ProjectVisual variant="faces" label={experiments[0].title} /><span className="mono">Character study · 2026</span><h3>{experiments[0].title}</h3></article>
-          <article className="latest-note note-violet"><span className="mono">Prompt note #017</span><blockquote>“不要描述她长什么样，先描述她如何停顿。”</blockquote><small>本周最有用的一句废话</small></article>
-          <article className="latest-small"><ProjectVisual variant="frames" label={experiments[1].title} /><span className="mono">Model test</span><h3>{experiments[1].title}</h3></article>
-          <article className="latest-note note-apricot"><span className="note-number">40</span><p>个镜头以后，角色最先忘记的是耳环。</p><span className="mono">Observation 08/24</span></article>
+          <article className="latest-lead"><ProjectVisual variant="faces" label={experiments[0].title} /><span className="mono">Pilot record · 4 static samples / 40 planned</span><h3>{experiments[0].title}</h3></article>
+          <article className="latest-note note-violet"><span className="mono">Research question / 待验证</span><blockquote>“变量不断增加时，哪些角色特征最容易先失去一致性？”</blockquote><small>需要正式四十镜样本才能回答</small></article>
+          <article className="latest-small"><ProjectVisual variant="frames" label={experiments[1].title} /><span className="mono">Experiment idea · not run</span><h3>{experiments[1].title}</h3></article>
+          <article className="latest-note note-apricot"><span className="note-number">40</span><p>个正式镜头仍待测试。目前只有四格静态 Pilot，不写模型结论。</p><span className="mono">PILOT STATUS · 4 / 40</span></article>
         </div>
       </section></Reveal>
 
@@ -87,7 +87,7 @@ export default function Home() {
       </section></Reveal>
 
       <Reveal><section className="home-picks section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">JING PICKS / 荆选</p><h2>最近收藏的，<br />四个值得看的东西。</h2></div><div className="home-notes-intro"><p>一条视频、一篇文章、一份 PDF 和一个工具。每条都有我为什么保存它。</p><Link className="text-link" href="/library/">打开收藏夹 ↗</Link></div></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">JING PICKS / 编辑初选</p><h2>最近留下的，<br />四个来源已核对候选。</h2></div><div className="home-notes-intro"><p>资源和原始链接已经核对；推荐理由与 JING&apos;S TAKE 仍是等待荆确认的编辑初稿。</p><Link className="text-link" href="/library/">打开收藏夹 ↗</Link></div></div>
         <div className="home-picks-grid">{jingPicks.map((item) => <LibraryCard item={item} compact key={item.id} />)}</div>
       </section></Reveal>
 

@@ -155,6 +155,10 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .story-card h3, .experiment-card h3 { margin: 0; font-family: var(--display); font-size: clamp(2rem,3vw,3.2rem); font-weight: 650; line-height: 1.02; }
 .story-card > p, .experiment-card > p { max-width: 570px; margin: 15px 0 22px; color: var(--muted); font-size: 13px; line-height: 1.75; }
 .card-footer { padding-top: 14px; border-top: 1px solid var(--line); }
+.project-truth-badge { display: inline-flex; width: fit-content; margin-top: 16px; padding: 7px 9px; border: 1.5px solid var(--ink); border-radius: 99px; color: var(--ink); font-weight: 700; }
+.truth-documented { background: var(--mint); }
+.truth-concept { background: var(--yellow); }
+.concept-card-note { display: block; width: fit-content; margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); line-height: 1.55; }
 .dark-section { background: var(--sky); color: var(--ink); border-block: 2px solid var(--ink); }
 .dark-section .text-link { box-shadow: 3px 3px 0 var(--blue); }
 .experiment-preview-grid { display: grid; grid-template-columns: 1.12fr .86fr .86fr; gap: 18px; align-items: start; }
@@ -225,6 +229,9 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .archive-filter { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 65px; }
 .archive-filter span { padding: 9px 13px; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); }
 .archive-filter span:first-child { border-color: var(--ink); background: var(--yellow); color: var(--ink); font-weight: 650; }
+.archive-truth-note { display: grid; grid-template-columns: .35fr 1fr; gap: 5vw; margin-bottom: 55px; padding: 24px; border: 2px solid var(--ink); border-radius: 22px; background: var(--mint); box-shadow: 6px 6px 0 var(--ink); }
+.archive-truth-note > span { color: var(--blue); font-weight: 700; }
+.archive-truth-note p { max-width: 850px; margin: 0; font-size: 13px; line-height: 1.75; }
 .archive-grid { gap: 85px 22px; }
 .archive-grid .reveal:nth-child(even) { margin-top: 110px; }
 .story-grid.archive-grid .reveal:last-child { grid-column: 1/2; }
@@ -946,6 +953,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .page-intro { padding: 48px 0 70px; }
   .page-intro h1 { margin: 58px 0 30px; font-size: clamp(4.8rem,24vw,7.5rem); overflow-wrap: anywhere; }
   .archive-shell { padding-block: 62px 90px; }
+  .archive-truth-note { grid-template-columns: 1fr; gap: 15px; padding: 20px; }
   .about-manifesto p { grid-column: 1; }
   .about-answers { padding-block: 80px; }
   .about-answer-grid { grid-template-columns: 1fr; }

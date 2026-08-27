@@ -8,6 +8,7 @@ export type Story = {
   date: string;
   duration: string;
   status: string;
+  stage: 'documented' | 'concept';
   visual: string;
 };
 
@@ -19,6 +20,7 @@ export type Experiment = {
   category: string;
   date: string;
   status: string;
+  stage: 'documented' | 'concept';
   visual: string;
 };
 
@@ -42,7 +44,8 @@ export const stories: Story[] = [
     type: 'AI Short Film',
     date: '2026.08',
     duration: '01:30',
-    status: 'AI 共创概念稿',
+    status: 'AI 共创草案 · 有详情记录',
+    stage: 'documented',
     visual: 'memory',
   },
   {
@@ -51,9 +54,10 @@ export const stories: Story[] = [
     englishTitle: 'No Boat at Pier Seven',
     description: '深夜值班员收到一张来自十年后的船票。一个雾、旧广播与错过的人的故事。',
     type: 'AI Comic Series',
-    date: '2026.09',
-    duration: 'EP.01—03',
-    status: '概念中',
+    date: '未排期',
+    duration: '系列设想',
+    status: '概念候选 · 未进入制作',
+    stage: 'concept',
     visual: 'pier',
   },
   {
@@ -62,9 +66,10 @@ export const stories: Story[] = [
     englishTitle: 'Before the Rain Ends',
     description: '如果一场雨只落在一个人头顶，她要走多远，才能把它留在身后？',
     type: 'Visual Poem',
-    date: '2026.10',
-    duration: '00:52',
-    status: '脚本中',
+    date: '未排期',
+    duration: '短片设想',
+    status: '概念候选 · 未进入制作',
+    stage: 'concept',
     visual: 'rain',
   },
 ];
@@ -74,37 +79,41 @@ export const experiments: Experiment[] = [
     id: 'experiment-001',
     slug: 'forty-shots-one-character',
     title: '同一个她，四十个镜头',
-    description: '跨景别、光线、情绪和动作测试角色一致性。已完成首轮四格静态样本，四十镜正式测试仍待继续。',
+    description: '跨景别、光线、情绪和动作测试角色一致性。现有一张四格静态 Pilot 样本板；正式四十镜视频测试尚未开始。',
     category: 'Character Study',
     date: '2026.08.18',
-    status: '4 / 40 首轮样本',
+    status: 'PILOT 4 格 · 非模型结论',
+    stage: 'documented',
     visual: 'faces',
   },
   {
     id: 'experiment-002',
     title: '一句话，四种视频模型',
-    description: '同一条分镜提示词，在不同模型里会长出怎样不同的运动与镜头语言？',
+    description: '待验证问题：同一条分镜提示词，在不同模型里会长出怎样不同的运动与镜头语言？目前没有样本或比较结果。',
     category: 'Model Test',
-    date: '2026.08.11',
-    status: '对比中',
+    date: '未执行',
+    status: '实验设想 · 无样本',
+    stage: 'concept',
     visual: 'frames',
   },
   {
     id: 'experiment-003',
     title: '让 AI 先画一张不会发生的海报',
-    description: '从一张虚构电影海报反向生长出角色、场景与故事梗概。',
+    description: '待验证玩法：从一张虚构电影海报反向生长出角色、场景与故事梗概。目前只保留概念卡。',
     category: 'Prompt Play',
-    date: '2026.07.29',
-    status: '完成',
+    date: '未执行',
+    status: '概念设想 · 无结果',
+    stage: 'concept',
     visual: 'poster',
   },
   {
     id: 'experiment-004',
     title: '自动分镜机，第一次走神',
-    description: '把短故事拆成镜头，同时保留那些机器意外带来的奇怪空白。',
+    description: '待验证工作流：把短故事拆成镜头，同时观察自动拆分遗漏了什么。目前没有正式实验记录。',
     category: 'Workflow',
-    date: '2026.07.16',
-    status: '迭代中',
+    date: '未执行',
+    status: '工作流设想 · 无记录',
+    stage: 'concept',
     visual: 'storyboard',
   },
 ];

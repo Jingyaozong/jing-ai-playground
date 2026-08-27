@@ -9,6 +9,8 @@ import { experiments } from '../data/content';
 export const metadata: Metadata = { title: 'Experiments — JING AI PLAYGROUND', description: 'AI 角色、视频模型、Prompt 与工作流实验记录。' };
 
 export default function ExperimentsPage() {
-  return <main className="experiments-page"><SiteHeader active="Experiments" /><PageIntro eyebrow="Archive B / Experiments" count={`${experiments.length} open notebooks`} title="Experiments" description="有些实验解决问题，有些只是为了看看会发生什么。过程、失败和意外结果都值得留下来。" />
-    <section className="archive-shell"><div className="lab-note"><span className="mono">Lab rule 001</span><p>先记录，再解释。<br />允许结果比问题更奇怪。</p></div><div className="experiment-grid archive-grid">{experiments.map((experiment, index) => <Reveal key={experiment.id}><ExperimentCard experiment={experiment} index={index} /></Reveal>)}</div></section><SiteFooter /></main>;
+  const documented = experiments.filter((experiment) => experiment.stage === 'documented').length;
+  const concepts = experiments.length - documented;
+  return <main className="experiments-page"><SiteHeader active="Experiments" /><PageIntro eyebrow="Archive B / Experiments" count={`${documented} pilot record · ${concepts} test ideas`} title="Experiments" description="有些实验已经留下样本，有些目前只是一道待验证的问题。没有执行过的内容不会显示成实验结果。" />
+    <section className="archive-shell"><div className="lab-note"><span className="mono">Lab rule 001</span><p>先记录，再解释。<br />没有样本，就没有结论。</p></div><aside className="archive-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>目前只有 Experiment 001 拥有一张四格静态 Pilot 样本板和记录台；其余三张是尚未执行的实验设想，没有模型输出、比较结果或完成结论。</p></aside><div className="experiment-grid archive-grid">{experiments.map((experiment, index) => <Reveal key={experiment.id}><ExperimentCard experiment={experiment} index={index} /></Reveal>)}</div></section><SiteFooter /></main>;
 }
