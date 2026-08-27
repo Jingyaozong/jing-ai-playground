@@ -146,6 +146,15 @@ export const tools: Tool[] = [
     symbol: '⌁',
     href: '/tools/shot-list-cleaner/',
   },
+  {
+    id: 'tool-004',
+    title: 'Character Anchor',
+    description: '把人物外貌、配饰、服装与允许变化整理成可复制的角色参考卡、图像锚点和视频验收清单。',
+    label: '角色锚点卡生成器',
+    status: 'Ready',
+    symbol: '◎',
+    href: '/tools/character-anchor/',
+  },
 ];
 
 export const currentlyPlaying = [

@@ -16,11 +16,11 @@ sourceUrl: "https://help.runwayml.com/hc/en-us/articles/40042718905875-Creating-
 sourceNote: "功能事实来自 Runway、Google Cloud 和 Adobe 的官方文档；分镜前的整理方法是本站面向创作者的编辑转译，不包含模型排名，也不声称任何工具能保证人物百分之百一致。"
 relatedNotes: ["image-prompt-guide", "video-vs-image-prompt", "ai-video-evaluation"]
 connections:
-  - label: "STORY"
-    title: "她每天醒来都会忘记昨天"
-    description: "查看同一角色在十四镜故事中需要保持的发型、配饰、服装与表演锚点。"
-    href: "/stories/she-forgets-yesterday/"
-    tone: "yellow"
+  - label: "TOOL"
+    title: "角色锚点卡生成器"
+    description: "把脸部、头发、配饰、服装和允许变化整理成三种可复制的工作格式。"
+    href: "/tools/character-anchor/"
+    tone: "mint"
   - label: "EXPERIMENT"
     title: "同一个她，四十个镜头"
     description: "进入人物一致性 Pilot 与记录台，用真实样本观察身份、动作、物理和镜头表现。"
