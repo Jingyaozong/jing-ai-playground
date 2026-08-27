@@ -4,6 +4,7 @@ import { LibraryCard } from '../components/library-card';
 import { Reveal } from '../components/reveal';
 import { SiteFooter } from '../components/site-footer';
 import { SiteHeader } from '../components/site-header';
+import { TruthMethodLink } from '../components/truth-method-link';
 import { libraryItems } from '../data/library';
 
 export const metadata: Metadata = {
@@ -53,11 +54,12 @@ export default function LibraryPage() {
       <section className="library-hero page-intro">
         <div className="page-intro-top mono"><span>JING LIBRARY / 荆的 AI 收藏夹</span><span>Curated, not collected</span></div>
         <div className="library-title-lockup"><h1>LIBRARY</h1><span className="library-pick-stamp">荆选<br />JING PICKS</span></div>
-        <div className="notes-hero-bottom"><p>不是把链接堆在一起，<br />而是留下我为什么觉得它值得看。</p><span className="mono">Articles / Videos / Papers / Tools</span></div>
+        <div className="notes-hero-bottom"><p>不是把链接堆在一起，<br />而是留下它为什么值得先看。</p><span className="mono">Articles / Videos / Papers / Tools</span></div>
       </section>
 
       <Reveal><section className="library-routes section-shell" aria-labelledby="library-routes-title">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Choose by purpose / 按用途开始</p><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条路线只依据资源内容和官方用途编排，不代表 JING&apos;S TAKE 已经确认。需要查单项时，仍可使用下方搜索与筛选。</p></div>
+        <aside className="archive-truth-note library-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>资源标题、摘要和原始链接已经核对；推荐理由与 JING&apos;S TAKE 多数仍是编辑初稿，只有荆确认后才会成为正式个人观点。</p><TruthMethodLink /></aside>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Choose by purpose / 按用途开始</p><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条路线依据资源内容和官方用途编排。需要查单项时，仍可使用下方搜索与筛选。</p></div>
         <div className="library-route-grid">
           {libraryRoutes.map((route) => (
             <article className={`library-route-card library-route-${route.tone}`} key={route.id}>
@@ -77,9 +79,9 @@ export default function LibraryPage() {
         </div>
       </section></Reveal>
 
-      <Reveal><section className="featured-library section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">This week&apos;s candidate / 本周候选</p><h2>先看一个可能<br />值得花时间的内容。</h2></div><p>我先核对来源并写出推荐理由；等你确认判断后，它才会成为正式“荆选”。</p></div><LibraryCard item={featured} /></section></Reveal>
+      <Reveal><section className="featured-library section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">This week&apos;s candidate / 本周候选</p><h2>先看一个可能<br />值得花时间的内容。</h2></div><p>来源已经核对，并附有编辑推荐理由；等荆确认判断后，它才会成为正式“荆选”。</p></div><LibraryCard item={featured} /></section></Reveal>
 
-      <Reveal><section className="library-shelves section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Five shelves / 收藏分类</p><h2>按内容类型收好，<br />按判断重新找到。</h2></div><p>“荆选”可以跨越所有类型，代表我个人特别推荐。</p></div><div className="library-shelf-grid">{shelves.map(([en, zh, description, color], index) => <a className={`library-shelf shelf-${color}`} href="#library-all" key={en}><span className="mono">0{index + 1}</span><strong>{en}</strong><h3>{zh}</h3><p>{description}</p><i>浏览 ↓</i></a>)}<a className="library-shelf shelf-picks" href="#library-all"><span className="mono">05</span><strong>JING PICKS</strong><h3>荆选</h3><p>跨越文章、视频、PDF 和工具的个人特别推荐。</p><i>只看荆选 ↓</i></a></div></section></Reveal>
+      <Reveal><section className="library-shelves section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Five shelves / 收藏分类</p><h2>按内容类型收好，<br />按判断重新找到。</h2></div><p>“荆选”可以跨越所有类型，代表等待荆确认的特别推荐候选。</p></div><div className="library-shelf-grid">{shelves.map(([en, zh, description, color], index) => <a className={`library-shelf shelf-${color}`} href="#library-all" key={en}><span className="mono">0{index + 1}</span><strong>{en}</strong><h3>{zh}</h3><p>{description}</p><i>浏览 ↓</i></a>)}<a className="library-shelf shelf-picks" href="#library-all"><span className="mono">05</span><strong>JING PICKS</strong><h3>荆选</h3><p>跨越文章、视频、PDF 和工具的特别推荐候选，等待荆确认。</p><i>只看候选 ↓</i></a></div></section></Reveal>
 
       <section className="library-all section-shell" id="library-all"><div className="section-title-row compact"><div><p className="eyebrow mono">Saved with a reason</p><h2>这些内容，<br />为什么被留下来。</h2></div><p>资源标题、摘要和原始链接已经核对；“JING&apos;S TAKE”目前是编辑初稿，等你确认后才会转为正式荆选。</p></div><LibraryBrowser items={libraryItems} /></section>
       <SiteFooter />
