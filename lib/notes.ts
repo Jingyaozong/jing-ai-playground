@@ -77,7 +77,11 @@ export function getAllNotes(): NoteMeta[] {
       void content;
       return meta;
     })
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .sort((a, b) => {
+      const byDate = b.date.localeCompare(a.date);
+      if (byDate !== 0) return byDate;
+      return Number.parseInt(b.issue, 10) - Number.parseInt(a.issue, 10);
+    });
 }
 
 export function getNoteBySlug(slug: string): NoteDocument | null {
