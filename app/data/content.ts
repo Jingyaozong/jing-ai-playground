@@ -209,6 +209,15 @@ export const tools: Tool[] = [
     symbol: '▦',
     href: '/tools/shot-version-recorder/',
   },
+  {
+    id: 'tool-011',
+    title: 'Generation Budget',
+    description: '按风险组计算镜头候选、生成秒数、返工预留、后期、声音与人工成本，不内置会过期的平台费率。',
+    label: '生成预算计算器',
+    status: 'Ready',
+    symbol: '◫',
+    href: '/tools/generation-budget/',
+  },
 ];
 
 export const currentlyPlaying = [

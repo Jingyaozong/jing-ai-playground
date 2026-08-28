@@ -17,9 +17,9 @@ sourceNote: "计费单位、生成秒数、模型与分辨率对 Credits 或价�
 relatedNotes: ["ai-video-generation-version-log", "ai-video-evaluation", "first-last-frame-motion-prompt"]
 connections:
   - label: "TOOL"
-    title: "镜头版本记录器"
-    description: "记录每个镜头实际生成了多少候选、哪些被淘汰以及为什么，为下一轮预算提供真实批次数据。"
-    href: "/tools/shot-version-recorder/"
+    title: "生成预算计算器"
+    description: "填写自己的单位成本、风险组、候选数、生成秒数与返工预留，生成完整预算明细。"
+    href: "/tools/generation-budget/"
     tone: "yellow"
   - label: "TOOL"
     title: "镜头风险检查器"
