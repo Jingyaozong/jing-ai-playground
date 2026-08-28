@@ -17,6 +17,11 @@ sourceNote: "产品能力与限制依据 Runway、Google Cloud 和 Adobe 官方�
 relatedNotes: ["video-vs-image-prompt", "camera-movement-guide", "video-failure-cases"]
 connections:
   - label: "TOOL"
+    title: "AI 视频镜头风险预检器"
+    description: "填写时长、动作、运镜与首尾差异，在生成前找出需要减项或拆镜的位置。"
+    href: "/tools/shot-risk-checker/"
+    tone: "coral"
+  - label: "TOOL"
     title: "分镜整理器"
     description: "把首帧画面、主体动作、摄影机运动和声音拆成一张可编辑的镜头表。"
     href: "/tools/shot-list-cleaner/"
@@ -26,11 +31,6 @@ connections:
     description: "先固定人物身份，再决定每一镜的起点、终点与允许变化。"
     href: "/tools/character-anchor/"
     tone: "yellow"
-  - label: "METHOD"
-    title: "AI 视频到底应该怎么评？"
-    description: "生成之后，检查首尾是否到位、中间过程是否连续、结果是否真正可用。"
-    href: "/notes/ai-video-evaluation/"
-    tone: "blue"
 ---
 
 首帧和尾帧不是两张“参考氛围图”。它们分别提出两个明确要求：**镜头从哪里开始，镜头必须在哪里结束。** 运动提示词则要回答更难的问题：从起点到终点，中间到底发生什么。

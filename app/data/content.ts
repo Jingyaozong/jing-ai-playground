@@ -155,6 +155,15 @@ export const tools: Tool[] = [
     symbol: '◎',
     href: '/tools/character-anchor/',
   },
+  {
+    id: 'tool-005',
+    title: 'Shot Pre-flight',
+    description: '检查镜头时长、动作数量、运镜冲突与首尾帧差异，用透明规则给出减项或拆镜建议。',
+    label: 'AI 视频镜头风险预检器',
+    status: 'Ready',
+    symbol: '△',
+    href: '/tools/shot-risk-checker/',
+  },
 ];
 
 export const currentlyPlaying = [
