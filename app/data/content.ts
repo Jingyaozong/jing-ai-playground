@@ -173,6 +173,15 @@ export const tools: Tool[] = [
     symbol: '≡',
     href: '/tools/sound-layer-card/',
   },
+  {
+    id: 'tool-007',
+    title: 'Continuity Checker',
+    description: '把镜头 A 的出口和镜头 B 的入口放在一起，检查人物、方向、视线、动作、场景事实与声音交接。',
+    label: '相邻镜头连续性检查器',
+    status: 'Ready',
+    symbol: '→',
+    href: '/tools/continuity-checker/',
+  },
 ];
 
 export const currentlyPlaying = [

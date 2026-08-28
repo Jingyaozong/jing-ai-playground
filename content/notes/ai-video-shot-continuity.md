@@ -17,10 +17,10 @@ sourceNote: "剪辑术语与基础原则依据 Adobe、BFI、Runway 和 Google C
 relatedNotes: ["first-last-frame-motion-prompt", "ai-video-character-consistency", "ai-video-sound-workflow"]
 connections:
   - label: "TOOL"
-    title: "分镜整理器"
-    description: "把相邻镜头的动作、运镜和声音放进同一张表，先找到真正需要交接的位置。"
-    href: "/tools/shot-list-cleaner/"
-    tone: "mint"
+    title: "相邻镜头连续性检查器"
+    description: "填写镜头 A 出口与镜头 B 入口，沿六条连续线找出需要补锚点或重做的位置。"
+    href: "/tools/continuity-checker/"
+    tone: "coral"
   - label: "TOOL"
     title: "角色锚点卡生成器"
     description: "先锁定不能跨镜漂移的人物身份、服装、配饰与道具。"
