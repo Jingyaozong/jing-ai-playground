@@ -164,6 +164,15 @@ export const tools: Tool[] = [
     symbol: '△',
     href: '/tools/shot-risk-checker/',
   },
+  {
+    id: 'tool-006',
+    title: 'Sound Layer Card',
+    description: '把对白、声音表演、环境底、动作音效和音乐分配到各自轨道，生成单镜声音 Brief 与验收清单。',
+    label: '声音分层卡生成器',
+    status: 'Ready',
+    symbol: '≡',
+    href: '/tools/sound-layer-card/',
+  },
 ];
 
 export const currentlyPlaying = [
