@@ -17,9 +17,9 @@ sourceNote: "剪辑时机、逐帧修剪、跳切与镜头长度统计依据 BFI
 relatedNotes: ["ninety-second-storyboard", "ai-video-shot-continuity", "ai-video-sound-workflow"]
 connections:
   - label: "TOOL"
-    title: "分镜整理器"
-    description: "先把每行一镜的草稿整理成镜头表，再为每镜补上节奏职责和时长范围。"
-    href: "/tools/shot-list-cleaner/"
+    title: "镜头节奏规划器"
+    description: "为每镜分配职责和秒数，用可伸缩时间带检查段落超时、留白与过度平均。"
+    href: "/tools/shot-rhythm-planner/"
     tone: "mint"
   - label: "TOOL"
     title: "相邻镜头连续性检查器"

@@ -182,6 +182,15 @@ export const tools: Tool[] = [
     symbol: '→',
     href: '/tools/continuity-checker/',
   },
+  {
+    id: 'tool-008',
+    title: 'Shot Rhythm Planner',
+    description: '给镜头分配职责和秒数，用按时长伸缩的时间带检查段落超时、留白与过度平均。',
+    label: '镜头节奏规划器',
+    status: 'Ready',
+    symbol: '▥',
+    href: '/tools/shot-rhythm-planner/',
+  },
 ];
 
 export const currentlyPlaying = [
