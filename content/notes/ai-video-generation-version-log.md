@@ -17,9 +17,9 @@ sourceNote: "生成记录、资产组织、版本比较、镜头元数据与 Veo
 relatedNotes: ["ai-video-evaluation", "ai-video-scene-consistency", "ai-video-shot-continuity"]
 connections:
   - label: "TOOL"
-    title: "分镜整理器"
-    description: "先为每个叙事镜头建立稳定镜号，再让所有生成批次和候选版本归到同一镜号下面。"
-    href: "/tools/shot-list-cleaner/"
+    title: "镜头版本记录器"
+    description: "填写批次输入、候选状态、可用区间与淘汰原因，导出 Markdown 完整记录和 CSV 候选行。"
+    href: "/tools/shot-version-recorder/"
     tone: "yellow"
   - label: "TOOL"
     title: "镜头风险检查器"

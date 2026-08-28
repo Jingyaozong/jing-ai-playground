@@ -200,6 +200,15 @@ export const tools: Tool[] = [
     symbol: '⌂',
     href: '/tools/scene-anchor/',
   },
+  {
+    id: 'tool-010',
+    title: 'Shot Version Recorder',
+    description: '记录生成批次、候选状态、可用区间、淘汰原因与剪辑采用方式，并导出 Markdown 和 CSV。',
+    label: '镜头版本记录器',
+    status: 'Ready',
+    symbol: '▦',
+    href: '/tools/shot-version-recorder/',
+  },
 ];
 
 export const currentlyPlaying = [
