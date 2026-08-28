@@ -191,6 +191,15 @@ export const tools: Tool[] = [
     symbol: '▥',
     href: '/tools/shot-rhythm-planner/',
   },
+  {
+    id: 'tool-009',
+    title: 'Scene Anchor',
+    description: '把空间结构、固定家具、道具状态、材质、光线和天气整理成可复制的场景蓝图与单镜接口。',
+    label: '场景锚点卡生成器',
+    status: 'Ready',
+    symbol: '⌂',
+    href: '/tools/scene-anchor/',
+  },
 ];
 
 export const currentlyPlaying = [

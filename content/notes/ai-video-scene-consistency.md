@@ -17,9 +17,9 @@ sourceNote: "参考图、环境 Plate、构图标注与颜色比较能力依据 
 relatedNotes: ["ai-video-shot-continuity", "ai-video-character-consistency", "camera-movement-guide"]
 connections:
   - label: "TOOL"
-    title: "相邻镜头连续性检查器"
-    description: "把场景结构、道具和光线变化写进镜头 A 出口与镜头 B 入口，检查变化是否有因。"
-    href: "/tools/continuity-checker/"
+    title: "场景锚点卡生成器"
+    description: "把空间结构、固定家具、道具状态、材质、光线和天气整理成场景母版与单镜接口。"
+    href: "/tools/scene-anchor/"
     tone: "coral"
   - label: "TOOL"
     title: "角色锚点卡生成器"
