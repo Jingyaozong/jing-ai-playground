@@ -59,6 +59,8 @@ export type ExperimentDetail = {
   conclusionBadge?: string;
   relatedHref?: string;
   relatedLabel?: string;
+  toolHref?: string;
+  toolLabel?: string;
 };
 
 export const experimentDetails: ExperimentDetail[] = [
@@ -247,6 +249,8 @@ export const experimentDetails: ExperimentDetail[] = [
     conclusionBadge: '0 / 9 · 无结论',
     relatedHref: '/stories/before-the-rain-ends/',
     relatedLabel: '返回《雨停以前》故事页 ↗',
+    toolHref: '/tools/local-effect-card/',
+    toolLabel: '生成局部特效约束卡 ↗',
   },
 ];
 

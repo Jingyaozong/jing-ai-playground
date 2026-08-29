@@ -15,7 +15,7 @@ const stages = [
     label: 'ANCHOR',
     title: '角色与场景',
     description: '锁住不能漂移的人物与空间事实，并在生成前拆掉过载镜头。',
-    toolIds: ['tool-004', 'tool-009', 'tool-005'],
+    toolIds: ['tool-004', 'tool-009', 'tool-014', 'tool-005'],
     note: '先固定，再变化',
   },
   {
@@ -76,7 +76,7 @@ export function ToolWorkflowMap() {
       <div className="tool-route-legend">
         <span className="mono">LOOP WHEN NEEDED</span>
         <p>风险预检、连续性检查和版本记录可以在每轮生成后重新打开；路线表示主要顺序，不是单向流水线。</p>
-        <a href="#all-tools">查看全部 13 个工具 ↓</a>
+        <a href="#all-tools">查看全部 14 个工具 ↓</a>
       </div>
     </section>
   );

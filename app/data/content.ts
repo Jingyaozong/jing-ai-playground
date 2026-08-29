@@ -250,6 +250,15 @@ export const tools: Tool[] = [
     symbol: '▤',
     href: '/tools/release-matrix/',
   },
+  {
+    id: 'tool-014',
+    title: 'Local Effect Card',
+    description: '把局部雨、雾、微光或粒子拆成锚点、边界、区外状态与时间规则，生成待测试 Prompt、九格矩阵和逐帧验收表。',
+    label: '局部特效约束卡生成器',
+    status: 'Ready',
+    symbol: '◉',
+    href: '/tools/local-effect-card/',
+  },
 ];
 
 export const currentlyPlaying = [

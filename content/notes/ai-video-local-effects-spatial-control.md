@@ -27,9 +27,9 @@ connections:
     href: "/stories/before-the-rain-ends/"
     tone: "yellow"
   - label: "TOOL"
-    title: "镜头风险预检器"
-    description: "生成前先找出局部特效、人物动作与镜头运动叠加出的高风险镜头。"
-    href: "/tools/shot-risk-checker/"
+    title: "局部特效约束卡生成器"
+    description: "把锚点、边界、区外状态和时间规则整理成 Prompt、九格测试与逐帧验收表。"
+    href: "/tools/local-effect-card/"
     tone: "mint"
 ---
 

@@ -3013,3 +3013,118 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .rain-task-key { grid-template-columns: 1fr; }
   .rain-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
 }
+
+/* Local effect card: one moving anchor, one explicit boundary, one dry outside state */
+.effect-detail-hero { overflow: clip; }
+.effect-detail-hero .tool-detail-title h1 { font-size: clamp(4.3rem,7.5vw,8rem); }
+.effect-workbench { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(380px,.8fr); gap: 20px; align-items: start; }
+.effect-editor, .effect-relation-card { border: 2px solid var(--ink); border-radius: 32px; }
+.effect-editor { min-width: 0; padding: 34px; background: var(--white); box-shadow: 9px 9px 0 var(--sky); }
+.effect-panel-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 28px; padding-bottom: 31px; }
+.effect-panel-heading span, .effect-group-heading span, .effect-output-heading span, .effect-method-note span { color: var(--blue); }
+.effect-panel-heading h2, .effect-output-heading h2 { margin: 16px 0 0; font-family: var(--display); font-size: clamp(2.6rem,4.2vw,4.6rem); font-weight: 720; line-height: .92; letter-spacing: -.045em; }
+.effect-panel-heading > div:last-child { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; }
+.effect-panel-heading button, .effect-output-card button, .effect-copy-fallback button { padding: 10px 14px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--paper); color: var(--ink); font: 750 9px var(--body); cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
+.effect-panel-heading button:first-child, .effect-output-card button { background: var(--yellow); box-shadow: 3px 3px 0 var(--ink); }
+.effect-panel-heading button:hover, .effect-output-card button:hover:not(:disabled) { transform: translateY(-2px); }
+.effect-field-group { margin-top: 13px; padding: 24px; border: 1.5px solid var(--ink); border-radius: 23px; }
+.effect-group-relation { background: var(--sky); }
+.effect-group-time { background: var(--mint); }
+.effect-group-test { background: var(--yellow); }
+.effect-group-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; margin-bottom: 13px; padding-bottom: 14px; border-bottom: 1.5px solid var(--ink); }
+.effect-group-heading p { max-width: 300px; margin: 0; color: var(--muted); font-size: 8px; line-height: 1.5; text-align: right; }
+.effect-text-field, .effect-select-field { display: grid; grid-template-columns: minmax(145px,.58fr) minmax(220px,1.42fr); gap: 16px; align-items: center; padding: 13px 0; border-bottom: 1px solid rgba(20,33,51,.3); }
+.effect-field-group > label:last-child { border-bottom: 0; }
+.effect-text-field > span, .effect-select-field > span, .effect-compact-grid label > span { display: flex; flex-direction: column; gap: 4px; }
+.effect-text-field strong, .effect-select-field strong, .effect-compact-grid strong { font-family: var(--display); font-size: 1rem; }
+.effect-text-field small, .effect-select-field small, .effect-compact-grid small { color: var(--muted); font-size: 7px; line-height: 1.4; }
+.effect-text-field textarea, .effect-select-field select, .effect-compact-grid input, .effect-compact-grid select { width: 100%; min-width: 0; border: 1.5px solid var(--ink); border-radius: 12px; outline: 0; background: rgba(255,255,255,.86); color: var(--ink); font: 600 10px/1.55 var(--body); }
+.effect-text-field textarea { min-height: 70px; padding: 12px; resize: vertical; }
+.effect-select-field select, .effect-compact-grid input, .effect-compact-grid select { height: 44px; padding: 0 11px; }
+.effect-text-field textarea:focus, .effect-select-field select:focus, .effect-compact-grid input:focus, .effect-compact-grid select:focus { box-shadow: 4px 4px 0 var(--coral); }
+.effect-compact-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 9px; margin-top: 14px; }
+.effect-compact-grid > label { min-width: 0; display: grid; gap: 9px; padding: 13px; border: 1px solid var(--ink); border-radius: 14px; background: rgba(255,255,255,.58); }
+.effect-compact-grid label > div { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 7px; }
+.effect-compact-grid b { font-size: 7px; }
+.effect-relation-card { position: sticky; top: 108px; min-height: 920px; display: flex; flex-direction: column; padding: 30px; overflow: hidden; background: var(--ink); color: var(--white); box-shadow: 9px 9px 0 var(--coral); }
+.effect-card-topline { display: flex; justify-content: space-between; gap: 18px; padding-bottom: 17px; border-bottom: 1px solid rgba(255,255,255,.5); color: var(--yellow); }
+.effect-target { position: relative; min-height: 390px; display: grid; place-items: center; margin: 29px 0 25px; overflow: hidden; border: 2px solid var(--white); border-radius: 50%; background: radial-gradient(circle at center,rgba(93,227,184,.18),transparent 52%),var(--blue); box-shadow: 8px 8px 0 var(--yellow); }
+.effect-outside-label { position: absolute; left: 25px; top: 23px; color: rgba(255,255,255,.75); font-size: 7px; }
+.effect-ring { position: absolute; aspect-ratio: 1; border: 2px dashed rgba(255,255,255,.42); border-radius: 50%; transition: background .25s ease, border-color .25s ease, transform .25s ease; }
+.effect-ring-outside { width: 73%; }
+.effect-ring-outside.is-filled { border-color: var(--mint); background: rgba(93,227,184,.08); }
+.effect-ring-boundary { width: 42%; border-style: solid; border-color: rgba(255,213,73,.5); }
+.effect-ring-boundary.is-filled { border-width: 3px; border-color: var(--yellow); background: rgba(255,213,73,.18); box-shadow: 0 0 0 11px rgba(255,213,73,.08); }
+.effect-rain-lines { position: absolute; width: 30%; height: 54%; display: flex; justify-content: space-between; opacity: .22; transform: rotate(5deg); }
+.effect-rain-lines.is-filled { opacity: 1; }
+.effect-rain-lines i { width: 2px; height: 100%; background: linear-gradient(transparent,var(--sky) 20% 72%,transparent); }
+.effect-rain-lines i:nth-child(even) { height: 78%; margin-top: 13%; }
+.effect-anchor-dot { z-index: 2; width: 70px; aspect-ratio: 1; display: grid; place-items: center; border: 3px solid var(--white); border-radius: 50%; background: var(--coral); color: var(--ink); font: 780 2.5rem/1 var(--display); box-shadow: 6px 6px 0 var(--ink); }
+.effect-anchor-dot.is-filled { background: var(--yellow); }
+.effect-target > small { position: absolute; left: 50%; bottom: 21%; padding: 6px 9px; border: 1px solid var(--white); border-radius: 99px; background: var(--ink); color: var(--white); font-size: 6px; transform: translateX(-50%); }
+.effect-relation-card > h2 { margin: 0 0 18px; font-family: var(--display); font-size: clamp(2.4rem,3.8vw,4rem); font-weight: 720; line-height: .9; letter-spacing: -.045em; }
+.effect-card-ledger { display: grid; gap: 8px; }
+.effect-card-ledger span { min-width: 0; display: grid; grid-template-columns: 78px 1fr; gap: 11px; padding: 11px; border: 1px solid rgba(255,255,255,.5); border-radius: 12px; background: rgba(255,255,255,.07); }
+.effect-card-ledger small { color: var(--yellow); font: 700 6px var(--mono); }
+.effect-card-ledger b { overflow: hidden; font-size: 8px; font-weight: 650; line-height: 1.5; text-overflow: ellipsis; white-space: nowrap; }
+.effect-relation-card > p { margin: 22px 0 0; color: rgba(255,255,255,.78); font-size: 9px; line-height: 1.65; }
+.effect-local-note { margin-top: auto; padding-top: 25px; color: rgba(255,255,255,.55); font-size: 7px; }
+.effect-output-section { grid-column: 1/-1; margin-top: 105px; }
+.effect-output-heading { display: grid; grid-template-columns: 1.2fr .8fr; gap: 8vw; align-items: end; margin-bottom: 35px; }
+.effect-output-heading > p { max-width: 440px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.75; }
+.effect-output-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.effect-output-card { min-width: 0; padding: 22px; border: 2px solid var(--ink); border-radius: 27px; background: var(--sky); box-shadow: 7px 7px 0 var(--ink); }
+.effect-output-matrix { background: var(--yellow); }
+.effect-output-review { background: var(--mint); }
+.effect-output-card > div:first-child { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 15px; border-bottom: 1.5px solid var(--ink); color: var(--blue); }
+.effect-output-card button:disabled { opacity: .42; box-shadow: none; cursor: not-allowed; }
+.effect-output-card h3 { margin: 20px 0 13px; font-family: var(--display); font-size: 1.85rem; line-height: .95; }
+.effect-output-card pre { height: 460px; margin: 0; padding: 16px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; border: 1.5px solid var(--ink); border-radius: 15px; background: rgba(255,255,255,.82); color: var(--ink); font: 500 8px/1.7 var(--mono); }
+.effect-output-empty { height: 460px; display: grid; place-items: center; align-content: center; gap: 13px; border: 1.5px dashed var(--ink); border-radius: 15px; text-align: center; }
+.effect-output-empty span { font: 760 3rem var(--display); }
+.effect-output-empty p { max-width: 180px; margin: 0; font-size: 9px; line-height: 1.6; }
+.effect-method-note { display: grid; grid-template-columns: .95fr 1fr auto; gap: 5vw; align-items: end; margin-top: 115px; padding: 34px; border: 2px solid var(--ink); border-radius: 29px; background: var(--coral); box-shadow: 8px 8px 0 var(--yellow); }
+.effect-method-note h2 { margin: 42px 0 0; font-family: var(--display); font-size: clamp(2.7rem,4.8vw,5rem); font-weight: 720; line-height: .92; }
+.effect-method-note > p { max-width: 470px; margin: 0; font-size: 12px; line-height: 1.8; }
+.effect-method-note nav { display: grid; gap: 9px; }
+.effect-method-note a { padding: 11px 15px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--white); color: var(--ink); font-size: 9px; font-weight: 750; box-shadow: 4px 4px 0 var(--ink); white-space: nowrap; }
+.effect-copy-fallback { grid-column: 1/-1; display: grid; grid-template-columns: 1fr auto; gap: 18px; margin-top: 18px; padding: 22px; border: 2px solid var(--ink); border-radius: 22px; background: var(--coral); box-shadow: 6px 6px 0 var(--ink); }
+.effect-copy-fallback p { margin: 7px 0 0; font-size: 10px; }
+.effect-copy-fallback textarea { grid-column: 1/-1; min-height: 220px; padding: 16px; resize: vertical; border: 1.5px solid var(--ink); border-radius: 14px; background: var(--white); color: var(--ink); font: 500 10px/1.65 var(--mono); }
+.effect-panel-heading button:focus-visible, .effect-output-card button:focus-visible, .effect-method-note a:focus-visible, .effect-copy-fallback button:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+
+@media (max-width: 1050px) {
+  .effect-workbench { grid-template-columns: 1fr; }
+  .effect-relation-card { position: static; min-height: 850px; }
+  .effect-target { width: min(100%,500px); align-self: center; }
+  .effect-output-grid { grid-template-columns: 1fr 1fr; }
+  .effect-output-review { grid-column: 1/-1; }
+  .effect-method-note { grid-template-columns: 1fr 1fr; }
+  .effect-method-note nav { grid-column: 2; }
+}
+
+@media (max-width: 760px) {
+  .effect-editor, .effect-relation-card { padding: 22px; border-radius: 25px; }
+  .effect-panel-heading, .effect-group-heading { align-items: flex-start; flex-direction: column; }
+  .effect-panel-heading > div:last-child { justify-content: flex-start; }
+  .effect-group-heading p { text-align: left; }
+  .effect-field-group { padding: 18px; }
+  .effect-text-field, .effect-select-field { grid-template-columns: 1fr; gap: 9px; }
+  .effect-compact-grid { grid-template-columns: 1fr; }
+  .effect-relation-card { min-height: 760px; }
+  .effect-target { min-height: 300px; margin-top: 23px; }
+  .effect-anchor-dot { width: 58px; }
+  .effect-output-section { margin-top: 78px; }
+  .effect-output-heading, .effect-output-grid { grid-template-columns: 1fr; }
+  .effect-output-heading { gap: 28px; }
+  .effect-output-review { grid-column: auto; }
+  .effect-output-card { padding: 19px; border-radius: 23px; }
+  .effect-output-card pre, .effect-output-empty { height: 390px; }
+  .effect-method-note { grid-template-columns: 1fr; margin-top: 82px; padding: 24px; }
+  .effect-method-note nav { grid-column: auto; }
+  .effect-method-note a { white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .effect-panel-heading button, .effect-output-card button, .effect-ring { transition: none; }
+}

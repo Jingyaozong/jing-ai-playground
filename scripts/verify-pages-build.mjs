@@ -25,6 +25,7 @@ const requiredFiles = [
   'tools/story-seed/index.html',
   'tools/review-pace/index.html',
   'tools/shot-list-cleaner/index.html',
+  'tools/local-effect-card/index.html',
   'og.png',
 ];
 
