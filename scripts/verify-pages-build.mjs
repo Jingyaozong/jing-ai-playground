@@ -13,6 +13,7 @@ const requiredFiles = [
   'index.html',
   '404.html',
   'notes/index.html',
+  'notes/ai-video-local-effects-spatial-control/index.html',
   'library/index.html',
   'prompts/index.html',
   'stories/she-forgets-yesterday/index.html',
