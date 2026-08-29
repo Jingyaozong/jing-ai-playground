@@ -14,6 +14,7 @@ const requiredFiles = [
   '404.html',
   'notes/index.html',
   'notes/ai-video-local-effects-spatial-control/index.html',
+  'notes/ai-video-lighting-continuity/index.html',
   'library/index.html',
   'prompts/index.html',
   'stories/she-forgets-yesterday/index.html',
