@@ -31,6 +31,11 @@ connections:
     description: "归档前回看生成秒数、返工预留与后期投入，补齐项目的实际成本线索。"
     href: "/tools/generation-budget/"
     tone: "coral"
+  - label: "TOOL"
+    title: "多平台发布规格规划器"
+    description: "从母版拆出横版、竖版、方版与短版，并记录安全区、字幕、音频和规则核对日期。"
+    href: "/tools/release-matrix/"
+    tone: "sky"
 ---
 
 AI 视频项目最容易在“看起来快做完”的时候失控。

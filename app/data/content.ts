@@ -227,6 +227,15 @@ export const tools: Tool[] = [
     symbol: '▣',
     href: '/tools/delivery-pack/',
   },
+  {
+    id: 'tool-013',
+    title: 'Release Matrix',
+    description: '从一个视频母版规划多种画幅、时长、安全区、字幕与音频版本，生成 Markdown 和 CSV 发布矩阵。',
+    label: '多平台发布规格规划器',
+    status: 'Ready',
+    symbol: '▤',
+    href: '/tools/release-matrix/',
+  },
 ];
 
 export const currentlyPlaying = [
