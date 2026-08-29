@@ -111,6 +111,17 @@ export const experiments: Experiment[] = [
     visual: 'rainstudy',
   },
   {
+    id: 'experiment-006',
+    slug: 'can-one-light-survive-a-reverse-angle',
+    title: '同一盏灯换机位后还能保持方向吗？',
+    description: '十二格对照协议：固定北窗冷光与桌灯暖光，比较氛围词、世界坐标账本和账本加起点证据。目前 0 / 12，没有视频结论。',
+    category: 'Lighting Continuity Study',
+    date: '2026.08.29',
+    status: '协议完成 · 0 / 12 待执行',
+    stage: 'documented',
+    visual: 'lighting',
+  },
+  {
     id: 'experiment-003',
     title: '让 AI 先画一张不会发生的海报',
     description: '待验证玩法：从一张虚构电影海报反向生长出角色、场景与故事梗概。目前只保留概念卡。',

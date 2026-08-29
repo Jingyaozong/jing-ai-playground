@@ -37,7 +37,7 @@ export type ExperimentDetail = {
   sampleTitle?: string;
   sampleDescription?: string;
   reference?: {
-    kind: 'character' | 'reference-pack';
+    kind: 'character' | 'reference-pack' | 'light-map';
     label: string;
     title: string;
     description: string;
@@ -52,7 +52,7 @@ export type ExperimentDetail = {
   }>;
   observationTitle?: string;
   observationDescription?: string;
-  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow';
+  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity';
   sources?: Array<{ title: string; url: string; note: string }>;
   nextSteps: string[];
   currentConclusion?: string;
@@ -251,6 +251,85 @@ export const experimentDetails: ExperimentDetail[] = [
     relatedLabel: '返回《雨停以前》故事页 ↗',
     toolHref: '/tools/local-effect-card/',
     toolLabel: '生成局部特效约束卡 ↗',
+  },
+  {
+    slug: 'can-one-light-survive-a-reverse-angle',
+    number: '004',
+    title: '同一盏灯换机位后还能保持方向吗？',
+    englishTitle: 'Can One Light Survive a Reverse Angle?',
+    category: 'Lighting Continuity Study',
+    date: '2026.08.29',
+    status: '实验协议完成 · 0 / 12 待执行',
+    demo: true,
+    testCount: 12,
+    testUnit: 'TEST CELLS',
+    pilotLabel: 'PLANNED · 0 / 12',
+    notice: '这是一份待执行的光线连续性实验协议。目前只有固定灯位图、十二个测试单元和空白记录台，没有模型输出、评分或结论；页面不会用概念图冒充视频结果。',
+    summary: '固定北窗冷光与桌灯暖光，用四个相同镜头对比氛围词、世界坐标账本和账本加起点证据三种输入条件；检查换景别、转身与反打后，灯是否还在原来的位置。',
+    question: '摄影机和人物改变方向之后，视频模型能否继续遵守同一个现实空间里的主光方向、阴影关系、曝光层级与冷暖分工？',
+    hypothesis: '只写“电影感冷暖光”可能不足以约束灯在现实空间中的位置；明确北窗、桌灯、人物和摄影机的世界坐标，可能减少主光翻面与阴影重置。增加首帧或场景参考可以固定起点证据，但不保证中段和反向机位仍然连续。',
+    constants: [
+      '同一个模型、版本、入口和账号设置；执行当天记录真实名称',
+      '同一位虚构成年角色、同一套服装、同一个房间与固定家具位置',
+      '固定灯位：北侧窗户提供偏冷高位主光，桌面低位灯提供偏暖局部光',
+      '四个固定镜头任务：建立镜头、人物转头、信纸特写、反向机位',
+      '每格 5 秒、16:9、相同输出数量；帧率与清晰度按平台可用项固定',
+      '除 A / B / C 指定输入条件外，不临时增删运镜、动作、光源或调色词',
+    ],
+    protocolTitle: '三种光线描述，\n四个相同机位任务。',
+    protocolDescription: '灯位、人物、空间和镜头任务全部固定。组间只改变光线输入的精确程度，失败后也不临时为单格补救。',
+    groups: [
+      { code: 'A', title: '氛围词基线', shots: 'A01—A04', variable: '只写“电影感冷暖夜景”，不说明灯位和现实空间方向', tone: 'blue' },
+      { code: 'B', title: '世界坐标账本', shots: 'B01—B04', variable: '写明北窗冷光、桌灯暖光、人物受光面与阴影方向', tone: 'yellow' },
+      { code: 'C', title: '账本 + 起点证据', shots: 'C01—C04', variable: '在 B 组文字账本上增加对应机位的首帧或环境参考', tone: 'coral' },
+    ],
+    reference: {
+      kind: 'light-map',
+      label: 'WORLD LIGHT MAP · FIXED FOR ALL 12 CELLS',
+      title: '先固定灯在哪里，再测试摄影机去哪。',
+      description: '北窗冷光与桌灯暖光在十二格中都不移动。相机 C1—C4 可以换位，人物可以转身，但主光来自现实空间的哪一侧不能跟着画面左右一起翻转。',
+    },
+    sampleTitle: '十二格不预设画面，\n只预设检查方法。',
+    sampleDescription: '每个位置对应一次真实视频生成。当前只显示固定任务、条件与检查重点；没有任何缩略图、分数或优胜组。',
+    samples: [
+      { shot: 'A01', title: '建立镜头', setting: '氛围词 · 房间全景 · 固定镜头', observation: '待执行；记录北窗与桌灯是否能形成可辨认的两层光线关系。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'blue', generated: false },
+      { shot: 'A02', title: '人物转头', setting: '氛围词 · 中近景 · 由窗转向桌面', observation: '待执行；检查人物转头时主光是否翻面、眼神光是否突然增殖。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'blue', generated: false },
+      { shot: 'A03', title: '信纸特写', setting: '氛围词 · 插入镜头 · 手拿信纸', observation: '待执行；检查信纸、手部与桌灯的阴影方向是否属于同一空间。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'blue', generated: false },
+      { shot: 'A04', title: '反向机位', setting: '氛围词 · 越肩反打 · 看向北窗', observation: '待执行；检查换到轴线另一侧后，主光是否只是机械地停在画面同一侧。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'blue', generated: false },
+      { shot: 'B01', title: '建立镜头', setting: '坐标账本 · 房间全景 · 固定镜头', observation: '待执行；与 A01 相同任务，增加北窗、桌灯与曝光层级约束。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'yellow', generated: false },
+      { shot: 'B02', title: '人物转头', setting: '坐标账本 · 中近景 · 由窗转向桌面', observation: '待执行；逐帧记录人物脸部受光面是否随真实转身正确变化。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'yellow', generated: false },
+      { shot: 'B03', title: '信纸特写', setting: '坐标账本 · 插入镜头 · 手拿信纸', observation: '待执行；检查信纸亮度、桌面接触影和手部投影是否保持因果关系。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'yellow', generated: false },
+      { shot: 'B04', title: '反向机位', setting: '坐标账本 · 越肩反打 · 看向北窗', observation: '待执行；区分正常的屏幕左右变化与错误的现实灯位翻转。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'yellow', generated: false },
+      { shot: 'C01', title: '建立镜头', setting: '账本 + 首帧 · 房间全景 · 固定镜头', observation: '待执行；检查起点证据是否稳定窗、桌灯与暗部层级。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'coral', generated: false },
+      { shot: 'C02', title: '人物转头', setting: '账本 + 首帧 · 中近景 · 由窗转向桌面', observation: '待执行；检查首帧正确之后，中段转头是否仍会重置主光。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'coral', generated: false },
+      { shot: 'C03', title: '信纸特写', setting: '账本 + 首帧 · 插入镜头 · 手拿信纸', observation: '待执行；检查参考中的光线是否保留，同时不锁死手部动作。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'coral', generated: false },
+      { shot: 'C04', title: '反向机位', setting: '账本 + 首帧 · 越肩反打 · 看向北窗', observation: '待执行；检查反打首帧与前一镜出口是否属于同一套现实灯位。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'coral', generated: false },
+    ],
+    checks: [
+      { label: 'LIGHT SOURCE', question: '现实空间里的灯还在原处吗？', note: '先按北窗与桌灯的世界坐标判断，不因为画面左右翻转就误判为主光错误。', tone: 'blue' },
+      { label: 'SUBJECT RESPONSE', question: '人、手、信纸和影子一起响应了吗？', note: '检查脸部受光面、眼神光、接触影和投影；只保住背景亮度不算连续。', tone: 'yellow' },
+      { label: 'GRADE BOUNDARY', question: '这是空间错误还是调色差异？', note: '把曝光泵动和色温跳变，与灯位翻转、阴影重置分开记录，避免把所有问题都写成“色不一样”。', tone: 'coral' },
+    ],
+    observationTitle: '先看灯从哪里来，\n再看画面像不像。',
+    observationDescription: '四项人工评分分开记录：光源方向、主体受光、曝光层级和色温关系。每格再检查 0%、25%、50%、75%、100% 五个时间点。',
+    recordBoard: 'lighting-continuity',
+    sources: [
+      { title: 'Runway · Image to Video Prompting Guide', url: 'https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide', note: '官方说明输入图承担构图、主体、光线与风格，文字应主要描述运动；因此首帧可作为起点证据，但不能替代整段检查。' },
+      { title: 'Google Cloud · Video generation best practices', url: 'https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/video/best-practice', note: '官方建议清晰描述主体、动作、环境、光线与镜头；本实验把这些变量拆开固定，不把建议本身当成结果。' },
+      { title: 'Adobe · Match Color between shots', url: 'https://helpx.adobe.com/premiere/desktop/correct-color/add-color-effects/match-color-between-shots.html', note: '官方调色流程可用于镜头间颜色匹配；本实验仍把后期可修的色彩差异与无法靠调色修复的空间照明错误分开。' },
+    ],
+    nextSteps: [
+      '执行当天选择一个支持五秒视频生成的模型版本，记录入口、设置和日期。',
+      '制作同一房间的环境参考与四个机位首帧，并先核对北窗、桌灯和人物位置。',
+      '按 A、B、C 三组完成十二格，不在中途修改固定动作、灯位或验收标准。',
+      '逐格检查五个时间点，分开记录灯位翻转、阴影重置、曝光跳动和色温跳变。',
+    ],
+    currentConclusion: '固定灯位图、十二格空白样本墙与本地记录台已经准备好；当前 0 / 12，没有视频输出，因此不能判断哪种输入更稳定。',
+    conclusionBadge: '0 / 12 · 无结论',
+    relatedHref: '/notes/ai-video-lighting-continuity/',
+    relatedLabel: '阅读完整光线连续性方法 ↗',
+    toolHref: '/tools/scene-anchor/',
+    toolLabel: '制作场景与光线锚点卡 ↗',
   },
 ];
 

@@ -7,6 +7,7 @@ import characterAnchor from '../../assets/generated/she-forgets-yesterday-charac
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 import { ExperimentRecordBoard } from '../../components/experiment-record-board';
+import { LightingContinuityBoard } from '../../components/lighting-continuity-board';
 import { RainFollowRecordBoard } from '../../components/rain-follow-record-board';
 import { ReferenceComparisonBoard } from '../../components/reference-comparison-board';
 import { experimentDetails, getExperimentBySlug } from '../../data/experiments';
@@ -118,7 +119,11 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
           <p>{experiment.sampleDescription ?? '首轮先放入四格静态样本。正式实验会继续扩展到四十镜，并同时保留最稳定与最容易漂移的结果。'}</p>
         </div>
         <article className="experiment-reference-card">
-          {reference.kind === 'character' ? <div className="experiment-reference-image" aria-label={reference.imageAlt ?? '实验角色锚点图'} style={{ backgroundImage: `url("${referenceImage.src}")` }} /> : <div className="experiment-reference-image is-reference-pack" aria-label="待制作的正面、侧面与全身参考图位置"><i>FRONT</i><i>SIDE</i><i>FULL</i><b className="mono">WAITING FOR CONSISTENT SOURCES</b></div>}
+          {reference.kind === 'character'
+            ? <div className="experiment-reference-image" aria-label={reference.imageAlt ?? '实验角色锚点图'} style={{ backgroundImage: `url("${referenceImage.src}")` }} />
+            : reference.kind === 'light-map'
+              ? <div className="experiment-reference-image is-light-map" aria-label="北窗冷光、桌灯暖光、人物与四个摄影机位的世界坐标图"><span className="light-map-window mono">NORTH WINDOW · COOL</span><span className="light-map-ray ray-one" /><span className="light-map-ray ray-two" /><b className="light-map-subject">S<small className="mono">SUBJECT</small></b><i className="light-map-lamp">●<small className="mono">WARM DESK LAMP</small></i>{['C1', 'C2', 'C3', 'C4'].map((camera) => <em className={`light-map-camera camera-${camera.toLowerCase()}`} key={camera}>{camera}</em>)}<strong className="mono">LIGHTS STAY · CAMERAS MOVE</strong></div>
+              : <div className="experiment-reference-image is-reference-pack" aria-label="待制作的正面、侧面与全身参考图位置"><i>FRONT</i><i>SIDE</i><i>FULL</i><b className="mono">WAITING FOR CONSISTENT SOURCES</b></div>}
           <div><span className="mono">{reference.label}</span><h3>{reference.title}</h3><p>{reference.description}</p></div>
         </article>
         <div className="experiment-sample-grid">
@@ -164,6 +169,8 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         ? <ReferenceComparisonBoard />
         : experiment.recordBoard === 'rain-follow'
           ? <RainFollowRecordBoard />
+          : experiment.recordBoard === 'lighting-continuity'
+            ? <LightingContinuityBoard />
           : <ExperimentRecordBoard />}
 
       <section className="experiment-next section-shell">

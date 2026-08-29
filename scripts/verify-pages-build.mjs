@@ -23,6 +23,7 @@ const requiredFiles = [
   'experiments/forty-shots-one-character/index.html',
   'experiments/what-reference-images-lock/index.html',
   'experiments/can-local-rain-follow-a-character/index.html',
+  'experiments/can-one-light-survive-a-reverse-angle/index.html',
   'tools/story-seed/index.html',
   'tools/review-pace/index.html',
   'tools/shot-list-cleaner/index.html',

@@ -116,6 +116,12 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .visual-storyboard { background: var(--yellow); }
 .visual-storyboard::before { inset: 8%; border: 2px solid var(--ink); background: linear-gradient(90deg,transparent 32%,var(--ink) 32% 32.6%,transparent 32.6% 66%,var(--ink) 66% 66.6%,transparent 66.6%),linear-gradient(transparent 48%,var(--ink) 48% 49%,transparent 49%); }
 .visual-storyboard::after { width: 13%; aspect-ratio: 1; left: 16%; top: 18%; border: 2px solid var(--ink); border-radius: 50%; background: var(--blue); box-shadow: 190px 90px 0 var(--coral),350px 5px 0 var(--white); }
+.visual-lighting { background: linear-gradient(135deg,var(--sky) 0 52%,var(--yellow) 52%); }
+.visual-lighting::before { left: 8%; top: 9%; width: 16%; height: 82%; border: 2px solid var(--ink); background: repeating-linear-gradient(0deg,var(--white) 0 13%,var(--blue) 13% 15%); box-shadow: 7px 7px 0 var(--ink); }
+.visual-lighting::after { left: 24%; top: 39%; width: 58%; height: 3px; border: 0; background: var(--blue); box-shadow: 0 14px 0 rgba(34,114,255,.52),0 -14px 0 rgba(34,114,255,.3); transform: rotate(12deg); transform-origin: left center; }
+.visual-lighting .shape-a { z-index: 2; left: 61%; top: 27%; width: 18%; aspect-ratio: 1; border: 2px solid var(--ink); border-radius: 50%; background: var(--coral); box-shadow: 5px 5px 0 var(--ink); }
+.visual-lighting .shape-b { z-index: 2; right: 9%; bottom: 12%; width: 13%; aspect-ratio: 1; border: 2px solid var(--ink); border-radius: 50%; background: var(--yellow); box-shadow: 0 0 0 10px rgba(255,213,73,.38); }
+.visual-lighting .shape-c { z-index: 1; left: 52%; bottom: 13%; width: 33%; height: 22%; border: 2px dashed var(--ink); border-radius: 50%; transform: rotate(-10deg); }
 
 /* Featured */
 .featured { width: min(100% - 56px,1420px); margin-inline: auto; padding: 125px 0 95px; }
@@ -2958,6 +2964,21 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .experiment-reference-image.is-reference-pack > i:nth-child(2) { margin-top: 48px; background: var(--sky); }
 .experiment-reference-image.is-reference-pack > i:nth-child(3) { margin-top: 15px; background: var(--mint); }
 .experiment-reference-image.is-reference-pack > b { position: absolute; left: 34px; bottom: 22px; color: var(--blue); font-size: 7px; }
+.experiment-reference-image.is-light-map { position: relative; overflow: hidden; background: linear-gradient(135deg,var(--sky),var(--mint)); }
+.experiment-reference-image.is-light-map::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(20,33,51,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(20,33,51,.08) 1px,transparent 1px); background-size: 38px 38px; }
+.light-map-window { position: absolute; left: 0; top: 8%; width: 24%; height: 82%; display: grid; place-items: center; padding: 10px; border: 2px solid var(--ink); border-left: 0; background: var(--white); color: var(--blue); font-size: 7px; text-align: center; writing-mode: vertical-rl; box-shadow: 7px 7px 0 var(--ink); }
+.light-map-ray { position: absolute; left: 20%; top: 37%; width: 56%; height: 3px; background: var(--blue); transform: rotate(13deg); transform-origin: left center; }
+.light-map-ray.ray-two { top: 55%; opacity: .45; transform: rotate(-8deg); }
+.light-map-subject { position: absolute; z-index: 2; left: 58%; top: 38%; width: 86px; aspect-ratio: 1; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: var(--coral); font: 760 3rem/.75 var(--display); box-shadow: 6px 6px 0 var(--ink); }
+.light-map-subject small { position: absolute; top: calc(100% + 10px); font-size: 7px; }
+.light-map-lamp { position: absolute; z-index: 2; right: 10%; bottom: 12%; display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--coral); font: normal 2.7rem/1 var(--display); text-shadow: 0 0 0 var(--ink),0 0 20px var(--yellow); }
+.light-map-lamp small { padding: 5px 7px; border: 1px solid var(--ink); border-radius: 99px; background: var(--yellow); color: var(--ink); font-size: 6px; text-shadow: none; }
+.light-map-camera { position: absolute; z-index: 2; width: 39px; aspect-ratio: 1; display: grid; place-items: center; border: 1.5px solid var(--ink); border-radius: 8px; background: var(--white); color: var(--blue); font: normal 750 8px var(--mono); box-shadow: 3px 3px 0 var(--ink); }
+.light-map-camera.camera-c1 { left: 36%; bottom: 11%; }
+.light-map-camera.camera-c2 { left: 37%; top: 12%; }
+.light-map-camera.camera-c3 { right: 8%; top: 10%; }
+.light-map-camera.camera-c4 { left: 46%; top: 38%; }
+.experiment-reference-image.is-light-map > strong { position: absolute; left: 30px; bottom: 24px; color: var(--blue); font-size: 7px; }
 .experiment-sample-visual.is-planned-frame { background-color: var(--sky); color: var(--ink); }
 .experiment-sample-card:nth-child(3n+2) .experiment-sample-visual.is-planned-frame { background-color: var(--yellow); }
 .experiment-sample-card:nth-child(3n) .experiment-sample-visual.is-planned-frame { background-color: var(--coral); }
@@ -2994,6 +3015,25 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .rain-record-grid .record-cell { aspect-ratio: 1.35; }
 .rain-task-key { grid-template-columns: repeat(3,1fr); }
 .rain-record-board .experiment-record-meta > label:last-child { grid-column: 1/-1; }
+.lighting-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
+.lighting-record-board .experiment-record-meta > label:last-child { grid-column: 1/-1; }
+.light-axis-diagram { position: relative; min-height: 285px; margin-bottom: 24px; overflow: hidden; border: 2px solid var(--ink); border-radius: 24px; background: linear-gradient(140deg,var(--sky),var(--mint)); }
+.light-axis-diagram::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(20,33,51,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(20,33,51,.07) 1px,transparent 1px); background-size: 28px 28px; }
+.light-axis-diagram > span { position: absolute; left: 16px; top: 14px; color: var(--blue); font-size: 7px; }
+.light-axis-window { position: absolute; left: -2px; top: 46px; width: 22%; height: 66%; border: 2px solid var(--ink); background: repeating-linear-gradient(0deg,var(--white) 0 18%,var(--blue) 18% 20%); box-shadow: 5px 5px 0 var(--ink); }
+.light-axis-beam { position: absolute; left: 19%; top: 42%; width: 59%; height: 3px; background: var(--blue); transform: rotate(12deg); transform-origin: left center; }
+.light-axis-beam.beam-two { top: 57%; opacity: .38; transform: rotate(-8deg); }
+.light-axis-diagram > b { position: absolute; z-index: 2; left: 57%; top: 35%; width: 70px; aspect-ratio: 1; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: var(--coral); font: 760 2.5rem/.8 var(--display); box-shadow: 5px 5px 0 var(--ink); }
+.light-axis-diagram > b small { position: absolute; top: calc(100% + 7px); font-size: 6px; }
+.light-axis-diagram > i { position: absolute; z-index: 2; right: 8%; bottom: 12%; display: flex; flex-direction: column; align-items: center; color: var(--coral); font: normal 2rem/1 var(--display); }
+.light-axis-diagram > i small { margin-top: 4px; padding: 4px 6px; border: 1px solid var(--ink); border-radius: 99px; background: var(--yellow); color: var(--ink); font-size: 5px; }
+.light-axis-diagram > em { position: absolute; z-index: 2; width: 33px; aspect-ratio: 1; display: grid; place-items: center; border: 1px solid var(--ink); border-radius: 7px; background: var(--white); color: var(--blue); font: normal 750 7px var(--mono); box-shadow: 2px 2px 0 var(--ink); }
+.light-axis-diagram .axis-c1 { left: 34%; bottom: 9%; }
+.light-axis-diagram .axis-c2 { left: 34%; top: 13%; }
+.light-axis-diagram .axis-c3 { right: 8%; top: 10%; }
+.light-axis-diagram .axis-c4 { left: 45%; top: 40%; }
+.light-axis-diagram > strong { position: absolute; left: 16px; bottom: 13px; color: var(--blue); font-size: 6px; }
+.lighting-task-key { grid-template-columns: repeat(4,1fr); }
 .experiment-source-grid a:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
 
 @media (max-width: 920px) {
@@ -3003,15 +3043,19 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 
 @media (max-width: 760px) {
   .experiment-reference-image.is-reference-pack { min-height: 410px; border-right: 0; border-bottom: 2px solid var(--ink); }
+  .experiment-reference-image.is-light-map { min-height: 410px; border-right: 0; border-bottom: 2px solid var(--ink); }
   .reference-record-grid { grid-template-columns: repeat(4,1fr); }
   .reference-task-key { grid-template-columns: 1fr; }
   .reference-active-task { align-items: flex-start; flex-direction: column; }
   .reference-record-board .experiment-record-filters > span { align-self: flex-start; }
   .rain-record-board .experiment-record-filters > span { align-self: flex-start; }
+  .lighting-record-board .experiment-record-filters > span { align-self: flex-start; }
   .rain-zone-diagram { min-height: 220px; }
   .rain-record-grid { grid-template-columns: repeat(3,1fr); }
   .rain-task-key { grid-template-columns: 1fr; }
   .rain-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
+  .lighting-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
+  .lighting-task-key { grid-template-columns: 1fr; }
 }
 
 /* Local effect card: one moving anchor, one explicit boundary, one dry outside state */
