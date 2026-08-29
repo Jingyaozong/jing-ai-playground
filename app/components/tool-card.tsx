@@ -5,7 +5,7 @@ export function ToolCard({ tool, index }: { tool: Tool; index: number }) {
   const card = (
     <article className={`tool-card tool-tone-${index % 3}`} id={tool.id}>
       <div className="tool-symbol" aria-hidden="true">{tool.symbol}</div>
-      <div className="card-topline mono"><span>TOOL 0{index + 1}</span><span>{tool.status}</span></div>
+      <div className="card-topline mono"><span>TOOL {String(index + 1).padStart(2, '0')}</span><span>{tool.status}</span></div>
       <p className="tool-label">{tool.label}</p>
       <h3>{tool.title}</h3>
       <p>{tool.description}</p>

@@ -2800,3 +2800,71 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .release-method-note { grid-template-columns: 1fr; margin-top: 82px; padding: 24px; }
   .release-method-note > a { grid-column: auto; white-space: normal; }
 }
+
+/* Tools route: thirteen existing tools arranged as a five-stage production conveyor */
+.tool-workflow { padding-top: 18px; padding-bottom: 125px; }
+.tool-workflow-heading { display: grid; grid-template-columns: 1.25fr .75fr; gap: 9vw; align-items: end; padding-bottom: 42px; }
+.tool-workflow-heading h2, .tool-archive-heading h2 { margin: 15px 0 0; font-family: var(--display); font-size: clamp(3.4rem,6.5vw,7.2rem); font-weight: 720; line-height: .88; letter-spacing: -.055em; }
+.tool-workflow-heading h2 em { color: var(--blue); font-style: normal; }
+.tool-workflow-heading > p, .tool-archive-heading > p { max-width: 420px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.tool-route { position: relative; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 11px; padding: 54px 0 40px; }
+.tool-route::before { content: ''; position: absolute; left: 4%; right: 4%; top: 32px; height: 8px; border: 2px solid var(--ink); border-radius: 99px; background: var(--yellow); box-shadow: 4px 4px 0 var(--ink); }
+.tool-route-stage { position: relative; min-width: 0; min-height: 455px; display: flex; flex-direction: column; padding: 18px; border: 2px solid var(--ink); border-radius: 25px; background: var(--white); box-shadow: 6px 6px 0 var(--ink); }
+.tool-route-stage:nth-child(even) { transform: translateY(26px); }
+.tool-route-tone-0 { background: var(--yellow); }
+.tool-route-tone-1 { background: var(--sky); }
+.tool-route-tone-2 { background: var(--coral); }
+.tool-route-tone-3 { background: var(--mint); }
+.tool-route-tone-4 { background: var(--white); }
+.tool-route-index { position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 8px; min-height: 61px; padding-bottom: 13px; border-bottom: 1.5px solid var(--ink); }
+.tool-route-index span { align-self: flex-start; color: var(--blue); font-size: 7px; }
+.tool-route-index strong { font: 760 4.5rem/.63 var(--display); letter-spacing: -.07em; }
+.tool-route-index i { position: absolute; left: 50%; top: -45px; width: 18px; aspect-ratio: 1; border: 2px solid var(--ink); border-radius: 50%; background: var(--blue); box-shadow: 3px 3px 0 var(--ink); transform: translateX(-50%); }
+.tool-route-stage:nth-child(even) .tool-route-index i { top: -71px; background: var(--coral); }
+.tool-route-copy { padding: 21px 0 17px; }
+.tool-route-copy > span { color: var(--blue); font-size: 7px; }
+.tool-route-copy h3 { margin: 8px 0 11px; font-family: var(--display); font-size: clamp(1.55rem,2.3vw,2.25rem); font-weight: 700; line-height: .95; letter-spacing: -.035em; }
+.tool-route-copy p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.65; }
+.tool-route-links { display: grid; gap: 7px; }
+.tool-route-links a { min-width: 0; display: grid; grid-template-columns: 30px minmax(0,1fr) 25px; gap: 7px; align-items: center; padding: 9px; border: 1.5px solid var(--ink); border-radius: 12px; background: rgba(255,255,255,.82); color: var(--ink); transition: transform .18s ease, background .18s ease, box-shadow .18s ease; }
+.tool-route-links a:hover { background: var(--white); box-shadow: 3px 3px 0 var(--blue); transform: translate(-2px,-2px); }
+.tool-route-links span { color: var(--blue); font-size: 6px; }
+.tool-route-links strong { overflow: hidden; font-size: 8px; line-height: 1.25; text-overflow: ellipsis; }
+.tool-route-links i { width: 25px; aspect-ratio: 1; display: grid; place-items: center; border: 1px solid var(--ink); border-radius: 50%; background: var(--yellow); font: normal 750 11px var(--display); }
+.tool-route-stage > small { margin-top: auto; padding-top: 16px; color: var(--blue); font: 700 7px/1.45 var(--mono); }
+.tool-route-legend { display: grid; grid-template-columns: auto 1fr auto; gap: 28px; align-items: center; margin-top: 30px; padding: 17px 20px; border: 2px solid var(--ink); border-radius: 18px; background: var(--blue); color: var(--white); box-shadow: 6px 6px 0 var(--yellow); }
+.tool-route-legend > span { color: var(--yellow); }
+.tool-route-legend p { margin: 0; font-size: 9px; line-height: 1.6; }
+.tool-route-legend a { padding: 10px 14px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--yellow); color: var(--ink); font-size: 9px; font-weight: 750; white-space: nowrap; }
+.tool-archive-heading { display: grid; grid-template-columns: 1.15fr .85fr; gap: 9vw; align-items: end; padding-top: 15px; padding-bottom: 42px; scroll-margin-top: 110px; }
+.tool-archive-heading h2 { font-size: clamp(3rem,5.4vw,6rem); }
+.tool-route-links a:focus-visible, .tool-route-legend a:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+
+@media (max-width: 1080px) {
+  .tool-route { grid-template-columns: repeat(3,minmax(0,1fr)); row-gap: 34px; }
+  .tool-route::before { display: none; }
+  .tool-route-stage:nth-child(even) { transform: none; }
+  .tool-route-index i, .tool-route-stage:nth-child(even) .tool-route-index i { left: auto; right: 0; top: -29px; transform: none; }
+}
+
+@media (max-width: 760px) {
+  .tool-workflow { padding-bottom: 85px; }
+  .tool-workflow-heading, .tool-archive-heading { grid-template-columns: 1fr; gap: 27px; }
+  .tool-workflow-heading h2 { font-size: clamp(3.4rem,16vw,5.5rem); }
+  .tool-route { grid-template-columns: 1fr; gap: 14px; padding-top: 34px; padding-left: 27px; }
+  .tool-route::before { display: block; left: 7px; right: auto; top: 35px; bottom: 35px; width: 7px; height: auto; }
+  .tool-route-stage { min-height: 0; padding: 20px; }
+  .tool-route-index { min-height: 52px; }
+  .tool-route-index strong { font-size: 4rem; }
+  .tool-route-index i, .tool-route-stage:nth-child(even) .tool-route-index i { left: -39px; right: auto; top: 18px; transform: none; }
+  .tool-route-copy h3 { font-size: 2rem; }
+  .tool-route-links strong { font-size: 9px; }
+  .tool-route-stage > small { margin-top: 16px; }
+  .tool-route-legend { grid-template-columns: 1fr; gap: 12px; margin-left: 27px; }
+  .tool-route-legend a { width: fit-content; white-space: normal; }
+  .tool-archive-heading { padding-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tool-route-links a { transition: none; }
+}
