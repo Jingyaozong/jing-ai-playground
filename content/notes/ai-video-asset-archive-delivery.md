@@ -17,19 +17,19 @@ sourceNote: "项目收集、文件结构与元数据依据 Adobe 官方资料核
 relatedNotes: ["ai-video-generation-version-log", "ai-video-production-budget", "ai-video-shot-continuity"]
 connections:
   - label: "TOOL"
+    title: "交付清单生成器"
+    description: "选择交付目录，逐项确认母版、字幕、声音、工程与授权，并生成 README、CSV 与 SHA-256 命令。"
+    href: "/tools/delivery-pack/"
+    tone: "yellow"
+  - label: "TOOL"
     title: "镜头版本记录器"
     description: "把候选素材的模型、参数、结果、决定与淘汰原因保存成可复制的镜头记录。"
     href: "/tools/shot-version-recorder/"
-    tone: "yellow"
+    tone: "mint"
   - label: "TOOL"
     title: "生成预算计算器"
     description: "归档前回看生成秒数、返工预留与后期投入，补齐项目的实际成本线索。"
     href: "/tools/generation-budget/"
-    tone: "mint"
-  - label: "STORY"
-    title: "她每天醒来都会忘记昨天"
-    description: "把目录、镜头编号和交付清单应用到一支正在制作的故事，而不是停留在空白模板。"
-    href: "/stories/she-forgets-yesterday/"
     tone: "coral"
 ---
 

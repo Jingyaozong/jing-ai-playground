@@ -218,6 +218,15 @@ export const tools: Tool[] = [
     symbol: '◫',
     href: '/tools/generation-budget/',
   },
+  {
+    id: 'tool-012',
+    title: 'Delivery Pack',
+    description: '规划母版、平台版、字幕、声音、工程、授权与清单目录，生成 README、CSV 和 SHA-256 校验命令。',
+    label: '交付清单生成器',
+    status: 'Ready',
+    symbol: '▣',
+    href: '/tools/delivery-pack/',
+  },
 ];
 
 export const currentlyPlaying = [
