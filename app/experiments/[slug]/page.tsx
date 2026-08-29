@@ -2,10 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import experimentPilotSamples from '../../assets/generated/forty-shots-pilot-samples.png';
+import rainCharacterAnchor from '../../assets/generated/before-the-rain-ends-character-anchor.webp';
 import characterAnchor from '../../assets/generated/she-forgets-yesterday-character-anchor.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 import { ExperimentRecordBoard } from '../../components/experiment-record-board';
+import { RainFollowRecordBoard } from '../../components/rain-follow-record-board';
 import { ReferenceComparisonBoard } from '../../components/reference-comparison-board';
 import { experimentDetails, getExperimentBySlug } from '../../data/experiments';
 
@@ -37,6 +39,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
     title: '先固定“她是谁”。',
     description: '黑色齐下巴短发、右侧蓝色发夹、红色三角耳饰、黄色针织外套和象牙白上衣，是这轮测试要求保留的五个视觉锚点。角色为 AI 生成的虚构人物。',
   };
+  const referenceImage = reference.asset === 'rain-character-anchor' ? rainCharacterAnchor : characterAnchor;
 
   return (
     <main className="experiment-detail-page">
@@ -115,7 +118,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
           <p>{experiment.sampleDescription ?? '首轮先放入四格静态样本。正式实验会继续扩展到四十镜，并同时保留最稳定与最容易漂移的结果。'}</p>
         </div>
         <article className="experiment-reference-card">
-          {reference.kind === 'character' ? <div className="experiment-reference-image" aria-label="实验角色锚点图" style={{ backgroundImage: `url("${characterAnchor.src}")` }} /> : <div className="experiment-reference-image is-reference-pack" aria-label="待制作的正面、侧面与全身参考图位置"><i>FRONT</i><i>SIDE</i><i>FULL</i><b className="mono">WAITING FOR CONSISTENT SOURCES</b></div>}
+          {reference.kind === 'character' ? <div className="experiment-reference-image" aria-label={reference.imageAlt ?? '实验角色锚点图'} style={{ backgroundImage: `url("${referenceImage.src}")` }} /> : <div className="experiment-reference-image is-reference-pack" aria-label="待制作的正面、侧面与全身参考图位置"><i>FRONT</i><i>SIDE</i><i>FULL</i><b className="mono">WAITING FOR CONSISTENT SOURCES</b></div>}
           <div><span className="mono">{reference.label}</span><h3>{reference.title}</h3><p>{reference.description}</p></div>
         </article>
         <div className="experiment-sample-grid">
@@ -157,7 +160,11 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         </div>
       </section>
 
-      {experiment.recordBoard === 'reference-comparison' ? <ReferenceComparisonBoard /> : <ExperimentRecordBoard />}
+      {experiment.recordBoard === 'reference-comparison'
+        ? <ReferenceComparisonBoard />
+        : experiment.recordBoard === 'rain-follow'
+          ? <RainFollowRecordBoard />
+          : <ExperimentRecordBoard />}
 
       <section className="experiment-next section-shell">
         <div className="experiment-next-title"><span className="mono">NEXT RUN</span><strong>→</strong><h2>下一轮怎么做</h2></div>

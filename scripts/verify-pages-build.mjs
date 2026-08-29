@@ -19,6 +19,8 @@ const requiredFiles = [
   'stories/no-boat-at-pier-seven/index.html',
   'stories/before-the-rain-ends/index.html',
   'experiments/forty-shots-one-character/index.html',
+  'experiments/what-reference-images-lock/index.html',
+  'experiments/can-local-rain-follow-a-character/index.html',
   'tools/story-seed/index.html',
   'tools/review-pace/index.html',
   'tools/shot-list-cleaner/index.html',

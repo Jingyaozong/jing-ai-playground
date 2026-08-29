@@ -41,6 +41,8 @@ export type ExperimentDetail = {
     label: string;
     title: string;
     description: string;
+    asset?: 'rain-character-anchor';
+    imageAlt?: string;
   };
   checks: Array<{
     label: string;
@@ -50,7 +52,7 @@ export type ExperimentDetail = {
   }>;
   observationTitle?: string;
   observationDescription?: string;
-  recordBoard?: 'forty-shots' | 'reference-comparison';
+  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow';
   sources?: Array<{ title: string; url: string; note: string }>;
   nextSteps: string[];
   currentConclusion?: string;
@@ -174,6 +176,77 @@ export const experimentDetails: ExperimentDetail[] = [
     conclusionBadge: '0 / 12 · 无结论',
     relatedHref: '/notes/ai-video-character-consistency/',
     relatedLabel: '阅读角色一致性方法 ↗',
+  },
+  {
+    slug: 'can-local-rain-follow-a-character',
+    number: '003',
+    title: '局部雨区能否稳定跟随人物？',
+    englishTitle: 'Can a Local Rain Zone Follow a Character?',
+    category: 'Motion & Weather Study',
+    date: '2026.08.29',
+    status: '实验协议完成 · 0 / 9 待执行',
+    demo: true,
+    testCount: 9,
+    testUnit: 'TEST CELLS',
+    pilotLabel: 'PLANNED · 0 / 9',
+    notice: '这是一份服务《雨停以前》的待执行视频实验协议。目前只有角色锚点、静态概念画面、九个测试单元与空白记录台；没有视频输出、评分或模型结论。',
+    summary: '用三个相同高风险镜头，对比纯文字、明确空间约束和角色锚点 / 首帧参考三种条件；检查一小块雨能否持续跟着林栖，同时让雨区之外保持干燥。',
+    question: '当人物开始横移、快走和收伞时，视频模型能否让半径约 1.2 米的雨区持续跟随，而不把雨铺满全场？',
+    hypothesis: '只写“雨跟着她”可能不足以维持稳定边界；明确人物为圆心、雨区半径和区外干燥，可能改善空间关系。加入角色锚点或首帧参考可能帮助身份一致性，但不一定改善雨幕跟随，甚至可能限制动作。',
+    constants: [
+      '同一个模型、版本、入口和账号设置；执行当天记录真实名称',
+      '同一个虚构角色林栖、同一套黄色雨衣、蓝包、红鞋和透明伞',
+      '三个固定镜头任务：厨房横移一步、通道快走三步、公交站合伞',
+      '每格 5 秒、16:9、相同输出数量；帧率与清晰度按平台可用项固定',
+      '除 A / B / C 指定条件外，不临时增删动作、运镜或负面限制',
+      '如果平台支持 Seed 则固定；不支持时明确记为不可控变量',
+    ],
+    protocolTitle: '三种提示条件，\n三个相同动作。',
+    protocolDescription: '每组都执行同样三个高风险镜头。组间只改变空间描述与参考素材条件，失败后也不临时改 Prompt 拯救单个样本。',
+    groups: [
+      { code: 'A', title: '纯文字基线', shots: 'A01—A03', variable: '只写“局部雨跟着她”，不补充半径、圆心或区外干燥', tone: 'blue' },
+      { code: 'B', title: '明确空间约束', shots: 'B01—B03', variable: '写明人物为圆心、半径约 1.2 米、区外始终干燥', tone: 'yellow' },
+      { code: 'C', title: '锚点 / 首帧参考', shots: 'C01—C03', variable: '在 B 组文字约束上增加林栖角色锚点或同场景首帧', tone: 'coral' },
+    ],
+    reference: {
+      kind: 'character',
+      asset: 'rain-character-anchor',
+      imageAlt: '林栖局部雨实验角色锚点图',
+      label: 'IDENTITY ANCHOR · AI FICTIONAL CHARACTER',
+      title: '先固定林栖，再看雨会不会跟丢。',
+      description: 'C 组计划使用《雨停以前》的林栖角色锚点。脸、耳后直发、透明黄色雨衣、蓝色斜挎包和红色帆布鞋都保持不变；参考图只用于角色与服装，不预设雨效已经成功。',
+    },
+    sampleTitle: '九格保持空白，\n失败也要留下位置。',
+    sampleDescription: '每个样本位对应一次真实视频生成。当前只显示条件、镜头任务和观察重点，不用静态概念图冒充视频结果。',
+    samples: [
+      { shot: 'A01', title: '厨房横移一步', setting: '纯文字 · 固定镜头 · 5 秒', observation: '待执行；观察雨区是否留在原地或迅速铺满厨房。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'blue', generated: false },
+      { shot: 'A02', title: '通道快走三步', setting: '纯文字 · 后退跟拍 · 5 秒', observation: '待执行；观察模型是否把局部雨误解成固定漏水。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'blue', generated: false },
+      { shot: 'A03', title: '公交站合伞', setting: '纯文字 · 缓慢下压 · 5 秒', observation: '待执行；观察透明伞、双手与雨区是否同时保持连续。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'blue', generated: false },
+      { shot: 'B01', title: '厨房横移一步', setting: '空间约束 · 固定镜头 · 5 秒', observation: '待执行；与 A01 相同动作，增加 1.2 米半径和区外干燥描述。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'yellow', generated: false },
+      { shot: 'B02', title: '通道快走三步', setting: '空间约束 · 后退跟拍 · 5 秒', observation: '待执行；检查雨幕中心、人物步伐和湿脚印是否同向移动。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'yellow', generated: false },
+      { shot: 'B03', title: '公交站合伞', setting: '空间约束 · 缓慢下压 · 5 秒', observation: '待执行；检查合伞前局部雨区是否保持，且不提前扩散全街。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'yellow', generated: false },
+      { shot: 'C01', title: '厨房横移一步', setting: '林栖锚点 / 首帧 · 固定镜头 · 5 秒', observation: '待执行；检查参考是否稳定人物，但让身体动作或雨区边界变僵。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'coral', generated: false },
+      { shot: 'C02', title: '通道快走三步', setting: '林栖锚点 / 首帧 · 后退跟拍 · 5 秒', observation: '待执行；检查锚点条件下的脸、服装、步态与跟随雨幕。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'coral', generated: false },
+      { shot: 'C03', title: '公交站合伞', setting: '林栖锚点 / 首帧 · 缓慢下压 · 5 秒', observation: '待执行；检查透明伞放下后是否增殖、漂移或重新展开。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'coral', generated: false },
+    ],
+    checks: [
+      { label: 'RAIN LOCK', question: '雨区中心还跟着她吗？', note: '逐帧看人物中心与雨幕中心的相对位置；不要只根据开头和结尾两帧判断。', tone: 'blue' },
+      { label: 'DRY OUTSIDE', question: '雨区之外真的保持干燥吗？', note: '记录雨线、积水和反光是否向全场扩散，以及湿圆边界是否闪烁或跳动。', tone: 'yellow' },
+      { label: 'BODY & PROP', question: '人物和透明伞先崩了吗？', note: '把雨效问题与脸、雨衣、鞋、手和伞骨问题分开记录，避免把多个失败合成一句“不能用”。', tone: 'coral' },
+    ],
+    observationTitle: '先看跟随与边界，\n最后才看好不好看。',
+    observationDescription: '四项评分分开记录：雨区跟随、干湿边界、人物连续性、动作与道具。九格只用于发现本轮失败模式，不外推模型普遍能力。',
+    recordBoard: 'rain-follow',
+    nextSteps: [
+      '执行当天选择一个支持五秒视频生成的模型版本，记录入口、设置与日期。',
+      '按 A、B、C 三组完成九格，不在中途修改固定动作和验收标准。',
+      '逐帧记录雨区落后、全场扩散、边界闪烁、人物漂移和透明伞变形。',
+      '完成九格后再判断是否进入《雨停以前》的十镜完整视频测试。',
+    ],
+    currentConclusion: '实验协议、林栖角色锚点与九格空白记录台已经准备好；当前 0 / 9，没有视频输出，因此不能判断哪种条件更稳定。',
+    conclusionBadge: '0 / 9 · 无结论',
+    relatedHref: '/stories/before-the-rain-ends/',
+    relatedLabel: '返回《雨停以前》故事页 ↗',
   },
 ];
 

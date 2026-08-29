@@ -100,6 +100,17 @@ export const experiments: Experiment[] = [
     visual: 'frames',
   },
   {
+    id: 'experiment-005',
+    slug: 'can-local-rain-follow-a-character',
+    title: '局部雨区能否稳定跟随人物？',
+    description: '九格对照协议：让三个相同高风险镜头分别使用纯文字、空间约束和角色锚点条件。目前 0 / 9，没有视频结论。',
+    category: 'Motion & Weather Study',
+    date: '2026.08.29',
+    status: '协议完成 · 0 / 9 待执行',
+    stage: 'documented',
+    visual: 'rainstudy',
+  },
+  {
     id: 'experiment-003',
     title: '让 AI 先画一张不会发生的海报',
     description: '待验证玩法：从一张虚构电影海报反向生长出角色、场景与故事梗概。目前只保留概念卡。',

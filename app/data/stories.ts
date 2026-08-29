@@ -356,7 +356,7 @@ export const storyDetails: StoryDetail[] = [
       locks: ['耳后直黑发＋平静克制的表情', '透明柠檬黄雨衣＋象牙白内搭', '天蓝斜挎包＋珊瑚红帆布鞋＋透明伞'],
     },
     ending: { label: 'CURRENT ENDING', copy: '雨没有停。\n它只是不再单独落在她身上。', href: '/notes/ai-video-shot-rhythm/', link: '阅读节奏设计方法 ↗' },
-    related: { href: '/tools/scene-anchor/', label: '打开场景锚点工具 ↗' },
+    related: { href: '/experiments/can-local-rain-follow-a-character/', label: '打开局部雨跟随实验 ↗' },
     beats: [
       { time: '07:20', title: '醒来', copy: '厨房地面只有她站立的一小圈是湿的。窗外晴朗，头顶却持续落下细雨。', tone: 'blue' },
       { time: '08:05', title: '上车', copy: '公交车里只有她的座位上方在下雨。乘客默默挪开，给她留出一圈干燥的空位。', tone: 'yellow' },

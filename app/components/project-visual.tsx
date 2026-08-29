@@ -1,9 +1,11 @@
 import experimentPilotSamples from '../assets/generated/forty-shots-pilot-samples.png';
+import rainKitchenFrame from '../assets/generated/before-the-rain-ends-frame-01.webp';
 import storyKeyframes from '../assets/generated/she-forgets-yesterday-keyframes.png';
 
 const generatedVisuals = {
   memory: { image: storyKeyframes, caption: 'AI concept board · 4 frames' },
   faces: { image: experimentPilotSamples, caption: 'Pilot samples · 4 / 40' },
+  rainstudy: { image: rainKitchenFrame, caption: 'Story concept frame · no video' },
 };
 
 export function ProjectVisual({ variant, label }: { variant: string; label: string }) {

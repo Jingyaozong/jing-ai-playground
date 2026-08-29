@@ -2981,6 +2981,19 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .reference-active-task span { color: var(--blue); }
 .reference-active-task strong { font-family: var(--display); font-size: 1.3rem; }
 .reference-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
+.rain-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
+.rain-zone-diagram { position: relative; min-height: 285px; display: grid; place-items: center; margin-bottom: 24px; overflow: hidden; border: 2px solid var(--ink); border-radius: 24px; background: radial-gradient(circle at center,var(--yellow) 0 9%,transparent 9.5%),linear-gradient(135deg,var(--sky),var(--mint)); }
+.rain-zone-diagram > span { position: absolute; left: 18px; top: 16px; color: var(--blue); font-size: 7px; font-weight: 750; }
+.rain-zone-diagram > i { position: absolute; left: 50%; top: 50%; aspect-ratio: 1; border: 2px solid var(--ink); border-radius: 50%; transform: translate(-50%,-50%); }
+.rain-zone-diagram > i:nth-of-type(1) { width: 72%; border-style: dashed; opacity: .36; }
+.rain-zone-diagram > i:nth-of-type(2) { width: 50%; background: rgba(255,255,255,.28); }
+.rain-zone-diagram > i:nth-of-type(3) { width: 27%; border-width: 3px; background: rgba(255,213,73,.72); box-shadow: 7px 7px 0 var(--coral); }
+.rain-zone-diagram > b { z-index: 1; display: grid; gap: 4px; text-align: center; font: 780 clamp(2.8rem,5vw,5rem)/.75 var(--display); }
+.rain-zone-diagram > b small { font: 700 7px var(--mono); letter-spacing: .08em; }
+.rain-record-grid { grid-template-columns: repeat(3,1fr); gap: 12px; }
+.rain-record-grid .record-cell { aspect-ratio: 1.35; }
+.rain-task-key { grid-template-columns: repeat(3,1fr); }
+.rain-record-board .experiment-record-meta > label:last-child { grid-column: 1/-1; }
 .experiment-source-grid a:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
 
 @media (max-width: 920px) {
@@ -2994,4 +3007,9 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .reference-task-key { grid-template-columns: 1fr; }
   .reference-active-task { align-items: flex-start; flex-direction: column; }
   .reference-record-board .experiment-record-filters > span { align-self: flex-start; }
+  .rain-record-board .experiment-record-filters > span { align-self: flex-start; }
+  .rain-zone-diagram { min-height: 220px; }
+  .rain-record-grid { grid-template-columns: repeat(3,1fr); }
+  .rain-task-key { grid-template-columns: 1fr; }
+  .rain-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
 }
