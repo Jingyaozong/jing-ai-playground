@@ -2866,5 +2866,51 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tool-route-links a { transition: none; }
+.tool-route-links a { transition: none; }
+}
+
+/* Reference comparison protocol: empty samples and a 12-cell local observation desk */
+.experiment-section-heading h2 { white-space: pre-line; }
+.experiment-group-grid:has(> .experiment-group-card:nth-child(3):last-child) { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.experiment-reference-image.is-reference-pack { position: relative; display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; align-items: center; padding: 34px; background: var(--yellow); }
+.experiment-reference-image.is-reference-pack > i { min-width: 0; aspect-ratio: 3/4; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 45% 45% 14px 14px; background: var(--white); color: var(--blue); font: normal 750 8px var(--mono); box-shadow: 5px 5px 0 var(--ink); }
+.experiment-reference-image.is-reference-pack > i:nth-child(2) { margin-top: 48px; background: var(--sky); }
+.experiment-reference-image.is-reference-pack > i:nth-child(3) { margin-top: 15px; background: var(--mint); }
+.experiment-reference-image.is-reference-pack > b { position: absolute; left: 34px; bottom: 22px; color: var(--blue); font-size: 7px; }
+.experiment-sample-visual.is-planned-frame { background-color: var(--sky); color: var(--ink); }
+.experiment-sample-card:nth-child(3n+2) .experiment-sample-visual.is-planned-frame { background-color: var(--yellow); }
+.experiment-sample-card:nth-child(3n) .experiment-sample-visual.is-planned-frame { background-color: var(--coral); }
+.experiment-sample-visual.is-planned-frame::after { content: 'NO OUTPUT'; position: absolute; left: 50%; top: 50%; padding: 10px 13px; border: 1.5px solid var(--ink); border-radius: 99px; background: rgba(255,255,255,.68); color: var(--blue); font: 750 8px var(--mono); transform: translate(-50%,-50%) rotate(-7deg); }
+.experiment-source-strip { border-block: 2px solid var(--ink); background: var(--mint); }
+.experiment-source-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 15px; }
+.experiment-source-grid a { min-height: 310px; display: flex; flex-direction: column; padding: 25px; border: 2px solid var(--ink); border-radius: 26px; background: var(--white); color: var(--ink); box-shadow: 6px 6px 0 var(--ink); transition: transform .2s ease, box-shadow .2s ease; }
+.experiment-source-grid a:nth-child(2) { background: var(--yellow); }
+.experiment-source-grid a:nth-child(3) { background: var(--sky); }
+.experiment-source-grid a:hover { transform: translate(-3px,-3px); box-shadow: 9px 9px 0 var(--blue); }
+.experiment-source-grid span { color: var(--blue); }
+.experiment-source-grid h3 { margin: auto 0 15px; font-family: var(--display); font-size: clamp(1.8rem,2.7vw,3rem); line-height: .95; }
+.experiment-source-grid p { margin: 0 0 22px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.experiment-source-grid i { color: var(--blue); font-size: 9px; font-style: normal; font-weight: 750; }
+.reference-record-grid { grid-template-columns: repeat(4,1fr); gap: 10px; }
+.reference-record-grid .record-cell { aspect-ratio: 1.08; }
+.reference-task-key { display: grid; grid-template-columns: repeat(2,1fr); gap: 7px; margin-top: 22px; }
+.reference-task-key span { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); font-size: 8px; }
+.reference-task-key b { color: var(--blue); font-family: var(--mono); }
+.reference-active-task { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 17px 22px; border-bottom: 1px solid var(--ink); background: var(--yellow); }
+.reference-active-task span { color: var(--blue); }
+.reference-active-task strong { font-family: var(--display); font-size: 1.3rem; }
+.reference-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
+.experiment-source-grid a:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+
+@media (max-width: 920px) {
+  .experiment-group-grid:has(> .experiment-group-card:nth-child(3):last-child), .experiment-source-grid { grid-template-columns: 1fr; }
+  .experiment-source-grid a { min-height: 245px; }
+}
+
+@media (max-width: 760px) {
+  .experiment-reference-image.is-reference-pack { min-height: 410px; border-right: 0; border-bottom: 2px solid var(--ink); }
+  .reference-record-grid { grid-template-columns: repeat(4,1fr); }
+  .reference-task-key { grid-template-columns: 1fr; }
+  .reference-active-task { align-items: flex-start; flex-direction: column; }
+  .reference-record-board .experiment-record-filters > span { align-self: flex-start; }
 }
