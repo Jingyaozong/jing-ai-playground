@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import rainCharacterAnchor from '../../assets/generated/before-the-rain-ends-character-anchor.webp';
+import rainFrame01 from '../../assets/generated/before-the-rain-ends-frame-01.webp';
+import rainFrame02 from '../../assets/generated/before-the-rain-ends-frame-02.webp';
+import rainFrame03 from '../../assets/generated/before-the-rain-ends-frame-03.webp';
+import rainFrame04 from '../../assets/generated/before-the-rain-ends-frame-04.webp';
 import pierCharacterAnchor from '../../assets/generated/no-boat-at-pier-seven-character-anchor.webp';
 import pierFrame01 from '../../assets/generated/no-boat-at-pier-seven-frame-01.webp';
 import pierFrame02 from '../../assets/generated/no-boat-at-pier-seven-frame-02.webp';
@@ -39,8 +44,16 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
   };
   const shotSummary = story.shotSummary ?? ['14 SHOTS', '90 SECONDS', '1 DAY', 'DRAFT 01'];
   const stillsGenerated = story.stillsGenerated ?? true;
-  const individualFrames = story.slug === 'no-boat-at-pier-seven' ? [pierFrame01, pierFrame02, pierFrame03, pierFrame04] : null;
-  const characterAnchorImage = story.slug === 'no-boat-at-pier-seven' ? pierCharacterAnchor : null;
+  const individualFrames = story.slug === 'no-boat-at-pier-seven'
+    ? [pierFrame01, pierFrame02, pierFrame03, pierFrame04]
+    : story.slug === 'before-the-rain-ends'
+      ? [rainFrame01, rainFrame02, rainFrame03, rainFrame04]
+      : null;
+  const characterAnchorImage = story.slug === 'no-boat-at-pier-seven'
+    ? pierCharacterAnchor
+    : story.slug === 'before-the-rain-ends'
+      ? rainCharacterAnchor
+      : null;
   const ending = story.ending ?? { label: 'CURRENT ENDING', copy: '故事还没有结束。\n它正在被做出来。', href: '/experiments/', link: '查看相关实验 ↗' };
   const related = story.related ?? { href: '/notes/ninety-second-storyboard/', label: '阅读拆镜方法 ↗' };
 
@@ -114,7 +127,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         <div className="story-section-inner">
           <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.stills.eyebrow}</p><h2>{sectionCopy.stills.heading}</h2></div><p>{sectionCopy.stills.description}</p></div>
           {story.characterAnchor && characterAnchorImage && <article className="story-character-anchor" id="character-anchor">
-            <div className="story-character-anchor-image" role="img" aria-label="周渡 AI 角色锚点图" style={{ backgroundImage: `url("${characterAnchorImage.src}")` }} />
+            <div className="story-character-anchor-image" role="img" aria-label={`${story.characterAnchor.name} AI 角色锚点图`} style={{ backgroundImage: `url("${characterAnchorImage.src}")` }} />
             <div className="story-character-anchor-copy"><span className="mono">CHARACTER ANCHOR / AI 视觉开发</span><h3>{story.characterAnchor.title}</h3><p>{story.characterAnchor.copy}</p><ul>{story.characterAnchor.locks.map((lock) => <li key={lock}>{lock}</li>)}</ul><small className="mono">GENERATED 2026-08-29 · FICTIONAL CHARACTER</small></div>
           </article>}
           <div className="story-still-grid">

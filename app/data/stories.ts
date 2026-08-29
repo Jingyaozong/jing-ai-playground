@@ -22,6 +22,7 @@ export type StoryDetail = {
   shotSummary?: [string, string, string, string];
   stillsGenerated?: boolean;
   characterAnchor?: {
+    name: string;
     title: string;
     copy: string;
     locks: string[];
@@ -233,6 +234,7 @@ export const storyDetails: StoryDetail[] = [
     shotSummary: ['12 SHOTS', '72 SECONDS', '1 NIGHT', 'DRAFT 01'],
     stillsGenerated: true,
     characterAnchor: {
+      name: '周渡',
       title: '先确认周渡是谁，再让他走进雾里。',
       copy: '这张独立锚点图固定周渡的脸、年龄感与值班服装。后续四张关键帧都引用同一张人物图生成，用珊瑚红围巾和薄荷反光条帮助跨场景识别。',
       locks: ['短卷黑发＋疲惫但平静的眼神', '海军蓝港口工装＋一条薄荷反光带', '珊瑚红针织围巾＋旧银色腕表'],
@@ -332,21 +334,27 @@ export const storyDetails: StoryDetail[] = [
     type: 'Visual Poem Draft',
     date: '2026.08',
     duration: '01:00',
-    status: '原创开发稿 · 尚未生成',
+    status: 'AI 概念开发 · 无视频',
     draft: true,
     heroVisual: 'personal-rain',
-    draftNotice: '这是由 AI 协助整理的原创视觉诗开发稿，林栖及全部情节均为虚构。页面已经完成一分钟剧本、十镜分镜与生成约束，但没有角色锚点、关键帧、视频或模型结论，也不代表已经完成的个人作品。',
+    draftNotice: '这是由 AI 协助整理的原创视觉诗开发稿，林栖及全部情节均为虚构。角色锚点与四张画面是 2026-08-29 生成的视觉开发素材，用于验证人物、局部雨区和结尾方向；尚未生成视频或模型结论，也不代表已经完成的成片。',
     logline: '一场雨只落在林栖头顶。她走遍整座城想甩掉它，直到终于把伞放下，雨才第一次落向所有人。',
     premise: '当悲伤像一场只属于你的天气，真正的出口是走得更远，还是停止把淋湿当成一种惩罚？',
     sectionCopy: {
       beats: { eyebrow: '01 / One private weather', heading: '从清晨到傍晚，\n她一直走在同一场雨里。', description: '六个时间点不解释雨从哪里来，只记录她怎样从躲避、奔跑，走到愿意停下。' },
       rules: { eyebrow: '02 / Weather rules', heading: '三条规则，\n让隐喻留在现实里。', description: '雨有稳定半径，会打湿真实物体，也会跟随她移动；除此之外不增加新的魔法解释。' },
-      stills: { eyebrow: '03 / Key-frame briefs', heading: '四个画面，\n先确认雨落在哪里。', description: '这里只展示待生成关键帧的画面任务书。角色、局部降雨和全城细雨都尚未生成，不用占位图冒充视觉结果。' },
+      stills: { eyebrow: '03 / Key-frame studies', heading: '四个画面，\n先确认雨落在哪里。', description: '角色锚点与四张 AI 概念关键帧用于检查林栖、局部雨区与结尾的共享雨幕。它们是视觉开发素材，不是成片剧照，也不代表视频动作或雨效已经通过测试。' },
       script: { eyebrow: '04 / Screenplay draft', heading: '六十秒，\n让一场雨不再只属于她。', description: '五场无旁白视觉诗，人物只说一句话。声音从私人雨声逐渐打开为整座城市的普通天气。' },
-      shots: { eyebrow: '05 / Shot list', heading: '十个镜头，\n每一镜只改变一件事。', description: '一分钟镜头表锁定局部雨区、人物路径与声音变化；尚未进行图像或视频模型测试。' },
+      shots: { eyebrow: '05 / Shot list', heading: '十个镜头，\n每一镜只改变一件事。', description: '一分钟镜头表锁定局部雨区、人物路径与声音变化；当前只有静态概念画面，尚未进行视频动作与雨效测试。' },
     },
     shotSummary: ['10 SHOTS', '60 SECONDS', '1 RAIN CLOUD', 'DRAFT 01'],
-    stillsGenerated: false,
+    stillsGenerated: true,
+    characterAnchor: {
+      name: '林栖',
+      title: '先确认林栖是谁，再让雨跟着她走。',
+      copy: '这张独立锚点图固定林栖的脸、发型与日常服装。后续四张关键帧都引用同一张人物图生成，用透明黄色雨衣、蓝色斜挎包和红色帆布鞋帮助跨场景识别。',
+      locks: ['耳后直黑发＋平静克制的表情', '透明柠檬黄雨衣＋象牙白内搭', '天蓝斜挎包＋珊瑚红帆布鞋＋透明伞'],
+    },
     ending: { label: 'CURRENT ENDING', copy: '雨没有停。\n它只是不再单独落在她身上。', href: '/notes/ai-video-shot-rhythm/', link: '阅读节奏设计方法 ↗' },
     related: { href: '/tools/scene-anchor/', label: '打开场景锚点工具 ↗' },
     beats: [
@@ -363,17 +371,17 @@ export const storyDetails: StoryDetail[] = [
       { label: 'THE CHANGE', title: '雨不会因为跑远而停止', copy: '只有她主动停下并合起伞时，局部雨区才向外扩散；雨没有消失，只从私人事件变回普通天气。' },
     ],
     stills: [
-      { shot: 'FRAME 01', title: '厨房里的局部雨', direction: '明亮奶油色厨房，窗外有阳光；林栖站在直径两米的湿圆中央，黄色透明雨衣和蓝色斜挎包建立人物锚点。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'left top', tone: 'yellow' },
-      { shot: 'FRAME 02', title: '公交车上的空圈', direction: '宽幅车厢里只有她的座位上方落雨，其他乘客与雨区保持礼貌距离；不做夸张围观或喜剧反应。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'right top', tone: 'blue' },
-      { shot: 'FRAME 03', title: '跑到城市边缘', direction: '明亮蓝天下的空旷堤岸，局部雨幕紧跟她的背影；远处城市仍干燥清楚，红色帆布鞋成为动作锚点。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'left bottom', tone: 'coral' },
-      { shot: 'FRAME 04', title: '雨终于落向所有人', direction: '傍晚公交站，合起的伞留在长椅上；整条街开始均匀细雨，林栖站在画面中心但不再是唯一被淋湿的人。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'right bottom', tone: 'mint' },
+      { shot: 'FRAME 01', title: '厨房里的局部雨', direction: '阳光仍照进奶油色厨房，林栖站在清晰的湿圆中央；雨衣、蓝包与红鞋建立人物锚点，雨区外地板保持干燥。', status: 'AI 概念关键帧 · 2026-08-29', framePosition: 'left top', tone: 'yellow' },
+      { shot: 'FRAME 02', title: '公交车上的空圈', direction: '车厢里只有她的座位上方落雨，透明伞和局部积水把边界讲清楚；乘客只是自然留出距离，没有夸张围观。', status: 'AI 概念关键帧 · 2026-08-29', framePosition: 'right top', tone: 'blue' },
+      { shot: 'FRAME 03', title: '跑到城市边缘', direction: '明亮蓝天下的堤岸保持干燥，局部雨幕紧跟她的背影；蓝色斜挎包与红色帆布鞋继续承担跨场景识别。', status: 'AI 概念关键帧 · 2026-08-29', framePosition: 'left bottom', tone: 'coral' },
+      { shot: 'FRAME 04', title: '雨终于落向所有人', direction: '傍晚公交站里整条街一起下雨，合起的透明伞留在黄色长椅上；林栖仍可辨认，但已经不再是唯一被淋湿的人。', status: 'AI 概念关键帧 · 2026-08-29', framePosition: 'right bottom', tone: 'mint' },
     ],
     production: [
       { phase: '故事命题', status: '完成草案', note: '已把“只落在一个人头顶的雨”收束为关于停止逃避与重新进入共同世界的视觉寓言。' },
       { phase: '角色与规则', status: '完成草案', note: '建立虚构角色林栖，以及雨区半径、真实积水和扩散条件三条规则；人物细节待荆确认。' },
       { phase: '60 秒剧本', status: '完成草案', note: '已写成五场无旁白短片文本，唯一一句对白是“原来不是要等它停”。' },
       { phase: '十镜分镜', status: '完成草案', note: '十个镜头各六秒，已锁定景别、人物动作、局部雨声和结尾扩散。' },
-      { phase: '角色与关键帧', status: '待开始', note: '只有人物与四张关键帧任务书，没有调用图像模型，也没有生成结果。' },
+      { phase: '角色与关键帧', status: '完成草案', note: '已用同一角色锚点生成四张 AI 概念关键帧，初步统一林栖的脸、服装与道具；这些画面尚未接受视频连续性测试。' },
       { phase: '动作与特效测试', status: '待开始', note: '优先测试跟随人物的局部雨区、车厢局部积水和合伞后的雨幕扩散。' },
       { phase: '剪辑与声音', status: '待开始', note: '以近距离私人雨声开场，结尾扩展为整条街的宽阔环境声。' },
     ],
@@ -420,8 +428,8 @@ export const storyDetails: StoryDetail[] = [
     ],
     nextSteps: [
       '由荆确认“雨扩散成普通天气”的结尾，以及唯一一句对白是否保留。',
-      '先制作林栖角色锚点和局部雨区空间示意，再生成四张概念关键帧。',
-      '优先测试镜头 02、05、09，记录局部降雨、人物一致性与透明伞的失败情况。',
+      '用同一角色锚点优先测试镜头 02、05、09，验证局部雨区能否在移动镜头里稳定跟随。',
+      '按通过与失败标准保存原始输出、参数和局部雨区问题截图。',
       '根据测试决定保留写实雨效，还是改成更平面的插画视觉诗。',
     ],
   },

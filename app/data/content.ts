@@ -70,7 +70,7 @@ export const stories: Story[] = [
     type: 'Visual Poem Draft',
     date: '2026.08',
     duration: '01:00',
-    status: '原创开发稿 · 无生成画面',
+    status: 'AI 概念开发 · 无视频',
     stage: 'documented',
     visual: 'rain',
   },
