@@ -8,8 +8,21 @@ export type StoryDetail = {
   duration: string;
   status: string;
   draft: boolean;
+  heroVisual?: 'memory-letter' | 'pier-ticket';
+  draftNotice?: string;
   logline: string;
   premise: string;
+  sectionCopy?: {
+    beats: { eyebrow: string; heading: string; description: string };
+    rules: { eyebrow: string; heading: string; description: string };
+    stills: { eyebrow: string; heading: string; description: string };
+    script: { eyebrow: string; heading: string; description: string };
+    shots: { eyebrow: string; heading: string; description: string };
+  };
+  shotSummary?: [string, string, string, string];
+  stillsGenerated?: boolean;
+  ending?: { label: string; copy: string; href: string; link: string };
+  related?: { href: string; label: string };
   beats: Array<{
     time: string;
     title: string;
@@ -84,6 +97,7 @@ export const storyDetails: StoryDetail[] = [
     duration: '01:30',
     status: 'AI 共创概念稿',
     draft: true,
+    heroVisual: 'memory-letter',
     logline: '她每天醒来都会失去昨天的记忆，只能依靠桌上那封由“昨天的自己”留下的信，重新认识正在告别的人。',
     premise: '这不是一个关于恢复记忆的故事，而是关于：如果每天都要重新选择一次，你还会不会继续爱同一个人。',
     beats: [
@@ -168,6 +182,136 @@ export const storyDetails: StoryDetail[] = [
       '用同一张人物锚点图分别生成镜头 02、07、11 的五秒动作测试。',
       '按通过/失败标准保存参数、原始输出和问题截图。',
       '记录角色一致性与情绪表演问题，再决定是否进入完整制作。',
+    ],
+  },
+  {
+    slug: 'no-boat-at-pier-seven',
+    number: '002',
+    title: '第七码头没有船',
+    englishTitle: 'No Boat at Pier Seven',
+    type: 'AI Short Film Draft',
+    date: '2026.08',
+    duration: '01:12',
+    status: '原创开发稿 · 尚未生成',
+    draft: true,
+    heroVisual: 'pier-ticket',
+    draftNotice: '这是由 AI 协助整理的原创故事开发稿，周渡、周遥及全部情节均为虚构。页面已经写完故事结构、72 秒剧本、十二镜分镜与生成约束，但没有生成关键帧、视频或模型结论，也不代表已经完成的个人作品。',
+    logline: '港口深夜值班员收到一张来自十年后的船票。票面写着失踪姐姐的名字，以及一座从来不存在的第七码头。',
+    premise: '如果一条不存在的航线能带你见到错过的人，你会继续等那艘船，还是承认有些告别只能由留下的人完成？',
+    sectionCopy: {
+      beats: {
+        eyebrow: '01 / One impossible night',
+        heading: '二十四分钟，\n等一艘不存在的船。',
+        description: '故事世界只走过二十四分钟，却压着周渡十年的等待。每个时间点都把“船会不会来”推向“他还要不要等”。',
+      },
+      rules: {
+        eyebrow: '02 / The route rules',
+        heading: '三条规则，\n让谎言保持可信。',
+        description: '超自然设定只通过船票、码头和旧广播出现。规则越少越明确，人物最后的选择就越有重量。',
+      },
+      stills: {
+        eyebrow: '03 / Key-frame briefs',
+        heading: '先留四个空位，\n再决定雾里有什么。',
+        description: '这里展示的是待生成关键帧的画面任务书，不是剧照。四格分别验证道具、空间、角色和结尾，不虚构任何视觉结果。',
+      },
+      script: {
+        eyebrow: '04 / Screenplay draft',
+        heading: '七十二秒，\n把十年等到天亮。',
+        description: '五场原创短片剧本，以老打印机和广播作为声音主轴。对白保持克制，解释留给动作和空镜。',
+      },
+      shots: {
+        eyebrow: '05 / Shot list',
+        heading: '十二个镜头，\n只让一次选择发生。',
+        description: '镜头表已经拆到景别、运镜和声音，可直接进入关键帧设计。当前只锁定叙事节奏，尚未进行视频模型测试。',
+      },
+    },
+    shotSummary: ['12 SHOTS', '72 SECONDS', '1 NIGHT', 'DRAFT 01'],
+    stillsGenerated: false,
+    ending: {
+      label: 'CURRENT ENDING',
+      copy: '船没有来。\n天亮以后，他第一次没有继续等。',
+      href: '/experiments/what-reference-images-lock/',
+      link: '先看角色锁定实验 ↗',
+    },
+    related: { href: '/notes/ai-video-shot-continuity/', label: '阅读连续性方法 ↗' },
+    beats: [
+      { time: '00:03', title: '出票', copy: '停用多年的针式打印机自行启动，吐出一张日期为 2036 年的单程票。乘客是周渡，签发人是失踪十年的姐姐周遥。', tone: 'yellow' },
+      { time: '00:08', title: '查图', copy: '周渡翻遍值班室的旧图纸。港口只有一到六码头，所有版本都没有“7”。', tone: 'blue' },
+      { time: '00:17', title: '起雾', copy: '第三声雾笛落下，六号码头尽头亮起一块黄色“7”号牌，一条窄跳板伸进没有船的雾里。', tone: 'mint' },
+      { time: '00:19', title: '听见', copy: '停用的七码头频道突然有了信号。广播里传来年长十岁的周遥：“小渡，不要上来。”', tone: 'coral' },
+      { time: '00:22', title: '撕票', copy: '跳板在脚下轻响。他没有问姐姐在哪里，只问了一句“你还好吗”，然后把票沿虚线慢慢撕开。', tone: 'blue' },
+      { time: '00:24', title: '退潮', copy: '号牌和跳板随雾消失。天亮后第一班船从三号码头离岸，周渡关掉广播，第一次准时下班。', tone: 'yellow' },
+    ],
+    rules: [
+      { label: 'THE TICKET', title: '船票只出现一次', copy: '午夜后由停用打印机出票，日期来自十年后；票面只有乘客、时间和七码头，不写目的地。沿虚线撕开后，航线永久关闭。' },
+      { label: 'PIER 07', title: '码头只存在七分钟', copy: '第三声雾笛后的 00:17 到 00:24，六号码头尽头才会多出号牌与跳板。雾里没有可见船体，只有受力和声响证明它可能存在。' },
+      { label: 'CHANNEL 07', title: '广播只能回答一句', copy: '登船者可以向广播问一个问题，对面只会留下一句回答。故事不解释信号来自未来、记忆还是周渡自己的告别。' },
+    ],
+    stills: [
+      { shot: 'FRAME 01', title: '十年后的船票', direction: '奶油色票据卡在老式打印机出口；日期、00:17 与数字 07 留给后期排版，周渡戴旧表的右手停在画面边缘。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'left top', tone: 'yellow' },
+      { shot: 'FRAME 02', title: '地图上没有七', direction: '俯拍旧港区图，六码头之后只有海面留白；蓝色工作灯、珊瑚红围巾边缘和票据组成视觉证据链。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'right top', tone: 'blue' },
+      { shot: 'FRAME 03', title: '雾里的跳板', direction: '明亮的浅蓝雾而非黑色恐怖场景；黄色 7 号牌立在尽头，跳板伸向画外，周渡只以背影进入下三分之一。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'left bottom', tone: 'mint' },
+      { shot: 'FRAME 04', title: '把票撕开', direction: '黎明蓝光与暖黄值班灯交界处，两半船票落在湿地上；七码头已消失，远处真实渡轮从三号码头离岸。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'right bottom', tone: 'coral' },
+    ],
+    production: [
+      { phase: '故事命题', status: '完成草案', note: '已从“未来船票”概念收束为一个关于结束等待的单夜故事；人物与情节均为虚构。' },
+      { phase: '角色与规则', status: '完成草案', note: '建立周渡、周遥的关系，以及船票、七码头、广播三条超自然规则；名字与细节待荆确认。' },
+      { phase: '72 秒剧本', status: '完成草案', note: '已写成五场短片文本，锁定唯一关键动作：周渡主动撕票。对白仍是编辑初稿。' },
+      { phase: '十二镜分镜', status: '完成草案', note: '镜头总时长 72 秒，已分配景别、运镜、画面动作和声音线索。' },
+      { phase: '概念关键帧', status: '待开始', note: '四个位置只有明确画面任务书，没有调用图像模型，也没有可展示的生成素材。' },
+      { phase: '动作测试', status: '待开始', note: '先测试出票取票、走上湿滑跳板、撕开票据三个动作，再决定是否制作完整镜头。' },
+      { phase: '剪辑与声音', status: '待开始', note: '声音设计以打印机、三声雾笛、广播噪声和清晨第一班渡轮为主线。' },
+    ],
+    script: [
+      { timecode: '00:00—00:11', scene: '值班室 / 出票', visual: '空港在浅蓝夜雾里。周渡趴在值班台前，停用的针式打印机突然自行走纸。他抬头，看见一张新票。', voice: '无对白。', sound: '荧光灯电流；远处浪声；打印针从一个点敲成一整行。' },
+      { timecode: '00:11—00:24', scene: '值班室 / 查图', visual: '票面：2036、00:17、七码头、周渡，签发人周遥。周渡拉出港区图，手指从 1 划到 6，停在一片空白海面。', voice: '周渡（极轻）：“姐？”', sound: '第一声雾笛；纸页摩擦；墙钟秒针被放大。' },
+      { timecode: '00:24—00:43', scene: '六码头尽头 / 出现', visual: '他跑过六块码头牌。第二声、第三声雾笛后，雾里多出黄色 7 号牌和一条向下微沉的跳板。跳板尽头没有船。', voice: '港区广播：“七码头，开始检票。”', sound: '脚步踩过湿地；金属跳板受力轻响；广播像从很远的旧喇叭传来。' },
+      { timecode: '00:43—00:59', scene: '七码头 / 回答', visual: '周渡把一只脚放上跳板。值班手台亮起“07”。他握紧船票，没有继续向前。', voice: '周遥（广播）：“小渡，不要上来。”\n周渡：“你还好吗？”\n周遥：“我已经到岸了。”', sound: '无线电噪声中留一秒安静；水下传来一次沉闷船铃。' },
+      { timecode: '00:59—01:12', scene: '黎明 / 下班', visual: '他沿虚线撕开船票。跳板、号牌和雾一起退去。第一班真实渡轮从三号码头驶出；周渡关灯、锁门，走向亮起来的街道。', voice: '无旁白。', sound: '撕纸声清楚落下；清晨广播报出“三号码头”；脚步离开，海浪继续。' },
+    ],
+    shotList: [
+      { shot: '01', duration: 5, size: '大全景', visual: '浅蓝夜雾罩住空港，值班室是唯一暖黄色方块。', camera: '固定', sound: '浪声、灯管电流' },
+      { shot: '02', duration: 5, size: '中景', visual: '周渡趴在桌边；身后的旧打印机突然走纸，他惊醒回头。', camera: '缓慢推近', sound: '打印针启动' },
+      { shot: '03', duration: 6, size: '特写', visual: '船票从打印口推出；右手接住，票面文字留给后期合成。', camera: '固定俯角', sound: '打印声结束、第一声雾笛' },
+      { shot: '04', duration: 5, size: '俯拍近景', visual: '港区图上只有 1—6，手指和船票一起停在六码头后的空白。', camera: '轻微横移', sound: '纸页与墙钟' },
+      { shot: '05', duration: 5, size: '跟拍中景', visual: '周渡沿湿码头快走，珊瑚红围巾成为雾里的身份锚点。', camera: '背后跟拍', sound: '脚步、第二声雾笛' },
+      { shot: '06', duration: 6, size: '远景', visual: '第三声雾笛后，黄色 7 号牌从雾中显出；画面里仍没有船。', camera: '固定长焦', sound: '第三声雾笛、金属轻响' },
+      { shot: '07', duration: 7, size: '广角背影', visual: '周渡停在跳板前；跳板向雾中延伸并轻微下沉。', camera: '极慢推近', sound: '广播：开始检票' },
+      { shot: '08', duration: 6, size: '脚部特写', visual: '工作靴踏上湿跳板，重量压下金属；另一只脚留在岸上。', camera: '低机位固定', sound: '金属受力、海水' },
+      { shot: '09', duration: 7, size: '中近景', visual: '手台亮起 07，周渡抬起它贴近耳边，听见姐姐的声音。', camera: '侧面缓推', sound: '三句广播对白' },
+      { shot: '10', duration: 6, size: '手部特写', visual: '双手沿票据虚线缓慢反向用力，纸纤维断开。', camera: '固定微距', sound: '噪声静止、撕纸' },
+      { shot: '11', duration: 7, size: '远景', visual: '两半船票落地，雾退去；原位置只剩普通护栏和六号码头。', camera: '缓慢拉远', sound: '清晨广播开始' },
+      { shot: '12', duration: 7, size: '大全景', visual: '真实渡轮从三号码头离岸，周渡锁门走向亮街，不再回头。', camera: '固定', sound: '渡轮汽笛、脚步渐远' },
+    ],
+    promptGuide: {
+      identityLock: 'same fictional East Asian man, early 30s, lean build, short slightly wavy black hair, tired calm eyes, navy harbour work jacket with one mint reflective stripe, coral-red knitted scarf, worn silver wristwatch, consistent facial proportions and wardrobe',
+      styleLock: 'bright nocturnal cinematic realism, luminous pale-blue fog, warm sodium-yellow practical lights, coral and mint color accents, deep ink outlines only in graphic props, restrained performance, subtle 35mm texture, 16:9, no horror darkness, no on-screen text',
+      negative: 'different person, age change, hairstyle change, missing coral scarf, wardrobe change, black crushed shadows, horror monster, visible ghost, visible ship at pier seven, facial morphing, extra fingers, fused hands, floating ticket, warped pier, unreadable generated typography, subtitles, logo, watermark',
+    },
+    prompts: [
+      { shot: '01', title: '空港值班室', prompt: 'Wide establishing shot of an empty coastal ferry terminal after midnight. Luminous pale-blue fog fills the harbour; one small ticket office glows warm yellow. Calm sea, bright readable silhouettes, locked camera, no people visible.', constraint: '夜景保持明亮可读；不要出现第七码头、船或恐怖元素。' },
+      { shot: '02', title: '打印机惊醒', prompt: 'Medium shot inside a mint-and-cream harbour office. The same night attendant rests at the desk; an old dot-matrix printer behind him starts once and he lifts his head, then turns toward it. One slow camera push.', constraint: '先测试回头时的脸和围巾稳定；打印机不能漂移或变形。' },
+      { shot: '03', title: '船票出现', prompt: 'Close overhead insert of a cream perforated ferry ticket advancing once from an old dot-matrix printer. His watch-wearing right hand enters and receives it after the paper stops. Clean object continuity, locked camera.', constraint: '票面文字后期排版；只生成空白分区和打孔结构。' },
+      { shot: '04', title: '地图只有六码头', prompt: 'Top-down close shot of a worn harbour map with six simple pier blocks and open water beyond. His finger traces the route and stops at the blank edge while the cream ticket rests beside it. Gentle lateral slide.', constraint: '数字与地图标注后期合成；保持一只手和两个道具。' },
+      { shot: '05', title: '穿过六码头', prompt: 'Rear medium tracking shot of the same attendant walking quickly along a wet pier through luminous blue fog. His coral scarf and mint reflective stripe remain clearly visible; natural gait, restrained urgency.', constraint: '不奔跑、不回头；控制背景干净，避免出现额外行人。' },
+      { shot: '06', title: '七码头出现', prompt: 'Locked long shot into pale-blue harbour fog. After a gentle fog shift, a single mustard-yellow pier sign is revealed at the end of the walkway. No vessel, no creature, no silhouette behind it.', constraint: '数字 7 后期合成；重点只测雾中显露，不做物体凭空变形。' },
+      { shot: '07', title: '没有船的跳板', prompt: 'Wide rear view of the attendant facing a narrow metal gangway extending into bright fog. The gangway settles downward a few centimeters as if weight exists beyond the frame, but no boat is visible. Very slow push-in.', constraint: '不可生成船体或幽灵；空间结构要可信，跳板只动一次。' },
+      { shot: '08', title: '一只脚上船', prompt: 'Low locked close-up of one worn work boot stepping carefully onto a wet metal gangway while the other boot stays on the concrete pier. The metal flexes slightly under weight, realistic contact and reflections.', constraint: '动作分两阶段完成；若脚踝、鞋底或金属接触变形即失败。' },
+      { shot: '09', title: '频道七', prompt: 'Side medium close-up of the same attendant lifting a small vintage radio to his ear. He listens in stillness, eyes fixed into fog, then lowers his gaze slightly. Slow two-percent camera push, no lip sync.', constraint: '频道数字与对白后期完成；不生成姐姐形象，只保留声音空间。' },
+      { shot: '10', title: '沿虚线撕票', prompt: 'Macro close-up of both hands holding a cream perforated ticket. He tears it once along the central dotted line with slow deliberate force. Stable fingers, believable paper fibers and clean separation, locked frame.', constraint: '这是最高风险手部镜头；多指、纸张黏连、撕开后复原均判失败。' },
+      { shot: '11', title: '雾退以后', prompt: 'Wide shot of the ordinary end of pier six at blue dawn. Two torn ticket halves land on wet ground as fog thins, revealing only a safety rail and open water. The camera slowly pulls back.', constraint: '不要让票据悬浮；七码头元素必须完全不出现。' },
+      { shot: '12', title: '第一次准时下班', prompt: 'Bright dawn establishing shot of a real ferry departing from pier three in the distance. The attendant locks the small office and walks toward a sunlit street without turning back. Locked composition, natural pace.', constraint: '以离开而非船为情绪终点；人物服装和步态保持一致。' },
+    ],
+    motionTests: [
+      { shot: '03', title: '出票与接票', duration: '5 秒', purpose: '检验打印机、纸张和单手接触的道具连续性。', action: '船票推出 → 停止 → 右手接住并停留。', pass: '票据只有一张，移动方向一致；手指完整，纸张没有穿过打印机。', fail: '票据增殖、悬浮、文字跳动、手指融合或纸张突然变形。', status: '待生成' },
+      { shot: '08', title: '踏上湿跳板', duration: '5 秒', purpose: '检验脚部接触、重心转移和金属受力的可信度。', action: '右脚抬起 → 踏上跳板 → 重量压下后停住。', pass: '两脚位置清楚，鞋底贴合金属，跳板只产生一次轻微形变。', fail: '脚穿过跳板、步态循环、鞋子改变或背景海面扭曲。', status: '待生成' },
+      { shot: '10', title: '沿虚线撕开', duration: '5 秒', purpose: '检验双手、薄纸和不可逆动作的连续性。', action: '双手绷紧船票 → 沿中线撕开 → 两半分离。', pass: '手部结构稳定，撕裂路径单一，分开的票据不再恢复。', fail: '多指、手掌融合、纸张重复生成、裂口回弹或碎片消失。', status: '待生成' },
+    ],
+    nextSteps: [
+      '由荆确认周渡、周遥的关系，以及“我已经到岸了”是否保留为唯一回答。',
+      '先画角色正侧背锚点与值班服装卡，再生成四张概念关键帧。',
+      '用相同角色参考图测试镜头 03、08、10，按通过与失败标准记录原始输出。',
+      '确认声音方向后，再决定制作 72 秒短片，或改编成十二格纵向漫画。',
     ],
   },
 ];
