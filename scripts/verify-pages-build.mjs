@@ -17,6 +17,7 @@ const requiredFiles = [
   'prompts/index.html',
   'stories/she-forgets-yesterday/index.html',
   'stories/no-boat-at-pier-seven/index.html',
+  'stories/before-the-rain-ends/index.html',
   'experiments/forty-shots-one-character/index.html',
   'tools/story-seed/index.html',
   'tools/review-pace/index.html',

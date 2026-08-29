@@ -57,7 +57,18 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
             <p>{story.logline}</p>
             <div className="story-title-footer mono"><span>{story.englishTitle}</span><span>{story.date}</span></div>
           </div>
-          {story.heroVisual === 'pier-ticket' ? (
+          {story.heroVisual === 'personal-rain' ? (
+            <div className="personal-rain-card" aria-label="只为一个人预报的局部降雨概念视觉">
+              <div className="personal-rain-forecast mono"><span>LOCAL FORECAST</span><b>100%</b><small>RAIN / 仅限一人</small></div>
+              <div className="personal-rain-stage" aria-hidden="true">
+                <div className="personal-rain-cloud" />
+                <div className="personal-rain-lines">{Array.from({ length: 9 }, (_, index) => <span key={index} />)}</div>
+                <div className="personal-rain-person"><i /><b /></div>
+                <div className="personal-rain-radius" />
+              </div>
+              <div className="personal-rain-footer mono"><span>RADIUS / 1.2 M</span><span>FOLLOWING SUBJECT</span><b>07:20 → 17:03</b></div>
+            </div>
+          ) : story.heroVisual === 'pier-ticket' ? (
             <div className="pier-ticket" aria-label="第七码头未来船票概念视觉">
               <div className="pier-ticket-route mono"><span>DEPARTURE</span><b>00:17</b><small>ONE WAY / 单程</small></div>
               <div className="pier-ticket-number"><span className="mono">PIER</span><strong>07</strong><em className="mono">NOT ON MAP</em></div>

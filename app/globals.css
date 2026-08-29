@@ -2191,6 +2191,36 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .pier-ticket-stub > span { color: var(--blue); font-size: 9px; font-weight: 750; writing-mode: vertical-rl; }
 .pier-ticket-stub > span:last-child { color: var(--ink); }
 .pier-ticket-stub b { font-family: var(--display); font-size: 1.6rem; line-height: .92; writing-mode: vertical-rl; }
+.personal-rain-card { position: relative; min-height: 610px; display: grid; grid-template-rows: auto 1fr auto; overflow: hidden; border: 2px solid var(--ink); border-radius: 14px 34px 12px 30px; background: var(--sky); box-shadow: 12px 12px 0 var(--mint); transform: rotate(.8deg); }
+.personal-rain-forecast { position: relative; z-index: 3; display: grid; grid-template-columns: 1fr auto; gap: 6px 20px; align-items: end; padding: 27px 32px 22px; border-bottom: 2px solid var(--ink); background: var(--yellow); }
+.personal-rain-forecast > span { color: var(--blue); font-weight: 750; }
+.personal-rain-forecast b { grid-row: span 2; font-family: var(--display); font-size: clamp(4.5rem,7vw,7rem); line-height: .7; letter-spacing: -.08em; }
+.personal-rain-forecast small { color: var(--muted); }
+.personal-rain-stage { position: relative; min-height: 375px; overflow: hidden; background: linear-gradient(180deg,var(--sky),rgba(255,255,255,.72)); }
+.personal-rain-stage::before { content: ''; position: absolute; inset: 24px; border: 1px solid rgba(22,36,58,.2); border-radius: 50%; }
+.personal-rain-cloud { position: absolute; z-index: 2; top: 42px; left: 50%; width: 155px; height: 50px; border: 2px solid var(--ink); border-radius: 99px; background: var(--white); transform: translateX(-50%); }
+.personal-rain-cloud::before, .personal-rain-cloud::after { content: ''; position: absolute; bottom: 12px; border: 2px solid var(--ink); border-bottom: 0; border-radius: 50% 50% 0 0; background: var(--white); }
+.personal-rain-cloud::before { left: 22px; width: 62px; height: 55px; }
+.personal-rain-cloud::after { right: 20px; width: 48px; height: 40px; }
+.personal-rain-lines { position: absolute; z-index: 1; top: 87px; left: 50%; width: 180px; height: 215px; transform: translateX(-50%); }
+.personal-rain-lines span { position: absolute; top: 0; width: 3px; height: 100%; border-radius: 99px; background: var(--blue); transform: rotate(8deg); opacity: .75; }
+.personal-rain-lines span:nth-child(1) { left: 5%; height: 72%; }
+.personal-rain-lines span:nth-child(2) { left: 16%; top: 22px; height: 82%; }
+.personal-rain-lines span:nth-child(3) { left: 28%; height: 91%; }
+.personal-rain-lines span:nth-child(4) { left: 40%; top: 13px; height: 73%; }
+.personal-rain-lines span:nth-child(5) { left: 51%; height: 98%; }
+.personal-rain-lines span:nth-child(6) { left: 63%; top: 28px; height: 70%; }
+.personal-rain-lines span:nth-child(7) { left: 74%; height: 87%; }
+.personal-rain-lines span:nth-child(8) { left: 85%; top: 17px; height: 78%; }
+.personal-rain-lines span:nth-child(9) { left: 95%; height: 66%; }
+.personal-rain-person { position: absolute; z-index: 2; left: 50%; bottom: 22px; width: 58px; height: 118px; border: 2px solid var(--ink); border-radius: 29px 29px 12px 12px; background: var(--yellow); transform: translateX(-50%); }
+.personal-rain-person::before { content: ''; position: absolute; left: 50%; top: -40px; width: 54px; height: 54px; border: 2px solid var(--ink); border-radius: 50%; background: var(--paper); transform: translateX(-50%); }
+.personal-rain-person i, .personal-rain-person b { position: absolute; bottom: -25px; width: 18px; height: 48px; border: 2px solid var(--ink); border-radius: 0 0 10px 10px; background: var(--coral); }
+.personal-rain-person i { left: 7px; }
+.personal-rain-person b { right: 7px; }
+.personal-rain-radius { position: absolute; z-index: 0; left: 50%; bottom: 10px; width: 300px; height: 82px; border: 2px dashed var(--blue); border-radius: 50%; transform: translateX(-50%); }
+.personal-rain-footer { position: relative; z-index: 3; display: flex; justify-content: space-between; gap: 18px; padding: 20px 28px; border-top: 2px solid var(--ink); background: var(--mint); font-weight: 650; }
+.personal-rain-footer b { color: var(--blue); }
 .story-draft-notice { display: grid; grid-template-columns: .35fr 1.65fr; gap: 30px; padding: 22px 28px; border: 2px solid var(--ink); border-radius: 20px; background: var(--yellow); box-shadow: 6px 6px 0 var(--ink); }
 .story-draft-notice span { color: var(--blue); font-weight: 750; }
 .story-draft-notice p { max-width: 900px; margin: 0; font-size: 13px; font-weight: 600; line-height: 1.7; }
@@ -2344,7 +2374,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 @media (max-width: 1040px) {
   .story-detail-hero-grid { grid-template-columns: minmax(0,1.15fr) minmax(330px,.85fr); gap: 35px; }
   .story-detail-title h1 { font-size: clamp(4rem,8vw,6.5rem); }
-  .memory-letter, .pier-ticket { min-height: 560px; }
+  .memory-letter, .pier-ticket, .personal-rain-card { min-height: 560px; }
   .story-beat-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
   .story-character-anchor { grid-template-columns: minmax(260px,.82fr) minmax(0,1.18fr); }
   .story-beat:nth-child(2), .story-beat:nth-child(5) { margin-top: 0; }
@@ -2379,6 +2409,11 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .pier-ticket-number em { align-self: flex-start; }
   .pier-ticket-details { padding: 18px 22px 24px; font-size: 9px; }
   .pier-ticket-stub { padding-inline: 10px; }
+  .personal-rain-card { min-height: 550px; margin: 25px 2px 0 0; box-shadow: 7px 7px 0 var(--mint); transform: none; }
+  .personal-rain-forecast { grid-template-columns: 1fr; padding: 23px 22px 18px; }
+  .personal-rain-forecast b { grid-row: auto; font-size: 4.8rem; }
+  .personal-rain-stage { min-height: 340px; }
+  .personal-rain-footer { display: grid; padding: 17px 20px; font-size: 9px; }
   .story-draft-notice { grid-template-columns: 1fr; gap: 12px; padding: 20px; }
   .story-premise { padding-block: 90px; }
   .story-premise h2 { font-size: clamp(3rem,14vw,4.8rem); }

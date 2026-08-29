@@ -8,7 +8,7 @@ export type StoryDetail = {
   duration: string;
   status: string;
   draft: boolean;
-  heroVisual?: 'memory-letter' | 'pier-ticket';
+  heroVisual?: 'memory-letter' | 'pier-ticket' | 'personal-rain';
   draftNotice?: string;
   logline: string;
   premise: string;
@@ -322,6 +322,107 @@ export const storyDetails: StoryDetail[] = [
       '先画角色正侧背锚点与值班服装卡，再生成四张概念关键帧。',
       '用相同角色参考图测试镜头 03、08、10，按通过与失败标准记录原始输出。',
       '确认声音方向后，再决定制作 72 秒短片，或改编成十二格纵向漫画。',
+    ],
+  },
+  {
+    slug: 'before-the-rain-ends',
+    number: '003',
+    title: '雨停以前',
+    englishTitle: 'Before the Rain Ends',
+    type: 'Visual Poem Draft',
+    date: '2026.08',
+    duration: '01:00',
+    status: '原创开发稿 · 尚未生成',
+    draft: true,
+    heroVisual: 'personal-rain',
+    draftNotice: '这是由 AI 协助整理的原创视觉诗开发稿，林栖及全部情节均为虚构。页面已经完成一分钟剧本、十镜分镜与生成约束，但没有角色锚点、关键帧、视频或模型结论，也不代表已经完成的个人作品。',
+    logline: '一场雨只落在林栖头顶。她走遍整座城想甩掉它，直到终于把伞放下，雨才第一次落向所有人。',
+    premise: '当悲伤像一场只属于你的天气，真正的出口是走得更远，还是停止把淋湿当成一种惩罚？',
+    sectionCopy: {
+      beats: { eyebrow: '01 / One private weather', heading: '从清晨到傍晚，\n她一直走在同一场雨里。', description: '六个时间点不解释雨从哪里来，只记录她怎样从躲避、奔跑，走到愿意停下。' },
+      rules: { eyebrow: '02 / Weather rules', heading: '三条规则，\n让隐喻留在现实里。', description: '雨有稳定半径，会打湿真实物体，也会跟随她移动；除此之外不增加新的魔法解释。' },
+      stills: { eyebrow: '03 / Key-frame briefs', heading: '四个画面，\n先确认雨落在哪里。', description: '这里只展示待生成关键帧的画面任务书。角色、局部降雨和全城细雨都尚未生成，不用占位图冒充视觉结果。' },
+      script: { eyebrow: '04 / Screenplay draft', heading: '六十秒，\n让一场雨不再只属于她。', description: '五场无旁白视觉诗，人物只说一句话。声音从私人雨声逐渐打开为整座城市的普通天气。' },
+      shots: { eyebrow: '05 / Shot list', heading: '十个镜头，\n每一镜只改变一件事。', description: '一分钟镜头表锁定局部雨区、人物路径与声音变化；尚未进行图像或视频模型测试。' },
+    },
+    shotSummary: ['10 SHOTS', '60 SECONDS', '1 RAIN CLOUD', 'DRAFT 01'],
+    stillsGenerated: false,
+    ending: { label: 'CURRENT ENDING', copy: '雨没有停。\n它只是不再单独落在她身上。', href: '/notes/ai-video-shot-rhythm/', link: '阅读节奏设计方法 ↗' },
+    related: { href: '/tools/scene-anchor/', label: '打开场景锚点工具 ↗' },
+    beats: [
+      { time: '07:20', title: '醒来', copy: '厨房地面只有她站立的一小圈是湿的。窗外晴朗，头顶却持续落下细雨。', tone: 'blue' },
+      { time: '08:05', title: '上车', copy: '公交车里只有她的座位上方在下雨。乘客默默挪开，给她留出一圈干燥的空位。', tone: 'yellow' },
+      { time: '11:40', title: '躲雨', copy: '她走进长长的地下通道，雨云仍贴着天花板移动。所有屋檐都失去意义。', tone: 'mint' },
+      { time: '16:10', title: '跑远', copy: '她一路跑到城市边缘。雨区始终以她为圆心，鞋子越来越重，世界仍然明亮。', tone: 'coral' },
+      { time: '17:02', title: '放下', copy: '她在空公交站停住，把伞合起，放在长椅上，第一次不再向前走。', tone: 'blue' },
+      { time: '17:03', title: '一起下雨', copy: '私人雨区向外扩散成普通细雨。街上的人陆续撑伞，她抬头，让雨落到脸上。', tone: 'yellow' },
+    ],
+    rules: [
+      { label: 'THE RADIUS', title: '雨区始终以她为圆心', copy: '半径约 1.2 米，随她平稳移动；无论室内、车里还是地下通道，雨都来自她头顶一小片看不见的云。' },
+      { label: 'THE WATER', title: '被淋湿的东西都是真的', copy: '头发、衣服、座椅和地面会积水，旁人一旦走出雨区就不再被淋。它不是只有她能看见的幻觉。' },
+      { label: 'THE CHANGE', title: '雨不会因为跑远而停止', copy: '只有她主动停下并合起伞时，局部雨区才向外扩散；雨没有消失，只从私人事件变回普通天气。' },
+    ],
+    stills: [
+      { shot: 'FRAME 01', title: '厨房里的局部雨', direction: '明亮奶油色厨房，窗外有阳光；林栖站在直径两米的湿圆中央，黄色透明雨衣和蓝色斜挎包建立人物锚点。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'left top', tone: 'yellow' },
+      { shot: 'FRAME 02', title: '公交车上的空圈', direction: '宽幅车厢里只有她的座位上方落雨，其他乘客与雨区保持礼貌距离；不做夸张围观或喜剧反应。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'right top', tone: 'blue' },
+      { shot: 'FRAME 03', title: '跑到城市边缘', direction: '明亮蓝天下的空旷堤岸，局部雨幕紧跟她的背影；远处城市仍干燥清楚，红色帆布鞋成为动作锚点。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'left bottom', tone: 'coral' },
+      { shot: 'FRAME 04', title: '雨终于落向所有人', direction: '傍晚公交站，合起的伞留在长椅上；整条街开始均匀细雨，林栖站在画面中心但不再是唯一被淋湿的人。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'right bottom', tone: 'mint' },
+    ],
+    production: [
+      { phase: '故事命题', status: '完成草案', note: '已把“只落在一个人头顶的雨”收束为关于停止逃避与重新进入共同世界的视觉寓言。' },
+      { phase: '角色与规则', status: '完成草案', note: '建立虚构角色林栖，以及雨区半径、真实积水和扩散条件三条规则；人物细节待荆确认。' },
+      { phase: '60 秒剧本', status: '完成草案', note: '已写成五场无旁白短片文本，唯一一句对白是“原来不是要等它停”。' },
+      { phase: '十镜分镜', status: '完成草案', note: '十个镜头各六秒，已锁定景别、人物动作、局部雨声和结尾扩散。' },
+      { phase: '角色与关键帧', status: '待开始', note: '只有人物与四张关键帧任务书，没有调用图像模型，也没有生成结果。' },
+      { phase: '动作与特效测试', status: '待开始', note: '优先测试跟随人物的局部雨区、车厢局部积水和合伞后的雨幕扩散。' },
+      { phase: '剪辑与声音', status: '待开始', note: '以近距离私人雨声开场，结尾扩展为整条街的宽阔环境声。' },
+    ],
+    script: [
+      { timecode: '00:00—00:12', scene: '厨房 / 清晨', visual: '阳光落在桌面。林栖睁眼，发现头顶在下雨。她侧移一步，地面的湿圆也跟着移动。', voice: '无对白。', sound: '冰箱低鸣；雨滴只在画面中央出现，窗外有清楚鸟鸣。' },
+      { timecode: '00:12—00:24', scene: '公交车 / 上午', visual: '她撑伞坐在车厢里，雨只落在座位周围。新上车的人看见积水，安静地换到另一边。', voice: '无对白。', sound: '雨打伞面压过报站声；雨区外保留干燥衣料和车门声。' },
+      { timecode: '00:24—00:36', scene: '地下通道 / 中午', visual: '她收伞冲进通道，雨仍贴着她移动。她加快脚步，最后跑起来，湿鞋在地面留下连续脚印。', voice: '无对白。', sound: '脚步、呼吸与局部雨声逐渐变快；通道回声拉长。' },
+      { timecode: '00:36—00:48', scene: '城市边缘 / 下午', visual: '林栖跑到空旷堤岸，停下回望。远处城市晴朗，她的雨区仍完整罩住身体。她第一次没有立刻继续走。', voice: '林栖（轻声）：“原来不是要等它停。”', sound: '呼吸慢下来；雨声保持不变，音乐只进入一个低而温暖的长音。' },
+      { timecode: '00:48—01:00', scene: '公交站 / 傍晚', visual: '她合起伞，放在长椅上，抬头站进雨里。局部雨幕向画外展开，路人陆续撑伞；她沿原路慢慢走回城里。', voice: '无旁白。', sound: '合伞一响；私人雨声扩展成立体环境声，最后留下鞋底踩水。' },
+    ],
+    shotList: [
+      { shot: '01', duration: 6, size: '俯拍全景', visual: '明亮厨房里只有一个湿圆；林栖站在圆心，四周地面干燥。', camera: '固定', sound: '近距离雨滴、鸟鸣' },
+      { shot: '02', duration: 6, size: '脚部近景', visual: '她向左试探一步，湿圆与雨线同步平移。', camera: '横向小幅跟随', sound: '雨鞋踩水' },
+      { shot: '03', duration: 6, size: '车厢广角', visual: '她撑伞坐在公交车中段，乘客在雨区外形成自然空圈。', camera: '固定', sound: '雨打伞面、报站' },
+      { shot: '04', duration: 6, size: '中近景', visual: '车门打开，新乘客看见座椅积水，平静地换到对面。', camera: '轻微横移', sound: '车门、衣料、雨声' },
+      { shot: '05', duration: 6, size: '长焦中景', visual: '地下通道中，局部雨幕跟着她快走，不受屋顶阻挡。', camera: '正面后退跟拍', sound: '脚步与回声加速' },
+      { shot: '06', duration: 6, size: '低机位特写', visual: '红色帆布鞋跑过干地，留下两列清楚湿脚印。', camera: '侧向跟拍', sound: '踩水、呼吸' },
+      { shot: '07', duration: 6, size: '大全景', visual: '她抵达明亮堤岸，整个城市干燥，只有她被一小块雨幕笼罩。', camera: '缓慢拉远', sound: '风声、雨声不变' },
+      { shot: '08', duration: 6, size: '近景', visual: '她停下看向雨线之外，说出唯一一句话。', camera: '固定', sound: '“原来不是要等它停。”' },
+      { shot: '09', duration: 6, size: '手部中近景', visual: '她合起透明伞，放到公交站长椅上，双手离开伞柄。', camera: '缓慢下压', sound: '合伞、伞尖触椅' },
+      { shot: '10', duration: 6, size: '街道远景', visual: '雨幕从她身边向整条街扩散，路人撑伞；她转身走回城里。', camera: '固定长镜头', sound: '整条街的雨、脚步' },
+    ],
+    promptGuide: {
+      identityLock: 'same fictional East Asian woman, late 20s, shoulder-length straight black hair tucked behind both ears, calm oval face, translucent lemon-yellow raincoat over an ivory shirt, sky-blue crossbody bag, coral-red canvas shoes, clear dome umbrella, consistent facial proportions and wardrobe',
+      styleLock: 'bright cinematic realism, luminous daylight even during rain, restrained natural performance, clean pastel city production design, believable wet surfaces and water physics, subtle 35mm texture, 16:9, no on-screen text',
+      negative: 'different person, age change, hairstyle change, missing yellow raincoat, bag color change, shoe color change, dark storm, thunder, horror, crying performance, beauty filter, extra fingers, fused hands, duplicated umbrella, rain covering whole scene before final shot, warped architecture, subtitles, logo, watermark',
+    },
+    prompts: [
+      { shot: '01', title: '厨房湿圆', prompt: 'Bright top-down wide shot of a cream kitchen in morning sunlight. The same woman stands at the center of a precise 1.2-meter wet circle while fine rain falls only inside that circle; the rest of the floor stays dry.', constraint: '局部雨区边界要清楚但自然；不要出现可见乌云或全屋降雨。' },
+      { shot: '02', title: '雨跟着移动', prompt: 'Low close shot of her coral-red canvas shoes taking one cautious step left. The small rain column and wet boundary translate with her in one smooth motion, leaving the previous floor dry except for residual droplets.', constraint: '只测试一步和雨区平移；鞋型、脚踝与积水反射必须稳定。' },
+      { shot: '03', title: '车厢里的伞', prompt: 'Wide symmetrical city bus interior in daylight. She sits under a clear dome umbrella while rain falls only around her seat; other passengers sit naturally beyond the dry boundary without staring.', constraint: '保持明亮日常感；不要做围观、惊叫或灾难场面。' },
+      { shot: '04', title: '安静换座', prompt: 'Medium shot near the bus door. One newly arrived passenger notices a wet seat edge, pauses, then calmly crosses to a dry seat while she remains under the small rain column in the background.', constraint: '人物动作只保留一次换座；避免背景乘客增殖或伞面变形。' },
+      { shot: '05', title: '屋顶没有用', prompt: 'Front-facing tracking shot in a bright pedestrian underpass. She walks quickly toward camera without opening the umbrella; a narrow rain column follows directly above her despite the ceiling.', constraint: '雨区跟随人物，不穿帮成漏水点；人物五官与雨衣保持稳定。' },
+      { shot: '06', title: '湿脚印', prompt: 'Low side tracking close-up of coral-red canvas shoes running across a dry pale floor, leaving two clean lines of wet footprints behind. Natural stride, realistic splashes, no upper body visible.', constraint: '只生成两只脚与连续脚印；出现多脚、滑步或水迹跳变即失败。' },
+      { shot: '07', title: '城市边缘', prompt: 'Very wide bright embankment under a blue afternoon sky. She stops alone near the center while one compact rain curtain surrounds only her; the distant city remains sunlit and dry.', constraint: '画面不能变成阴天灾难；局部雨幕必须与人物同中心。' },
+      { shot: '08', title: '终于停下', prompt: 'Restrained close-up of her wet face beneath a clear umbrella. She catches her breath, looks beyond the rain boundary and speaks one short sentence with quiet recognition, one natural blink.', constraint: '口型可后期处理；不哭、不笑，不做戏剧化表情。' },
+      { shot: '09', title: '把伞放下', prompt: 'Medium close-up at a bright bus shelter. She closes the clear dome umbrella once and places it on a dry yellow bench, then releases the handle with both hands. Stable object contact.', constraint: '合伞是不可逆连续动作；手、伞骨和长椅接触不能融合。' },
+      { shot: '10', title: '普通天气', prompt: 'Locked wide shot of a city street at warm dusk. Rain expands outward from the woman until it becomes an even gentle shower across the whole frame; pedestrians naturally open umbrellas as she walks back toward the city.', constraint: '只在最后一镜让全场下雨；扩散顺序清楚，不做洪水或暴风。' },
+    ],
+    motionTests: [
+      { shot: '02', title: '人物与雨区同步', duration: '5 秒', purpose: '验证局部降雨能否随人物平移，并保留真实湿地边界。', action: '右脚站定 → 左移一步 → 雨区同步停住。', pass: '人物、雨线和湿圆同向移动，边界没有突然扩大或跳帧。', fail: '雨区留在原地、覆盖全屋、人物滑步或水迹瞬间消失。', status: '待生成' },
+      { shot: '05', title: '通道内跟随雨', duration: '5 秒', purpose: '验证屋顶空间中雨幕跟随人物，而不会被解释成固定漏水。', action: '快走三步 → 抬头确认 → 继续向前。', pass: '雨幕始终以人物为中心，背景结构稳定，黄雨衣保持一致。', fail: '雨从天花板固定位置落下、人物换脸、通道弯曲或雨幕闪烁。', status: '待生成' },
+      { shot: '09', title: '合伞并放下', duration: '5 秒', purpose: '验证双手、透明伞骨与长椅的复杂接触。', action: '收拢伞面 → 合起伞骨 → 放上长椅 → 松手。', pass: '两手结构完整，伞只合拢一次，放下后不漂移。', fail: '多指、伞骨穿手、伞面重复展开、长椅变形或道具消失。', status: '待生成' },
+    ],
+    nextSteps: [
+      '由荆确认“雨扩散成普通天气”的结尾，以及唯一一句对白是否保留。',
+      '先制作林栖角色锚点和局部雨区空间示意，再生成四张概念关键帧。',
+      '优先测试镜头 02、05、09，记录局部降雨、人物一致性与透明伞的失败情况。',
+      '根据测试决定保留写实雨效，还是改成更平面的插画视觉诗。',
     ],
   },
 ];
