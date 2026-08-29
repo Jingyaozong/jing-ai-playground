@@ -21,6 +21,11 @@ export type StoryDetail = {
   };
   shotSummary?: [string, string, string, string];
   stillsGenerated?: boolean;
+  characterAnchor?: {
+    title: string;
+    copy: string;
+    locks: string[];
+  };
   ending?: { label: string; copy: string; href: string; link: string };
   related?: { href: string; label: string };
   beats: Array<{
@@ -192,10 +197,10 @@ export const storyDetails: StoryDetail[] = [
     type: 'AI Short Film Draft',
     date: '2026.08',
     duration: '01:12',
-    status: '原创开发稿 · 尚未生成',
+    status: 'AI 概念开发 · 无视频',
     draft: true,
     heroVisual: 'pier-ticket',
-    draftNotice: '这是由 AI 协助整理的原创故事开发稿，周渡、周遥及全部情节均为虚构。页面已经写完故事结构、72 秒剧本、十二镜分镜与生成约束，但没有生成关键帧、视频或模型结论，也不代表已经完成的个人作品。',
+    draftNotice: '这是由 AI 协助整理的原创故事开发稿，周渡、周遥及全部情节均为虚构。角色锚点与四张画面是 2026-08-29 生成的视觉开发素材，用于验证人物、道具和场景方向；尚未生成视频或模型结论，也不代表已经完成的成片。',
     logline: '港口深夜值班员收到一张来自十年后的船票。票面写着失踪姐姐的名字，以及一座从来不存在的第七码头。',
     premise: '如果一条不存在的航线能带你见到错过的人，你会继续等那艘船，还是承认有些告别只能由留下的人完成？',
     sectionCopy: {
@@ -212,7 +217,7 @@ export const storyDetails: StoryDetail[] = [
       stills: {
         eyebrow: '03 / Key-frame briefs',
         heading: '先留四个空位，\n再决定雾里有什么。',
-        description: '这里展示的是待生成关键帧的画面任务书，不是剧照。四格分别验证道具、空间、角色和结尾，不虚构任何视觉结果。',
+        description: '角色锚点与四张 AI 概念关键帧用于验证人物、道具、空间和结尾方向。它们是视觉开发素材，不是成片剧照，也不代表视频动作已经通过测试。',
       },
       script: {
         eyebrow: '04 / Screenplay draft',
@@ -226,7 +231,12 @@ export const storyDetails: StoryDetail[] = [
       },
     },
     shotSummary: ['12 SHOTS', '72 SECONDS', '1 NIGHT', 'DRAFT 01'],
-    stillsGenerated: false,
+    stillsGenerated: true,
+    characterAnchor: {
+      title: '先确认周渡是谁，再让他走进雾里。',
+      copy: '这张独立锚点图固定周渡的脸、年龄感与值班服装。后续四张关键帧都引用同一张人物图生成，用珊瑚红围巾和薄荷反光条帮助跨场景识别。',
+      locks: ['短卷黑发＋疲惫但平静的眼神', '海军蓝港口工装＋一条薄荷反光带', '珊瑚红针织围巾＋旧银色腕表'],
+    },
     ending: {
       label: 'CURRENT ENDING',
       copy: '船没有来。\n天亮以后，他第一次没有继续等。',
@@ -248,17 +258,17 @@ export const storyDetails: StoryDetail[] = [
       { label: 'CHANNEL 07', title: '广播只能回答一句', copy: '登船者可以向广播问一个问题，对面只会留下一句回答。故事不解释信号来自未来、记忆还是周渡自己的告别。' },
     ],
     stills: [
-      { shot: 'FRAME 01', title: '十年后的船票', direction: '奶油色票据卡在老式打印机出口；日期、00:17 与数字 07 留给后期排版，周渡戴旧表的右手停在画面边缘。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'left top', tone: 'yellow' },
-      { shot: 'FRAME 02', title: '地图上没有七', direction: '俯拍旧港区图，六码头之后只有海面留白；蓝色工作灯、珊瑚红围巾边缘和票据组成视觉证据链。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'right top', tone: 'blue' },
-      { shot: 'FRAME 03', title: '雾里的跳板', direction: '明亮的浅蓝雾而非黑色恐怖场景；黄色 7 号牌立在尽头，跳板伸向画外，周渡只以背影进入下三分之一。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'left bottom', tone: 'mint' },
-      { shot: 'FRAME 04', title: '把票撕开', direction: '黎明蓝光与暖黄值班灯交界处，两半船票落在湿地上；七码头已消失，远处真实渡轮从三号码头离岸。', status: 'KEY-FRAME BRIEF · 待生成', framePosition: 'right bottom', tone: 'coral' },
+      { shot: 'FRAME 01', title: '十年后的船票', direction: '奶油色空白票据停在周渡手里，老式打印机与港外蓝光建立午夜值班室；日期、00:17 与数字 07 仍留给后期排版。', status: 'AI 概念关键帧 · 2026-08-29', framePosition: 'left top', tone: 'yellow' },
+      { shot: 'FRAME 02', title: '地图上没有七', direction: '高机位保留周渡可辨认的侧脸，港区图、手指和空白船票构成视觉证据链；地图编号仍留给后期制作。', status: 'AI 概念关键帧 · 2026-08-29', framePosition: 'right top', tone: 'blue' },
+      { shot: 'FRAME 03', title: '雾里的跳板', direction: '浅蓝雾保持明亮可读，空白黄色号牌与金属跳板指向画外；画面中没有船体、幽灵或第二个人。', status: 'AI 概念关键帧 · 2026-08-29', framePosition: 'left bottom', tone: 'mint' },
+      { shot: 'FRAME 04', title: '把票撕开', direction: '黎明蓝光与暖色晨光交界处，周渡手里只剩两半船票，远处真实渡轮作为次要信息离岸。', status: 'AI 概念关键帧 · 2026-08-29', framePosition: 'right bottom', tone: 'coral' },
     ],
     production: [
       { phase: '故事命题', status: '完成草案', note: '已从“未来船票”概念收束为一个关于结束等待的单夜故事；人物与情节均为虚构。' },
       { phase: '角色与规则', status: '完成草案', note: '建立周渡、周遥的关系，以及船票、七码头、广播三条超自然规则；名字与细节待荆确认。' },
       { phase: '72 秒剧本', status: '完成草案', note: '已写成五场短片文本，锁定唯一关键动作：周渡主动撕票。对白仍是编辑初稿。' },
       { phase: '十二镜分镜', status: '完成草案', note: '镜头总时长 72 秒，已分配景别、运镜、画面动作和声音线索。' },
-      { phase: '概念关键帧', status: '待开始', note: '四个位置只有明确画面任务书，没有调用图像模型，也没有可展示的生成素材。' },
+      { phase: '概念关键帧', status: '完成草案', note: '已用同一张周渡锚点图生成四张视觉开发素材，验证值班室、港图、雾中跳板与黎明结尾；不是成片剧照。' },
       { phase: '动作测试', status: '待开始', note: '先测试出票取票、走上湿滑跳板、撕开票据三个动作，再决定是否制作完整镜头。' },
       { phase: '剪辑与声音', status: '待开始', note: '声音设计以打印机、三声雾笛、广播噪声和清晨第一班渡轮为主线。' },
     ],
