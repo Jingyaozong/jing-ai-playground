@@ -17,9 +17,9 @@ sourceNote: "产品提示方式依据 Runway 与 Google Cloud 官方文档；动
 relatedNotes: ["first-last-frame-motion-prompt", "video-failure-cases", "ai-video-shot-continuity"]
 connections:
   - label: "TOOL"
-    title: "AI 视频镜头风险预检器"
-    description: "先检查动作数量、时长和首尾差异，决定一镜完成还是拆成两镜。"
-    href: "/tools/shot-risk-checker/"
+    title: "接触动作拆分卡"
+    description: "填写手、道具、接触点和承重点，生成五阶段 Prompt、九格矩阵与验收表。"
+    href: "/tools/contact-action-card/"
     tone: "coral"
   - label: "METHOD"
     title: "首帧、尾帧与运动提示词怎样分工"
@@ -27,9 +27,9 @@ connections:
     href: "/notes/first-last-frame-motion-prompt/"
     tone: "yellow"
   - label: "TOOL"
-    title: "分镜整理器"
-    description: "把复杂互动拆成每行一镜的画面、动作、运镜和声音任务。"
-    href: "/tools/shot-list-cleaner/"
+    title: "AI 视频镜头风险预检器"
+    description: "先检查动作数量、时长和首尾差异，决定一镜完成还是拆成两镜。"
+    href: "/tools/shot-risk-checker/"
     tone: "mint"
 ---
 

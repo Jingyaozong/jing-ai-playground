@@ -312,6 +312,15 @@ export const tools: Tool[] = [
     symbol: '◐',
     href: '/tools/shadow-motion-card/',
   },
+  {
+    id: 'tool-017',
+    title: 'Contact Action Card',
+    description: '把手、道具、接触点与承重点拆成五个阶段，生成接触链 Prompt、九格变量矩阵和逐阶段验收表。',
+    label: '接触动作拆分卡',
+    status: 'Ready',
+    symbol: '⊕',
+    href: '/tools/contact-action-card/',
+  },
 ];
 
 export const currentlyPlaying = [
