@@ -16,6 +16,11 @@ import shadowFrame01 from '../../assets/generated/shadow-arrives-five-minutes-ea
 import shadowFrame02 from '../../assets/generated/shadow-arrives-five-minutes-early-frame-02.webp';
 import shadowFrame03 from '../../assets/generated/shadow-arrives-five-minutes-early-frame-03.webp';
 import shadowFrame04 from '../../assets/generated/shadow-arrives-five-minutes-early-frame-04.webp';
+import objectMemoryCharacterAnchor from '../../assets/generated/objects-remember-character-anchor.webp';
+import objectMemoryFrame01 from '../../assets/generated/objects-remember-frame-01.webp';
+import objectMemoryFrame02 from '../../assets/generated/objects-remember-frame-02.webp';
+import objectMemoryFrame03 from '../../assets/generated/objects-remember-frame-03.webp';
+import objectMemoryFrame04 from '../../assets/generated/objects-remember-frame-04.webp';
 import storyKeyframes from '../../assets/generated/she-forgets-yesterday-keyframes.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
@@ -56,6 +61,8 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
       ? [rainFrame01, rainFrame02, rainFrame03, rainFrame04]
       : story.slug === 'shadow-arrives-five-minutes-early'
         ? [shadowFrame01, shadowFrame02, shadowFrame03, shadowFrame04]
+        : story.slug === 'objects-remember-the-last-sentence'
+          ? [objectMemoryFrame01, objectMemoryFrame02, objectMemoryFrame03, objectMemoryFrame04]
         : null;
   const characterAnchorImage = story.slug === 'no-boat-at-pier-seven'
     ? pierCharacterAnchor
@@ -63,6 +70,8 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
       ? rainCharacterAnchor
       : story.slug === 'shadow-arrives-five-minutes-early'
         ? shadowCharacterAnchor
+        : story.slug === 'objects-remember-the-last-sentence'
+          ? objectMemoryCharacterAnchor
         : null;
   const ending = story.ending ?? { label: 'CURRENT ENDING', copy: '故事还没有结束。\n它正在被做出来。', href: '/experiments/', link: '查看相关实验 ↗' };
   const related = story.related ?? { href: '/notes/ninety-second-storyboard/', label: '阅读拆镜方法 ↗' };
@@ -162,7 +171,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
           <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.stills.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.stills.heading)} /></div><p>{sectionCopy.stills.description}</p></div>
           {story.characterAnchor && <article className={`story-character-anchor${characterAnchorImage ? '' : ' is-brief'}`} id="character-anchor">
             {characterAnchorImage ? <div className="story-character-anchor-image" role="img" aria-label={`${story.characterAnchor.name} AI 角色锚点图`} style={{ backgroundImage: `url("${characterAnchorImage.src}")` }} /> : <div className="story-character-anchor-image is-brief" role="img" aria-label={`${story.characterAnchor.name}角色与道具锚点任务书`}><div className="anchor-brief-person" aria-hidden="true"><i /><b /></div><div className="anchor-brief-cup" aria-hidden="true"><span /></div><div className="anchor-brief-rule mono" aria-hidden="true">FACE / HAND / CUP<br />LOCK BEFORE GENERATION</div></div>}
-            <div className="story-character-anchor-copy"><span className="mono">CHARACTER ANCHOR / AI 视觉开发</span><h3>{story.characterAnchor.title}</h3><p>{story.characterAnchor.copy}</p><ul>{story.characterAnchor.locks.map((lock) => <li key={lock}>{lock}</li>)}</ul><small className="mono">{characterAnchorImage ? 'GENERATED 2026.08 · FICTIONAL CHARACTER' : 'BRIEF 2026.08 · NO GENERATED IMAGE'}</small></div>
+            <div className="story-character-anchor-copy"><span className="mono">CHARACTER ANCHOR / AI 视觉开发</span><h3>{story.characterAnchor.titleLines ? story.characterAnchor.titleLines.map((line) => <span key={line}>{line}</span>) : story.characterAnchor.title}</h3><p>{story.characterAnchor.copy}</p><ul>{story.characterAnchor.locks.map((lock) => <li key={lock}>{lock}</li>)}</ul><small className="mono">{characterAnchorImage ? 'GENERATED 2026.08 · FICTIONAL CHARACTER' : 'BRIEF 2026.08 · NO GENERATED IMAGE'}</small></div>
           </article>}
           <div className="story-still-grid">
             {story.stills.map((still, index) => <article className="story-still-card" key={still.shot}><div className={`story-still-placeholder tone-${still.tone}${stillsGenerated ? ' has-generated-frame' : ' is-brief'}`} aria-label={stillsGenerated ? `${still.title} AI 概念关键帧` : `${still.title} 待生成关键帧任务书`} style={stillsGenerated ? { backgroundImage: `url("${(individualFrames?.[index] ?? storyKeyframes).src}")`, backgroundPosition: individualFrames ? 'center' : still.framePosition, backgroundSize: individualFrames ? 'cover' : '200% 200%' } : undefined}><span className="story-frame-corner corner-a" /><span className="story-frame-corner corner-b" />{!stillsGenerated && <div className="story-frame-brief mono" aria-hidden="true"><span>IMAGE<br />PENDING</span><strong>{String(index + 1).padStart(2, '0')}</strong><i /></div>}<b className="mono">{stillsGenerated ? 'AI 概念关键帧' : '待生成 · 画面任务书'}</b></div><div className="story-still-copy"><div className="mono"><span>{still.shot}</span><span>{still.status}</span></div><h3>{still.title}</h3><p>{still.direction}</p><small className="mono">FRAME {String(index + 1).padStart(2, '0')} / {String(story.stills.length).padStart(2, '0')}</small></div></article>)}

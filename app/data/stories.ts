@@ -26,6 +26,7 @@ export type StoryDetail = {
   characterAnchor?: {
     name: string;
     title: string;
+    titleLines?: string[];
     copy: string;
     locks: string[];
   };
@@ -580,24 +581,25 @@ export const storyDetails: StoryDetail[] = [
     status: 'AI 概念开发 · 无视频',
     draft: true,
     heroVisual: 'echo-cup',
-    draftNotice: '这是由 AI 协助整理的原创魔幻现实短片开发稿，乔野、母亲及全部情节均为虚构。当前只有故事、角色与道具锚点任务书、十二镜分镜和待测试 Prompt；没有生成关键帧、视频或实验结论，也不代表已经完成的个人作品。',
+    draftNotice: '这是由 AI 协助整理的原创魔幻现实短片开发稿，乔野、母亲及全部情节均为虚构。角色锚点与四张画面是 2026-08-30 生成的 AI 视觉开发素材，用于确认人物、白杯、旧家和接触构图；没有生成视频或实验结论，也不代表已经完成的成片。',
     logline: '搬空旧家那天，乔野发现每件被她碰到的东西，都会重复母亲在它身边说过的最后一句话；唯独那只白杯，她一直不敢拿起。',
     premise: '我们真正舍不得的，究竟是那个人留下的话，还是某个再普通不过、却再也不会重复的日常？',
     premiseLines: ['真正舍不得的，', '是那个人留下的话，', '还是再也不会重复的日常？'],
     sectionCopy: {
       beats: { eyebrow: '01 / One empty afternoon', heading: '五次触碰，\n把告别从大话变回日常。', description: '异常从钥匙、围巾和收音机逐渐靠近核心白杯。每一次接触只触发一句话，乔野也只能决定继续听，或把手收回。' },
       rules: { eyebrow: '02 / Echo rules', heading: '三条规则，\n让回声只存在于接触之后。', description: '声音来源、触发方式和重复边界都被锁定。物品不回答问题，也不会替人物解释过去。' },
-      stills: { eyebrow: '03 / Visual briefs', heading: '四张画面任务书，\n先锁住手、杯子与留白。', description: '当前没有生成关键帧。下面只记录构图、人物锚点和道具状态，避免把概念图任务误写成已经完成的画面。' },
+      stills: { eyebrow: '03 / Key-frame studies', heading: '四张概念画面，\n先锁住手、杯子与留白。', description: '四张 AI 概念关键帧使用同一人物锚点生成，用于确认乔野、白杯、旧家配色和接触构图；它们是视觉开发素材，不是成片剧照。' },
       script: { eyebrow: '04 / Screenplay draft', heading: '六十秒，\n只让最后一句话响一次。', description: '六场原创无旁白短片，以纸箱、手指接触、物品回声和房间环境声推进；文字与声音都将在后期完成。' },
       shots: { eyebrow: '05 / Shot list', heading: '十二个镜头，\n两次伸手，一次真正拿起。', description: '镜头表刻意把接近、预接触、闭合、承重与释放拆开。镜头 08、09 和 10 是手物接触与声音时点的重点测试。' },
     },
     shotSummary: ['12 SHOTS', '60 SECONDS', '1 WHITE CUP', 'DRAFT 01'],
-    stillsGenerated: false,
+    stillsGenerated: true,
     characterAnchor: {
       name: '乔野',
-      title: '先锁住乔野，再让白杯成为唯一不变的证据。',
-      copy: '乔野是 29 岁的书籍修复师。人物锚点固定齐下巴短发、薄荷绿发夹、珊瑚红针织背心和浅蓝衬衫；道具锚点固定一只无图案白色陶瓷杯、C 形杯柄朝右、杯口细小缺口和木桌上的黄色杯垫。',
-      locks: ['齐下巴黑色短发＋右侧薄荷绿长方发夹＋克制表情', '珊瑚红针织背心＋浅蓝衬衫＋深藏蓝直筒裤', '白色陶瓷杯＋杯柄朝右＋杯口一点缺口＋黄色圆形杯垫'],
+      title: '先锁住乔野，再锁住那只白杯。',
+      titleLines: ['先锁住乔野，', '再锁住那只白杯。'],
+      copy: '乔野是 29 岁的书籍修复师。人物锚点固定齐下巴短发、左侧薄荷绿发夹、珊瑚红针织背心和浅蓝衬衫；道具锚点固定一只无图案白色陶瓷杯、C 形杯柄、杯口细小缺口和木桌上的黄色杯垫。',
+      locks: ['齐下巴黑色短发＋左侧薄荷绿长方发夹＋克制表情', '珊瑚红针织背心＋浅蓝衬衫＋深藏蓝直筒裤', '白色陶瓷杯＋C 形杯柄＋杯口一点缺口＋黄色圆形杯垫'],
     },
     ending: { label: 'CURRENT ENDING', copy: '她没有保存回声。\n只把杯子洗干净，带走。', href: '/experiments/can-one-hand-lift-the-same-cup/', link: '查看同一只手拿杯实验 ↗' },
     related: { href: '/tools/contact-action-card/', label: '生成接触动作拆分卡 ↗' },
@@ -675,19 +677,19 @@ export const storyDetails: StoryDetail[] = [
       { label: 'NO REPLY', title: '回声只播放一次，不回答问题', copy: '松手再碰不会重复，同一件物品不能对话、补充或变成保存无限记忆的录音机。' },
     ],
     stills: [
-      { shot: 'FRAME 01', title: '纸箱里的第一句', direction: '明亮空屋中，乔野蹲在蓝色纸箱旁，钥匙落在掌心；画面保留大量墙面留白，让声音从空处出现。', status: '待生成 · 画面任务书', framePosition: 'left top', tone: 'yellow' },
-      { shot: 'FRAME 02', title: '她听见自己的争吵', direction: '珊瑚红收音机放在窗台，乔野的手刚刚松开；人物在画面左侧，右侧桌面上的白杯仍未被触碰。', status: '待生成 · 画面任务书', framePosition: 'right top', tone: 'coral' },
-      { shot: 'FRAME 03', title: '杯柄前的一厘米', direction: '极近景只看右手、杯柄、黄色杯垫和清楚间距；白杯保持完整落桌，接触点与承重点都可辨认。', status: '待生成 · 画面任务书', framePosition: 'left bottom', tone: 'mint' },
-      { shot: 'FRAME 04', title: '洗净以后带走', direction: '水槽边的白杯被双手擦干，杯口小缺口仍在；空屋从背景虚化，画面不出现生成文字或超自然光效。', status: '待生成 · 画面任务书', framePosition: 'right bottom', tone: 'blue' },
+      { shot: 'FRAME 01', title: '纸箱里的第一句', direction: '明亮空屋中，乔野蹲在蓝色纸箱旁，钥匙落在掌心；画面保留大量门口留白，让声音从空处出现。', status: 'AI 概念关键帧 · 2026-08-30', framePosition: 'left top', tone: 'yellow' },
+      { shot: 'FRAME 02', title: '她听见自己的争吵', direction: '珊瑚红收音机停在窗边，乔野的手刚刚松开；右侧桌面上的白杯仍未被触碰。', status: 'AI 概念关键帧 · 2026-08-30', framePosition: 'right top', tone: 'coral' },
+      { shot: 'FRAME 03', title: '杯柄前的一厘米', direction: '极近景只看右手、杯柄、黄色杯垫和清楚间距；白杯保持完整落桌，接触点与承重点都可辨认。', status: 'AI 概念关键帧 · 2026-08-30', framePosition: 'left bottom', tone: 'mint' },
+      { shot: 'FRAME 04', title: '洗净以后带走', direction: '水槽边的白杯被双手擦干，杯口小缺口仍在；空屋从背景虚化，画面不出现生成文字或超自然光效。', status: 'AI 概念关键帧 · 2026-08-30', framePosition: 'right bottom', tone: 'blue' },
     ],
     production: [
       { phase: '故事命题', status: '完成草案', note: '已把“物品保存最后一句话”收束为关于普通日常、告别与带走什么的原创短片命题。' },
       { phase: '人物与规则', status: '完成草案', note: '建立虚构角色乔野、母亲与旧家，并锁定接触触发、只存一句和不可重播三条规则。' },
       { phase: '60 秒剧本', status: '完成草案', note: '已写成六场结构；没有旁白，回声台词与现场声音均标明后期制作。' },
       { phase: '十二镜分镜', status: '完成草案', note: '十二镜共 60 秒，重点拆分白杯接近、握住、承重、落稳与清洗动作。' },
-      { phase: '角色与道具锚点', status: '完成草案', note: '已完成文字任务书；尚未生成乔野或白杯的参考图，页面中的图形只表示固定关系。' },
+      { phase: '角色与道具锚点', status: '完成草案', note: '已生成乔野全身角色锚点，并把白杯、杯口缺口、黄色杯垫和旧家配色纳入同一张参考图。' },
       { phase: '接触动作测试', status: '待开始', note: '优先验证镜头 08、09、10 的手杯接触链，以及接触后声音进入的剪辑时点；目前没有视频结果。' },
-      { phase: '关键帧与声音制作', status: '制作中', note: '60 秒四轨声音触发时间线已完成草案；四张关键帧、配音与现场声音素材仍未制作。' },
+      { phase: '关键帧与声音制作', status: '制作中', note: '四张 AI 概念关键帧与 60 秒声音触发时间线已经完成；配音、拟音与真实视频仍未制作。' },
     ],
     script: [
       { timecode: '00:00—00:10', scene: '旧家 / 开箱', visual: '午后空屋。乔野把钥匙放进纸箱，金属刚碰到掌心，门边传来母亲的声音。她停住。', voice: '母亲的回声：“早点回来。”', sound: '胶带撕开、钥匙轻响；回声保持干燥，不加混响特效。' },
@@ -712,7 +714,7 @@ export const storyDetails: StoryDetail[] = [
       { shot: '12', duration: 5, size: '门口远景', visual: '白杯进入随身包，乔野锁门离开，纸箱留在空屋。', camera: '固定长镜头', sound: '拉链与门锁' },
     ],
     promptGuide: {
-      identityLock: 'same fictional East Asian Chinese woman, age 29, chin-length straight black bob, mint-green rectangular hair clip on her right side, calm restrained eyes, coral-red knitted vest over a pale sky-blue cotton shirt, dark navy straight trousers, natural skin texture, consistent face and hands',
+      identityLock: 'same fictional East Asian Chinese woman, age 29, chin-length straight black bob, mint-green rectangular hair clip on her left side, calm restrained eyes, coral-red knitted vest over a pale sky-blue cotton shirt, dark navy straight trousers, natural skin texture, consistent face and hands',
       styleLock: 'bright cinematic magical realism, sunlit empty apartment, cream walls, sky-blue moving boxes, coral mint and mustard accents, natural photographic texture, restrained performance, readable hand-object contact, subtle 35mm texture, 16:9, no on-screen text',
       negative: 'different person, hairstyle change, missing hair clip, wardrobe change, duplicate woman, extra hands, extra fingers, fused fingers, hand passing through object, warped cup, duplicated cup, moving cup before contact, floating props, supernatural glow, horror mood, dark noir, subtitles, logo, watermark, generated text',
     },
@@ -737,7 +739,7 @@ export const storyDetails: StoryDetail[] = [
     ],
     nextSteps: [
       '由荆确认母亲最后一句保持“水凉了就别喝了”，还是改成更接近她真实感受的日常话语。',
-      '先制作乔野人物锚点与白杯道具锚点，再生成四张静态构图验证图。',
+      '复核人物锚点与四张概念关键帧中的脸、发夹、服装、白杯和旧家配色，再决定是否锁为正式视觉参考。',
       '用接触动作卡分别测试镜头 08、09、10，记录接触时点、手部完整、道具保持和承重逻辑。',
       '确认四句虚构台词与声音表演方向后，按触发时间线制作临时配音和动作拟音。',
     ],

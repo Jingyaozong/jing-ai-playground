@@ -1,6 +1,7 @@
 import experimentPilotSamples from '../assets/generated/forty-shots-pilot-samples.png';
 import rainKitchenFrame from '../assets/generated/before-the-rain-ends-frame-01.webp';
 import earlyShadowFrame from '../assets/generated/shadow-arrives-five-minutes-early-frame-03.webp';
+import objectMemoryFrame from '../assets/generated/objects-remember-frame-03.webp';
 import storyKeyframes from '../assets/generated/she-forgets-yesterday-keyframes.png';
 
 const generatedVisuals = {
@@ -8,6 +9,7 @@ const generatedVisuals = {
   faces: { image: experimentPilotSamples, caption: 'Pilot samples · 4 / 40' },
   rainstudy: { image: rainKitchenFrame, caption: 'Story concept frame · no video' },
   earlyshadow: { image: earlyShadowFrame, caption: 'AI concept frame · no video' },
+  echo: { image: objectMemoryFrame, caption: 'AI concept frame · no video' },
 };
 
 export function ProjectVisual({ variant, label }: { variant: string; label: string }) {
