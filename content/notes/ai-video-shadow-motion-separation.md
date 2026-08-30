@@ -27,9 +27,9 @@ connections:
     href: "/stories/shadow-arrives-five-minutes-early/"
     tone: "yellow"
   - label: "TOOL"
-    title: "光线连续性账本"
-    description: "先锁定真实空间里的灯位，再判断影子方向、软硬和接触关系。"
-    href: "/tools/lighting-ledger/"
+    title: "影子动作拆分卡"
+    description: "把实体、影子、光线和摄影机拆成四轨，再生成九格测试与五点验收表。"
+    href: "/tools/shadow-motion-card/"
     tone: "mint"
 ---
 
@@ -194,4 +194,3 @@ The shadow stays connected to her feet and remains consistent with the same hard
 - 是否保留真实版本、参数和失败样本。
 
 影子先走，不等于人物也要动。先把两条时间线写清楚，再决定让模型一次完成，还是把控制权留给后期。
-

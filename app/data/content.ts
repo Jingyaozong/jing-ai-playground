@@ -303,6 +303,15 @@ export const tools: Tool[] = [
     symbol: '☀',
     href: '/tools/lighting-ledger/',
   },
+  {
+    id: 'tool-016',
+    title: 'Shadow Motion Card',
+    description: '把实体、影子、光线与摄影机拆成四条控制轨，生成双时间线 Prompt、九格变量矩阵和五点验收表。',
+    label: '影子动作拆分卡',
+    status: 'Ready',
+    symbol: '◐',
+    href: '/tools/shadow-motion-card/',
+  },
 ];
 
 export const currentlyPlaying = [

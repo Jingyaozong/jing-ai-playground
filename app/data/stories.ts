@@ -468,7 +468,7 @@ export const storyDetails: StoryDetail[] = [
       locks: ['黑色低发髻＋轻薄碎刘海＋克制观察感', '珊瑚红工装短夹克＋浅天蓝衬衫＋深藏蓝阔腿裤', '芥末黄工具包＋银色方表＋薄荷绿硬壳行李箱'],
     },
     ending: { label: 'CURRENT ENDING', copy: '影子先到了五分钟。\n门也早开了五分钟。', href: '/notes/ai-video-lighting-continuity/', link: '阅读光线连续性方法 ↗' },
-    related: { href: '/tools/lighting-ledger/', label: '打开光线连续性账本 ↗' },
+    related: { href: '/tools/shadow-motion-card/', label: '生成影子动作拆分卡 ↗' },
     beats: [
       { time: '08:03', title: '杯子先被拿起', copy: '安澄还站在工作台旁，墙上的影子已经伸手去够架上的杯子。五分钟后，她做了同样的动作。', tone: 'yellow' },
       { time: '12:10', title: '误差被量出来', copy: '她用单盏工作灯、地面胶带和计时器重复测试。无论动作大小，影子始终领先整整五分钟。', tone: 'blue' },

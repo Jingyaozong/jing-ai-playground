@@ -412,8 +412,8 @@ export const experimentDetails: ExperimentDetail[] = [
     conclusionBadge: '0 / 9 · 无结论',
     relatedHref: '/notes/ai-video-shadow-motion-separation/',
     relatedLabel: '阅读双时间线控制方法 ↗',
-    toolHref: '/tools/lighting-ledger/',
-    toolLabel: '打开光线连续性账本 ↗',
+    toolHref: '/tools/shadow-motion-card/',
+    toolLabel: '生成影子动作拆分卡 ↗',
   },
 ];
 

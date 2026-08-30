@@ -15,7 +15,7 @@ const stages = [
     label: 'ANCHOR',
     title: '角色与场景',
     description: '锁住不能漂移的人物与空间事实，并在生成前拆掉过载镜头。',
-    toolIds: ['tool-004', 'tool-009', 'tool-014', 'tool-015', 'tool-005'],
+    toolIds: ['tool-004', 'tool-009', 'tool-014', 'tool-015', 'tool-016', 'tool-005'],
     note: '先固定，再变化',
   },
   {
