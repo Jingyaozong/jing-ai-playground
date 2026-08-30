@@ -146,6 +146,17 @@ export const experiments: Experiment[] = [
     visual: 'earlyshadow reversed',
   },
   {
+    id: 'experiment-008',
+    slug: 'can-one-hand-lift-the-same-cup',
+    title: '一只手能否稳定拿起同一个杯子？',
+    description: '九格对照协议：固定同一只手、同一个杯子与三个接触任务，比较普通动作句、五状态顺序和端点证据。目前 0 / 9，没有视频结论。',
+    category: 'Contact & Physics Study',
+    date: '2026.08.30',
+    status: '协议完成 · 0 / 9 待执行',
+    stage: 'documented',
+    visual: 'frames',
+  },
+  {
     id: 'experiment-003',
     title: '让 AI 先画一张不会发生的海报',
     description: '待验证玩法：从一张虚构电影海报反向生长出角色、场景与故事梗概。目前只保留概念卡。',

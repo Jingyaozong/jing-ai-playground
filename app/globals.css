@@ -3004,6 +3004,22 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .experiment-reference-image.is-reference-pack > i:nth-child(2) { margin-top: 48px; background: var(--sky); }
 .experiment-reference-image.is-reference-pack > i:nth-child(3) { margin-top: 15px; background: var(--mint); }
 .experiment-reference-image.is-reference-pack > b { position: absolute; left: 34px; bottom: 22px; color: var(--blue); font-size: 7px; }
+.experiment-reference-image.is-contact-layout { position: relative; overflow: hidden; background: linear-gradient(150deg,var(--sky) 0 58%,var(--yellow) 58%); }
+.experiment-detail-title h1 > span { display: block; }
+.experiment-reference-image.is-contact-layout::before { content: ''; position: absolute; left: 8%; right: 8%; bottom: 18%; height: 14px; border: 2px solid var(--ink); border-radius: 5px; background: var(--mint); }
+.contact-reference-cup { position: absolute; right: 18%; bottom: calc(18% + 14px); width: 115px; height: 128px; border: 3px solid var(--ink); border-radius: 10px 10px 42px 42px; background: var(--white); box-shadow: 5px 5px 0 var(--ink); }
+.contact-reference-cup::after { content: ''; position: absolute; right: -54px; top: 23px; width: 62px; height: 62px; border: 13px solid var(--ink); border-left-width: 8px; border-radius: 50%; }
+.contact-reference-cup i { position: absolute; left: 12%; right: 12%; top: 16px; height: 12px; border-radius: 50%; background: var(--blue); opacity: .6; }
+.contact-reference-cup b { position: absolute; left: 18%; right: 18%; bottom: 14px; height: 36px; border-radius: 0 0 20px 20px; background: var(--sky); }
+.contact-reference-hand { position: absolute; z-index: 3; left: 10%; top: 31%; width: 205px; height: 125px; transform: rotate(-7deg); }
+.contact-reference-hand b { position: absolute; left: 0; top: 45px; width: 128px; height: 61px; border: 3px solid var(--ink); border-radius: 45px 25px 25px 45px; background: var(--coral); }
+.contact-reference-hand i { position: absolute; z-index: 2; left: 98px; width: 82px; height: 21px; border: 3px solid var(--ink); border-radius: 99px; background: var(--coral); transform-origin: left center; }
+.contact-reference-hand i:nth-child(1) { top: 18px; transform: rotate(13deg); }
+.contact-reference-hand i:nth-child(2) { top: 44px; }
+.contact-reference-hand i:nth-child(3) { top: 70px; transform: rotate(-12deg); }
+.experiment-reference-image.is-contact-layout > em, .contact-action-diagram > em { position: absolute; z-index: 5; display: grid; place-items: center; border: 2px solid var(--ink); border-radius: 50%; background: var(--coral); color: var(--ink); font: normal 800 1.5rem var(--display); box-shadow: 0 0 0 9px rgba(255,112,90,.25); }
+.experiment-reference-image.is-contact-layout > em { right: 28%; top: 43%; width: 45px; aspect-ratio: 1; }
+.experiment-reference-image.is-contact-layout > span { position: absolute; left: 30px; bottom: 22px; color: var(--blue); font-size: 7px; }
 .experiment-reference-image.is-light-map { position: relative; overflow: hidden; background: linear-gradient(135deg,var(--sky),var(--mint)); }
 .experiment-reference-image.is-light-map::before { content: ''; position: absolute; inset: 0; background: linear-gradient(rgba(20,33,51,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(20,33,51,.08) 1px,transparent 1px); background-size: 38px 38px; }
 .light-map-window { position: absolute; left: 0; top: 8%; width: 24%; height: 82%; display: grid; place-items: center; padding: 10px; border: 2px solid var(--ink); border-left: 0; background: var(--white); color: var(--blue); font-size: 7px; text-align: center; writing-mode: vertical-rl; box-shadow: 7px 7px 0 var(--ink); }
@@ -3074,6 +3090,23 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .shadow-offset-diagram > em { position: absolute; left: 39%; right: 9%; bottom: 29px; height: 45px; border-bottom: 2px dashed var(--blue); transform: rotate(-9deg); }
 .shadow-offset-diagram > em::after { content: '↗'; position: absolute; right: -3px; bottom: -13px; color: var(--blue); font: normal 800 2rem var(--display); }
 .shadow-offset-diagram > strong { position: absolute; left: 17px; bottom: 14px; z-index: 3; color: var(--blue); font-size: 6px; }
+.contact-action-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
+.contact-action-record-board .experiment-record-meta > label:last-child { grid-column: 1/-1; }
+.contact-action-diagram { position: relative; min-height: 285px; margin-bottom: 24px; overflow: hidden; border: 2px solid var(--ink); border-radius: 24px; background: linear-gradient(150deg,var(--sky) 0 57%,var(--yellow) 57%); }
+.contact-action-diagram::before { content: ''; position: absolute; left: 7%; right: 7%; bottom: 50px; height: 12px; border: 2px solid var(--ink); border-radius: 4px; background: var(--mint); }
+.contact-action-diagram > span { position: absolute; left: 17px; top: 15px; z-index: 4; color: var(--blue); font-size: 7px; font-weight: 750; }
+.contact-diagram-cup { position: absolute; right: 18%; bottom: 62px; width: 86px; height: 91px; border: 2px solid var(--ink); border-radius: 9px 9px 32px 32px; background: var(--white); box-shadow: 4px 4px 0 var(--ink); }
+.contact-diagram-cup::after { content: ''; position: absolute; right: -39px; top: 16px; width: 43px; height: 43px; border: 9px solid var(--ink); border-left-width: 6px; border-radius: 50%; }
+.contact-diagram-cup i { position: absolute; left: 12%; right: 12%; top: 12px; height: 9px; border-radius: 50%; background: var(--blue); opacity: .55; }
+.contact-diagram-cup b { position: absolute; left: 18%; right: 18%; bottom: 11px; height: 25px; border-radius: 0 0 15px 15px; background: var(--sky); }
+.contact-diagram-hand { position: absolute; z-index: 3; left: 8%; top: 34%; width: 175px; height: 105px; transform: rotate(-7deg); }
+.contact-diagram-hand b { position: absolute; left: 0; top: 39px; width: 105px; height: 51px; border: 2px solid var(--ink); border-radius: 39px 22px 22px 39px; background: var(--coral); }
+.contact-diagram-hand i { position: absolute; z-index: 2; left: 80px; width: 70px; height: 18px; border: 2px solid var(--ink); border-radius: 99px; background: var(--coral); transform-origin: left center; }
+.contact-diagram-hand i:nth-child(1) { top: 15px; transform: rotate(12deg); }
+.contact-diagram-hand i:nth-child(2) { top: 38px; }
+.contact-diagram-hand i:nth-child(3) { top: 61px; transform: rotate(-12deg); }
+.contact-action-diagram > em { right: 27%; top: 45%; width: 38px; aspect-ratio: 1; font-size: 1.2rem; }
+.contact-action-diagram > strong { position: absolute; left: 17px; bottom: 15px; color: var(--blue); font-size: 6px; }
 .lighting-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
 .lighting-record-board .experiment-record-meta > label:last-child { grid-column: 1/-1; }
 .light-axis-diagram { position: relative; min-height: 285px; margin-bottom: 24px; overflow: hidden; border: 2px solid var(--ink); border-radius: 24px; background: linear-gradient(140deg,var(--sky),var(--mint)); }
@@ -3103,12 +3136,16 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 @media (max-width: 760px) {
   .experiment-reference-image.is-reference-pack { min-height: 410px; border-right: 0; border-bottom: 2px solid var(--ink); }
   .experiment-reference-image.is-light-map { min-height: 410px; border-right: 0; border-bottom: 2px solid var(--ink); }
+  .experiment-reference-image.is-contact-layout { min-height: 410px; border-right: 0; border-bottom: 2px solid var(--ink); }
+  .contact-reference-hand { left: 2%; transform: rotate(-7deg) scale(.82); transform-origin: left center; }
+  .contact-reference-cup { right: 13%; transform: scale(.88); transform-origin: bottom right; }
   .reference-record-grid { grid-template-columns: repeat(4,1fr); }
   .reference-task-key { grid-template-columns: 1fr; }
   .reference-active-task { align-items: flex-start; flex-direction: column; }
   .reference-record-board .experiment-record-filters > span { align-self: flex-start; }
   .rain-record-board .experiment-record-filters > span { align-self: flex-start; }
   .shadow-offset-record-board .experiment-record-filters > span { align-self: flex-start; }
+  .contact-action-record-board .experiment-record-filters > span { align-self: flex-start; }
   .lighting-record-board .experiment-record-filters > span { align-self: flex-start; }
   .rain-zone-diagram { min-height: 220px; }
   .rain-record-grid { grid-template-columns: repeat(3,1fr); }
@@ -3116,6 +3153,9 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .rain-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
   .shadow-offset-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
   .shadow-offset-diagram { min-height: 220px; }
+  .contact-action-diagram { min-height: 220px; }
+  .contact-diagram-hand { left: 1%; top: 33%; transform: rotate(-7deg) scale(.8); transform-origin: left center; }
+  .contact-diagram-cup { right: 14%; transform: scale(.85); transform-origin: bottom right; }
   .lighting-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
   .lighting-task-key { grid-template-columns: 1fr; }
 }
@@ -3749,6 +3789,10 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
 
   .note-detail-title h1 {
     font-size: clamp(2.85rem,12.2vw,4.4rem);
+  }
+
+  .experiment-detail-title h1:has(> span) {
+    font-size: clamp(2.45rem,11vw,2.8rem);
   }
 
   .section-heading h2,

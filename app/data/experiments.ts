@@ -2,6 +2,7 @@ export type ExperimentDetail = {
   slug: string;
   number: string;
   title: string;
+  titleLines?: string[];
   englishTitle: string;
   category: string;
   date: string;
@@ -38,7 +39,7 @@ export type ExperimentDetail = {
   sampleTitle?: string;
   sampleDescription?: string;
   reference?: {
-    kind: 'character' | 'reference-pack' | 'light-map';
+    kind: 'character' | 'reference-pack' | 'light-map' | 'contact-layout';
     label: string;
     title: string;
     description: string;
@@ -53,7 +54,7 @@ export type ExperimentDetail = {
   }>;
   observationTitle?: string;
   observationDescription?: string;
-  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset';
+  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset' | 'contact-action';
   sources?: Array<{ title: string; url: string; note: string }>;
   nextSteps: string[];
   currentConclusion?: string;
@@ -414,6 +415,84 @@ export const experimentDetails: ExperimentDetail[] = [
     relatedLabel: '阅读双时间线控制方法 ↗',
     toolHref: '/tools/shadow-motion-card/',
     toolLabel: '生成影子动作拆分卡 ↗',
+  },
+  {
+    slug: 'can-one-hand-lift-the-same-cup',
+    number: '006',
+    title: '一只手能否稳定拿起同一个杯子？',
+    titleLines: ['一只手能否稳定', '拿起同一个杯子？'],
+    englishTitle: 'Can One Hand Lift the Same Cup?',
+    category: 'Contact & Physics Study',
+    date: '2026.08.30',
+    status: '实验协议完成 · 0 / 9 待执行',
+    demo: true,
+    testCount: 9,
+    testUnit: 'CONTACT CELLS',
+    pilotLabel: 'PLANNED · 0 / 9',
+    notice: '这是一份待执行的手物接触实验协议。目前只有同一只手、同一个杯子的结构化起点、三种输入条件、九个测试单元和本地记录台，没有视频输出、评分或结论；页面中的手杯示意只说明接触关系，不冒充生成样本。',
+    summary: '固定同一只右手、同一个白色杯子、机位和三个接触任务，对比普通动作句、五状态顺序与五状态加端点证据；检查接触时点、手部完整、道具保持和承重逻辑。',
+    question: '当同一只手依次触碰、握住并放下同一个杯子时，怎样的输入结构，才能避免手指穿模、杯子提前移动、抓握滑动和承重点消失？',
+    questionLines: ['同一只手，同一个杯子。', '先接触，还是先移动？', '抓握、承重与释放，', '能否保持同一条因果链？'],
+    hypothesis: '把“拿起杯子”写成一个动作句，可能让接触、抓握和物体移动同时发生；拆成接近、预接触、闭合、承重移动与结束状态，可能提高顺序可读性。加入一致的首尾端点可能进一步固定结果，但中间手指姿态与物理关系仍需逐阶段验收。',
+    constants: [
+      '同一只虚构成年角色右手；相同肤色、袖口、手背朝向和初始手指姿态',
+      '同一只白色陶瓷杯；圆形杯口、C 形杯柄朝画面右侧，杯中无液体',
+      '同一张桌面、固定近景、相同焦段、机位、光线与干净背景',
+      '三个固定任务：指尖触碰杯壁、握住杯柄并抬高、放稳杯子再松手',
+      '每格 5 秒、16:9、相同输出数量；模型、版本、Seed 与平台设置在执行当天记录',
+      '不加入喝水、转身、说话、液体晃动、摄影机运动或第二只手',
+    ],
+    protocolTitle: '三种输入条件，\n三个相同接触任务。',
+    protocolDescription: '九格共用相同起点、接触点与动作终点。组间只改变动作被组织成一句话、五状态顺序，还是五状态加端点证据。',
+    groups: [
+      { code: 'A', title: '普通动作句', shots: 'A01—A03', variable: '只写“手触碰 / 拿起 / 放下杯子”，不拆接触与承重', tone: 'blue' },
+      { code: 'B', title: '五状态顺序', shots: 'B01—B03', variable: '接近→预接触→闭合→承重移动→结束状态', tone: 'yellow' },
+      { code: 'C', title: '五状态＋端点证据', shots: 'C01—C03', variable: '保留同一五状态顺序，并加入一致的首帧与目标尾帧', tone: 'coral' },
+    ],
+    reference: {
+      kind: 'contact-layout',
+      label: 'CONTACT LAYOUT · NO GENERATED OUTPUT',
+      title: '先把手、杯柄和桌面都留在证据里。',
+      description: '起点规定右手与杯柄保持清楚间距，杯底完整落在桌面；这张关系图只用于固定抓握方向、接触点和初始承重点，不代表任何生成结果。',
+    },
+    sampleTitle: '九格全部留白。\n先看杯子何时开始动。',
+    sampleDescription: '每格对应一次真实生成。当前只展示固定任务、输入条件和观察重点；未执行的单元不会计算平均分，也不会生成成功率。',
+    samples: [
+      { shot: 'A01', title: '指尖触碰杯壁', setting: '普通动作句 · 杯子保持在桌面', observation: '待执行；检查杯子是否在指尖真正接触前提前移动。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'blue', generated: false },
+      { shot: 'A02', title: '握住杯柄并抬高', setting: '普通动作句 · 只写“拿起杯子”', observation: '待执行；检查手指闭合、杯底离桌和同步抬升是否有清楚顺序。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'blue', generated: false },
+      { shot: 'A03', title: '放稳杯子再松手', setting: '普通动作句 · 只写“放下杯子”', observation: '待执行；检查杯底是否先落稳，手指随后才释放。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'blue', generated: false },
+      { shot: 'B01', title: '指尖触碰杯壁', setting: '五状态顺序 · 接近 / 接触 / 停住', observation: '待执行；记录手与杯子间距在哪个阶段归零，以及杯子是否全程静止。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'yellow', generated: false },
+      { shot: 'B02', title: '握住杯柄并抬高', setting: '五状态顺序 · 闭合后才转移承重', observation: '待执行；检查手指、杯柄和杯底三处关系是否连续。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'yellow', generated: false },
+      { shot: 'B03', title: '放稳杯子再松手', setting: '五状态顺序 · 落稳后才释放', observation: '待执行；检查承重点是否从手回到桌面后，手才离开。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'yellow', generated: false },
+      { shot: 'C01', title: '指尖触碰杯壁', setting: '五状态＋端点 · 接触终点固定', observation: '待执行；检查终点证据是否帮助指尖停在目标位置，而不改变杯子。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'coral', generated: false },
+      { shot: 'C02', title: '握住杯柄并抬高', setting: '五状态＋端点 · 抬升高度固定', observation: '待执行；检查两端正确时，中间抓握与承重过程是否仍出现穿模。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'coral', generated: false },
+      { shot: 'C03', title: '放稳杯子再松手', setting: '五状态＋端点 · 释放终点固定', observation: '待执行；检查杯子形状、朝向和落桌位置是否保持一致。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'coral', generated: false },
+    ],
+    checks: [
+      { label: 'CONTACT', question: '杯子究竟何时开始移动？', note: '逐阶段检查指尖与杯柄的间距；接触前的任何位移都单独标记，不用动作顺滑掩盖因果错误。', tone: 'blue' },
+      { label: 'INTEGRITY', question: '手和杯子还是原来那两个对象吗？', note: '检查手指数量、关节、杯柄、杯口、材质和数量；遮挡后重新出现时尤其要对照起点。', tone: 'yellow' },
+      { label: 'SUPPORT', question: '这一刻是谁在承重？', note: '杯底离桌前应由桌面承重，闭合抓握后转到手；放下时顺序反向，不能悬浮或无因滑动。', tone: 'coral' },
+    ],
+    observationTitle: '先找第一个接触点，\n再追承重点去了哪里。',
+    observationDescription: '四项人工评分分开记录：接触时点、手部完整、道具保持和承重逻辑。每格按接近、预接触、闭合、承重移动与结束状态检查。',
+    recordBoard: 'contact-action',
+    sources: [
+      { title: 'Runway · Image to Video Prompting Guide', url: 'https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide', note: '官方建议图生视频文字集中描述动作、互动与时间进展，并从最关键运动开始减少歧义。' },
+      { title: 'Google Cloud · Veo Prompt Guide', url: 'https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/video-gen-prompt-guide', note: '官方把动作与互动列为 Prompt 组成部分；实际可用控件和模型版本需在执行当天核对。' },
+      { title: 'T2V-CompBench · CVPR 2025', url: 'https://openaccess.thecvf.com/content/CVPR2025/html/Sun_T2V-CompBench_A_Comprehensive_Benchmark_for_Compositional_Text-to-video_Generation_CVPR_2025_paper.html', note: '研究把动作绑定与物体互动作为独立评测类别；本文只借用问题划分，不预写模型表现。' },
+    ],
+    nextSteps: [
+      '制作一张干净首帧：右手与杯柄保留清楚间距，杯底完整接触桌面，关键轮廓没有模糊或融合。',
+      '执行当天固定一个真实模型版本、五秒时长、16:9、输出数量和 Seed（如支持），先完成 A、B 两组。',
+      '为 C 组制作与起点一致的三个目标尾帧，只改变接触结果，不改变手、杯子、光线和机位。',
+      '九格完成后报告接触错误最早出现阶段、四项真实评分与失败标签，再决定是否需要拆镜或局部实拍。',
+    ],
+    currentConclusion: '三种输入条件、三个固定接触任务、九格空白样本墙与本地记录台已经准备好；当前 0 / 9，没有视频输出，因此不能判断哪种结构更稳定。',
+    conclusionBadge: '0 / 9 · 无结论',
+    relatedHref: '/notes/ai-video-hand-object-contact/',
+    relatedLabel: '阅读完整接触动作方法 ↗',
+    toolHref: '/tools/contact-action-card/',
+    toolLabel: '生成接触动作拆分卡 ↗',
   },
 ];
 
