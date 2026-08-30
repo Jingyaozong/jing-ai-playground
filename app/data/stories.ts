@@ -2,13 +2,14 @@ export type StoryDetail = {
   slug: string;
   number: string;
   title: string;
+  titleLines?: string[];
   englishTitle: string;
   type: string;
   date: string;
   duration: string;
   status: string;
   draft: boolean;
-  heroVisual?: 'memory-letter' | 'pier-ticket' | 'personal-rain' | 'early-shadow';
+  heroVisual?: 'memory-letter' | 'pier-ticket' | 'personal-rain' | 'early-shadow' | 'echo-cup';
   draftNotice?: string;
   logline: string;
   premise: string;
@@ -548,6 +549,120 @@ export const storyDetails: StoryDetail[] = [
       '用同一人物锚点优先测试镜头 01、09、12，验证人物与影子能否在视频里保持不同步。',
       '按通过与失败标准保存原始输出、模型参数和影子错位截图，不把失败样本当成正式结论。',
       '根据测试结果决定保留写实光影，或把全片改成更可控的二维剪影动画。',
+    ],
+  },
+  {
+    slug: 'objects-remember-the-last-sentence',
+    number: '005',
+    title: '她碰过的东西，会记住最后一句话',
+    titleLines: ['她碰过的东西，', '会记住', '最后一句话'],
+    englishTitle: 'Objects Remember the Last Sentence',
+    type: 'Magical Realism Draft',
+    date: '2026.08',
+    duration: '01:00',
+    status: 'AI 概念开发 · 无视频',
+    draft: true,
+    heroVisual: 'echo-cup',
+    draftNotice: '这是由 AI 协助整理的原创魔幻现实短片开发稿，乔野、母亲及全部情节均为虚构。当前只有故事、角色与道具锚点任务书、十二镜分镜和待测试 Prompt；没有生成关键帧、视频或实验结论，也不代表已经完成的个人作品。',
+    logline: '搬空旧家那天，乔野发现每件被她碰到的东西，都会重复母亲在它身边说过的最后一句话；唯独那只白杯，她一直不敢拿起。',
+    premise: '我们真正舍不得的，究竟是那个人留下的话，还是某个再普通不过、却再也不会重复的日常？',
+    premiseLines: ['真正舍不得的，', '是那个人留下的话，', '还是再也不会重复的日常？'],
+    sectionCopy: {
+      beats: { eyebrow: '01 / One empty afternoon', heading: '五次触碰，\n把告别从大话变回日常。', description: '异常从钥匙、围巾和收音机逐渐靠近核心白杯。每一次接触只触发一句话，乔野也只能决定继续听，或把手收回。' },
+      rules: { eyebrow: '02 / Echo rules', heading: '三条规则，\n让回声只存在于接触之后。', description: '声音来源、触发方式和重复边界都被锁定。物品不回答问题，也不会替人物解释过去。' },
+      stills: { eyebrow: '03 / Visual briefs', heading: '四张画面任务书，\n先锁住手、杯子与留白。', description: '当前没有生成关键帧。下面只记录构图、人物锚点和道具状态，避免把概念图任务误写成已经完成的画面。' },
+      script: { eyebrow: '04 / Screenplay draft', heading: '六十秒，\n只让最后一句话响一次。', description: '六场原创无旁白短片，以纸箱、手指接触、物品回声和房间环境声推进；文字与声音都将在后期完成。' },
+      shots: { eyebrow: '05 / Shot list', heading: '十二个镜头，\n两次伸手，一次真正拿起。', description: '镜头表刻意把接近、预接触、闭合、承重与释放拆开。镜头 08、09 和 10 是手物接触与声音时点的重点测试。' },
+    },
+    shotSummary: ['12 SHOTS', '60 SECONDS', '1 WHITE CUP', 'DRAFT 01'],
+    stillsGenerated: false,
+    characterAnchor: {
+      name: '乔野',
+      title: '先锁住乔野，再让白杯成为唯一不变的证据。',
+      copy: '乔野是 29 岁的书籍修复师。人物锚点固定齐下巴短发、薄荷绿发夹、珊瑚红针织背心和浅蓝衬衫；道具锚点固定一只无图案白色陶瓷杯、C 形杯柄朝右、杯口细小缺口和木桌上的黄色杯垫。',
+      locks: ['齐下巴黑色短发＋右侧薄荷绿长方发夹＋克制表情', '珊瑚红针织背心＋浅蓝衬衫＋深藏蓝直筒裤', '白色陶瓷杯＋杯柄朝右＋杯口一点缺口＋黄色圆形杯垫'],
+    },
+    ending: { label: 'CURRENT ENDING', copy: '她没有保存回声。\n只把杯子洗干净，带走。', href: '/experiments/can-one-hand-lift-the-same-cup/', link: '查看同一只手拿杯实验 ↗' },
+    related: { href: '/tools/contact-action-card/', label: '生成接触动作拆分卡 ↗' },
+    beats: [
+      { time: '14:06', title: '钥匙说“早点回来”', copy: '乔野把旧钥匙放进纸箱，金属碰到掌心时，门口响起母亲平静的一句话。房间里没有其他人。', tone: 'yellow' },
+      { time: '14:19', title: '围巾说“外面冷”', copy: '她试着再碰一次围巾。熟悉的声音只播放一遍，不回应她，也不解释自己从哪里来。', tone: 'blue' },
+      { time: '14:31', title: '收音机记住了一句争吵', copy: '她碰到旧收音机，听见自己曾说“我不会再回来了”。这一次，她立刻松手，把它留在原处。', tone: 'coral' },
+      { time: '14:47', title: '白杯一直没有被碰', copy: '桌上只剩那只白杯。她的手两次停在杯柄前，杯子和房间都保持沉默。', tone: 'mint' },
+      { time: '14:52', title: '最后一句只是“水凉了”', copy: '她握住杯柄，杯底离开桌面后，母亲说：“水凉了就别喝了。”没有遗言，也没有答案。', tone: 'yellow' },
+      { time: '15:06', title: '她带走的是杯子', copy: '乔野洗净杯口，把白杯放进随身包。门锁上后，屋里没有回声，只有水管里最后一点水声。', tone: 'blue' },
+    ],
+    rules: [
+      { label: 'THE TOUCH', title: '真正接触后，物品才会开口', copy: '靠近、悬停和隔着布料不触发声音。必须由乔野的皮肤或完整抓握产生清楚接触，回声才开始。' },
+      { label: 'THE LAST LINE', title: '每件物品只保留最后一句', copy: '声音属于最后一个在物品旁说话的人；内容可能重要，也可能只是最普通的生活提醒。' },
+      { label: 'NO REPLY', title: '回声只播放一次，不回答问题', copy: '松手再碰不会重复，同一件物品不能对话、补充或变成保存无限记忆的录音机。' },
+    ],
+    stills: [
+      { shot: 'FRAME 01', title: '纸箱里的第一句', direction: '明亮空屋中，乔野蹲在蓝色纸箱旁，钥匙落在掌心；画面保留大量墙面留白，让声音从空处出现。', status: '待生成 · 画面任务书', framePosition: 'left top', tone: 'yellow' },
+      { shot: 'FRAME 02', title: '她听见自己的争吵', direction: '珊瑚红收音机放在窗台，乔野的手刚刚松开；人物在画面左侧，右侧桌面上的白杯仍未被触碰。', status: '待生成 · 画面任务书', framePosition: 'right top', tone: 'coral' },
+      { shot: 'FRAME 03', title: '杯柄前的一厘米', direction: '极近景只看右手、杯柄、黄色杯垫和清楚间距；白杯保持完整落桌，接触点与承重点都可辨认。', status: '待生成 · 画面任务书', framePosition: 'left bottom', tone: 'mint' },
+      { shot: 'FRAME 04', title: '洗净以后带走', direction: '水槽边的白杯被双手擦干，杯口小缺口仍在；空屋从背景虚化，画面不出现生成文字或超自然光效。', status: '待生成 · 画面任务书', framePosition: 'right bottom', tone: 'blue' },
+    ],
+    production: [
+      { phase: '故事命题', status: '完成草案', note: '已把“物品保存最后一句话”收束为关于普通日常、告别与带走什么的原创短片命题。' },
+      { phase: '人物与规则', status: '完成草案', note: '建立虚构角色乔野、母亲与旧家，并锁定接触触发、只存一句和不可重播三条规则。' },
+      { phase: '60 秒剧本', status: '完成草案', note: '已写成六场结构；没有旁白，回声台词与现场声音均标明后期制作。' },
+      { phase: '十二镜分镜', status: '完成草案', note: '十二镜共 60 秒，重点拆分白杯接近、握住、承重、落稳与清洗动作。' },
+      { phase: '角色与道具锚点', status: '完成草案', note: '已完成文字任务书；尚未生成乔野或白杯的参考图，页面中的图形只表示固定关系。' },
+      { phase: '接触动作测试', status: '待开始', note: '优先验证镜头 08、09、10 的手杯接触链，以及接触后声音进入的剪辑时点；目前没有视频结果。' },
+      { phase: '关键帧与声音', status: '待开始', note: '四张关键帧仍为空白任务书；母亲声音需要另行确认表演方向与授权素材。' },
+    ],
+    script: [
+      { timecode: '00:00—00:10', scene: '旧家 / 开箱', visual: '午后空屋。乔野把钥匙放进纸箱，金属刚碰到掌心，门边传来母亲的声音。她停住。', voice: '母亲的回声：“早点回来。”', sound: '胶带撕开、钥匙轻响；回声保持干燥，不加混响特效。' },
+      { timecode: '00:10—00:20', scene: '衣柜 / 验证', visual: '她用指尖碰围巾，听完后再次触碰。围巾不再发声，她在空白标签上画下一道线。', voice: '母亲的回声：“外面冷。”', sound: '布料摩擦；第二次触碰只保留房间底噪。' },
+      { timecode: '00:20—00:30', scene: '窗边 / 退开', visual: '她碰到旧收音机，自己的声音突然出现。手立刻松开；收音机没有启动，白杯在远处保持静止。', voice: '乔野过去的声音：“我不会再回来了。”', sound: '窗外自行车铃；手离开塑料外壳的轻响。' },
+      { timecode: '00:30—00:40', scene: '餐桌 / 悬停', visual: '她坐到白杯前。右手接近杯柄，又停在一厘米外；第二次仍然没有碰到。', voice: '无对白。', sound: '冰箱停机，屋内突然更安静；指甲轻碰桌面。' },
+      { timecode: '00:40—00:50', scene: '餐桌 / 拿起', visual: '指尖接触杯柄，手指闭合，杯底离桌。直到杯子真正承重，母亲最后一句话才出现。', voice: '母亲的回声：“水凉了就别喝了。”', sound: '陶瓷离开杯垫；台词结束后留一秒呼吸。' },
+      { timecode: '00:50—01:00', scene: '水槽与门口 / 带走', visual: '她把杯子放稳、洗净、擦干，收进随身包。最后一个纸箱留在屋里；她锁门离开。', voice: '无对白。', sound: '水流、布擦陶瓷、拉链与门锁；结尾不加音乐。' },
+    ],
+    shotList: [
+      { shot: '01', duration: 5, size: '空屋大全景', visual: '乔野坐在蓝色纸箱之间，把旧钥匙放进掌心。', camera: '固定', sound: '胶带与钥匙' },
+      { shot: '02', duration: 5, size: '手部特写', visual: '钥匙接触掌心后她停住，目光转向空门口。', camera: '缓慢推近', sound: '“早点回来。”' },
+      { shot: '03', duration: 5, size: '衣柜近景', visual: '指尖碰到围巾，听完后再碰一次，第二次没有声音。', camera: '固定', sound: '“外面冷。”＋布料' },
+      { shot: '04', duration: 5, size: '窗台中景', visual: '她触碰收音机又立刻松开，白杯留在远处桌面。', camera: '轻微横移', sound: '“我不会再回来了。”' },
+      { shot: '05', duration: 5, size: '面部近景', visual: '乔野看向白杯，没有哭，只把一只纸箱推到旁边。', camera: '固定', sound: '自行车铃与房间底噪' },
+      { shot: '06', duration: 6, size: '桌面俯拍', visual: '白杯、黄色杯垫与右手形成三角；手在杯柄前停住。', camera: '缓慢下压', sound: '冰箱停机' },
+      { shot: '07', duration: 5, size: '极近景', visual: '指尖第二次接近杯柄，仍保留清楚间距，然后短暂停住。', camera: '固定', sound: '指甲碰桌面' },
+      { shot: '08', duration: 4, size: '微距特写', visual: '指腹接触杯柄外侧，杯底仍完整落在杯垫上。', camera: '固定', sound: '皮肤轻触陶瓷' },
+      { shot: '09', duration: 5, size: '手杯近景', visual: '四指闭合后杯底离桌两厘米，杯柄和杯口形状保持不变。', camera: '固定', sound: '“水凉了就别喝了。”' },
+      { shot: '10', duration: 5, size: '侧面近景', visual: '杯子先落稳在水槽边，手指随后释放。', camera: '固定匹配切', sound: '陶瓷落台与呼吸' },
+      { shot: '11', duration: 5, size: '水槽中景', visual: '乔野洗净、擦干白杯，杯口缺口始终朝画面左侧。', camera: '缓慢横移', sound: '水流与布料' },
+      { shot: '12', duration: 5, size: '门口远景', visual: '白杯进入随身包，乔野锁门离开，纸箱留在空屋。', camera: '固定长镜头', sound: '拉链与门锁' },
+    ],
+    promptGuide: {
+      identityLock: 'same fictional East Asian Chinese woman, age 29, chin-length straight black bob, mint-green rectangular hair clip on her right side, calm restrained eyes, coral-red knitted vest over a pale sky-blue cotton shirt, dark navy straight trousers, natural skin texture, consistent face and hands',
+      styleLock: 'bright cinematic magical realism, sunlit empty apartment, cream walls, sky-blue moving boxes, coral mint and mustard accents, natural photographic texture, restrained performance, readable hand-object contact, subtle 35mm texture, 16:9, no on-screen text',
+      negative: 'different person, hairstyle change, missing hair clip, wardrobe change, duplicate woman, extra hands, extra fingers, fused fingers, hand passing through object, warped cup, duplicated cup, moving cup before contact, floating props, supernatural glow, horror mood, dark noir, subtitles, logo, watermark, generated text',
+    },
+    prompts: [
+      { shot: '01', title: '钥匙落进掌心', prompt: 'Wide locked shot in a bright nearly empty apartment. Qiao Ye sits among sky-blue moving boxes and lowers one old brass key into her open right palm, then freezes.', constraint: '只出现一把钥匙与一只右手；声音后期加入，不生成幽灵或发光效果。' },
+      { shot: '02', title: '听向空门口', prompt: 'Close-up of her hand holding the key, then a restrained focus shift to her face as her eyes turn toward the empty doorway. No one else appears.', constraint: '手与钥匙保持不变；只移动眼神，不做夸张惊吓或口型。' },
+      { shot: '03', title: '围巾只说一次', prompt: 'Medium close-up at an open wardrobe. Her index finger touches a mustard scarf once, withdraws, then touches the same point again. The scarf stays still.', constraint: '两次接触分开生成或剪辑；不让布料自动移动，不在画面中生成声音文字。' },
+      { shot: '04', title: '从收音机松手', prompt: 'Side medium shot by a bright window. Her fingertips touch one coral-red radio and immediately release it; a white ceramic cup remains untouched on a distant table.', constraint: '收音机不可自行启动；白杯位置、数量和朝向保持固定。' },
+      { shot: '05', title: '看向白杯', prompt: 'Restrained close-up. She looks from the radio toward the white cup across the room, then quietly pushes one box aside. One natural blink.', constraint: '不流泪、不说话；人物发夹、发型与背心保持稳定。' },
+      { shot: '06', title: '杯柄前停住', prompt: 'Top-down shot of a plain white ceramic cup on a round mustard coaster, handle pointing right. Her right hand approaches and stops one centimeter before the handle.', constraint: '明确保留空气间距；杯底完整接触杯垫，杯子不可提前移动。' },
+      { shot: '07', title: '第二次接近', prompt: 'Extreme close-up matching the previous frame. Her fingertips approach the cup handle again and stop without contact, then hold still.', constraint: '保持同一手、同一杯与同一机位；不要用隐性切镜消除间距。' },
+      { shot: '08', title: '第一次真正接触', prompt: 'Macro locked shot. The pad of her index finger makes clear contact with the outside of the cup handle while the cup stays fully supported by the table.', constraint: '只完成接触，不抬杯；接触前杯子不能滑动，手指不能穿过杯柄。' },
+      { shot: '09', title: '闭合后承重', prompt: 'Close locked shot. Her fingers close naturally around the C-shaped handle; only after the grip is secure, the white cup rises exactly two centimeters.', constraint: '接触→闭合→离桌按顺序发生；不复制杯子，不改变杯柄、杯口缺口或手指数。' },
+      { shot: '10', title: '落稳再松手', prompt: 'Side close-up beside a sink. She lowers the cup until its base is fully supported by the counter, pauses, then releases her fingers.', constraint: '必须先落稳后释放；禁止悬浮、滑动、穿模和动作回弹。' },
+      { shot: '11', title: '洗净与擦干', prompt: 'Medium shot at a bright sink. She rinses the same white cup once, turns off the water, then dries it with a pale cloth.', constraint: '拆成短动作生成后剪辑；杯子缺口、柄方向和数量全程一致。' },
+      { shot: '12', title: '带走杯子', prompt: 'Wide locked shot toward the apartment door. She places the dry white cup carefully into an open canvas shoulder bag, closes the zipper and locks the door behind her.', constraint: '杯子进入包后不再出现；门锁动作与离开分开验收，不生成文字。' },
+    ],
+    motionTests: [
+      { shot: '08', title: '接触前保持绝对静止', duration: '4 秒', purpose: '验证指尖接近与真正接触能否被清楚区分，杯子不会提前响应。', action: '保留间距 → 指腹接触杯柄 → 停住半秒。', pass: '接触点可见；接触前杯底与杯垫坐标不变，手指结构完整。', fail: '杯子提前滑动、手穿过杯柄、接触点被遮挡或出现多指。', status: '待生成' },
+      { shot: '09', title: '闭合之后才抬杯', duration: '5 秒', purpose: '验证抓握、承重转移和杯底离桌能否按顺序发生。', action: '指尖接触 → 四指闭合 → 杯底离桌两厘米 → 停住。', pass: '杯形与杯柄不变，手先完成抓握，杯子随后平稳离桌。', fail: '杯子悬浮、抓握点滑动、杯柄变形、手指融合或隐性切镜。', status: '待生成' },
+      { shot: '10', title: '落稳以后再释放', duration: '5 秒', purpose: '验证承重点从手回到台面时，释放动作不会抢先发生。', action: '杯底靠近台面 → 完整落稳 → 手指打开 → 手离开。', pass: '杯底落稳后才松手，杯子位置与朝向保持一致。', fail: '提前松手仍悬浮、杯子弹跳、落点漂移、手穿杯或动作倒放。', status: '待生成' },
+    ],
+    nextSteps: [
+      '由荆确认母亲最后一句保持“水凉了就别喝了”，还是改成更接近她真实感受的日常话语。',
+      '先制作乔野人物锚点与白杯道具锚点，再生成四张静态构图验证图。',
+      '用接触动作卡分别测试镜头 08、09、10，记录接触时点、手部完整、道具保持和承重逻辑。',
+      '声音台词只在接触时点后期进入；未经确认不使用真实人物声音或模拟任何具体个人声线。',
     ],
   },
 ];

@@ -87,6 +87,19 @@ export const stories: Story[] = [
     stage: 'documented',
     visual: 'earlyshadow',
   },
+  {
+    id: 'story-005',
+    slug: 'objects-remember-the-last-sentence',
+    title: '她碰过的东西，会记住最后一句话',
+    englishTitle: 'Objects Remember the Last Sentence',
+    description: '搬空旧家那天，乔野发现每件被她碰到的东西，都会重复母亲在它身边说过的最后一句话；唯独那只白杯，她一直不敢拿起。',
+    type: 'Magical Realism Draft',
+    date: '2026.08',
+    duration: '01:00',
+    status: 'AI 概念开发 · 无视频',
+    stage: 'documented',
+    visual: 'echo',
+  },
 ];
 
 export const experiments: Experiment[] = [

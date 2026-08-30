@@ -76,11 +76,23 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         <div className="story-detail-hero-grid">
           <div className="story-detail-title">
             <div className="story-detail-labels mono"><span>{story.type}</span><span>{story.duration}</span><b>{story.status}</b></div>
-            <h1>{story.title}</h1>
+            <h1>{story.titleLines ? story.titleLines.map((line) => <span key={line}>{line}</span>) : story.title}</h1>
             <p>{story.logline}</p>
             <div className="story-title-footer mono"><span>{story.englishTitle}</span><span>{story.date}</span></div>
           </div>
-          {story.heroVisual === 'early-shadow' ? (
+          {story.heroVisual === 'echo-cup' ? (
+            <div className="echo-cup-card" aria-label="白杯接触后播放最后一句话的概念视觉">
+              <div className="echo-cup-head mono"><span>TOUCH TO HEAR / 接触后播放</span><b>01×</b></div>
+              <div className="echo-cup-stage" aria-hidden="true">
+                <div className="echo-cup-hand"><i /><i /><i /><i /></div>
+                <div className="echo-cup-object"><span /></div>
+                <div className="echo-cup-gap mono">1 CM</div>
+                <div className="echo-cup-wave"><span>水凉了</span><span>就别喝了</span></div>
+              </div>
+              <div className="echo-cup-states mono"><span><b>01</b> GAP</span><span><b>02</b> TOUCH</span><span><b>03</b> LIFT</span></div>
+              <div className="echo-cup-foot mono"><span>ONE CUP</span><span>ONE SENTENCE</span><b>NO REPLAY</b></div>
+            </div>
+          ) : story.heroVisual === 'early-shadow' ? (
             <div className="early-shadow-card" aria-label="影子提前五分钟行动的概念视觉">
               <div className="early-shadow-head mono"><span>CAST SHADOW / 行动草稿</span><b>+05:00</b></div>
               <div className="early-shadow-stage" aria-hidden="true">
@@ -148,9 +160,9 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
       <section className="story-stills">
         <div className="story-section-inner">
           <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.stills.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.stills.heading)} /></div><p>{sectionCopy.stills.description}</p></div>
-          {story.characterAnchor && characterAnchorImage && <article className="story-character-anchor" id="character-anchor">
-            <div className="story-character-anchor-image" role="img" aria-label={`${story.characterAnchor.name} AI 角色锚点图`} style={{ backgroundImage: `url("${characterAnchorImage.src}")` }} />
-            <div className="story-character-anchor-copy"><span className="mono">CHARACTER ANCHOR / AI 视觉开发</span><h3>{story.characterAnchor.title}</h3><p>{story.characterAnchor.copy}</p><ul>{story.characterAnchor.locks.map((lock) => <li key={lock}>{lock}</li>)}</ul><small className="mono">GENERATED 2026.08 · FICTIONAL CHARACTER</small></div>
+          {story.characterAnchor && <article className={`story-character-anchor${characterAnchorImage ? '' : ' is-brief'}`} id="character-anchor">
+            {characterAnchorImage ? <div className="story-character-anchor-image" role="img" aria-label={`${story.characterAnchor.name} AI 角色锚点图`} style={{ backgroundImage: `url("${characterAnchorImage.src}")` }} /> : <div className="story-character-anchor-image is-brief" role="img" aria-label={`${story.characterAnchor.name}角色与道具锚点任务书`}><div className="anchor-brief-person" aria-hidden="true"><i /><b /></div><div className="anchor-brief-cup" aria-hidden="true"><span /></div><div className="anchor-brief-rule mono" aria-hidden="true">FACE / HAND / CUP<br />LOCK BEFORE GENERATION</div></div>}
+            <div className="story-character-anchor-copy"><span className="mono">CHARACTER ANCHOR / AI 视觉开发</span><h3>{story.characterAnchor.title}</h3><p>{story.characterAnchor.copy}</p><ul>{story.characterAnchor.locks.map((lock) => <li key={lock}>{lock}</li>)}</ul><small className="mono">{characterAnchorImage ? 'GENERATED 2026.08 · FICTIONAL CHARACTER' : 'BRIEF 2026.08 · NO GENERATED IMAGE'}</small></div>
           </article>}
           <div className="story-still-grid">
             {story.stills.map((still, index) => <article className="story-still-card" key={still.shot}><div className={`story-still-placeholder tone-${still.tone}${stillsGenerated ? ' has-generated-frame' : ' is-brief'}`} aria-label={stillsGenerated ? `${still.title} AI 概念关键帧` : `${still.title} 待生成关键帧任务书`} style={stillsGenerated ? { backgroundImage: `url("${(individualFrames?.[index] ?? storyKeyframes).src}")`, backgroundPosition: individualFrames ? 'center' : still.framePosition, backgroundSize: individualFrames ? 'cover' : '200% 200%' } : undefined}><span className="story-frame-corner corner-a" /><span className="story-frame-corner corner-b" />{!stillsGenerated && <div className="story-frame-brief mono" aria-hidden="true"><span>IMAGE<br />PENDING</span><strong>{String(index + 1).padStart(2, '0')}</strong><i /></div>}<b className="mono">{stillsGenerated ? 'AI 概念关键帧' : '待生成 · 画面任务书'}</b></div><div className="story-still-copy"><div className="mono"><span>{still.shot}</span><span>{still.status}</span></div><h3>{still.title}</h3><p>{still.direction}</p><small className="mono">FRAME {String(index + 1).padStart(2, '0')} / {String(story.stills.length).padStart(2, '0')}</small></div></article>)}

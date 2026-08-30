@@ -26,7 +26,7 @@ export default function ContactActionCardPage() {
         <section className="contact-action-method">
           <div><span className="mono">CONTACT BEFORE MOTION / 先接触</span><h2>先让关系成立，<br />再让动作变复杂。</h2></div>
           <p>工具不会读取图片、生成视频或判断手部是否正确。它只把可见关系整理成测试文件。基础触碰仍失败时，应先换干净首帧、放大接触区域或简化抓握，而不是继续叠加喝水、转身和运镜。</p>
-          <nav><Link href="/notes/ai-video-hand-object-contact/">阅读完整接触方法 ↗</Link><Link href="/experiments/can-one-hand-lift-the-same-cup/">打开九格接触实验 ↗</Link><Link href="/tools/shot-risk-checker/">进行镜头风险预检 ↗</Link></nav>
+          <nav><Link href="/notes/ai-video-hand-object-contact/">阅读完整接触方法 ↗</Link><Link href="/experiments/can-one-hand-lift-the-same-cup/">打开九格接触实验 ↗</Link><Link href="/stories/objects-remember-the-last-sentence/">查看故事中的接触镜头 ↗</Link><Link href="/tools/shot-risk-checker/">进行镜头风险预检 ↗</Link></nav>
         </section>
       </div>
       <SiteFooter />
