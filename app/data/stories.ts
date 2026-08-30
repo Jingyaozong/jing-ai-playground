@@ -12,6 +12,7 @@ export type StoryDetail = {
   draftNotice?: string;
   logline: string;
   premise: string;
+  premiseLines: string[];
   sectionCopy?: {
     beats: { eyebrow: string; heading: string; description: string };
     rules: { eyebrow: string; heading: string; description: string };
@@ -106,6 +107,7 @@ export const storyDetails: StoryDetail[] = [
     heroVisual: 'memory-letter',
     logline: '她每天醒来都会失去昨天的记忆，只能依靠桌上那封由“昨天的自己”留下的信，重新认识正在告别的人。',
     premise: '这不是一个关于恢复记忆的故事，而是关于：如果每天都要重新选择一次，你还会不会继续爱同一个人。',
+    premiseLines: ['这不是关于恢复记忆。', '如果每天都要重新选择一次，', '还会继续爱同一个人吗？'],
     beats: [
       { time: '06:42', title: '醒来', copy: '她在陌生的房间醒来，不认识镜子里的人，也不记得桌上的合照。', tone: 'yellow' },
       { time: '06:47', title: '发现信', copy: '信封上只有一句话：先别害怕，这是你写给自己的。', tone: 'blue' },
@@ -204,6 +206,7 @@ export const storyDetails: StoryDetail[] = [
     draftNotice: '这是由 AI 协助整理的原创故事开发稿，周渡、周遥及全部情节均为虚构。角色锚点与四张画面是 2026-08-29 生成的视觉开发素材，用于验证人物、道具和场景方向；尚未生成视频或模型结论，也不代表已经完成的成片。',
     logline: '港口深夜值班员收到一张来自十年后的船票。票面写着失踪姐姐的名字，以及一座从来不存在的第七码头。',
     premise: '如果一条不存在的航线能带你见到错过的人，你会继续等那艘船，还是承认有些告别只能由留下的人完成？',
+    premiseLines: ['一条不存在的航线，', '真能带你见到错过的人？', '继续等，', '还是由留下的人完成告别？'],
     sectionCopy: {
       beats: {
         eyebrow: '01 / One impossible night',
@@ -340,6 +343,7 @@ export const storyDetails: StoryDetail[] = [
     draftNotice: '这是由 AI 协助整理的原创视觉诗开发稿，林栖及全部情节均为虚构。角色锚点与四张画面是 2026-08-29 生成的视觉开发素材，用于验证人物、局部雨区和结尾方向；尚未生成视频或模型结论，也不代表已经完成的成片。',
     logline: '一场雨只落在林栖头顶。她走遍整座城想甩掉它，直到终于把伞放下，雨才第一次落向所有人。',
     premise: '当悲伤像一场只属于你的天气，真正的出口是走得更远，还是停止把淋湿当成一种惩罚？',
+    premiseLines: ['当悲伤成为只属于你的天气，', '出口是走得更远，', '还是停止把淋湿当成惩罚？'],
     sectionCopy: {
       beats: { eyebrow: '01 / One private weather', heading: '从清晨到傍晚，\n她一直走在同一场雨里。', description: '六个时间点不解释雨从哪里来，只记录她怎样从躲避、奔跑，走到愿意停下。' },
       rules: { eyebrow: '02 / Weather rules', heading: '三条规则，\n让隐喻留在现实里。', description: '雨有稳定半径，会打湿真实物体，也会跟随她移动；除此之外不增加新的魔法解释。' },
@@ -447,6 +451,7 @@ export const storyDetails: StoryDetail[] = [
     draftNotice: '这是由 AI 协助整理的原创魔幻现实短片开发稿，安澄、父亲与全部情节均为虚构。角色锚点与四张画面是 2026-08-30 生成的视觉开发素材，用于确认人物、硬光影子与结尾方向；尚未生成视频或实验结论，也不代表已经完成的成片。',
     logline: '离开城市的那天，钟表修复师安澄发现自己的影子总比她早五分钟行动。傍晚，它在车站与父亲的旧钟表店之间，替她先走出了一条尚未决定的路。',
     premise: '如果未来只比你早五分钟，你看见的是命运，还是一次仍来得及改变的选择？',
+    premiseLines: ['如果未来只比你早五分钟，', '你看见的是命运，', '还是仍来得及改变的选择？'],
     sectionCopy: {
       beats: { eyebrow: '01 / Five minutes ahead', heading: '从第一只杯子，\n到最后一扇门。', description: '六个时间点把异常从小动作推到真正的选择。影子不解释未来，只把安澄此刻最可能做的事提前演给她看。' },
       rules: { eyebrow: '02 / Shadow rules', heading: '三条规则，\n让影子不变成万能预言。', description: '时间差、信息边界和改道条件都被锁定。魔法只负责制造五分钟空隙，选择仍然属于人物。' },

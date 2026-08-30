@@ -7,6 +7,7 @@ import shadowCharacterAnchor from '../../assets/generated/shadow-arrives-five-mi
 import characterAnchor from '../../assets/generated/she-forgets-yesterday-character-anchor.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
+import { EditorialHeading, editorialLines } from '../../components/editorial-heading';
 import { ExperimentRecordBoard } from '../../components/experiment-record-board';
 import { LightingContinuityBoard } from '../../components/lighting-continuity-board';
 import { RainFollowRecordBoard } from '../../components/rain-follow-record-board';
@@ -90,7 +91,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
 
       <section className="experiment-question section-shell">
         <p className="eyebrow mono">The question / 实验问题</p>
-        <h2>{experiment.question}</h2>
+        <EditorialHeading lines={experiment.questionLines} mode="statement" />
         <div className="experiment-hypothesis">
           <span className="mono">WORKING HYPOTHESIS</span>
           <p>{experiment.hypothesis}</p>
@@ -100,7 +101,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
       <section className="experiment-protocol">
         <div className="experiment-section-inner">
           <div className="experiment-section-heading">
-            <div><p className="eyebrow mono">01 / Protocol</p><h2>{experiment.protocolTitle ?? '先固定什么，\n再改变什么。'}</h2></div>
+            <div><p className="eyebrow mono">01 / Protocol</p><EditorialHeading lines={editorialLines(experiment.protocolTitle ?? '先固定什么，\n再改变什么。')} /></div>
             <p>{experiment.protocolDescription ?? '一次只改变一类主要变量，才能知道角色是从哪里开始失去一致性的。'}</p>
           </div>
           <div className="experiment-constants">
@@ -121,7 +122,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
 
       <section className="experiment-samples section-shell">
         <div className="experiment-section-heading">
-          <div><p className="eyebrow mono">02 / Sample wall</p><h2>{experiment.sampleTitle ?? '不是展示最好看，\n而是留下变化。'}</h2></div>
+          <div><p className="eyebrow mono">02 / Sample wall</p><EditorialHeading lines={editorialLines(experiment.sampleTitle ?? '不是展示最好看，\n而是留下变化。')} /></div>
           <p>{experiment.sampleDescription ?? '首轮先放入四格静态样本。正式实验会继续扩展到四十镜，并同时保留最稳定与最容易漂移的结果。'}</p>
         </div>
         <article className="experiment-reference-card">
@@ -151,12 +152,12 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         </div>
       </section>
 
-      {experiment.sources && experiment.sources.length > 0 && <section className="experiment-source-strip"><div className="experiment-section-inner"><div className="experiment-section-heading"><div><p className="eyebrow mono">Capability sources / 能力边界</p><h2>先看官方怎么说，<br />再决定怎么测。</h2></div><p>这些链接只用于确认参考模式和输入边界，不会被当成实验结果。功能可能随模型版本变化，执行当天仍需复核。</p></div><div className="experiment-source-grid">{experiment.sources.map((source, index) => <a href={source.url} target="_blank" rel="noreferrer" key={source.url}><span className="mono">SOURCE {String(index + 1).padStart(2, '0')}</span><h3>{source.title}</h3><p>{source.note}</p><i>打开官方资料 ↗</i></a>)}</div></div></section>}
+      {experiment.sources && experiment.sources.length > 0 && <section className="experiment-source-strip"><div className="experiment-section-inner"><div className="experiment-section-heading"><div><p className="eyebrow mono">Capability sources / 能力边界</p><EditorialHeading lines={['先看官方怎么说，', '再决定怎么测。']} /></div><p>这些链接只用于确认参考模式和输入边界，不会被当成实验结果。功能可能随模型版本变化，执行当天仍需复核。</p></div><div className="experiment-source-grid">{experiment.sources.map((source, index) => <a href={source.url} target="_blank" rel="noreferrer" key={source.url}><span className="mono">SOURCE {String(index + 1).padStart(2, '0')}</span><h3>{source.title}</h3><p>{source.note}</p><i>打开官方资料 ↗</i></a>)}</div></div></section>}
 
       <section className="experiment-checks">
         <div className="experiment-section-inner">
           <div className="experiment-section-heading">
-            <div><p className="eyebrow mono">03 / Observation</p><h2>{experiment.observationTitle ?? '别只写：\n“这个崩了”。'}</h2></div>
+            <div><p className="eyebrow mono">03 / Observation</p><EditorialHeading lines={editorialLines(experiment.observationTitle ?? '别只写：\n“这个崩了”。')} /></div>
             <p>{experiment.observationDescription ?? '把主观感觉拆成可以重复检查的问题，下一次测试才知道该改哪里。'}</p>
           </div>
           <div className="experiment-check-grid">

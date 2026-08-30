@@ -19,6 +19,7 @@ import shadowFrame04 from '../../assets/generated/shadow-arrives-five-minutes-ea
 import storyKeyframes from '../../assets/generated/she-forgets-yesterday-keyframes.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
+import { EditorialHeading, editorialLines } from '../../components/editorial-heading';
 import { StoryPromptPack } from '../../components/story-prompt-pack';
 import { getStoryBySlug, storyDetails } from '../../data/stories';
 
@@ -125,12 +126,12 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
 
       <section className="story-premise section-shell">
         <p className="eyebrow mono">The heart of the story / 故事真正想问</p>
-        <h2>{story.premise}</h2>
+        <EditorialHeading lines={story.premiseLines} mode="statement" />
       </section>
 
       <section className="story-dayline">
         <div className="story-section-inner">
-          <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.beats.eyebrow}</p><h2>{sectionCopy.beats.heading}</h2></div><p>{sectionCopy.beats.description}</p></div>
+          <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.beats.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.beats.heading)} /></div><p>{sectionCopy.beats.description}</p></div>
           <div className="story-beat-grid">
             {story.beats.map((beat, index) => <article className={`story-beat tone-${beat.tone}`} key={beat.time}><div className="mono"><span>{beat.time}</span><span>{String(index + 1).padStart(2, '0')} / {String(story.beats.length).padStart(2, '0')}</span></div><h3>{beat.title}</h3><p>{beat.copy}</p></article>)}
           </div>
@@ -138,7 +139,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
       </section>
 
       <section className="story-rules section-shell">
-        <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.rules.eyebrow}</p><h2>{sectionCopy.rules.heading}</h2></div><p>{sectionCopy.rules.description}</p></div>
+        <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.rules.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.rules.heading)} /></div><p>{sectionCopy.rules.description}</p></div>
         <div className="story-rule-list">
           {story.rules.map((rule, index) => <article key={rule.label}><span className="mono">{String(index + 1).padStart(2, '0')} · {rule.label}</span><h3>{rule.title}</h3><p>{rule.copy}</p></article>)}
         </div>
@@ -146,7 +147,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
 
       <section className="story-stills">
         <div className="story-section-inner">
-          <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.stills.eyebrow}</p><h2>{sectionCopy.stills.heading}</h2></div><p>{sectionCopy.stills.description}</p></div>
+          <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.stills.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.stills.heading)} /></div><p>{sectionCopy.stills.description}</p></div>
           {story.characterAnchor && characterAnchorImage && <article className="story-character-anchor" id="character-anchor">
             <div className="story-character-anchor-image" role="img" aria-label={`${story.characterAnchor.name} AI 角色锚点图`} style={{ backgroundImage: `url("${characterAnchorImage.src}")` }} />
             <div className="story-character-anchor-copy"><span className="mono">CHARACTER ANCHOR / AI 视觉开发</span><h3>{story.characterAnchor.title}</h3><p>{story.characterAnchor.copy}</p><ul>{story.characterAnchor.locks.map((lock) => <li key={lock}>{lock}</li>)}</ul><small className="mono">GENERATED 2026.08 · FICTIONAL CHARACTER</small></div>
@@ -159,7 +160,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
 
       <section className="story-script">
         <div className="story-section-inner">
-          <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.script.eyebrow}</p><h2>{sectionCopy.script.heading}</h2></div><p>{sectionCopy.script.description}</p></div>
+          <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.script.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.script.heading)} /></div><p>{sectionCopy.script.description}</p></div>
           <div className="story-script-list">
             {story.script.map((scene, index) => <article key={scene.timecode}>
               <div className="story-script-time"><b>{String(index + 1).padStart(2, '0')}</b><span className="mono">{scene.timecode}</span></div>
@@ -171,7 +172,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
       </section>
 
       <section className="story-shots section-shell">
-        <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.shots.eyebrow}</p><h2>{sectionCopy.shots.heading}</h2></div><p>{sectionCopy.shots.description}</p></div>
+        <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.shots.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.shots.heading)} /></div><p>{sectionCopy.shots.description}</p></div>
         <div className="story-shot-summary mono">{shotSummary.map((item) => <span key={item}>{item}</span>)}</div>
         <div className="story-shot-board">
           {story.shotList.map((shot) => <article key={shot.shot}>
