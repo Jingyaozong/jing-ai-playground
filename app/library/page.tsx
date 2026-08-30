@@ -33,7 +33,7 @@ const libraryRoutes = [
     question: '怎样从清楚的任务走到可运行工作流？',
     description: '先定义成功标准，再进入视频 Prompt 与节点工作流；不从巨大模板或复杂技巧开始。',
     tone: 'mint',
-    resourceIds: ['openai-prompt-engineering-best-practices', 'anthropic-prompt-engineering-overview', 'google-veo-prompt-guide', 'runway-gen4-prompt-guide', 'comfyui-official-docs'],
+    resourceIds: ['openai-prompt-engineering-best-practices', 'anthropic-prompt-engineering-overview', 'google-veo-prompt-guide', 'google-flow-creative-workspace-2026', 'comfyui-official-docs'],
   },
   {
     id: 'EVALUATE',
@@ -58,7 +58,7 @@ export default function LibraryPage() {
 
       <Reveal><section className="library-routes section-shell" aria-labelledby="library-routes-title">
         <aside className="archive-truth-note library-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>资源标题、摘要和原始链接已经核对；推荐理由与 JING&apos;S TAKE 多数仍是编辑初稿，只有荆确认后才会成为正式个人观点。</p></aside>
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Choose by purpose / 按用途开始</p><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条路线依据资源内容和官方用途编排。需要查单项时，仍可使用下方搜索与筛选。</p></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Choose by purpose / 按用途开始</p><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条入门路线只精选最适合连续阅读的资源；声音、来源记录与开源工具可在下方继续搜索和筛选。</p></div>
         <div className="library-route-grid">
           {libraryRoutes.map((route) => (
             <article className={`library-route-card library-route-${route.tone}`} key={route.id}>
