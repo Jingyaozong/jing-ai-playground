@@ -14,6 +14,9 @@ import { getAllNotes } from '../lib/notes';
 
 export default function Home() {
   const featured = stories[0];
+  const recentStories = stories.slice(-2).reverse();
+  const recentExperiments = experiments.filter((experiment) => experiment.stage === 'documented').slice(-3).reverse();
+  const recentTools = tools.slice(-4).reverse();
   const latestNotes = getAllNotes().slice(0, 4);
   const jingPicks = libraryItems.filter((item) => item.jingPick).slice(0, 4);
   return (
@@ -41,7 +44,7 @@ export default function Home() {
       </section>
       <div className="live-strip" aria-label="最近动态">
         <span className="live-label mono"><i /> ON THE DESK</span>
-        <div className="ticker-track"><span>整理第一部 AI 短片草案</span><b>✦</b><span>记录角色一致性 Pilot</span><b>✦</b><span>完善 AI 视频评测方法</span><b>✦</b><span>打磨本地创作工具</span><b>✦</b><span>整理第一部 AI 短片草案</span></div>
+        <div className="ticker-track"><span>完善原创短片视觉开发</span><b>✦</b><span>记录接触与影子动作实验</span><b>✦</b><span>整理 AI 视频制作方法</span><b>✦</b><span>打磨本地创作工具</span><b>✦</b><span>完善原创短片视觉开发</span></div>
       </div>
 
       <Reveal><section className="featured">
@@ -50,24 +53,24 @@ export default function Home() {
       </section></Reveal>
 
       <Reveal><section className="latest section-shell">
-        <div className="section-title-row"><div><p className="eyebrow mono">Latest experiments</p><h2>最近又<br />折腾了什么？</h2></div><p>故事还没完全长成，测试也不一定有结论。这里先留下过程里的碎片、偏差和意外。</p></div>
+        <div className="section-title-row"><div><p className="eyebrow mono">Latest experiments</p><h2>最近又<br />折腾了什么？</h2></div><p>三套新协议已经把光线、影子和手持道具拆成可以记录的变量；模型测试仍未开始，所以这里只展示问题和方法。</p></div>
         <div className="latest-grid">
-          <article className="latest-lead"><ProjectVisual variant="faces" label={experiments[0].title} /><span className="mono">Pilot record · 4 static samples / 40 planned</span><h3>{experiments[0].title}</h3></article>
-          <article className="latest-note note-violet"><span className="mono">Research question / 待验证</span><blockquote>“变量不断增加时，哪些角色特征最容易先失去一致性？”</blockquote><small>需要正式四十镜样本才能回答</small></article>
-          <article className="latest-small"><ProjectVisual variant="frames" label={experiments[1].title} /><span className="mono">Experiment idea · not run</span><h3>{experiments[1].title}</h3></article>
-          <article className="latest-note note-apricot"><span className="note-number">40</span><p>个正式镜头仍待测试。目前只有四格静态 Pilot，不写模型结论。</p><span className="mono">PILOT STATUS · 4 / 40</span></article>
+          <Link className="latest-lead" href={`/experiments/${recentExperiments[0].slug}/`}><ProjectVisual variant={recentExperiments[0].visual} label={recentExperiments[0].title} /><span className="mono">LATEST PROTOCOL · {recentExperiments[0].status}</span><h3>{recentExperiments[0].title}</h3></Link>
+          <article className="latest-note note-violet"><span className="mono">Research question / 待验证</span><blockquote>“接触、承重和释放，能否保持同一条因果链？”</blockquote><small>需要九格真实模型样本才能回答</small></article>
+          <Link className="latest-small" href={`/experiments/${recentExperiments[1].slug}/`}><ProjectVisual variant={recentExperiments[1].visual} label={recentExperiments[1].title} /><span className="mono">LATEST PROTOCOL · {recentExperiments[1].status}</span><h3>{recentExperiments[1].title}</h3></Link>
+          <article className="latest-note note-apricot"><span className="note-number">30</span><p>个对照样本等待执行：接触 9 格、影子 9 格、光线 12 格。没有模型输出，就不写结果。</p><span className="mono">CURRENT STATUS · 0 / 30</span></article>
         </div>
       </section></Reveal>
 
       <Reveal><section className="stories-preview section-shell">
         <div className="section-index mono">Archive A / AI Stories</div>
         <div className="section-title-row compact"><div><p className="eyebrow mono">Stories</p><h2>把脑子里的<br />奇怪故事做出来。</h2></div><Link className="text-link" href="/stories">View all stories ↗</Link></div>
-        <div className="story-grid">{stories.slice(0, 2).map((story, index) => <StoryCard story={story} index={index} key={story.id} />)}</div>
+        <div className="story-grid">{recentStories.map((story, index) => <StoryCard story={story} index={index} key={story.id} />)}</div>
       </section></Reveal>
 
       <Reveal><section className="experiments-preview dark-section"><div className="dark-inner">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Experiments</p><h2>不急着有用，<br />先看看会发生什么。</h2></div><Link className="text-link" href="/experiments">Open the lab ↗</Link></div>
-        <div className="experiment-preview-grid">{experiments.slice(0, 3).map((experiment, index) => <ExperimentCard experiment={experiment} index={index} key={experiment.id} />)}</div>
+        <div className="experiment-preview-grid">{recentExperiments.map((experiment, index) => <ExperimentCard experiment={experiment} index={index} key={experiment.id} />)}</div>
       </div></section></Reveal>
 
       <Reveal><section className="home-notes section-shell">
@@ -77,7 +80,7 @@ export default function Home() {
 
       <Reveal><section className="tools-preview section-shell">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Little tools</p><h2>顺手做点<br />有用的小东西。</h2></div><p>不是产品中心，只是把重复的小麻烦做成按钮。</p></div>
-        <div className="tool-grid">{tools.map((tool, index) => <ToolCard tool={tool} index={index} key={tool.id} />)}</div>
+        <div className="tool-grid">{recentTools.map((tool, index) => <ToolCard tool={tool} index={index} key={tool.id} />)}</div>
         <Link className="text-link tools-all" href="/tools">See all little tools ↗</Link>
       </section></Reveal>
 
