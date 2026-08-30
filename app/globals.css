@@ -12,6 +12,9 @@
   --display: 'Bricolage Grotesque Variable', 'PingFang SC', sans-serif;
   --body: 'Manrope', 'PingFang SC', sans-serif;
   --mono: 'IBM Plex Mono', monospace;
+  --zh-title-tracking: -.018em;
+  --zh-title-leading: 1.04;
+  --zh-heading-leading: 1.08;
 }
 
 * { box-sizing: border-box; }
@@ -3378,4 +3381,130 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 
 @media (prefers-reduced-motion: reduce) {
   .lighting-panel-heading button, .lighting-add-shot, .lighting-output-actions button { transition: none; }
+}
+
+/* Chinese display typography calibration
+   Keep the magazine-scale hierarchy, but give dense Chinese glyphs enough air. */
+h1:lang(zh-CN), h2:lang(zh-CN), h3:lang(zh-CN) {
+  letter-spacing: var(--zh-title-tracking);
+  line-break: strict;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+h1:lang(zh-CN) { line-height: var(--zh-title-leading); }
+h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
+
+.hero h1 { font-size: clamp(4.2rem,8vw,8rem); }
+.page-intro h1 { font-size: clamp(4.8rem,9.5vw,9.25rem); }
+.footer-lead h2 { font-size: clamp(3.7rem,7vw,7.2rem); }
+
+.tool-detail-title h1,
+.budget-detail-hero .tool-detail-title h1,
+.delivery-detail-hero .tool-detail-title h1,
+.release-detail-hero .tool-detail-title h1,
+.effect-detail-hero .tool-detail-title h1,
+.lighting-ledger-hero .tool-detail-title h1,
+.note-detail-title h1,
+.experiment-detail-title h1,
+.story-detail-title h1 {
+  font-size: clamp(3.9rem,6.6vw,7.15rem);
+  line-height: 1.01;
+}
+
+.section-heading h2,
+.section-title-row h2,
+.experiment-question h2,
+.story-premise h2 {
+  font-size: clamp(3rem,5.25vw,5.8rem);
+  line-height: 1.07;
+}
+
+.experiment-section-heading h2,
+.experiment-record-top h2,
+.story-section-heading h2,
+.tool-workflow-heading h2,
+.tool-archive-heading h2,
+.about-status-heading h2,
+.about-columns h2 {
+  font-size: clamp(2.8rem,4.8vw,5.25rem);
+  line-height: 1.07;
+}
+
+.experiment-reference-card h3,
+.story-character-anchor-copy h3,
+.about-answer-card h3,
+.reading-path-card h3,
+.featured-note-copy h2,
+.prompt-entry-card h2,
+.prompt-story-bridge-card h2 {
+  font-size: clamp(2.65rem,4.05vw,4.6rem);
+  line-height: 1.08;
+}
+
+.experiment-next-title h2 {
+  font-size: clamp(3rem,5vw,5.5rem);
+  line-height: 1.05;
+}
+
+.tool-workflow-heading h2,
+.tool-archive-heading h2,
+.experiment-question h2,
+.story-premise h2,
+.experiment-reference-card h3,
+.story-character-anchor-copy h3 {
+  max-width: 1040px;
+}
+
+@media (max-width: 760px) {
+  :root {
+    --zh-title-tracking: -.012em;
+    --zh-title-leading: 1.06;
+    --zh-heading-leading: 1.1;
+  }
+
+  .hero h1,
+  .page-intro h1,
+  .tool-detail-title h1,
+  .budget-detail-hero .tool-detail-title h1,
+  .delivery-detail-hero .tool-detail-title h1,
+  .release-detail-hero .tool-detail-title h1,
+  .effect-detail-hero .tool-detail-title h1,
+  .lighting-ledger-hero .tool-detail-title h1,
+  .note-detail-title h1,
+  .experiment-detail-title h1,
+  .story-detail-title h1,
+  .prompt-title-lockup h1 {
+    font-size: clamp(3.05rem,13vw,4.65rem);
+    line-height: 1.05;
+  }
+
+  .section-heading h2,
+  .section-title-row h2,
+  .section-title-row.compact h2,
+  .experiment-question h2,
+  .experiment-section-heading h2,
+  .experiment-record-top h2,
+  .experiment-next-title h2,
+  .story-premise h2,
+  .story-section-heading h2,
+  .tool-workflow-heading h2,
+  .tool-archive-heading h2,
+  .about-status-heading h2,
+  .about-columns h2 {
+    font-size: clamp(2.45rem,10.8vw,3.75rem);
+    line-height: 1.09;
+  }
+
+  .experiment-reference-card h3,
+  .story-character-anchor-copy h3,
+  .about-answer-card h3,
+  .reading-path-card h3,
+  .featured-note-copy h2,
+  .prompt-entry-card h2,
+  .prompt-story-bridge-card h2 {
+    font-size: clamp(2.2rem,9.5vw,3.25rem);
+    line-height: 1.1;
+  }
+
+  .footer-lead h2 { font-size: clamp(3rem,12vw,4rem); }
 }
