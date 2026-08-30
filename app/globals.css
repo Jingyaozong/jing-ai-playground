@@ -3607,6 +3607,10 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
     line-height: 1.05;
   }
 
+  .note-detail-title h1 {
+    font-size: clamp(2.85rem,12.2vw,4.4rem);
+  }
+
   .section-heading h2,
   .section-title-row h2,
   .section-title-row.compact h2,
