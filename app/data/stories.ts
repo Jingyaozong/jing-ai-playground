@@ -31,6 +31,23 @@ export type StoryDetail = {
   };
   ending?: { label: string; copy: string; href: string; link: string };
   related?: { href: string; label: string };
+  soundPlan?: {
+    duration: number;
+    heading: string;
+    description: string;
+    lanes: Array<{
+      label: string;
+      role: string;
+      tone: 'blue' | 'yellow' | 'coral' | 'mint';
+      cues: Array<{
+        start: number;
+        end: number;
+        title: string;
+        detail: string;
+      }>;
+    }>;
+    checks: string[];
+  };
   beats: Array<{
     time: string;
     title: string;
@@ -584,6 +601,66 @@ export const storyDetails: StoryDetail[] = [
     },
     ending: { label: 'CURRENT ENDING', copy: '她没有保存回声。\n只把杯子洗干净，带走。', href: '/experiments/can-one-hand-lift-the-same-cup/', link: '查看同一只手拿杯实验 ↗' },
     related: { href: '/tools/contact-action-card/', label: '生成接触动作拆分卡 ↗' },
+    soundPlan: {
+      duration: 60,
+      heading: '声音不提前解释，\n只在动作之后出现。',
+      description: '四条轨道把房间环境、真实接触、物品回声与刻意静默分开。所有台词都是待确认的虚构文本，时间点是剪辑草案，不代表已经录音或完成声音制作。',
+      lanes: [
+        {
+          label: 'ROOM',
+          role: '环境底',
+          tone: 'blue',
+          cues: [
+            { start: 0, end: 30, title: '空屋午后', detail: '远处街声、轻微管道声；保持空间连续，不用音乐填满。' },
+            { start: 30, end: 40, title: '冰箱停机', detail: '环境底突然变薄，让白杯前的十秒悬停被听见。' },
+            { start: 40, end: 60, title: '房间恢复', detail: '低环境底回来，50 秒后逐渐交给水流、拉链与门锁。' },
+          ],
+        },
+        {
+          label: 'CONTACT',
+          role: '接触与动作',
+          tone: 'yellow',
+          cues: [
+            { start: 0, end: 5, title: '胶带 / 钥匙', detail: '钥匙真正落入掌心时保留一次清脆金属触点。' },
+            { start: 10, end: 15, title: '指尖 / 围巾', detail: '两次布料接触，第二次只有摩擦声，不再触发回声。' },
+            { start: 20, end: 25, title: '手 / 收音机', detail: '指尖触壳与立刻松手分成两个短声音，不让收音机自行启动。' },
+            { start: 30, end: 40, title: '桌面 / 指甲', detail: '两次接近都不触杯，只留下极轻的指甲碰桌声。' },
+            { start: 40, end: 50, title: '接触 / 闭合 / 承重 / 落稳', detail: '42 秒接触，44 秒闭合，45 秒离桌，49 秒杯底落稳。' },
+            { start: 50, end: 60, title: '水流 / 布 / 拉链 / 门锁', detail: '每个动作只留一个主声，门锁成为全片最后的实体声音。' },
+          ],
+        },
+        {
+          label: 'VOICE',
+          role: '物品回声',
+          tone: 'coral',
+          cues: [
+            { start: 5, end: 9, title: '“早点回来。”', detail: '钥匙接触完成后进入；声音干燥、近距离，不做幽灵混响。' },
+            { start: 11, end: 14, title: '“外面冷。”', detail: '第一次触碰围巾后播放；第二次触碰保持无声。' },
+            { start: 21, end: 25, title: '“我不会再回来了。”', detail: '乔野过去的声音；手松开后台词仍自然说完。' },
+            { start: 45, end: 49, title: '“水凉了就别喝了。”', detail: '抓握建立、杯底离桌以后才进入；不从靠近或接触瞬间抢跑。' },
+          ],
+        },
+        {
+          label: 'SILENCE',
+          role: '停顿与无音乐',
+          tone: 'mint',
+          cues: [
+            { start: 9, end: 10, title: '一秒确认', detail: '第一句结束后，不立刻用下一个动作盖住反应。' },
+            { start: 25, end: 30, title: '五秒退开', detail: '争吵回声结束后只留房间底噪，让她主动看向白杯。' },
+            { start: 38, end: 42, title: '接触前静默', detail: '指尖尚未碰到杯柄，台词与陶瓷声都不能提前出现。' },
+            { start: 49, end: 50, title: '一句后的呼吸', detail: '台词结束后留一秒人物呼吸，再切到水槽。' },
+            { start: 57, end: 60, title: '无配乐结尾', detail: '门锁后不加情绪音乐，让空屋底噪自然停止。' },
+          ],
+        },
+      ],
+      checks: [
+        'VOICE 轨不得早于对应 CONTACT 轨的真实接触点。',
+        '第二次触碰围巾只保留布料声，不重复台词。',
+        '母亲回声不使用恐怖混响、电话滤波或超自然音效。',
+        '全片不使用配乐；情绪来自环境密度、动作声和停顿长度。',
+        '未经确认不模仿任何真实人物声线，临时配音必须明确标注。',
+      ],
+    },
     beats: [
       { time: '14:06', title: '钥匙说“早点回来”', copy: '乔野把旧钥匙放进纸箱，金属碰到掌心时，门口响起母亲平静的一句话。房间里没有其他人。', tone: 'yellow' },
       { time: '14:19', title: '围巾说“外面冷”', copy: '她试着再碰一次围巾。熟悉的声音只播放一遍，不回应她，也不解释自己从哪里来。', tone: 'blue' },
@@ -610,7 +687,7 @@ export const storyDetails: StoryDetail[] = [
       { phase: '十二镜分镜', status: '完成草案', note: '十二镜共 60 秒，重点拆分白杯接近、握住、承重、落稳与清洗动作。' },
       { phase: '角色与道具锚点', status: '完成草案', note: '已完成文字任务书；尚未生成乔野或白杯的参考图，页面中的图形只表示固定关系。' },
       { phase: '接触动作测试', status: '待开始', note: '优先验证镜头 08、09、10 的手杯接触链，以及接触后声音进入的剪辑时点；目前没有视频结果。' },
-      { phase: '关键帧与声音', status: '待开始', note: '四张关键帧仍为空白任务书；母亲声音需要另行确认表演方向与授权素材。' },
+      { phase: '关键帧与声音制作', status: '制作中', note: '60 秒四轨声音触发时间线已完成草案；四张关键帧、配音与现场声音素材仍未制作。' },
     ],
     script: [
       { timecode: '00:00—00:10', scene: '旧家 / 开箱', visual: '午后空屋。乔野把钥匙放进纸箱，金属刚碰到掌心，门边传来母亲的声音。她停住。', voice: '母亲的回声：“早点回来。”', sound: '胶带撕开、钥匙轻响；回声保持干燥，不加混响特效。' },
@@ -662,7 +739,7 @@ export const storyDetails: StoryDetail[] = [
       '由荆确认母亲最后一句保持“水凉了就别喝了”，还是改成更接近她真实感受的日常话语。',
       '先制作乔野人物锚点与白杯道具锚点，再生成四张静态构图验证图。',
       '用接触动作卡分别测试镜头 08、09、10，记录接触时点、手部完整、道具保持和承重逻辑。',
-      '声音台词只在接触时点后期进入；未经确认不使用真实人物声音或模拟任何具体个人声线。',
+      '确认四句虚构台词与声音表演方向后，按触发时间线制作临时配音和动作拟音。',
     ],
   },
 ];

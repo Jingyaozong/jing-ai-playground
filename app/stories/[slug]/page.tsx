@@ -183,6 +183,28 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
+      {story.soundPlan && <section className="story-sound-map" id="sound-map">
+        <div className="story-section-inner">
+          <div className="story-section-heading"><div><p className="eyebrow mono">04B / Sound trigger map</p><EditorialHeading lines={editorialLines(story.soundPlan.heading)} /></div><p>{story.soundPlan.description}</p></div>
+          <div className="story-sound-ruler" aria-label={`${story.soundPlan.duration} 秒声音时间尺`}>
+            {Array.from({ length: Math.floor(story.soundPlan.duration / 10) + 1 }, (_, index) => <span key={index} className="mono" style={{ left: `${(index * 10 / story.soundPlan!.duration) * 100}%` }}>{String(index * 10).padStart(2, '0')}s</span>)}
+          </div>
+          <div className="story-sound-lanes">
+            {story.soundPlan.lanes.map((lane) => <article className={`story-sound-lane sound-tone-${lane.tone}`} key={lane.label}>
+              <header><span className="mono">{lane.label}</span><h3>{lane.role}</h3><b className="mono">{String(lane.cues.length).padStart(2, '0')} CUES</b></header>
+              <div className="story-sound-track" aria-label={`${lane.role}时间分布`}>
+                {lane.cues.map((cue, index) => <span key={`${cue.start}-${cue.title}`} style={{ left: `${(cue.start / story.soundPlan!.duration) * 100}%`, width: `${((cue.end - cue.start) / story.soundPlan!.duration) * 100}%` }}><b className="mono">{String(index + 1).padStart(2, '0')}</b></span>)}
+              </div>
+              <div className="story-sound-cue-list">
+                {lane.cues.map((cue, index) => <div key={cue.title}><span className="mono">{String(index + 1).padStart(2, '0')} · {String(cue.start).padStart(2, '0')}—{String(cue.end).padStart(2, '0')}s</span><h4>{cue.title}</h4><p>{cue.detail}</p></div>)}
+              </div>
+            </article>)}
+          </div>
+          <aside className="story-sound-checks"><div><span className="mono">SYNC CHECK / 时间验收</span><h3>先听接触，<br />再听见一句话。</h3></div><ol>{story.soundPlan.checks.map((check, index) => <li key={check}><b className="mono">{String(index + 1).padStart(2, '0')}</b><p>{check}</p></li>)}</ol></aside>
+          <nav className="story-sound-links"><Link href="/notes/ai-video-sound-workflow/">阅读完整声音工作流 ↗</Link><Link href="/tools/sound-layer-card/">打开声音分层卡 ↗</Link></nav>
+        </div>
+      </section>}
+
       <section className="story-shots section-shell">
         <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.shots.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.shots.heading)} /></div><p>{sectionCopy.shots.description}</p></div>
         <div className="story-shot-summary mono">{shotSummary.map((item) => <span key={item}>{item}</span>)}</div>
