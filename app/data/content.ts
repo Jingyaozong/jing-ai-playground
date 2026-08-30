@@ -74,6 +74,19 @@ export const stories: Story[] = [
     stage: 'documented',
     visual: 'rain',
   },
+  {
+    id: 'story-004',
+    slug: 'shadow-arrives-five-minutes-early',
+    title: '影子比她早到五分钟',
+    englishTitle: 'Her Shadow Arrives Five Minutes Early',
+    description: '离开城市的那天，钟表修复师安澄发现自己的影子总比她早五分钟行动。傍晚，它在车站与旧钟表店之间先替她改了方向。',
+    type: 'Magical Realism Draft',
+    date: '2026.08',
+    duration: '01:08',
+    status: 'AI 概念开发 · 无视频',
+    stage: 'documented',
+    visual: 'earlyshadow',
+  },
 ];
 
 export const experiments: Experiment[] = [

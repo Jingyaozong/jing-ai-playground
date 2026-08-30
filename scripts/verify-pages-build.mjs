@@ -20,6 +20,7 @@ const requiredFiles = [
   'stories/she-forgets-yesterday/index.html',
   'stories/no-boat-at-pier-seven/index.html',
   'stories/before-the-rain-ends/index.html',
+  'stories/shadow-arrives-five-minutes-early/index.html',
   'experiments/forty-shots-one-character/index.html',
   'experiments/what-reference-images-lock/index.html',
   'experiments/can-local-rain-follow-a-character/index.html',
