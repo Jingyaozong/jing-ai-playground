@@ -270,6 +270,15 @@ export const tools: Tool[] = [
     symbol: '◉',
     href: '/tools/local-effect-card/',
   },
+  {
+    id: 'tool-015',
+    title: 'Lighting Ledger',
+    description: '固定现实空间里的灯位，再按人物朝向和摄影机位置换算每镜预期受光方向，核对真实画面是否发生主光翻面。',
+    label: '光线连续性账本',
+    status: 'Ready',
+    symbol: '☀',
+    href: '/tools/lighting-ledger/',
+  },
 ];
 
 export const currentlyPlaying = [

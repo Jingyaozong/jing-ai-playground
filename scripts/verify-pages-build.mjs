@@ -28,6 +28,7 @@ const requiredFiles = [
   'tools/review-pace/index.html',
   'tools/shot-list-cleaner/index.html',
   'tools/local-effect-card/index.html',
+  'tools/lighting-ledger/index.html',
   'og.png',
 ];
 
