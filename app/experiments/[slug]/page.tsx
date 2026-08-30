@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import experimentPilotSamples from '../../assets/generated/forty-shots-pilot-samples.png';
 import rainCharacterAnchor from '../../assets/generated/before-the-rain-ends-character-anchor.webp';
+import shadowCharacterAnchor from '../../assets/generated/shadow-arrives-five-minutes-early-character-anchor.webp';
 import characterAnchor from '../../assets/generated/she-forgets-yesterday-character-anchor.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
@@ -10,6 +11,7 @@ import { ExperimentRecordBoard } from '../../components/experiment-record-board'
 import { LightingContinuityBoard } from '../../components/lighting-continuity-board';
 import { RainFollowRecordBoard } from '../../components/rain-follow-record-board';
 import { ReferenceComparisonBoard } from '../../components/reference-comparison-board';
+import { ShadowOffsetRecordBoard } from '../../components/shadow-offset-record-board';
 import { experimentDetails, getExperimentBySlug } from '../../data/experiments';
 
 export const dynamicParams = false;
@@ -40,7 +42,11 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
     title: '先固定“她是谁”。',
     description: '黑色齐下巴短发、右侧蓝色发夹、红色三角耳饰、黄色针织外套和象牙白上衣，是这轮测试要求保留的五个视觉锚点。角色为 AI 生成的虚构人物。',
   };
-  const referenceImage = reference.asset === 'rain-character-anchor' ? rainCharacterAnchor : characterAnchor;
+  const referenceImage = reference.asset === 'rain-character-anchor'
+    ? rainCharacterAnchor
+    : reference.asset === 'shadow-character-anchor'
+      ? shadowCharacterAnchor
+      : characterAnchor;
 
   return (
     <main className="experiment-detail-page">
@@ -169,8 +175,10 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         ? <ReferenceComparisonBoard />
         : experiment.recordBoard === 'rain-follow'
           ? <RainFollowRecordBoard />
-          : experiment.recordBoard === 'lighting-continuity'
+        : experiment.recordBoard === 'lighting-continuity'
             ? <LightingContinuityBoard />
+          : experiment.recordBoard === 'shadow-offset'
+            ? <ShadowOffsetRecordBoard />
           : <ExperimentRecordBoard />}
 
       <section className="experiment-next section-shell">

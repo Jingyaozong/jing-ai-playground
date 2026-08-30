@@ -3052,6 +3052,25 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .rain-record-grid .record-cell { aspect-ratio: 1.35; }
 .rain-task-key { grid-template-columns: repeat(3,1fr); }
 .rain-record-board .experiment-record-meta > label:last-child { grid-column: 1/-1; }
+.shadow-offset-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
+.shadow-offset-record-board .experiment-record-meta > label:last-child { grid-column: 1/-1; }
+.shadow-offset-diagram { position: relative; min-height: 285px; margin-bottom: 24px; overflow: hidden; border: 2px solid var(--ink); border-radius: 24px; background: linear-gradient(150deg,var(--yellow) 0 52%,var(--sky) 52%); }
+.shadow-offset-diagram::before { content: ''; position: absolute; left: -8%; right: -8%; bottom: 46px; height: 2px; background: var(--ink); transform: rotate(-5deg); }
+.shadow-offset-diagram > span { position: absolute; left: 17px; top: 15px; z-index: 3; color: var(--blue); font-size: 7px; font-weight: 750; }
+.shadow-diagram-body, .shadow-diagram-cast { position: absolute; bottom: 48px; width: 54px; height: 101px; border-radius: 27px 27px 10px 10px; }
+.shadow-diagram-body { z-index: 2; left: 25%; border: 2px solid var(--ink); background: var(--coral); }
+.shadow-diagram-body::before, .shadow-diagram-cast::before { content: ''; position: absolute; left: 50%; top: -39px; width: 45px; height: 45px; border-radius: 50%; transform: translateX(-50%); }
+.shadow-diagram-body::before { border: 2px solid var(--ink); background: var(--paper); }
+.shadow-diagram-body i, .shadow-diagram-body b, .shadow-diagram-cast i, .shadow-diagram-cast b { position: absolute; bottom: -30px; width: 17px; height: 43px; border-radius: 0 0 8px 8px; }
+.shadow-diagram-body i { left: 6px; border: 2px solid var(--ink); background: var(--blue); }
+.shadow-diagram-body b { right: 6px; border: 2px solid var(--ink); background: var(--blue); }
+.shadow-diagram-cast { left: 62%; bottom: 59px; height: 116px; background: var(--ink); opacity: .86; transform: skewX(-11deg) rotate(13deg); transform-origin: bottom; }
+.shadow-diagram-cast::before, .shadow-diagram-cast i, .shadow-diagram-cast b { background: var(--ink); }
+.shadow-diagram-cast i { left: -1px; bottom: -39px; height: 55px; transform: rotate(28deg); transform-origin: top; }
+.shadow-diagram-cast b { right: 2px; bottom: -39px; height: 55px; transform: rotate(-18deg); transform-origin: top; }
+.shadow-offset-diagram > em { position: absolute; left: 39%; right: 9%; bottom: 29px; height: 45px; border-bottom: 2px dashed var(--blue); transform: rotate(-9deg); }
+.shadow-offset-diagram > em::after { content: '↗'; position: absolute; right: -3px; bottom: -13px; color: var(--blue); font: normal 800 2rem var(--display); }
+.shadow-offset-diagram > strong { position: absolute; left: 17px; bottom: 14px; z-index: 3; color: var(--blue); font-size: 6px; }
 .lighting-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
 .lighting-record-board .experiment-record-meta > label:last-child { grid-column: 1/-1; }
 .light-axis-diagram { position: relative; min-height: 285px; margin-bottom: 24px; overflow: hidden; border: 2px solid var(--ink); border-radius: 24px; background: linear-gradient(140deg,var(--sky),var(--mint)); }
@@ -3086,11 +3105,14 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .reference-active-task { align-items: flex-start; flex-direction: column; }
   .reference-record-board .experiment-record-filters > span { align-self: flex-start; }
   .rain-record-board .experiment-record-filters > span { align-self: flex-start; }
+  .shadow-offset-record-board .experiment-record-filters > span { align-self: flex-start; }
   .lighting-record-board .experiment-record-filters > span { align-self: flex-start; }
   .rain-zone-diagram { min-height: 220px; }
   .rain-record-grid { grid-template-columns: repeat(3,1fr); }
   .rain-task-key { grid-template-columns: 1fr; }
   .rain-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
+  .shadow-offset-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
+  .shadow-offset-diagram { min-height: 220px; }
   .lighting-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
   .lighting-task-key { grid-template-columns: 1fr; }
 }

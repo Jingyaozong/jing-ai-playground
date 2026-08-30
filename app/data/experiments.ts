@@ -41,7 +41,7 @@ export type ExperimentDetail = {
     label: string;
     title: string;
     description: string;
-    asset?: 'rain-character-anchor';
+    asset?: 'rain-character-anchor' | 'shadow-character-anchor';
     imageAlt?: string;
   };
   checks: Array<{
@@ -52,7 +52,7 @@ export type ExperimentDetail = {
   }>;
   observationTitle?: string;
   observationDescription?: string;
-  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity';
+  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset';
   sources?: Array<{ title: string; url: string; note: string }>;
   nextSteps: string[];
   currentConclusion?: string;
@@ -330,6 +330,84 @@ export const experimentDetails: ExperimentDetail[] = [
     relatedLabel: '阅读完整光线连续性方法 ↗',
     toolHref: '/tools/scene-anchor/',
     toolLabel: '制作场景与光线锚点卡 ↗',
+  },
+  {
+    slug: 'can-a-shadow-move-on-its-own',
+    number: '005',
+    title: '影子能否在人物静止时独立行动？',
+    englishTitle: 'Can a Shadow Move on Its Own?',
+    category: 'Motion Separation Study',
+    date: '2026.08.30',
+    status: '实验协议完成 · 0 / 9 待执行',
+    demo: true,
+    testCount: 9,
+    testUnit: 'TEST CELLS',
+    pilotLabel: 'PLANNED · 0 / 9',
+    notice: '这是一份待执行的影子错位实验协议。目前只有安澄角色锚点、三种制作条件、九个测试单元和本地记录台，没有视频输出、评分或结论；故事概念关键帧只作为起点参考，不会冒充动作测试结果。',
+    summary: '固定同一人物、硬光、机位和三种影子动作，对比直接文字描述、实体/影子动作账本与分层合成三种制作条件；检查人物能否保持静止，影子能否独立抬手、改道并重新贴合。',
+    question: '当实体人物必须完全静止时，怎样的生成或合成条件，才能让单一投影完成独立动作，同时保住脚底连接、光线方向与时间连续性？',
+    hypothesis: '单次提示同时要求“人物不动”和“影子行动”可能产生动作耦合；把实体与影子写成独立时间轨道，可能提高指令可读性，但仍未必解决投影分叉与光学错误。分层制作预计更可控，却会增加遮罩、跟踪和合成成本。',
+    constants: [
+      '同一位虚构成年角色安澄，以及同一张已生成的人物锚点图',
+      '同一套珊瑚红夹克、浅蓝衬衫、藏蓝阔腿裤、黄工具包与银色方表',
+      '同一场景、同一盏方向明确的硬光、同一固定机位与相同起始构图',
+      '三个固定任务：影子独自抬手、影子从半步停顿改道、影子在夕阳下重新贴合',
+      '每格 5 秒、16:9、相同输出数量；模型、版本、Seed 与平台设置在执行当天记录',
+      '人物实体全程不说话；不加入运镜、风、衣摆或背景人群等额外运动',
+    ],
+    protocolTitle: '三种制作条件，\n三个相同影子任务。',
+    protocolDescription: '九格共用同一人物、灯位、起点和动作终点。组间只改变实体与影子被描述或拆层的方式，不为单个失败样本临时改构图。',
+    groups: [
+      { code: 'A', title: '直接文字描述', shots: 'A01—A03', variable: '单次生成；只写“人物保持静止，影子独立完成动作”', tone: 'blue' },
+      { code: 'B', title: '实体 / 影子动作账本', shots: 'B01—B03', variable: '单次生成；分别锁定 BODY = HOLD、SHADOW = MOVE，并写明五个时间点', tone: 'yellow' },
+      { code: 'C', title: '分层生成与合成', shots: 'C01—C03', variable: '实体底片与影子层分开制作，再用遮罩、透明度与混合模式合成', tone: 'coral' },
+    ],
+    reference: {
+      kind: 'character',
+      asset: 'shadow-character-anchor',
+      label: 'CHARACTER + LIGHT ANCHOR · GENERATED 2026.08',
+      title: '人物先保持不动，实验才知道影子动了没有。',
+      description: '安澄的脸、低发髻、珊瑚红夹克、芥末黄工具包和银色方表在九格中全部固定。参考图只提供人物与硬光起点，不代表任何影子动作已经通过。',
+      imageAlt: '安澄 AI 角色锚点与单一硬光影子',
+    },
+    sampleTitle: '九格全部留白，\n先把两条时间线分开。',
+    sampleDescription: '每格对应一次真实生成或一次完整分层合成。当前只展示任务、条件和观察重点；故事页的静态概念图不计入九格结果。',
+    samples: [
+      { shot: 'A01', title: '影子独自抬手', setting: '直接描述 · 工作室墙面 · 实体双臂垂下', observation: '待执行；检查人物是否会被影子动作带着同步抬手。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'blue', generated: false },
+      { shot: 'A02', title: '影子停顿改道', setting: '直接描述 · 站台地面 · 实体双脚站定', observation: '待执行；检查单一影子能否停住、转向并继续，而不复制人物。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'blue', generated: false },
+      { shot: 'A03', title: '影子重新贴合', setting: '直接描述 · 店门夕阳 · 人物到位后停住', observation: '待执行；检查影子能否以真实光学路径贴回脚边，而不是融化或消失。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'blue', generated: false },
+      { shot: 'B01', title: '影子独自抬手', setting: '动作账本 · BODY HOLD / SHADOW RAISE', observation: '待执行；五点记录实体是否始终静止，以及影子抬手从哪一帧开始。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'yellow', generated: false },
+      { shot: 'B02', title: '影子停顿改道', setting: '动作账本 · BODY HOLD / SHADOW TURN', observation: '待执行；检查停顿、转向与迈步能否形成三个连续节拍。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'yellow', generated: false },
+      { shot: 'B03', title: '影子重新贴合', setting: '动作账本 · BODY HOLD / SHADOW ALIGN', observation: '待执行；检查贴合过程中影子根部、长度和方向是否连续。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'yellow', generated: false },
+      { shot: 'C01', title: '影子独自抬手', setting: '分层合成 · 静止人物底片＋影子动作层', observation: '待执行；记录遮罩边缘、脚底接点与墙面材质是否穿帮。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'coral', generated: false },
+      { shot: 'C02', title: '影子停顿改道', setting: '分层合成 · 静止站台底片＋改道影子层', observation: '待执行；检查跟踪、透视与地面接触是否比单次生成更可控。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'coral', generated: false },
+      { shot: 'C03', title: '影子重新贴合', setting: '分层合成 · 门口底片＋渐变贴合影子层', observation: '待执行；记录贴合是否自然，以及为了隐藏边缘付出的制作成本。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'coral', generated: false },
+    ],
+    checks: [
+      { label: 'SEPARATION', question: '到底是谁在动？', note: '先看实体肩、肘、手、骨盆和脚位是否保持静止，再判断影子动作；人物微动不能被忽略。', tone: 'blue' },
+      { label: 'LIGHT LOGIC', question: '影子还属于这盏灯吗？', note: '检查脚底连接、投影方向、软硬、长度和表面透视；动作成功但光学脱节仍判失败。', tone: 'yellow' },
+      { label: 'PRODUCTION COST', question: '控制力换来了多少额外工作？', note: 'C 组单独记录遮罩、跟踪、修边和合成时间，不把后期路径与单次生成混写成模型能力。', tone: 'coral' },
+    ],
+    observationTitle: '先看实体有没有动，\n再看影子怎么动。',
+    observationDescription: '四项人工评分分开记录：实体静止、影子独立、光学关系和时间连续。每格检查 0%、25%、50%、75%、100% 五个时间点。',
+    recordBoard: 'shadow-offset',
+    sources: [
+      { title: 'Runway · Image to Video Prompting Guide', url: 'https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide', note: '官方说明输入图承担构图、主体、光线与风格，文字主要描述动作；也提醒起点图里的隐含运动线索可能与目标运动冲突。' },
+      { title: 'Google Cloud · Veo reference images', url: 'https://cloud.google.com/vertex-ai/generative-ai/docs/video/use-reference-images-to-guide-video-generation', note: '官方说明参考图可用于主体引导；支持的模型与输入数量可能变化，因此执行当天仍需核对真实能力。' },
+      { title: 'Adobe · Compositing overview', url: 'https://helpx.adobe.com/premiere/desktop/add-video-effects/work-with-composites/compositing-overview.html', note: '官方说明可使用透明度、遮罩、键控与混合模式叠加视频层；C 组把它作为制作兜底，不当作模型生成能力。' },
+    ],
+    nextSteps: [
+      '执行当天选择一个支持五秒图生视频的真实模型版本，并记录入口、设置与日期。',
+      '从故事 004 的角色锚点重新制作三张无动作模糊、单一硬光的干净首帧。',
+      '先执行 A、B 两组三个任务；C 组保留相同底片、动作终点与验收标准完成分层合成。',
+      '九格完成后只报告本轮分离成功率、光学错误与制作成本，再决定故事采用单次生成还是二维影子层。',
+    ],
+    currentConclusion: '安澄角色锚点、三种制作条件、九格空白样本墙与本地记录台已经准备好；当前 0 / 9，没有视频输出，因此不能判断影子能否稳定独立行动。',
+    conclusionBadge: '0 / 9 · 无结论',
+    relatedHref: '/stories/shadow-arrives-five-minutes-early/',
+    relatedLabel: '返回《影子比她早到五分钟》↗',
+    toolHref: '/tools/lighting-ledger/',
+    toolLabel: '打开光线连续性账本 ↗',
   },
 ];
 

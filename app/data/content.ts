@@ -135,6 +135,17 @@ export const experiments: Experiment[] = [
     visual: 'lighting',
   },
   {
+    id: 'experiment-007',
+    slug: 'can-a-shadow-move-on-its-own',
+    title: '影子能否在人物静止时独立行动？',
+    description: '九格对照协议：固定人物、硬光与三个影子任务，比较直接描述、动作账本和分层合成。目前 0 / 9，没有视频结论。',
+    category: 'Motion Separation Study',
+    date: '2026.08.30',
+    status: '协议完成 · 0 / 9 待执行',
+    stage: 'documented',
+    visual: 'earlyshadow reversed',
+  },
+  {
     id: 'experiment-003',
     title: '让 AI 先画一张不会发生的海报',
     description: '待验证玩法：从一张虚构电影海报反向生长出角色、场景与故事梗概。目前只保留概念卡。',
