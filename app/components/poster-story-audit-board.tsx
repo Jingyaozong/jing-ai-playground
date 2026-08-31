@@ -21,7 +21,7 @@ type PosterStoryRecord = {
   note: string;
 };
 
-const storageKey = 'jing-experiment-poster-story-audit-v3';
+const storageKey = 'jing-experiment-poster-story-audit-v4';
 const groups: Array<{ code: Group; label: string }> = [
   { code: 'A', label: '直接反推' },
   { code: 'B', label: '证据优先' },
@@ -175,7 +175,7 @@ export function PosterStoryAuditBoard() {
   }
 
   function resetRecords() {
-    if (!window.confirm('恢复页面公开的 3 份 Pilot 审计，并清除当前浏览器中的后续修改？')) return;
+    if (!window.confirm('恢复页面公开的 6 份 Pilot 审计，并清除当前浏览器中的后续修改？')) return;
     setRecords(initialRecords());
     setActiveId('A01');
     setCopyState('idle');
@@ -184,8 +184,8 @@ export function PosterStoryAuditBoard() {
   return (
     <section className="experiment-record-board poster-story-audit-board" id="record-desk" aria-label="九格海报反推故事审计台">
       <div className="experiment-record-top">
-        <div><p className="eyebrow mono">04 / Audit desk</p><h2>双月海报已跑三遍，<br />另外六格继续留白。</h2></div>
-        <div className="experiment-record-intro"><p>P01 的三份原始输出和暂定编辑审计随页面公开；你在此继续填写的标题、分数与备注只保存在当前浏览器，不上传故事文本。</p><span className="mono">{loaded ? '公开 Pilot + 当前浏览器草稿' : '正在读取本地记录…'}</span></div>
+        <div><p className="eyebrow mono">04 / Audit desk</p><h2>两张海报各跑三遍，<br />最后三格继续留白。</h2></div>
+        <div className="experiment-record-intro"><p>P01、P02 的六份原始输出和暂定编辑审计随页面公开；你在此继续填写的标题、分数与备注只保存在当前浏览器，不上传故事文本。</p><span className="mono">{loaded ? '公开 Pilot + 当前浏览器草稿' : '正在读取本地记录…'}</span></div>
       </div>
 
       <div className="experiment-record-summary">

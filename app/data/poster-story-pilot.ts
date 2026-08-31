@@ -1,5 +1,5 @@
 export type PosterStoryPilotRecord = {
-  id: 'A01' | 'B01' | 'C01';
+  id: 'A01' | 'A02' | 'B01' | 'B02' | 'C01' | 'C02';
   group: 'A' | 'B' | 'C';
   poster: string;
   method: string;
@@ -40,6 +40,23 @@ export const posterStoryPilotRecords: PosterStoryPilotRecord[] = [
     rawHref: '/records/poster-to-story/p01-a-direct.md',
   },
   {
+    id: 'A02',
+    group: 'A',
+    poster: '退潮电影院',
+    method: '直接反推',
+    outputTitle: '《最后一场退潮》',
+    protagonist: '守了旧电影院三十年的放映员孟桥',
+    worldRule: '海水退到银幕下方时，影院会放映观众最想重来的一天；看完整部电影的人会失去现在最珍贵的一段记忆。',
+    conflict: '孟桥想重看女儿离家的那天寻找挽回机会，却发现银幕上等待被交换的正是女儿后来寄给他的所有影像。',
+    irreversibleChoice: '他剪断正在播放的胶片，让海水永久淹没放映室，也放弃改写过去。',
+    synopsis: '退潮后的海滩上，一座旧电影院仍亮着门灯。放映员孟桥守了这里三十年，因为每当海水退到银幕下方，影院就会放映观众最想重来的一天；看完整部电影的人，则会失去现在最珍贵的一段记忆。今晚，空座位间只坐着他自己。银幕出现女儿离家的清晨，他终于看见那句没能说出口的挽留。影片接近结尾时，放映窗却映出交换的代价：女儿后来寄给他的每一段影像将从记忆里消失。潮水开始穿过大厅，孟桥没有等到结局。他剪断胶片，打开通往海面的门，让海水永久淹没放映室。天亮后，影院熄灭，他保留了现在，也放弃了重写那一天。',
+    wordCount: '216',
+    scores: { evidence: 4, boundary: 1, coherence: 4, relevance: 5 },
+    failures: ['推测冒充事实', '任意添加身份'],
+    auditNote: '旧影院、暖门灯、退潮水面与无人空间都成为故事机关，和海报关系紧密；但放映员身份、父女历史、记忆交换与海水时间点均未经标注，直接被写成画面世界的既定事实。',
+    rawHref: '/records/poster-to-story/p02-a-direct.md',
+  },
+  {
     id: 'B01',
     group: 'B',
     poster: '双月公交站',
@@ -57,6 +74,23 @@ export const posterStoryPilotRecords: PosterStoryPilotRecord[] = [
     rawHref: '/records/poster-to-story/p01-b-evidence-first.md',
   },
   {
+    id: 'B02',
+    group: 'B',
+    poster: '退潮电影院',
+    method: '证据优先',
+    outputTitle: '《潮线以外》',
+    protagonist: '负责复核沿岸废弃建筑的工程师宋晚',
+    worldRule: '最低潮时，影院会放映下一次风暴潮抵达前二十分钟的海岸；预警只有在建筑于涨潮前被主动注销后才能带离银幕。',
+    conflict: '宋晚在银幕里看见明日被淹的街区，却必须在保留影院作为证据与立刻注销它、带走预警之间选择。',
+    irreversibleChoice: '她签下永久拆除令并关闭影院总闸，让唯一能证明预警来源的建筑随涨潮沉没。',
+    synopsis: '可见证据先被逐项记录：一座旧式电影院独立在开阔滩涂上，入口亮着暖光；地面有浅水和倒影，远处可见海平线，周围没有人物、车辆或相邻建筑，天色明亮。故事据此把主人公设定为复核沿岸废弃建筑的工程师宋晚。最低潮时，影院会放映下一次风暴潮抵达前二十分钟的海岸，而预警只有在建筑于涨潮前被主动注销后才能带离银幕。宋晚在空厅里看见明日被淹的街区，却无法同时保留影院作证。潮线回升前，她签下永久拆除令，关闭总闸，带着记下的撤离路线走出大门。暖光在倒影中熄灭，影院随海水消失；镇民得到预警，却再也无法验证它从哪里来。',
+    wordCount: '226',
+    scores: { evidence: 5, boundary: 4, coherence: 5, relevance: 5 },
+    failures: [],
+    auditNote: '对象、空间、光线、浅水和无人状态先作为证据保存，故事规则也让退潮与影院缺一不可。输出仍只分“证据／故事”，工程师身份和预警机制属于主动设定，却没有单独列栏。',
+    rawHref: '/records/poster-to-story/p02-b-evidence-first.md',
+  },
+  {
     id: 'C01',
     group: 'C',
     poster: '双月公交站',
@@ -72,5 +106,22 @@ export const posterStoryPilotRecords: PosterStoryPilotRecord[] = [
     failures: ['解释过量'],
     auditNote: '三层来源最清楚：画面事实、可能解释和主动添加的世界规则都有位置；故事也依赖双月、湿路、空站和等待关系。代价是前置说明较长，正文的叙事流动性略弱。',
     rawHref: '/records/poster-to-story/p01-c-three-column.md',
+  },
+  {
+    id: 'C02',
+    group: 'C',
+    poster: '退潮电影院',
+    method: '证据／推测／选择三栏',
+    outputTitle: '《海退之后》',
+    protagonist: '替地方档案馆回收旧拷贝的电影修复师黎舟',
+    worldRule: '最低潮时，影院会放映一座城市放弃过的未来；第一位走进放映厅的人可以留下其中一个未来，其余版本会随涨潮消失。',
+    conflict: '黎舟必须在保住这座影院的未来与让沿岸居民及时迁离的未来之间选择，而两个版本不能同时存在。',
+    irreversibleChoice: '她剪下“影院仍在”的结尾，把居民撤离的版本接进放映机，随后留在建筑里等待涨潮抹去其余未来。',
+    synopsis: '可见证据：旧式电影院孤立在潮湿滩涂上，入口有暖光，浅水形成倒影，海平线可见，画面中没有观众。合理推测：建筑可能只在退潮时可进入，亮灯说明内部仍有能源或有人维护，但画面没有证明影院是否营业。主动创作选择：最低潮时，银幕会放映城市放弃过的未来；第一位入场者只能留下其中一个版本。电影修复师黎舟在空厅里看到两个结尾：一个让影院继续存在，却使居民错过迁离；另一个让海岸成为空地，所有人及时离开。涨潮前，她剪下“影院仍在”的最后一格，把撤离版本接进放映机。门外倒影被海水覆盖，她留下等待建筑消失，让整座城得到那个不再有电影院的未来。',
+    wordCount: '234',
+    scores: { evidence: 5, boundary: 5, coherence: 4, relevance: 5 },
+    failures: ['解释过量'],
+    auditNote: '证据、推测和作者选择全部有明确归属，影院、潮线、暖光和空场共同支撑规则；但三段说明再次占用较多梗概空间，主人公为何必须留下仍可写得更扎实。',
+    rawHref: '/records/poster-to-story/p02-c-three-column.md',
   },
 ];
