@@ -21,6 +21,11 @@ import objectMemoryFrame01 from '../../assets/generated/objects-remember-frame-0
 import objectMemoryFrame02 from '../../assets/generated/objects-remember-frame-02.webp';
 import objectMemoryFrame03 from '../../assets/generated/objects-remember-frame-03.webp';
 import objectMemoryFrame04 from '../../assets/generated/objects-remember-frame-04.webp';
+import memoryCharacterAnchor from '../../assets/generated/she-forgets-yesterday-character-anchor.png';
+import memoryFrame01 from '../../assets/generated/she-forgets-yesterday-frame-01-v2.webp';
+import memoryFrame02 from '../../assets/generated/she-forgets-yesterday-frame-02-v2.webp';
+import memoryFrame03 from '../../assets/generated/she-forgets-yesterday-frame-03-v2.webp';
+import memoryFrame04 from '../../assets/generated/she-forgets-yesterday-frame-04-v2.webp';
 import storyKeyframes from '../../assets/generated/she-forgets-yesterday-keyframes.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
@@ -49,14 +54,16 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
   const sectionCopy = story.sectionCopy ?? {
     beats: { eyebrow: '01 / One day', heading: '她只有一天，\n重新认识昨天。', description: '剧情结构草案按照一天中的真实时间推进。时间不是装饰，而是记忆再次清零前的倒计时。' },
     rules: { eyebrow: '02 / Memory rules', heading: '三个东西，\n帮她熬过今天。', description: '故事里的道具都有明确作用：保存事实、制造疑问，或者提醒时间正在消失。' },
-    stills: { eyebrow: '03 / Key frames', heading: '四张图，先把\n故事的呼吸定下来。', description: '下面是首轮 AI 概念关键帧。它们用于建立人物锚点、光线和情绪节奏，明确标注为视觉开发素材，不冒充成片剧照。' },
+    stills: { eyebrow: '03 / Key frames', heading: '四张图，先把\n故事的呼吸定下来。', description: '下面是四张独立 AI 概念关键帧。它们用于检查人物锚点、光线和情绪节奏，明确标注为视觉开发素材，不冒充成片剧照。' },
     script: { eyebrow: '04 / Screenplay draft', heading: '九十秒，\n把一天留给明天。', description: '第一版原创短片剧本，按成片时间码编排。对白、旁白与节奏均为 AI 共创草案，等待荆确认后再进入制作。' },
     shots: { eyebrow: '05 / Shot list', heading: '十四个镜头，\n刚好九十秒。', description: '镜头表把叙事意图换成可以执行的画面、运镜和声音。当前只锁定节奏，不假装已经完成视频测试。' },
   };
   const shotSummary = story.shotSummary ?? ['14 SHOTS', '90 SECONDS', '1 DAY', 'DRAFT 01'];
   const stillsGenerated = story.stillsGenerated ?? true;
-  const individualFrames = story.slug === 'no-boat-at-pier-seven'
-    ? [pierFrame01, pierFrame02, pierFrame03, pierFrame04]
+  const individualFrames = story.slug === 'she-forgets-yesterday'
+    ? [memoryFrame01, memoryFrame02, memoryFrame03, memoryFrame04]
+    : story.slug === 'no-boat-at-pier-seven'
+      ? [pierFrame01, pierFrame02, pierFrame03, pierFrame04]
     : story.slug === 'before-the-rain-ends'
       ? [rainFrame01, rainFrame02, rainFrame03, rainFrame04]
       : story.slug === 'shadow-arrives-five-minutes-early'
@@ -64,8 +71,10 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         : story.slug === 'objects-remember-the-last-sentence'
           ? [objectMemoryFrame01, objectMemoryFrame02, objectMemoryFrame03, objectMemoryFrame04]
         : null;
-  const characterAnchorImage = story.slug === 'no-boat-at-pier-seven'
-    ? pierCharacterAnchor
+  const characterAnchorImage = story.slug === 'she-forgets-yesterday'
+    ? memoryCharacterAnchor
+    : story.slug === 'no-boat-at-pier-seven'
+      ? pierCharacterAnchor
     : story.slug === 'before-the-rain-ends'
       ? rainCharacterAnchor
       : story.slug === 'shadow-arrives-five-minutes-early'

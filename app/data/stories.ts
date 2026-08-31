@@ -123,6 +123,7 @@ export const storyDetails: StoryDetail[] = [
     duration: '01:30',
     status: 'AI 共创概念稿',
     draft: true,
+    draftNotice: '这是由 AI 协助整理的原创短片开发稿，知夏、林澈及全部情节均为虚构。人物锚点生成于 2026-08-25，四张独立概念画面生成于 2026-08-31，用于确认人物、道具、光线与情绪方向；尚未生成视频或实验结论，也不代表已经完成的成片。',
     heroVisual: 'memory-letter',
     logline: '她每天醒来都会失去昨天的记忆，只能依靠桌上那封由“昨天的自己”留下的信，重新认识正在告别的人。',
     premise: '这不是一个关于恢复记忆的故事，而是关于：如果每天都要重新选择一次，你还会不会继续爱同一个人。',
@@ -140,6 +141,13 @@ export const storyDetails: StoryDetail[] = [
       { label: 'THE PHOTO', title: '照片证明发生过，不证明还爱着', copy: '它是人物关系的证据，也是她和观众共同面对的疑问。' },
       { label: 'THE CLOCK', title: '一天是完整的倒计时', copy: '从醒来到睡去，所有关系必须在记忆再次清零前重新建立。' },
     ],
+    characterAnchor: {
+      name: '知夏',
+      title: '先确认知夏是谁，再让她重新认识昨天。',
+      titleLines: ['先确认知夏是谁，', '再让她重新认识昨天。'],
+      copy: '独立人物锚点先锁定脸、发型、配饰与服装，再把同一组识别特征带进四个时间段。它只负责统一视觉身份，不代表任何真人或正式演员。',
+      locks: ['齐下巴黑色短发＋右侧蓝色发夹', '珊瑚红三角耳饰＋芥末黄针织外套', '象牙白圆领内搭＋自然肤质', '清晨冷蓝、傍晚暖光与夜间薄荷灯仍保持同一张脸'],
+    },
     stills: [
       { shot: 'SCENE 01', title: '清晨醒来', direction: '明亮但陌生的蓝色卧室；她坐在床沿望向窗外，黄色外套成为第一处身份锚点。', status: 'AI 概念关键帧', framePosition: 'left top', tone: 'yellow' },
       { shot: 'SCENE 02', title: '桌上的信', direction: '俯拍把空白信封、照片、时钟和迟疑的手放进同一条证据链。', status: 'AI 概念关键帧', framePosition: 'right top', tone: 'blue' },
@@ -149,7 +157,7 @@ export const storyDetails: StoryDetail[] = [
     production: [
       { phase: '故事梗概', status: '完成草案', note: '由 AI 编辑完成首版核心设定与一天时间线，尚未由荆确认。' },
       { phase: '人物设定', status: '完成草案', note: '已建立短发、蓝色发夹、红色三角耳饰和黄色外套四个视觉锚点。' },
-      { phase: '概念关键帧', status: '完成草案', note: '已生成首轮四格视觉板，用于检查一天中的光线与情绪节奏。' },
+      { phase: '概念关键帧', status: '完成草案', note: '已从四格拼板升级为四张独立概念关键帧，用于检查人物、道具、一天中的光线与情绪节奏；它们不是成片剧照。' },
       { phase: '90 秒剧本', status: '完成草案', note: '已写成六场、十四镜的第一版可拍摄文本；对白、旁白和声音仍待荆确认。' },
       { phase: '视频生成', status: '制作中', note: '已完成十四镜 Prompt 包并选定三镜动作测试；尚未调用外部视频模型，也没有生成结果。' },
       { phase: '剪辑与声音', status: '待开始', note: '以信件旁白和清晨/夜晚的环境声构建循环感。' },
