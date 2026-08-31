@@ -1,4 +1,5 @@
 import experimentPilotSamples from '../assets/generated/forty-shots-pilot-samples.png';
+import pierTicketFrame from '../assets/generated/no-boat-at-pier-seven-frame-01.webp';
 import rainKitchenFrame from '../assets/generated/before-the-rain-ends-frame-01.webp';
 import earlyShadowFrame from '../assets/generated/shadow-arrives-five-minutes-early-frame-03.webp';
 import objectMemoryFrame from '../assets/generated/objects-remember-frame-03.webp';
@@ -6,6 +7,8 @@ import memoryMorningFrame from '../assets/generated/she-forgets-yesterday-frame-
 
 const generatedVisuals = {
   memory: { image: memoryMorningFrame, caption: 'Scene 01 · AI concept frame · no video' },
+  pier: { image: pierTicketFrame, caption: 'Scene 01 · AI concept frame · no video' },
+  rain: { image: rainKitchenFrame, caption: 'Scene 01 · AI concept frame · no video' },
   faces: { image: experimentPilotSamples, caption: 'Pilot samples · 4 / 40' },
   rainstudy: { image: rainKitchenFrame, caption: 'Story concept frame · no video' },
   earlyshadow: { image: earlyShadowFrame, caption: 'AI concept frame · no video' },
