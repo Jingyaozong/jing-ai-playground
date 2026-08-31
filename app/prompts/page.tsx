@@ -55,6 +55,21 @@ export default function PromptsPage() {
         <Link className="text-link prompt-production-more" href="/prompts/all/">查看全部 8 条制作模板 ↗</Link>
       </section></Reveal>
 
+      <Reveal><section className="prompt-production-path section-shell" id="production-path" aria-labelledby="prompt-path-title">
+        <div className="prompt-path-heading">
+          <div><p className="eyebrow mono">Prompt to production / 从模板到镜头</p><h2 className="editorial-heading editorial-heading-lines" id="prompt-path-title"><span><b>从一句模板，</b></span><span><b>走到一个可返修镜头。</b></span></h2></div>
+          <p>Prompt 不是终点。沿着这五步，把模糊想法变成镜头事实，再把生成结果变成下一轮能够执行的修改。</p>
+        </div>
+        <nav className="prompt-path-track" aria-label="AI 视频 Prompt 制作路线">
+          <Link href="/prompts/all/"><span className="prompt-path-number mono">01</span><small className="mono">PICK / 选模板</small><h3>先找到<br />任务类型。</h3><p>按角色、场景、动作或连续性选择一份起点，不从空白页硬写。</p><i>打开完整目录 ↗</i></Link>
+          <Link href="/notes/ai-video-prompt-shot-facts/"><span className="prompt-path-number mono">02</span><small className="mono">READ / 学方法</small><h3>把要求<br />拆成事实。</h3><p>理解主体、场景、起点、动作、终点与失败边界怎样分工。</p><i>阅读重点文章 ↗</i></Link>
+          <Link href="/tools/shot-prompt-builder/"><span className="prompt-path-number mono">03</span><small className="mono">BUILD / 组镜头</small><h3>生成三份<br />制作记录。</h3><p>一次填写，得到单镜 Prompt、验收清单和返修记录模板。</p><i>打开组装器 ↗</i></Link>
+          <Link href="/tools/shot-risk-checker/"><span className="prompt-path-number mono">04</span><small className="mono">CHECK / 查风险</small><h3>生成以前<br />先做减法。</h3><p>检查时长、动作数量、运镜和首尾差异是否已经超过单镜任务。</p><i>开始风险预检 ↗</i></Link>
+          <Link href="/tools/shot-version-recorder/"><span className="prompt-path-number mono">05</span><small className="mono">LOG / 留版本</small><h3>看到失败，<br />留下证据。</h3><p>记录真实候选、失败时间与下一轮唯一变量，不预写模型结论。</p><i>记录候选版本 ↗</i></Link>
+        </nav>
+        <div className="prompt-path-footnote"><span className="mono">ONE SHOT · ONE MAIN CHANGE</span><p>每一步都可以单独使用；完整走一遍时，下一轮只改变一个主要变量。</p></div>
+      </section></Reveal>
+
       <Reveal><section className="prompt-categories section-shell">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Six drawers / 六个抽屉</p><h2>先选场景，<br />再找 Prompt。</h2></div><p>完整目录里可以继续搜索和筛选，不需要在这一页一次看完。</p></div>
         <div className="prompt-category-map">{categoryCopy.map((category) => {

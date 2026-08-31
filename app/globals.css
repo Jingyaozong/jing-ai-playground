@@ -4251,3 +4251,109 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
   .shot-prompt-method nav { grid-column: auto; grid-template-columns: 1fr; }
   .shot-prompt-method nav a:nth-child(n) { padding: 16px 0; border-left: 0; }
 }
+
+/* Prompt production path — five real handoffs from a template to a revision record. */
+.prompt-production-path { border-bottom: 1px solid var(--line); }
+.prompt-path-heading {
+  display: grid;
+  grid-template-columns: minmax(0,1.25fr) minmax(280px,.55fr);
+  gap: 40px;
+  align-items: end;
+  margin-bottom: 56px;
+}
+.prompt-path-heading .editorial-heading-lines { max-width: 920px; margin-top: 18px; }
+.prompt-path-heading > p { margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.8; }
+.prompt-path-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5,minmax(0,1fr));
+  overflow: hidden;
+  border: 2px solid var(--ink);
+  border-radius: 32px;
+  background: var(--white);
+  box-shadow: 10px 10px 0 var(--ink);
+}
+.prompt-path-track::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 49px;
+  right: 5%;
+  left: 5%;
+  height: 5px;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  background: var(--blue);
+}
+.prompt-path-track a {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 355px;
+  display: flex;
+  flex-direction: column;
+  padding: 27px 22px 23px;
+  border-right: 2px solid var(--ink);
+  transition: transform .22s ease, background .22s ease;
+}
+.prompt-path-track a:last-child { border-right: 0; }
+.prompt-path-track a:nth-child(1) { background: color-mix(in srgb,var(--yellow) 72%,white); }
+.prompt-path-track a:nth-child(2) { background: color-mix(in srgb,var(--sky) 76%,white); }
+.prompt-path-track a:nth-child(3) { background: color-mix(in srgb,var(--mint) 78%,white); }
+.prompt-path-track a:nth-child(4) { background: color-mix(in srgb,var(--coral) 28%,white); }
+.prompt-path-track a:nth-child(5) { background: var(--yellow); }
+.prompt-path-track a:hover { transform: translateY(-7px); }
+.prompt-path-number {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 28px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--blue);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.prompt-path-track small { color: var(--blue); }
+.prompt-path-track h3 {
+  margin: 34px 0 15px;
+  font-family: var(--display);
+  font-size: clamp(1.75rem,2.55vw,2.65rem);
+  line-height: 1.05;
+  letter-spacing: var(--zh-title-tracking);
+  text-wrap: balance;
+}
+.prompt-path-track p { margin: 0; color: color-mix(in srgb,var(--ink) 72%,transparent); font-size: .78rem; line-height: 1.65; }
+.prompt-path-track i { margin-top: auto; padding-top: 24px; color: var(--blue); font-size: .68rem; font-style: normal; font-weight: 800; }
+.prompt-path-footnote {
+  display: flex;
+  justify-content: space-between;
+  gap: 26px;
+  margin-top: 22px;
+  padding: 16px 20px;
+  border: 1.5px solid var(--ink);
+  border-radius: 17px;
+  background: var(--mint);
+}
+.prompt-path-footnote span { color: var(--blue); }
+.prompt-path-footnote p { margin: 0; font-size: .78rem; line-height: 1.55; }
+
+@media (max-width: 1120px) {
+  .prompt-path-track { grid-template-columns: repeat(6,minmax(0,1fr)); overflow: visible; background: transparent; border: 0; box-shadow: none; gap: 13px; }
+  .prompt-path-track::before { display: none; }
+  .prompt-path-track a { grid-column: span 2; min-height: 310px; border: 2px solid var(--ink); border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); }
+  .prompt-path-track a:nth-child(4) { grid-column: 2 / span 2; }
+  .prompt-path-track a:nth-child(5) { grid-column: 4 / span 2; }
+}
+
+@media (max-width: 760px) {
+  .prompt-path-heading { grid-template-columns: 1fr; gap: 24px; margin-bottom: 36px; }
+  .prompt-path-heading .editorial-heading-lines { font-size: clamp(2.2rem,9.7vw,3rem); }
+  .prompt-path-track { grid-template-columns: 1fr; gap: 12px; }
+  .prompt-path-track a:nth-child(n) { grid-column: auto; min-height: 270px; padding: 22px; }
+  .prompt-path-number { margin-bottom: 21px; }
+  .prompt-path-track h3 { margin-top: 24px; font-size: clamp(2rem,9vw,2.65rem); }
+  .prompt-path-track p { font-size: .84rem; }
+  .prompt-path-footnote { align-items: flex-start; flex-direction: column; }
+}
