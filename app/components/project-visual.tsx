@@ -59,6 +59,31 @@ export function ProjectVisual({ variant, label }: { variant: string; label: stri
     );
   }
 
+  if (visualKey === 'reference') {
+    const groups = [
+      { code: 'A', label: '无参考', count: 0, tone: 'none' },
+      { code: 'B', label: '单张正面', count: 1, tone: 'one' },
+      { code: 'C', label: '三张多角度', count: 3, tone: 'three' },
+    ];
+    return (
+      <div className={`project-visual visual-${variant} is-protocol-diagram`} aria-label={`${label}的三组参考输入实验协议图；不是模型样本`}>
+        <span className="reference-protocol-kicker mono">REFERENCE INPUT / 实验协议图</span>
+        <div className="reference-protocol-groups">
+          {groups.map((group) => <article className={`reference-group-card is-${group.tone}`} key={group.code}>
+            <div className="reference-group-top mono"><b>{group.code}</b><span>INPUT</span></div>
+            <div className="reference-portrait-set" aria-hidden="true">
+              {group.count === 0 ? <span className="reference-none-mark">×</span> : Array.from({ length: group.count }, (_, index) => <span className={`reference-portrait view-${index + 1}`} key={index} />)}
+            </div>
+            <div className="reference-group-foot"><b>{group.label}</b><small className="mono">0 / 4</small></div>
+          </article>)}
+        </div>
+        <span className="reference-shared-tasks mono">SAME 4 SHOT TASKS × 3 INPUT GROUPS</span>
+        <span className="grain" />
+        <span className="visual-caption mono">Protocol diagram · 0 / 12 samples</span>
+      </div>
+    );
+  }
+
   if (generated) {
     return (
       <div
