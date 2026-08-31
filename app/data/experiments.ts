@@ -35,6 +35,8 @@ export type ExperimentDetail = {
     framePosition: 'left top' | 'right top' | 'left bottom' | 'right bottom';
     tone: 'blue' | 'yellow' | 'coral' | 'mint';
     generated?: boolean;
+    outputText?: string;
+    rawHref?: string;
   }>;
   sampleTitle?: string;
   sampleDescription?: string;
@@ -575,12 +577,12 @@ export const experimentDetails: ExperimentDetail[] = [
     englishTitle: 'Can a Fictional Poster Grow a Story?',
     category: 'Poster-to-Story Study',
     date: '2026.08.31',
-    status: '3 张输入海报就绪 · 0 / 9 待执行',
+    status: 'P01 首轮 Pilot · 3 / 9 已审计',
     demo: true,
     testCount: 9,
     testUnit: 'STORY OUTPUTS',
-    pilotLabel: 'INPUTS READY · 0 / 9',
-    notice: '页面已经放入三张 2026.08.31 生成的虚构电影海报，作为本实验固定输入。它们不是电影成片、真实项目或故事输出；九个故事单元仍为空，目前没有评分、方法结论或荆的个人判断。',
+    pilotLabel: 'P01 PILOT · 3 / 9',
+    notice: '页面已保存双月公交站的 A／B／C 三份真实首轮文本，以及另外两张 2026.08.31 生成的固定输入海报。输出来自本次 Codex 会话，未按审计意见改写；分数是页面编辑初审，不代表荆已确认的个人观点，也不能当作模型能力排名。',
     summary: '用三张无片名的虚构海报，对比直接看图写故事、先列可见证据、再把证据／推测／创作选择分栏三种反推路径；检查视觉线索、推理边界、世界规则与故事冲突能否保持可追溯。',
     question: '海报只给出一个瞬间。怎样从同一组视觉线索长出完整故事，又不把看不见的推测冒充成画面事实？',
     questionLines: ['海报只给出一个瞬间。', '怎样长出完整故事，', '又不把推测写成事实？'],
@@ -606,16 +608,16 @@ export const experimentDetails: ExperimentDetail[] = [
       title: '先保留看得见的矛盾，不替海报补片名。',
       description: 'P01 是双月下的空公交站，P02 是退潮海滩上的旧电影院，P03 是晴天街道旁、只在室内落雪的失物招领处。三张图只提供视觉起点；人物身份、原因、规则、过去与结局全部仍待推导。',
     },
-    sampleTitle: '九份故事先留空。\n输入和解释分开保存。',
-    sampleDescription: '每格对应一次完整反推。当前样本墙只标出海报、方法和审计重点；输入图已经存在，不代表任何故事输出已经完成。',
+    sampleTitle: '同一张海报，\n三种路径已经跑完。',
+    sampleDescription: 'A01、B01、C01 是双月公交站的真实首轮文本，均保留原始记录；其余六格仍为空。卡片只显示短摘录，完整字段、指令和暂定编辑审计可打开原始 Markdown 查看。',
     samples: [
-      { shot: 'A01', title: '双月公交站', setting: '直接反推 · 海报 P01', observation: '待执行；检查输出是否无依据地指定两个月亮的来源、人物职业或等待对象。', status: '待执行 · 无故事', framePosition: 'left top', tone: 'blue', generated: false },
+      { shot: 'A01', title: '《下一班月亮》', setting: '直接反推 · 海报 P01', observation: '暂定编辑审计 3.0 / 5：双月、湿路、空站与等待都进入情节，但人物职业、亲属关系和魔法公交被直接写成事实。', status: '已生成 · 已初审', framePosition: 'left top', tone: 'blue', generated: true, outputText: '他撕掉自己的车票，把唯一座位让给想见母亲最后一面的陌生人。', rawHref: '/records/poster-to-story/p01-a-direct.md' },
       { shot: 'A02', title: '退潮电影院', setting: '直接反推 · 海报 P02', observation: '待执行；检查故事是否真正使用退潮、海滩、影院暖光与无人入口，而不只套用怀旧类型。', status: '待执行 · 无故事', framePosition: 'right top', tone: 'blue', generated: false },
       { shot: 'A03', title: '室内落雪', setting: '直接反推 · 海报 P03', observation: '待执行；检查室内雪、干燥街道、柜台、行李与工作人员之间是否形成一条规则。', status: '待执行 · 无故事', framePosition: 'left bottom', tone: 'blue', generated: false },
-      { shot: 'B01', title: '双月公交站', setting: '证据优先 · 海报 P01', observation: '待执行；先核对双月、湿路、空站、单人和清晨光线是否被完整列出，再看故事怎样使用。', status: '待执行 · 无故事', framePosition: 'right bottom', tone: 'yellow', generated: false },
+      { shot: 'B01', title: '《双月停靠站》', setting: '证据优先 · 海报 P01', observation: '暂定编辑审计 4.5 / 5：先保存可见证据再进入故事，线索利用清楚；推测与主动创作选择仍未完全拆开。', status: '已生成 · 已初审', framePosition: 'right bottom', tone: 'yellow', generated: true, outputText: '他关闭站灯，把站点登记为永久停用；倒影中的车门随即消失。', rawHref: '/records/poster-to-story/p01-b-evidence-first.md' },
       { shot: 'B02', title: '退潮电影院', setting: '证据优先 · 海报 P02', observation: '待执行；区分可见的建筑状态与不可见的营业历史、观众身份和退潮原因。', status: '待执行 · 无故事', framePosition: 'left top', tone: 'yellow', generated: false },
       { shot: 'B03', title: '室内落雪', setting: '证据优先 · 海报 P03', observation: '待执行；检查雪的边界、门外天气和行李是否都进入证据清单，而非只描述气氛。', status: '待执行 · 无故事', framePosition: 'right top', tone: 'yellow', generated: false },
-      { shot: 'C01', title: '双月公交站', setting: '三栏反推 · 海报 P01', observation: '待执行；检查输出能否标明“城市有双月”是事实，“月亮造成等待”只是推测。', status: '待执行 · 无故事', framePosition: 'left bottom', tone: 'mint', generated: false },
+      { shot: 'C01', title: '《第二个月台》', setting: '三栏反推 · 海报 P01', observation: '暂定编辑审计 4.75 / 5：证据、可能解释和主动设定来源最清楚；前置说明也更长，叙事流动性略弱。', status: '已生成 · 已初审', framePosition: 'left bottom', tone: 'mint', generated: true, outputText: '她没有上车，而是反转站牌，永久关闭映在湿路上的第二条线路。', rawHref: '/records/poster-to-story/p01-c-three-column.md' },
       { shot: 'C02', title: '退潮电影院', setting: '三栏反推 · 海报 P02', observation: '待执行；检查新增世界规则与人物选择是否明确标为创作决定，并真正推动冲突。', status: '待执行 · 无故事', framePosition: 'right bottom', tone: 'mint', generated: false },
       { shot: 'C03', title: '室内落雪', setting: '三栏反推 · 海报 P03', observation: '待执行；检查故事是否能追溯到室内雪、柜台与行李，同时避免把类型联想冒充证据。', status: '待执行 · 无故事', framePosition: 'left top', tone: 'mint', generated: false },
     ],
@@ -628,13 +630,13 @@ export const experimentDetails: ExperimentDetail[] = [
     observationDescription: '四项人工评分分开记录：线索利用、边界透明、故事连贯和海报关联。遗漏线索、推测冒充事实、规则空泛与类型套壳分别打标签。',
     recordBoard: 'poster-story-audit',
     nextSteps: [
-      '冻结三张输入海报及当前编号，不添加片名、说明文字或额外世界观。',
-      '执行当天记录真实模型、版本与入口，按 A、B、C 三组保存九份未经人工改写的原始故事输出。',
-      '逐格标注可见证据、推测和主动创作选择，并记录 5 项故事字段是否完整。',
-      '九格完成后只报告线索利用、边界透明、故事连贯、海报关联与错误标签，再决定是否把三栏法整理成正式 Prompt 模板。',
+      '保持 P01 三份原始文本不改写；如需润色，另存版本并保留与首轮输出的差异。',
+      '用同一模型入口和三种固定指令执行 P02 退潮电影院，保存 A02、B02、C02 原始输出。',
+      '再执行 P03 室内落雪；九格完成前不把 P01 的暂定观察外推成方法结论。',
+      '九格完成后再复核四项评分与错误标签，并决定是否把三栏法整理成正式 Prompt 模板。',
     ],
-    currentConclusion: '三张 AI 生成输入海报、三种反推路径、九格空白故事墙与本地审计台已经准备好；当前 0 / 9，没有故事输出，因此不能判断哪种路径更可靠。',
-    conclusionBadge: '3 INPUTS · 0 / 9 OUTPUTS',
+    currentConclusion: '只看 P01 这一次首轮输出，三栏法让事实、推测和主动设定最容易追溯；证据优先也保住了主要画面线索；直接反推最快，却把多项新增设定写成了既定事实。当前只有一张海报、同一会话和页面编辑初审，不能据此判断哪种方法普遍更可靠。',
+    conclusionBadge: 'P01 PILOT · 3 / 9',
     relatedHref: '/prompts/',
     relatedLabel: '查看现有 Prompt 工作台 ↗',
     toolHref: '/tools/story-seed/',

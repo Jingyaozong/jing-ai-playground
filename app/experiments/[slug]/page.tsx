@@ -146,9 +146,10 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         <div className="experiment-sample-grid">
           {experiment.samples.map((sample, index) => (
             <article className="experiment-sample-card" key={sample.shot}>
-              <div className={`experiment-sample-visual tone-${sample.tone} ${sample.generated === false ? 'is-planned-frame' : 'has-generated-frame'}`} aria-label={sample.generated === false ? `${sample.title}待执行样本位` : `${sample.title} AI 生成首轮样本`} style={sample.generated === false ? undefined : { backgroundImage: `url("${experimentPilotSamples.src}")`, backgroundPosition: sample.framePosition }}>
+              <div className={`experiment-sample-visual tone-${sample.tone} ${sample.outputText ? 'has-text-output' : sample.generated === false ? 'is-planned-frame' : 'has-generated-frame'}`} aria-label={sample.generated === false ? `${sample.title}待执行样本位` : `${sample.title} AI 生成首轮样本`} style={sample.generated === false || sample.outputText ? undefined : { backgroundImage: `url("${experimentPilotSamples.src}")`, backgroundPosition: sample.framePosition }}>
                 <span className="sample-crosshair" />
-                <b className="mono">{sample.generated === false ? '待执行 · 无样本' : 'AI 首轮样本'}</b>
+                {sample.outputText && <p>{sample.outputText}</p>}
+                <b className="mono">{sample.generated === false ? '待执行 · 无样本' : sample.outputText ? '真实文本 · 编辑初审' : 'AI 首轮样本'}</b>
                 <i className="mono">{String(index + 1).padStart(2, '0')} / {String(experiment.samples.length).padStart(2, '0')}</i>
               </div>
               <div className="experiment-sample-copy">
@@ -156,6 +157,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
                 <h3>{sample.title}</h3>
                 <p className="sample-setting">{sample.setting}</p>
                 <p>{sample.observation}</p>
+                {sample.rawHref && <Link className="sample-raw-link" href={sample.rawHref}>查看原始输出 ↗</Link>}
               </div>
             </article>
           ))}

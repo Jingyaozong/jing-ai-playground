@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { posterStoryPilotRecords } from '../data/poster-story-pilot';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type Group = 'A' | 'B' | 'C';
@@ -20,7 +21,7 @@ type PosterStoryRecord = {
   note: string;
 };
 
-const storageKey = 'jing-experiment-poster-story-audit-v1';
+const storageKey = 'jing-experiment-poster-story-audit-v3';
 const groups: Array<{ code: Group; label: string }> = [
   { code: 'A', label: '直接反推' },
   { code: 'B', label: '证据优先' },
@@ -36,20 +37,24 @@ const scoreLabels: Array<{ key: ScoreKey; label: string; hint: string }> = [
 const failureOptions = ['可见线索遗漏', '推测冒充事实', '任意添加身份', '世界规则空泛', '冲突与规则无关', '选择不可逆性不足', '类型套壳', '道具没有作用', '梗概跳步', '解释过量', '其他'];
 const statusLabels: Record<RecordStatus, string> = { untested: '待执行', generated: '已有故事', reviewed: '已审计' };
 
-function emptyRecords(): PosterStoryRecord[] {
-  return groups.flatMap((group) => posters.map((poster, index) => ({
-    id: `${group.code}${String(index + 1).padStart(2, '0')}`,
+function initialRecords(): PosterStoryRecord[] {
+  return groups.flatMap((group) => posters.map((poster, index) => {
+    const id = `${group.code}${String(index + 1).padStart(2, '0')}`;
+    const pilot = posterStoryPilotRecords.find((record) => record.id === id);
+    return {
+    id,
     group: group.code,
     poster,
-    status: 'untested' as const,
-    model: '',
-    asset: '',
-    outputTitle: '',
-    wordCount: '',
-    scores: { evidence: null, boundary: null, coherence: null, relevance: null },
-    failures: [],
-    note: '',
-  })));
+    status: pilot ? 'reviewed' as const : 'untested' as const,
+    model: pilot ? 'OpenAI Codex · current session · 2026.08.31' : '',
+    asset: pilot?.rawHref ?? '',
+    outputTitle: pilot?.outputTitle ?? '',
+    wordCount: pilot?.wordCount ?? '',
+    scores: pilot ? { ...pilot.scores } : { evidence: null, boundary: null, coherence: null, relevance: null },
+    failures: pilot ? [...pilot.failures] : [],
+    note: pilot?.auditNote ?? '',
+  };
+  }));
 }
 
 function isComplete(record: PosterStoryRecord) {
@@ -108,7 +113,7 @@ async function copyText(value: string) {
 }
 
 export function PosterStoryAuditBoard() {
-  const [records, setRecords] = useState<PosterStoryRecord[]>(emptyRecords);
+  const [records, setRecords] = useState<PosterStoryRecord[]>(initialRecords);
   const [activeId, setActiveId] = useState('A01');
   const [groupFilter, setGroupFilter] = useState<'ALL' | Group>('ALL');
   const [loaded, setLoaded] = useState(false);
@@ -123,7 +128,7 @@ export function PosterStoryAuditBoard() {
           if (Array.isArray(parsed) && parsed.length === 9) setRecords(parsed);
         }
       } catch {
-        // A damaged local draft should not block the empty audit sheet.
+        // A damaged local draft should not block the published pilot records.
       }
       setLoaded(true);
     }, 0);
@@ -170,8 +175,8 @@ export function PosterStoryAuditBoard() {
   }
 
   function resetRecords() {
-    if (!window.confirm('清空当前浏览器中的 9 格海报故事审计记录？此操作无法撤销。')) return;
-    setRecords(emptyRecords());
+    if (!window.confirm('恢复页面公开的 3 份 Pilot 审计，并清除当前浏览器中的后续修改？')) return;
+    setRecords(initialRecords());
     setActiveId('A01');
     setCopyState('idle');
   }
@@ -179,8 +184,8 @@ export function PosterStoryAuditBoard() {
   return (
     <section className="experiment-record-board poster-story-audit-board" id="record-desk" aria-label="九格海报反推故事审计台">
       <div className="experiment-record-top">
-        <div><p className="eyebrow mono">04 / Audit desk</p><h2>三张海报已经就位，<br />九份故事仍然留空。</h2></div>
-        <div className="experiment-record-intro"><p>每格对应一种反推方法和一张固定海报。输出标题、字数、评分与备注只保存在当前浏览器，不上传海报或故事文本。</p><span className="mono">{loaded ? '已保存到当前浏览器' : '正在读取本地记录…'}</span></div>
+        <div><p className="eyebrow mono">04 / Audit desk</p><h2>双月海报已跑三遍，<br />另外六格继续留白。</h2></div>
+        <div className="experiment-record-intro"><p>P01 的三份原始输出和暂定编辑审计随页面公开；你在此继续填写的标题、分数与备注只保存在当前浏览器，不上传故事文本。</p><span className="mono">{loaded ? '公开 Pilot + 当前浏览器草稿' : '正在读取本地记录…'}</span></div>
       </div>
 
       <div className="experiment-record-summary">
@@ -214,7 +219,7 @@ export function PosterStoryAuditBoard() {
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>输入海报、推理边界和故事结果分开保存。</strong><p>复制 Markdown 时保留九格编号、输出标题、字数、四项评分、错误标签与证据备注。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制海报故事审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>输入海报、推理边界和故事结果分开保存。</strong><p>复制 Markdown 时保留九格编号、输出标题、字数、四项评分、错误标签与证据备注。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>恢复公开记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制海报故事审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

@@ -8,7 +8,7 @@ import memoryMorningFrame from '../assets/generated/she-forgets-yesterday-frame-
 
 const generatedVisuals = {
   memory: { image: memoryMorningFrame, caption: 'Scene 01 · AI concept frame · no video' },
-  poster: { image: fictionalPosterInputs, caption: 'AI input posters · 3 inputs · 0 outputs' },
+  poster: { image: fictionalPosterInputs, caption: 'P01 pilot · 3 / 9 story outputs' },
   pier: { image: pierTicketFrame, caption: 'Scene 01 · AI concept frame · no video' },
   rain: { image: rainKitchenFrame, caption: 'Scene 01 · AI concept frame · no video' },
   faces: { image: experimentPilotSamples, caption: 'Pilot samples · 4 / 40' },
