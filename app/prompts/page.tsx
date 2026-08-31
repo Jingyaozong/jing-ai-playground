@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const featuredIds = ['socratic-questioning', 'two-layer-explanation', 'first-principles', 'minimum-experiment'];
 const featuredPrompts = featuredIds.map((id) => promptItems.find((item) => item.id === id)).filter((item) => item !== undefined);
-const productionIds = ['video-character-anchor-brief', 'video-single-shot-motion', 'video-sound-layer-brief', 'video-failure-revision'];
+const productionIds = ['poster-to-story-short-ledger', 'video-character-anchor-brief', 'video-single-shot-motion', 'video-sound-layer-brief', 'video-failure-revision'];
 const productionPrompts = productionIds.map((id) => promptItems.find((item) => item.id === id)).filter((item) => item !== undefined);
 
 const categoryCopy: Array<{ id: PromptCategory; label: string; description: string; color: string }> = [
@@ -50,9 +50,9 @@ export default function PromptsPage() {
       </section></Reveal>
 
       <Reveal><section className="prompt-production section-shell" id="production-templates">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">AI video production / 视频制作模板</p><h2>不是一句咒语，<br />是一张任务卡。</h2></div><p>8 条本站编辑模板覆盖角色、场景、动作、首尾帧、声音、连续性、返修与候选验收；没有真实样本时不会替你填写结果。</p></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">AI video production / 视频制作模板</p><h2>不是一句咒语，<br />是一张任务卡。</h2></div><p>9 条本站编辑模板覆盖故事反推、角色、场景、动作、首尾帧、声音、连续性、返修与候选验收；没有真实样本时不会替你填写结果。</p></div>
         <PromptBrowser items={productionPrompts} showToolbar={false} />
-        <Link className="text-link prompt-production-more" href="/prompts/all/">查看全部 8 条制作模板 ↗</Link>
+        <Link className="text-link prompt-production-more" href="/prompts/all/">查看全部 9 条制作模板 ↗</Link>
       </section></Reveal>
 
       <Reveal><section className="prompt-production-path section-shell" id="production-path" aria-labelledby="prompt-path-title">

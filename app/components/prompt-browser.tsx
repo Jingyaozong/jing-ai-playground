@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import type { PromptItem } from '../data/prompts';
 import { promptFilters } from '../data/prompts';
 
@@ -36,6 +37,7 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
         <div>{item.variables.map((variable) => <span key={variable}>【{variable}】</span>)}</div>
       </div>}
       <blockquote><span className="mono">使用提示 / HOW TO USE</span>{item.usageNote}</blockquote>
+      {item.sourceHref && <Link className="prompt-source-link" href={item.sourceHref}>{item.sourceLabel ?? '查看模板来源 ↗'}</Link>}
       <div className="prompt-card-bottom">
         <div className="note-tags">{item.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
         <button type="button" onClick={copyPrompt} aria-live="polite">{copied ? '已复制 ✓' : '复制 Prompt'}</button>

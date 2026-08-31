@@ -14,13 +14,15 @@ export type PromptItem = {
   featured: boolean;
   demo: boolean;
   editorial?: boolean;
+  sourceHref?: string;
+  sourceLabel?: string;
 };
 
 export const promptSource = {
   title: '都 Agent 时代了，我还是想分享给你这 12 个我最常用的 Prompt',
   author: '数字生命卡兹克',
   url: 'https://mp.weixin.qq.com/s/NAdhdFrUq9-BKelqzqpwBQ',
-  note: '首批 12 条 Prompt 根据作者公开分享整理，只保留 Prompt、适用场景和必要提示；新增的 8 条 AI 视频制作内容是本站编辑模板，不归于原作者，也不冒充荆已确认的个人方法。',
+  note: '首批 12 条 Prompt 根据作者公开分享整理，只保留 Prompt、适用场景和必要提示；新增的 9 条 AI 创作制作内容是本站编辑模板，不归于原作者，也不冒充荆已确认的个人方法。',
 };
 
 export const promptItems: PromptItem[] = [
@@ -688,6 +690,59 @@ export const promptItems: PromptItem[] = [
     model: '支持视频输入的多模态模型',
     usageNote: '候选 ID 和生成设置必须保留。没有真实样本时，只使用它生成空表，不让模型假装完成评测。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
+  },
+  {
+    id: 'poster-to-story-short-ledger',
+    title: '海报反推故事 · 短证据账本',
+    category: 'AI 视频制作',
+    description: '先用短账本分清看见、推测和主动设定，再生成不重复账本的故事梗概。',
+    prompt: String.raw`请根据我提供的一张无片名海报，反推一个可继续开发的故事。不要联网搜索，不要猜测它属于某部真实作品，也不要把创作设定写成画面事实。
+
+输入海报：【上传图片】
+故事类型或限制：【可选；没有则写无】
+不希望出现的套路：【可选；没有则写无】
+
+先建立一份短证据账本：
+
+E｜可见证据
+- 最多 6 条，只写能从画面直接指出的主体、环境、异常、空间关系、光线和关键道具。
+- 每条编号为 E1、E2……；看不清的内容写“无法确认”，不要补全。
+
+I｜合理推测
+- 最多 3 条，每条必须使用“可能”或“也许”，并标注它依据的证据编号。
+- 推测不能自动变成故事事实。
+
+C｜主动创作选择
+- 最多 3 条，明确写出作者为了建立世界规则、冲突或选择而新增的设定。
+- 每条说明它使用了哪些证据；不能只套用与海报无关的类型套路。
+
+完成账本后，输出：
+1. 故事标题；
+2. 主人公；
+3. 世界规则；
+4. 核心冲突；
+5. 一次不可逆选择；
+6. 150—250 字故事梗概。
+
+写作要求：
+- 故事至少使用 3 条可见证据，并让它们参与因果，而不只是装饰；
+- 主人公身份、过去、异常原因和世界规则若无法从画面确认，必须来自 C 栏；
+- 世界规则必须制造限制，限制必须迫使主人公做选择；
+- 梗概直接讲故事，不要再次抄写 E／I／C 账本；
+- 删除这张海报后，如果故事几乎不变，请重写。
+
+最后只用 4 行自检：
+- 使用了哪些 E 编号；
+- 哪一项仍只是推测；
+- 最大的一项主动设定；
+- 故事最可能落入的套路。`,
+    variables: ['输入海报', '故事类型或限制', '不希望出现的套路'],
+    tags: ['STORY', '海报反推', '证据边界', '创意开发'],
+    model: '支持图片输入的多模态模型',
+    usageNote: '这是根据 EXP.008 九份文本 Pilot 整理的本站编辑短版：保留 B 组的简洁证据清单和 C 组的来源边界，同时限制账本长度。当前只经过固定三张海报的页面初审，仍需更多题材复测。',
+    dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
+    sourceHref: '/experiments/can-a-fictional-poster-grow-a-story/',
+    sourceLabel: '查看 9 / 9 实验依据 ↗',
   },
 ];
 

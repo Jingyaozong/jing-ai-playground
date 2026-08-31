@@ -1599,6 +1599,8 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .prompt-variables > div span { padding: 7px 9px; border: 1px solid var(--ink); border-radius: 8px; background: rgba(255,255,255,.7); font-family: var(--mono); font-size: 8px; }
 .prompt-card blockquote { margin: 0 28px 28px; padding: 19px; border: 2px solid var(--ink); border-radius: 17px; background: var(--coral); font-family: var(--display); font-size: 1.12rem; font-weight: 620; line-height: 1.5; }
 .prompt-card blockquote span { display: block; margin-bottom: 9px; color: var(--blue); }
+.prompt-source-link { display: inline-flex; margin: 0 28px 24px; padding: 9px 12px; border: 1.5px solid var(--ink); border-radius: 99px; background: rgba(255,255,255,.72); color: var(--blue); font-size: 9px; font-weight: 760; transition: transform .2s ease, background-color .2s ease; }
+.prompt-source-link:hover { background: var(--yellow); transform: translateY(-2px); }
 .prompt-card-bottom { display: flex; justify-content: space-between; align-items: end; gap: 18px; padding: 0 28px 28px; }
 .prompt-card-bottom button { flex: none; padding: 11px 15px; border: 2px solid var(--ink); border-radius: 99px; background: var(--blue); color: var(--white); cursor: pointer; font-family: var(--body); font-size: 10px; font-weight: 750; box-shadow: 3px 3px 0 var(--yellow); transition: transform .2s ease, box-shadow .2s ease; }
 .prompt-card-bottom button:hover { transform: translate(2px,2px); box-shadow: 1px 1px 0 var(--yellow); }
