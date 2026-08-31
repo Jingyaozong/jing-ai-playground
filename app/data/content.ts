@@ -167,7 +167,7 @@ export const experiments: Experiment[] = [
     date: '2026.08.30',
     status: '协议完成 · 0 / 9 待执行',
     stage: 'documented',
-    visual: 'frames',
+    visual: 'contact',
   },
   {
     id: 'experiment-003',

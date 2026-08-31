@@ -13,8 +13,28 @@ const generatedVisuals = {
 };
 
 export function ProjectVisual({ variant, label }: { variant: string; label: string }) {
-  const visualKey = variant.split(' ')[0] as keyof typeof generatedVisuals;
-  const generated = generatedVisuals[visualKey];
+  const visualKey = variant.split(' ')[0];
+  const generated = generatedVisuals[visualKey as keyof typeof generatedVisuals];
+
+  if (visualKey === 'contact') {
+    const stages = [['01', '接近'], ['02', '接触'], ['03', '承重'], ['04', '移动'], ['05', '释放']];
+    return (
+      <div className={`project-visual visual-${variant} is-protocol-diagram`} aria-label={`${label}的五阶段接触动作实验协议图；不是模型样本`}>
+        <span className="contact-protocol-kicker mono">CONTACT CHAIN / 实验协议图</span>
+        <div className="contact-protocol-stage" aria-hidden="true">
+          <div className="contact-protocol-hand"><b /><i /><i /><i /></div>
+          <div className="contact-protocol-cup"><i /><b /></div>
+          <em>＋</em>
+          <strong className="mono">TABLE → HAND</strong>
+        </div>
+        <div className="contact-protocol-steps" aria-label="接近、接触、承重、移动、释放">
+          {stages.map(([number, stage]) => <span key={number}><small className="mono">{number}</small><b>{stage}</b></span>)}
+        </div>
+        <span className="grain" />
+        <span className="visual-caption mono">Protocol diagram · 0 / 9 samples</span>
+      </div>
+    );
+  }
 
   if (generated) {
     return (
