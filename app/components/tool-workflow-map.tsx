@@ -7,7 +7,7 @@ const stages = [
     label: 'DEVELOP',
     title: '故事与分镜',
     description: '先把想法变成可执行的镜头任务，再分配每一镜的职责和秒数。',
-    toolIds: ['tool-001', 'tool-002', 'tool-008'],
+    toolIds: ['tool-001', 'tool-019', 'tool-002', 'tool-008'],
     note: '从一个故事种子开始',
   },
   {

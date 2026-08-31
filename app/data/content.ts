@@ -356,6 +356,15 @@ export const tools: Tool[] = [
     symbol: '{ }',
     href: '/tools/shot-prompt-builder/',
   },
+  {
+    id: 'tool-019',
+    title: 'Poster Story Builder',
+    description: '把海报中的可见证据、合理推测和主动创作选择分开填写，生成短证据账本、故事任务卡与可复制 Prompt。',
+    label: '海报反推故事组装器',
+    status: 'Ready',
+    symbol: 'E→C',
+    href: '/tools/poster-story-builder/',
+  },
 ];
 
 export const currentlyPlaying = [
