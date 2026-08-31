@@ -1,5 +1,5 @@
 export type PosterStoryPilotRecord = {
-  id: 'A01' | 'A02' | 'B01' | 'B02' | 'C01' | 'C02';
+  id: 'A01' | 'A02' | 'A03' | 'B01' | 'B02' | 'B03' | 'C01' | 'C02' | 'C03';
   group: 'A' | 'B' | 'C';
   poster: string;
   method: string;
@@ -57,6 +57,23 @@ export const posterStoryPilotRecords: PosterStoryPilotRecord[] = [
     rawHref: '/records/poster-to-story/p02-a-direct.md',
   },
   {
+    id: 'A03',
+    group: 'A',
+    poster: '室内落雪',
+    method: '直接反推',
+    outputTitle: '《雪落在失物招领处》',
+    protagonist: '城市失物招领员沈砚',
+    worldRule: '当一个人决定停止等待，遗失物就会在室内落雪；标签被雪盖住后，物主会忘记它连接的那个人。',
+    conflict: '沈砚妹妹留下的红围巾与一个女孩寻找父亲的行李箱同时开始积雪，而每场雪只有一件物品能够离开柜台。',
+    irreversibleChoice: '他把行李箱交给女孩，让妹妹的围巾被雪覆盖，接受自己从妹妹记忆里消失。',
+    synopsis: '晴朗街道旁，失物招领处里却飘着雪。管理员沈砚知道，每当有人决定停止等待，属于那个人的遗失物就会在室内落雪；标签一旦被盖住，物主便会忘记它连接的那个人。柜台上的红围巾属于失踪多年的妹妹，门边行李箱则属于一个仍在寻找父亲的女孩。两件物品同时积雪，而每场雪只有一件能够穿过门口。女孩在门外说出父亲替她系围巾的最后一个清晨。沈砚把行李箱推过雪线，围巾的标签随即被埋没。街外阳光照常，他还记得妹妹；妹妹却会从此忘记曾有一个哥哥在这里等她。沈砚关掉柜台灯，把红围巾留在雪中。',
+    wordCount: '212',
+    scores: { evidence: 4, boundary: 1, coherence: 4, relevance: 5 },
+    failures: ['推测冒充事实', '任意添加身份'],
+    auditNote: '室内雪、晴朗门外、柜台、红围巾和行李箱都进入了故事因果；但管理员身份、兄妹关系、门外女孩和“一场雪一件物品”的规则全部直接出现，没有标明是作者新增。',
+    rawHref: '/records/poster-to-story/p03-a-direct.md',
+  },
+  {
     id: 'B01',
     group: 'B',
     poster: '双月公交站',
@@ -91,6 +108,23 @@ export const posterStoryPilotRecords: PosterStoryPilotRecord[] = [
     rawHref: '/records/poster-to-story/p02-b-evidence-first.md',
   },
   {
+    id: 'B03',
+    group: 'B',
+    poster: '室内落雪',
+    method: '证据优先',
+    outputTitle: '《门内天气》',
+    protagonist: '负责关闭这间失物招领处的市政审查员陈野',
+    worldRule: '每件失物都会在室内生成它与主人分开时的天气；只有认领者说出最后一次共同动作，天气才会停止，姓名和物品清单都不能替代。',
+    conflict: '红围巾行李箱制造的雪即将掩埋全部标签，一名记不起姓名的老人却只能说出自己曾替女儿系好围巾。',
+    irreversibleChoice: '陈野剪掉官方条码，以那句话替代身份证明，把行李箱交给老人，也永久中断了物品的正式保管链。',
+    synopsis: '可见证据先被逐项记录：室内有柜台、工作人员、装满物品的格架、行李箱、红色织物和伞筒；雪正在室内飘落并覆盖地面与物品，拱门外却是明亮、干燥的街道。故事据此设定，每件失物都会生成它与主人分开时的天气，只有认领者说出最后一次共同动作，天气才会停止。市政审查员陈野原本要关闭这间异常场所，红围巾行李箱制造的雪却将掩埋全部标签。门外老人记不起姓名和箱内清单，只反复说“我替她系好围巾”。陈野剪掉官方条码，以这句话替代身份证明，把箱子交给老人。雪在门槛前停止，他也永久中断了物品的正式保管链。',
+    wordCount: '216',
+    scores: { evidence: 5, boundary: 4, coherence: 5, relevance: 5 },
+    failures: [],
+    auditNote: '室内外天气边界、柜台、格架、织物与行李都先被列为证据，并共同支撑认领规则。审查员、老人和最后动作属于新增故事设定，但只在第二段出现，仍未细分推测与主动选择。',
+    rawHref: '/records/poster-to-story/p03-b-evidence-first.md',
+  },
+  {
     id: 'C01',
     group: 'C',
     poster: '双月公交站',
@@ -123,5 +157,22 @@ export const posterStoryPilotRecords: PosterStoryPilotRecord[] = [
     failures: ['解释过量'],
     auditNote: '证据、推测和作者选择全部有明确归属，影院、潮线、暖光和空场共同支撑规则；但三段说明再次占用较多梗概空间，主人公为何必须留下仍可写得更扎实。',
     rawHref: '/records/poster-to-story/p02-c-three-column.md',
+  },
+  {
+    id: 'C03',
+    group: 'C',
+    poster: '室内落雪',
+    method: '证据／推测／选择三栏',
+    outputTitle: '《只在门里下雪》',
+    protagonist: '临时看守失物档案的顾遥',
+    worldRule: '室内雪代表物品上的记忆正在被抹除；归还一件物品，需要看守交出一段同等重量的私人记忆，雪才不会越过门槛。',
+    conflict: '顾遥必须用自己关于哥哥的最后一段记忆，交换红围巾行李箱上的身份信息，否则整间档案会在雪中失去归属。',
+    irreversibleChoice: '她把与哥哥的合照放进空格架，交出那段记忆并将行李箱推出门外，从此不再认得照片里的人。',
+    synopsis: '可见证据：室内有工作人员、柜台、格架、行李和红色织物，雪只在门内飘落；门外街道明亮干燥。合理推测：拱门形成清楚的天气边界，工作人员可能正在处理红色物品，但画面没有证明雪的原因或行李主人。主动创作选择：室内雪代表物品上的记忆被抹除；归还一件物品，看守必须交出同等重量的私人记忆。临时看守顾遥发现，红围巾行李箱的标签正在变白，接着整排格架都将失去归属。她把与哥哥的合照放进空格，交换回箱上的姓名，并将行李推出门外。雪停在门槛内，她却再也认不出照片里的人。晴光落进柜台，所有失物保住了来处，只有她失去自己的那一处。',
+    wordCount: '228',
+    scores: { evidence: 5, boundary: 5, coherence: 4, relevance: 5 },
+    failures: ['解释过量'],
+    auditNote: '事实、可能解释和主动设定清楚分栏，天气边界、柜台、格架、红色织物与行李都进入故事机制；“同等重量的记忆”缺少可判断标准，三段前置信息也继续压缩了叙事空间。',
+    rawHref: '/records/poster-to-story/p03-c-three-column.md',
   },
 ];
