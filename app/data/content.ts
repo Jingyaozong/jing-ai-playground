@@ -345,6 +345,15 @@ export const tools: Tool[] = [
     symbol: '⊕',
     href: '/tools/contact-action-card/',
   },
+  {
+    id: 'tool-018',
+    title: 'Shot Prompt Builder',
+    description: '把主体、场景、起点、动作、终点、摄影机和失败边界分层填写，生成单镜 Prompt、验收清单与返修记录。',
+    label: 'AI 视频 Prompt 组装器',
+    status: 'Ready',
+    symbol: '{ }',
+    href: '/tools/shot-prompt-builder/',
+  },
 ];
 
 export const currentlyPlaying = [
