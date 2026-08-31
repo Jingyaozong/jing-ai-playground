@@ -2,10 +2,10 @@ import experimentPilotSamples from '../assets/generated/forty-shots-pilot-sample
 import rainKitchenFrame from '../assets/generated/before-the-rain-ends-frame-01.webp';
 import earlyShadowFrame from '../assets/generated/shadow-arrives-five-minutes-early-frame-03.webp';
 import objectMemoryFrame from '../assets/generated/objects-remember-frame-03.webp';
-import storyKeyframes from '../assets/generated/she-forgets-yesterday-keyframes.png';
+import memoryMorningFrame from '../assets/generated/she-forgets-yesterday-frame-01-v2.webp';
 
 const generatedVisuals = {
-  memory: { image: storyKeyframes, caption: 'AI concept board · 4 frames' },
+  memory: { image: memoryMorningFrame, caption: 'Scene 01 · AI concept frame · no video' },
   faces: { image: experimentPilotSamples, caption: 'Pilot samples · 4 / 40' },
   rainstudy: { image: rainKitchenFrame, caption: 'Story concept frame · no video' },
   earlyshadow: { image: earlyShadowFrame, caption: 'AI concept frame · no video' },

@@ -92,6 +92,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .grain { position: absolute; z-index: 7; inset: 0; opacity: .12; background-image: radial-gradient(rgba(255,255,255,.9) .6px,transparent .6px),radial-gradient(rgba(22,36,58,.5) .45px,transparent .45px); background-size: 8px 8px,10px 10px; background-position: 0 0,5px 6px; mix-blend-mode: multiply; pointer-events: none; }
 .visual-caption { position: absolute; z-index: 8; left: 16px; bottom: 14px; padding: 6px 9px; border: 1px solid var(--ink); border-radius: 99px; background: rgba(255,255,255,.85); color: var(--ink); }
 .project-visual.has-generated-image { background-position: center; background-size: cover; }
+.project-visual.visual-memory.has-generated-image { background-position: 42% center; }
 .project-visual.has-generated-image::before, .project-visual.has-generated-image::after { display: none; }
 .project-visual.has-generated-image .grain { opacity: .06; }
 .story-card:hover .project-visual, .experiment-card:hover .project-visual, .latest-lead:hover .project-visual, .latest-small:hover .project-visual { transform: translateY(-6px); box-shadow: 8px 8px 0 var(--ink); }
@@ -1671,6 +1672,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .featured { padding: 85px 0; }
   .section-heading h2, .section-title-row h2, .section-title-row.compact h2 { font-size: 3.35rem; }
   .visual-memory.feature { height: 115vw; min-height: 430px; }
+  .visual-memory.feature.has-generated-image { background-position: 38% center; }
   .feature-card { border-radius: 30px; box-shadow: 7px 7px 0 var(--ink); }
   .feature-meta { align-items: flex-start; }
   .round-link { width: 70px; }
