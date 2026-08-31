@@ -639,8 +639,8 @@ export const experimentDetails: ExperimentDetail[] = [
     conclusionBadge: 'PILOT COMPLETE · 9 / 9',
     relatedHref: '/prompts/',
     relatedLabel: '查看现有 Prompt 工作台 ↗',
-    toolHref: '/tools/story-seed/',
-    toolLabel: '打开故事种子生成器 ↗',
+    toolHref: '/tools/poster-story-builder/',
+    toolLabel: '打开海报反推故事组装器 ↗',
   },
 ];
 
