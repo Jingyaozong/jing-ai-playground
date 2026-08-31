@@ -36,6 +36,29 @@ export function ProjectVisual({ variant, label }: { variant: string; label: stri
     );
   }
 
+  if (visualKey === 'lighting') {
+    const locks = [['01', '灯位固定'], ['02', '人物转向'], ['03', '机位 A'], ['04', '机位 B']];
+    return (
+      <div className={`project-visual visual-${variant} is-protocol-diagram`} aria-label={`${label}的世界坐标光线实验协议图；不是模型样本`}>
+        <span className="lighting-protocol-kicker mono">WORLD LIGHT MAP / 实验协议图</span>
+        <div className="lighting-protocol-map" aria-hidden="true">
+          <div className="lighting-north-window"><span className="mono">NORTH WINDOW</span></div>
+          <div className="lighting-cold-beams"><i /><i /><i /></div>
+          <div className="lighting-subject"><i /><b className="mono">SUBJECT</b></div>
+          <div className="lighting-table-lamp"><i /><b className="mono">TABLE<br />LIGHT</b></div>
+          <div className="lighting-camera camera-a"><i /><b className="mono">A</b></div>
+          <div className="lighting-camera camera-b"><i /><b className="mono">B</b></div>
+          <span className="lighting-axis mono">180° AXIS</span>
+        </div>
+        <div className="lighting-protocol-locks" aria-label="灯位固定、人物转向、机位 A、机位 B">
+          {locks.map(([number, lock]) => <span key={number}><small className="mono">{number}</small><b>{lock}</b></span>)}
+        </div>
+        <span className="grain" />
+        <span className="visual-caption mono">Protocol diagram · 0 / 12 samples</span>
+      </div>
+    );
+  }
+
   if (generated) {
     return (
       <div
