@@ -39,7 +39,7 @@ export type ExperimentDetail = {
   sampleTitle?: string;
   sampleDescription?: string;
   reference?: {
-    kind: 'character' | 'reference-pack' | 'light-map' | 'contact-layout' | 'storyboard-benchmark';
+    kind: 'character' | 'reference-pack' | 'light-map' | 'contact-layout' | 'storyboard-benchmark' | 'poster-inputs';
     label: string;
     title: string;
     description: string;
@@ -54,7 +54,7 @@ export type ExperimentDetail = {
   }>;
   observationTitle?: string;
   observationDescription?: string;
-  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset' | 'contact-action' | 'storyboard-audit';
+  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset' | 'contact-action' | 'storyboard-audit' | 'poster-story-audit';
   sources?: Array<{ title: string; url: string; note: string }>;
   nextSteps: string[];
   currentConclusion?: string;
@@ -566,6 +566,79 @@ export const experimentDetails: ExperimentDetail[] = [
     relatedLabel: '阅读 90 秒故事拆镜方法 ↗',
     toolHref: '/tools/shot-list-cleaner/',
     toolLabel: '打开分镜整理器 ↗',
+  },
+  {
+    slug: 'can-a-fictional-poster-grow-a-story',
+    number: '008',
+    title: '让 AI 先画一张不会发生的海报',
+    titleLines: ['让 AI 先画一张', '不会发生的海报'],
+    englishTitle: 'Can a Fictional Poster Grow a Story?',
+    category: 'Poster-to-Story Study',
+    date: '2026.08.31',
+    status: '3 张输入海报就绪 · 0 / 9 待执行',
+    demo: true,
+    testCount: 9,
+    testUnit: 'STORY OUTPUTS',
+    pilotLabel: 'INPUTS READY · 0 / 9',
+    notice: '页面已经放入三张 2026.08.31 生成的虚构电影海报，作为本实验固定输入。它们不是电影成片、真实项目或故事输出；九个故事单元仍为空，目前没有评分、方法结论或荆的个人判断。',
+    summary: '用三张无片名的虚构海报，对比直接看图写故事、先列可见证据、再把证据／推测／创作选择分栏三种反推路径；检查视觉线索、推理边界、世界规则与故事冲突能否保持可追溯。',
+    question: '海报只给出一个瞬间。怎样从同一组视觉线索长出完整故事，又不把看不见的推测冒充成画面事实？',
+    questionLines: ['海报只给出一个瞬间。', '怎样长出完整故事，', '又不把推测写成事实？'],
+    hypothesis: '直接看图写故事可能更快形成戏剧梗概，却容易把类型惯例和模型联想误写成海报事实；先列可见证据可能提高线索利用率，但仍会把解释混进观察。把证据、推测和主动创作选择分栏，可能让故事来源更清楚，同时增加写作步骤。',
+    constants: [
+      '固定使用页面中的三张 AI 生成虚构海报：双月公交站、退潮电影院、室内落雪的失物招领处',
+      '海报没有片名、文案、品牌或真实电影信息；测试不得自行调用搜索补充“背景资料”',
+      '同一模型、版本、入口和上下文设置；每格只输入对应海报与该组固定指令',
+      '九格都输出五项：主人公、世界规则、核心冲突、一次不可逆选择、150—250 字故事梗概',
+      '每张海报每种方法只保留一次未经人工修订的原始输出；改写版必须另存',
+      '评审先对照可见线索，再检查推测和创作选择；不按文笔华丽程度替代结构判断',
+    ],
+    protocolTitle: '三种反推路径，\n三张固定输入海报。',
+    protocolDescription: '九份输出共用同一批海报和同一套故事字段。组间只改变“看见什么、怎样推测、何时开始创作”的步骤。',
+    groups: [
+      { code: 'A', title: '直接看图写故事', shots: 'A01—A03', variable: '一次完成主人公、世界规则、冲突、选择与梗概，不单独列证据', tone: 'blue' },
+      { code: 'B', title: '先列可见证据', shots: 'B01—B03', variable: '第一步只写画面中可指认的对象、关系、天气、光线与异常，再写故事', tone: 'yellow' },
+      { code: 'C', title: '证据／推测／选择分栏', shots: 'C01—C03', variable: '明确区分画面事实、合理推测和作者主动添加的设定，再生成梗概', tone: 'mint' },
+    ],
+    reference: {
+      kind: 'poster-inputs',
+      label: '3 AI-GENERATED INPUT POSTERS · 2026.08.31',
+      title: '先保留看得见的矛盾，不替海报补片名。',
+      description: 'P01 是双月下的空公交站，P02 是退潮海滩上的旧电影院，P03 是晴天街道旁、只在室内落雪的失物招领处。三张图只提供视觉起点；人物身份、原因、规则、过去与结局全部仍待推导。',
+    },
+    sampleTitle: '九份故事先留空。\n输入和解释分开保存。',
+    sampleDescription: '每格对应一次完整反推。当前样本墙只标出海报、方法和审计重点；输入图已经存在，不代表任何故事输出已经完成。',
+    samples: [
+      { shot: 'A01', title: '双月公交站', setting: '直接反推 · 海报 P01', observation: '待执行；检查输出是否无依据地指定两个月亮的来源、人物职业或等待对象。', status: '待执行 · 无故事', framePosition: 'left top', tone: 'blue', generated: false },
+      { shot: 'A02', title: '退潮电影院', setting: '直接反推 · 海报 P02', observation: '待执行；检查故事是否真正使用退潮、海滩、影院暖光与无人入口，而不只套用怀旧类型。', status: '待执行 · 无故事', framePosition: 'right top', tone: 'blue', generated: false },
+      { shot: 'A03', title: '室内落雪', setting: '直接反推 · 海报 P03', observation: '待执行；检查室内雪、干燥街道、柜台、行李与工作人员之间是否形成一条规则。', status: '待执行 · 无故事', framePosition: 'left bottom', tone: 'blue', generated: false },
+      { shot: 'B01', title: '双月公交站', setting: '证据优先 · 海报 P01', observation: '待执行；先核对双月、湿路、空站、单人和清晨光线是否被完整列出，再看故事怎样使用。', status: '待执行 · 无故事', framePosition: 'right bottom', tone: 'yellow', generated: false },
+      { shot: 'B02', title: '退潮电影院', setting: '证据优先 · 海报 P02', observation: '待执行；区分可见的建筑状态与不可见的营业历史、观众身份和退潮原因。', status: '待执行 · 无故事', framePosition: 'left top', tone: 'yellow', generated: false },
+      { shot: 'B03', title: '室内落雪', setting: '证据优先 · 海报 P03', observation: '待执行；检查雪的边界、门外天气和行李是否都进入证据清单，而非只描述气氛。', status: '待执行 · 无故事', framePosition: 'right top', tone: 'yellow', generated: false },
+      { shot: 'C01', title: '双月公交站', setting: '三栏反推 · 海报 P01', observation: '待执行；检查输出能否标明“城市有双月”是事实，“月亮造成等待”只是推测。', status: '待执行 · 无故事', framePosition: 'left bottom', tone: 'mint', generated: false },
+      { shot: 'C02', title: '退潮电影院', setting: '三栏反推 · 海报 P02', observation: '待执行；检查新增世界规则与人物选择是否明确标为创作决定，并真正推动冲突。', status: '待执行 · 无故事', framePosition: 'right bottom', tone: 'mint', generated: false },
+      { shot: 'C03', title: '室内落雪', setting: '三栏反推 · 海报 P03', observation: '待执行；检查故事是否能追溯到室内雪、柜台与行李，同时避免把类型联想冒充证据。', status: '待执行 · 无故事', framePosition: 'left top', tone: 'mint', generated: false },
+    ],
+    checks: [
+      { label: 'EVIDENCE', question: '海报里的线索真的被用到了吗？', note: '逐项核对主体、环境、异常、空间关系、光线和道具；只复述颜色或气氛不算建立故事因果。', tone: 'blue' },
+      { label: 'BOUNDARY', question: '事实、推测和创作选择分得开吗？', note: '无法从画面直接指认的身份、历史、原因与规则必须标明来源；合理不等于画面已经证明。', tone: 'yellow' },
+      { label: 'STORY ENGINE', question: '新增设定真的推动了选择吗？', note: '检查世界规则是否制造限制，限制是否形成冲突，冲突是否迫使主人公做出不可逆选择。', tone: 'coral' },
+    ],
+    observationTitle: '先指给我看，\n再告诉我为什么。',
+    observationDescription: '四项人工评分分开记录：线索利用、边界透明、故事连贯和海报关联。遗漏线索、推测冒充事实、规则空泛与类型套壳分别打标签。',
+    recordBoard: 'poster-story-audit',
+    nextSteps: [
+      '冻结三张输入海报及当前编号，不添加片名、说明文字或额外世界观。',
+      '执行当天记录真实模型、版本与入口，按 A、B、C 三组保存九份未经人工改写的原始故事输出。',
+      '逐格标注可见证据、推测和主动创作选择，并记录 5 项故事字段是否完整。',
+      '九格完成后只报告线索利用、边界透明、故事连贯、海报关联与错误标签，再决定是否把三栏法整理成正式 Prompt 模板。',
+    ],
+    currentConclusion: '三张 AI 生成输入海报、三种反推路径、九格空白故事墙与本地审计台已经准备好；当前 0 / 9，没有故事输出，因此不能判断哪种路径更可靠。',
+    conclusionBadge: '3 INPUTS · 0 / 9 OUTPUTS',
+    relatedHref: '/prompts/',
+    relatedLabel: '查看现有 Prompt 工作台 ↗',
+    toolHref: '/tools/story-seed/',
+    toolLabel: '打开故事种子生成器 ↗',
   },
 ];
 

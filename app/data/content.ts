@@ -182,12 +182,13 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-003',
+    slug: 'can-a-fictional-poster-grow-a-story',
     title: '让 AI 先画一张不会发生的海报',
-    description: '待验证玩法：从一张虚构电影海报反向生长出角色、场景与故事梗概。目前只保留概念卡。',
-    category: 'Prompt Play',
-    date: '未执行',
-    status: '概念设想 · 无结果',
-    stage: 'concept',
+    description: '三张 AI 生成输入海报已经就绪；九格协议对比直接反推、证据优先和证据／推测／选择分栏。目前 0 / 9，没有故事输出结论。',
+    category: 'Poster-to-Story Study',
+    date: '2026.08.31',
+    status: '3 张输入就绪 · 0 / 9 待执行',
+    stage: 'documented',
     visual: 'poster',
   },
 ];

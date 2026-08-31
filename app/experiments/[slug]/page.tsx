@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import experimentPilotSamples from '../../assets/generated/forty-shots-pilot-samples.png';
+import fictionalPosterInputs from '../../assets/generated/fictional-poster-inputs.webp';
 import rainCharacterAnchor from '../../assets/generated/before-the-rain-ends-character-anchor.webp';
 import shadowCharacterAnchor from '../../assets/generated/shadow-arrives-five-minutes-early-character-anchor.webp';
 import characterAnchor from '../../assets/generated/she-forgets-yesterday-character-anchor.png';
@@ -15,6 +16,7 @@ import { ReferenceComparisonBoard } from '../../components/reference-comparison-
 import { ShadowOffsetRecordBoard } from '../../components/shadow-offset-record-board';
 import { ContactActionRecordBoard } from '../../components/contact-action-record-board';
 import { StoryboardAuditBoard } from '../../components/storyboard-audit-board';
+import { PosterStoryAuditBoard } from '../../components/poster-story-audit-board';
 import { experimentDetails, getExperimentBySlug } from '../../data/experiments';
 
 export const dynamicParams = false;
@@ -136,6 +138,8 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
                 ? <div className="experiment-reference-image is-contact-layout" aria-label="右手、杯柄与桌面的接触关系示意图"><div className="contact-reference-hand"><i /><i /><i /><b /></div><div className="contact-reference-cup"><i /><b /></div><em>＋</em><span className="mono">GAP → CONTACT → SUPPORT</span></div>
                 : reference.kind === 'storyboard-benchmark'
                   ? <div className="experiment-reference-image is-storyboard-benchmark" aria-label="原故事、人工最低拍点与自动分镜输出的对照关系图"><article><span className="mono">01 / SOURCE</span><b>原故事</b><i /><i /><i /></article><em>→</em><article><span className="mono">02 / BASELINE</span><b>人工拍点</b><i /><i /><i /></article><em>↔</em><article><span className="mono">03 / AUDIT</span><b>自动输出</b><i /><i /><i /></article><strong className="mono">FACTS → MINIMUM BEATS → COMPARE</strong></div>
+                : reference.kind === 'poster-inputs'
+                  ? <div className="experiment-reference-image is-poster-inputs" aria-label="三张 AI 生成虚构电影海报输入：双月公交站、退潮电影院与室内落雪的失物招领处" style={{ backgroundImage: `url("${fictionalPosterInputs.src}")` }}><span className="mono">P01 · DOUBLE MOON</span><span className="mono">P02 · LOW TIDE CINEMA</span><span className="mono">P03 · INDOOR SNOW</span><b className="mono">AI-GENERATED INPUTS · NOT STORY OUTPUTS</b></div>
                 : <div className="experiment-reference-image is-reference-pack" aria-label="待制作的正面、侧面与全身参考图位置"><i>FRONT</i><i>SIDE</i><i>FULL</i><b className="mono">WAITING FOR CONSISTENT SOURCES</b></div>}
           <div><span className="mono">{reference.label}</span><h3>{reference.title}</h3><p>{reference.description}</p></div>
         </article>
@@ -190,6 +194,8 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
             ? <ContactActionRecordBoard />
           : experiment.recordBoard === 'storyboard-audit'
             ? <StoryboardAuditBoard />
+          : experiment.recordBoard === 'poster-story-audit'
+            ? <PosterStoryAuditBoard />
           : <ExperimentRecordBoard />}
 
       <section className="experiment-next section-shell">
