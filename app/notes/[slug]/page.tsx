@@ -31,6 +31,10 @@ export default async function NoteDetailPage({ params }: { params: Promise<{ slu
   const note = getNoteBySlug(slug);
   if (!note) notFound();
   const related = getRelatedNotes(note);
+  const isLongTitle = note.title.length >= 24;
+  const titleDivider = isLongTitle ? note.title.indexOf('：') : -1;
+  const titleLead = titleDivider >= 0 ? note.title.slice(0, titleDivider + 1) : note.title;
+  const titleTail = titleDivider >= 0 ? note.title.slice(titleDivider + 1) : '';
 
   return (
     <main>
@@ -38,7 +42,7 @@ export default async function NoteDetailPage({ params }: { params: Promise<{ slu
       <header className="note-detail-hero">
         <div className="note-detail-rail mono"><Link href="/notes/">← 返回笔记</Link><span>JING NOTES · {note.date.slice(0, 7).replace('-', ' / ')}</span></div>
         <div className="note-detail-grid">
-          <div className="note-detail-title"><div className="note-detail-labels"><span>{note.category}</span><span>ISSUE {note.issue}</span>{note.demo && <b>DEMO</b>}{note.editorialStatus === 'draft' && <b>EDITING DRAFT</b>}{note.editorialStatus === 'source-backed' && <b>SOURCE-BACKED</b>}</div><h1>{note.title}</h1><p>{note.description}</p><div className="note-detail-meta mono"><span>{note.date.replaceAll('-', ' / ')}</span><span>{note.readingTime}</span><span>{note.editorialStatus === 'draft' ? 'EDITED FOR JING' : note.editorialStatus === 'source-backed' ? 'SOURCE EDITION' : 'BY JING'}</span></div></div>
+          <div className={`note-detail-title ${isLongTitle ? 'is-long-title' : ''}`}><div className="note-detail-labels"><span>{note.category}</span><span>ISSUE {note.issue}</span>{note.demo && <b>DEMO</b>}{note.editorialStatus === 'draft' && <b>EDITING DRAFT</b>}{note.editorialStatus === 'source-backed' && <b>SOURCE-BACKED</b>}</div><h1>{titleLead}{titleTail && <><br /><span>{titleTail}</span></>}</h1><p>{note.description}</p><div className="note-detail-meta mono"><span>{note.date.replaceAll('-', ' / ')}</span><span>{note.readingTime}</span><span>{note.editorialStatus === 'draft' ? 'EDITED FOR JING' : note.editorialStatus === 'source-backed' ? 'SOURCE EDITION' : 'BY JING'}</span></div></div>
           <NoteVisual variant={note.cover} label={note.title} />
         </div>
       </header>

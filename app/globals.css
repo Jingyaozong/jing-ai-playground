@@ -3837,6 +3837,11 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
   font-size: clamp(3.9rem,6.6vw,7.15rem);
   line-height: 1.01;
 }
+.note-detail-title.is-long-title h1 {
+  font-size: clamp(3.45rem,5.45vw,6.05rem);
+  line-height: 1.06;
+  text-wrap: balance;
+}
 
 .section-heading h2,
 .section-title-row h2,
@@ -3907,6 +3912,10 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
 
   .note-detail-title h1 {
     font-size: clamp(2.85rem,12.2vw,4.4rem);
+  }
+  .note-detail-title.is-long-title h1 {
+    font-size: clamp(2.25rem,9.2vw,3.2rem);
+    line-height: 1.08;
   }
 
   .experiment-detail-title h1:has(> span) {
