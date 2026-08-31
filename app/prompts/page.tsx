@@ -15,6 +15,8 @@ export const metadata: Metadata = {
 
 const featuredIds = ['socratic-questioning', 'two-layer-explanation', 'first-principles', 'minimum-experiment'];
 const featuredPrompts = featuredIds.map((id) => promptItems.find((item) => item.id === id)).filter((item) => item !== undefined);
+const productionIds = ['video-character-anchor-brief', 'video-single-shot-motion', 'video-sound-layer-brief', 'video-failure-revision'];
+const productionPrompts = productionIds.map((id) => promptItems.find((item) => item.id === id)).filter((item) => item !== undefined);
 
 const categoryCopy: Array<{ id: PromptCategory; label: string; description: string; color: string }> = [
   { id: '问清问题', label: '把真正的问题找出来', description: '先澄清事实、解释、目标和假设，再开始回答。', color: 'yellow' },
@@ -22,6 +24,7 @@ const categoryCopy: Array<{ id: PromptCategory; label: string; description: stri
   { id: '解决问题', label: '换一个结构寻找解法', description: '专家会诊、第一性原理和跨领域借解。', color: 'blue' },
   { id: '决策', label: '从两个答案里做选择', description: '公平论证两个方向，再用现实实验拿反馈。', color: 'coral' },
   { id: '认识自己', label: '回看经历，也设计未来', description: '寻找底层天赋，生成可以验证的人生版本。', color: 'mint' },
+  { id: 'AI 视频制作', label: '把想法变成可验收镜头', description: '角色、场景、动作、声音、连续性和返修记录。', color: 'video' },
 ];
 
 export default function PromptsPage() {
@@ -35,7 +38,7 @@ export default function PromptsPage() {
       </section>
 
       <Reveal><section className="prompt-featured section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Start here / 先试这四条</p><h2>少一点，<br />但每条都能用。</h2></div><div className="home-notes-intro"><p>从问清问题、学习、解决问题和决策各选一条。需要更多时，再进入完整目录。</p><Link className="text-link" href="/prompts/all/">查看全部 12 条 ↗</Link></div></div>
+          <div className="section-title-row compact"><div><p className="eyebrow mono">Start here / 先试这四条</p><h2>少一点，<br />但每条都能用。</h2></div><div className="home-notes-intro"><p>从问清问题、学习、解决问题和决策各选一条。需要更多时，再进入完整目录。</p><Link className="text-link" href="/prompts/all/">查看全部 {promptItems.length} 条 ↗</Link></div></div>
         <PromptBrowser items={featuredPrompts} showToolbar={false} />
       </section></Reveal>
 
@@ -46,8 +49,14 @@ export default function PromptsPage() {
         </div>
       </section></Reveal>
 
+      <Reveal><section className="prompt-production section-shell" id="production-templates">
+        <div className="section-title-row compact"><div><p className="eyebrow mono">AI video production / 视频制作模板</p><h2>不是一句咒语，<br />是一张任务卡。</h2></div><p>8 条本站编辑模板覆盖角色、场景、动作、首尾帧、声音、连续性、返修与候选验收；没有真实样本时不会替你填写结果。</p></div>
+        <PromptBrowser items={productionPrompts} showToolbar={false} />
+        <Link className="text-link prompt-production-more" href="/prompts/all/">查看全部 8 条制作模板 ↗</Link>
+      </section></Reveal>
+
       <Reveal><section className="prompt-categories section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Five drawers / 五个抽屉</p><h2>先选场景，<br />再找 Prompt。</h2></div><p>完整目录里可以继续搜索和筛选，不需要在这一页一次看完。</p></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Six drawers / 六个抽屉</p><h2>先选场景，<br />再找 Prompt。</h2></div><p>完整目录里可以继续搜索和筛选，不需要在这一页一次看完。</p></div>
         <div className="prompt-category-map">{categoryCopy.map((category) => {
           const count = promptItems.filter((item) => item.category === category.id).length;
           return <Link className={`prompt-category-tile prompt-category-${category.color}`} href="/prompts/all/" key={category.id}><span className="mono">{count} 条 Prompt</span><strong>{category.id}</strong><h3>{category.label}</h3><p>{category.description}</p><i>打开完整目录 ↗</i></Link>;
@@ -68,7 +77,7 @@ export default function PromptsPage() {
 
       <section className="prompt-attribution section-shell">
         <div className="prompt-source-note">
-          <span className="mono">首批内容来源 / SOURCE</span>
+          <span className="mono">首批 12 条来源 / SOURCE</span>
           <div><p>作者：{promptSource.author}</p><h3>{promptSource.title}</h3><p>{promptSource.note}</p></div>
           <a href={promptSource.url} target="_blank" rel="noreferrer">查看原文 ↗</a>
         </div>

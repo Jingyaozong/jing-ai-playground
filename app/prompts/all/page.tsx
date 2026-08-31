@@ -7,7 +7,7 @@ import { promptItems } from '../../data/prompts';
 
 export const metadata: Metadata = {
   title: '全部 Prompt — JING AI PLAYGROUND',
-  description: '浏览、筛选和复制 Prompt 工作台中的全部 12 条 Prompt。',
+  description: '浏览、筛选和复制 Prompt 工作台中的通用思考 Prompt 与 AI 视频制作模板。',
 };
 
 export default function AllPromptsPage() {

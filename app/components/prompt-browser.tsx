@@ -17,7 +17,7 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
     <article className={`prompt-card prompt-card-${index % 4}`}>
       <div className="prompt-card-top mono">
         <span>{item.category} / {String(index + 1).padStart(2, '0')}</span>
-        <span>{item.demo ? 'DEMO' : item.dateAdded.replaceAll('-', ' / ')}</span>
+        <span>{item.demo ? 'DEMO' : item.editorial ? 'EDITORIAL TEMPLATE' : item.dateAdded.replaceAll('-', ' / ')}</span>
       </div>
       <div className="prompt-card-heading">
         <div>
