@@ -170,6 +170,17 @@ export const experiments: Experiment[] = [
     visual: 'contact',
   },
   {
+    id: 'experiment-004',
+    slug: 'where-auto-storyboarding-loses-the-story',
+    title: '自动分镜机，第一次走神',
+    description: '九格对照协议：三篇固定短故事分别经过直接拆镜、固定字段和先提拍点三种流程，再与人工最低拍点基准核对。目前 0 / 9，没有输出结论。',
+    category: 'Storyboard Decomposition Study',
+    date: '2026.08.31',
+    status: '协议完成 · 0 / 9 待执行',
+    stage: 'documented',
+    visual: 'storyboard',
+  },
+  {
     id: 'experiment-003',
     title: '让 AI 先画一张不会发生的海报',
     description: '待验证玩法：从一张虚构电影海报反向生长出角色、场景与故事梗概。目前只保留概念卡。',
@@ -178,16 +189,6 @@ export const experiments: Experiment[] = [
     status: '概念设想 · 无结果',
     stage: 'concept',
     visual: 'poster',
-  },
-  {
-    id: 'experiment-004',
-    title: '自动分镜机，第一次走神',
-    description: '待验证工作流：把短故事拆成镜头，同时观察自动拆分遗漏了什么。目前没有正式实验记录。',
-    category: 'Workflow',
-    date: '未执行',
-    status: '工作流设想 · 无记录',
-    stage: 'concept',
-    visual: 'storyboard',
   },
 ];
 

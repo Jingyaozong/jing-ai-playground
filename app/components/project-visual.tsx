@@ -87,6 +87,30 @@ export function ProjectVisual({ variant, label }: { variant: string; label: stri
     );
   }
 
+  if (visualKey === 'storyboard') {
+    const methods = [
+      { code: 'A', label: '直接拆镜', tone: 'blue' },
+      { code: 'B', label: '固定字段', tone: 'yellow' },
+      { code: 'C', label: '先提拍点', tone: 'mint' },
+    ];
+    return (
+      <div className={`project-visual visual-${variant} is-protocol-diagram`} aria-label={`${label}的三种自动拆镜方法实验协议图；不是实验结果`}>
+        <span className="storyboard-protocol-kicker mono">STORY → SHOTS / 实验协议图</span>
+        <div className="storyboard-protocol-source" aria-hidden="true"><span className="mono">90 SEC STORY</span><i /><i /><i /><b>→</b></div>
+        <div className="storyboard-protocol-methods">
+          {methods.map((method) => <article className={`tone-${method.tone}`} key={method.code}>
+            <div><b>{method.code}</b><span>{method.label}</span></div>
+            <div aria-hidden="true"><i /><i /><i /></div>
+            <small className="mono">0 / 3</small>
+          </article>)}
+        </div>
+        <span className="storyboard-protocol-check mono">COMPARE WITH HUMAN BEAT BASELINE</span>
+        <span className="grain" />
+        <span className="visual-caption mono">Protocol diagram · 0 / 9 outputs</span>
+      </div>
+    );
+  }
+
   if (generated) {
     return (
       <div

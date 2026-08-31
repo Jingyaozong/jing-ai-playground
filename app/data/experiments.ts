@@ -39,7 +39,7 @@ export type ExperimentDetail = {
   sampleTitle?: string;
   sampleDescription?: string;
   reference?: {
-    kind: 'character' | 'reference-pack' | 'light-map' | 'contact-layout';
+    kind: 'character' | 'reference-pack' | 'light-map' | 'contact-layout' | 'storyboard-benchmark';
     label: string;
     title: string;
     description: string;
@@ -54,7 +54,7 @@ export type ExperimentDetail = {
   }>;
   observationTitle?: string;
   observationDescription?: string;
-  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset' | 'contact-action';
+  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset' | 'contact-action' | 'storyboard-audit';
   sources?: Array<{ title: string; url: string; note: string }>;
   nextSteps: string[];
   currentConclusion?: string;
@@ -493,6 +493,79 @@ export const experimentDetails: ExperimentDetail[] = [
     relatedLabel: '阅读完整接触动作方法 ↗',
     toolHref: '/tools/contact-action-card/',
     toolLabel: '生成接触动作拆分卡 ↗',
+  },
+  {
+    slug: 'where-auto-storyboarding-loses-the-story',
+    number: '007',
+    title: '自动分镜机，第一次走神',
+    titleLines: ['自动分镜机，', '第一次走神'],
+    englishTitle: 'Where Auto Storyboarding Loses the Story',
+    category: 'Storyboard Decomposition Study',
+    date: '2026.08.31',
+    status: '实验协议完成 · 0 / 9 待执行',
+    demo: true,
+    testCount: 9,
+    testUnit: 'STORYBOARD OUTPUTS',
+    pilotLabel: 'PLANNED · 0 / 9',
+    notice: '这是一份待执行的自动拆镜对照实验。目前只有三份固定故事输入、人工拍点基准、三种拆镜流程、九个输出位和本地审计台，没有模型输出、评分或结论；页面中的分镜格只表示协议结构。',
+    summary: '把三篇已经写定的 60—90 秒故事分别交给直接拆镜、固定字段拆镜和“先提拍点、再拆镜”三种流程；对照人工基准，检查遗漏、错并、虚构、时长失衡与不可拍描述。',
+    question: '同一个短故事被自动拆成镜头以后，哪些叙事信息最容易被漏掉、合并、改写或拆成无法执行的画面？',
+    questionLines: ['同一个短故事，', '拆成镜头以后，', '哪些信息最容易消失？'],
+    hypothesis: '直接要求“拆成分镜”可能保留情节大意，却遗漏无对白动作、声音线索和因果转折；固定景别、画面、运镜、对白、声音与时长字段，可能减少制作信息缺口，但不会自动保证叙事拍点完整。先提取不可丢失的拍点再拆镜，可能更容易审计，也可能产生过度切分。',
+    constants: [
+      '三份输入固定为《她每天醒来都会忘记昨天》《第七码头没有船》《雨停以前》的当前 60—90 秒文字版本',
+      '人工基准在自动拆镜前完成，只标记不可丢失的动作、因果、声音、空间变化和结尾，不规定模型必须复制同一镜数',
+      '同一模型、版本、入口与上下文设置；如果温度或随机性不可控，执行当天明确记录',
+      '三组都要求输出景别、画面、运镜、对白、声音与秒数；组间只改变拆解步骤，不临时修改故事正文',
+      '每个故事每种流程只保留一次完整原始输出；人工修订版另存，不覆盖待评估文本',
+      '目标总时长沿用各故事现有设定；分镜总秒数必须自行相加核对，不能只看镜头数量',
+    ],
+    protocolTitle: '三种拆镜流程，\n三篇固定短故事。',
+    protocolDescription: '九个输出共用同一批故事与同一套验收问题。比较对象不是“谁写得更像电影”，而是哪种流程更少丢失已写进故事的事实。',
+    groups: [
+      { code: 'A', title: '直接拆镜', shots: 'A01—A03', variable: '一次提交完整故事，直接要求生成可拍摄分镜表', tone: 'blue' },
+      { code: 'B', title: '固定字段拆镜', shots: 'B01—B03', variable: '预先固定景别、画面、运镜、对白、声音与秒数六个字段', tone: 'yellow' },
+      { code: 'C', title: '先提拍点再拆镜', shots: 'C01—C03', variable: '第一步只列不可丢失拍点，确认后第二步把拍点展开成分镜', tone: 'mint' },
+    ],
+    reference: {
+      kind: 'storyboard-benchmark',
+      label: 'HUMAN BEAT BASELINE · NO MODEL OUTPUT',
+      title: '人工基准只标“不能丢什么”。',
+      description: '每篇故事先由人整理一张最低拍点清单：关键动作、因果转折、空间变化、对白归属、声音提示与结尾证据。它不是唯一正确分镜，也不规定镜头数量；它只让遗漏、错并和虚构变得可核对。',
+    },
+    sampleTitle: '九份输出先留空。\n原文和答案分开保存。',
+    sampleDescription: '每格对应一次完整自动拆镜。当前只展示故事任务、拆镜条件与审计重点；没有真实输出的单元不会计算覆盖率或完成度。',
+    samples: [
+      { shot: 'A01', title: '忘记昨天', setting: '直接拆镜 · 90 秒记忆故事', observation: '待执行；检查信件、照片、咖啡、主动握手和写给明天的信是否被漏掉或错并。', status: '待执行 · 无输出', framePosition: 'left top', tone: 'blue', generated: false },
+      { shot: 'A02', title: '第七码头', setting: '直接拆镜 · 72 秒港口故事', observation: '待执行；检查打印票、六码头后的空白、三声雾笛、踏板与撕票结尾的因果顺序。', status: '待执行 · 无输出', framePosition: 'right top', tone: 'blue', generated: false },
+      { shot: 'A03', title: '雨停以前', setting: '直接拆镜 · 60 秒局部降雨故事', observation: '待执行；检查雨区跟随、公交车空圈、地下通道脚印与结尾扩散是否保留。', status: '待执行 · 无输出', framePosition: 'left bottom', tone: 'blue', generated: false },
+      { shot: 'B01', title: '忘记昨天', setting: '固定六字段 · 90 秒记忆故事', observation: '待执行；核对字段是否完整，同时检查表格完整是否掩盖拍点遗漏。', status: '待执行 · 无输出', framePosition: 'right bottom', tone: 'yellow', generated: false },
+      { shot: 'B02', title: '第七码头', setting: '固定六字段 · 72 秒港口故事', observation: '待执行；检查声音线索、广播归属、空间递进和总秒数是否可执行。', status: '待执行 · 无输出', framePosition: 'left top', tone: 'yellow', generated: false },
+      { shot: 'B03', title: '雨停以前', setting: '固定六字段 · 60 秒局部降雨故事', observation: '待执行；检查局部雨与环境雨是否被写成两个可区分的声音和画面状态。', status: '待执行 · 无输出', framePosition: 'right top', tone: 'yellow', generated: false },
+      { shot: 'C01', title: '忘记昨天', setting: '先提拍点 · 90 秒记忆故事', observation: '待执行；检查拍点阶段是否先保住选择关系，再观察展开后是否过度切碎。', status: '待执行 · 无输出', framePosition: 'left bottom', tone: 'mint', generated: false },
+      { shot: 'C02', title: '第七码头', setting: '先提拍点 · 72 秒港口故事', observation: '待执行；检查“没有船”与“不要上来”是否被保留为两个不同信息节点。', status: '待执行 · 无输出', framePosition: 'right bottom', tone: 'mint', generated: false },
+      { shot: 'C03', title: '雨停以前', setting: '先提拍点 · 60 秒局部降雨故事', observation: '待执行；检查隐喻变化是否仍由可见动作和声音承担，而不是新增解释性旁白。', status: '待执行 · 无输出', framePosition: 'left top', tone: 'mint', generated: false },
+    ],
+    checks: [
+      { label: 'COVERAGE', question: '人工基准里的拍点还剩多少？', note: '逐项标记保留、错并、遗漏或被新内容替换；不因镜头数量更多就自动判为覆盖更完整。', tone: 'blue' },
+      { label: 'CAUSALITY', question: '动作为什么发生，还看得懂吗？', note: '检查先后顺序、空间位置、对白归属和声音触发；事件都出现但因果颠倒，仍然算结构错误。', tone: 'yellow' },
+      { label: 'SHOOTABILITY', question: '这张表能直接进入制作吗？', note: '检查每镜是否有明确主体、可见动作、景别、声音和秒数；“氛围感增强”这类不可执行描述要单独标记。', tone: 'coral' },
+    ],
+    observationTitle: '先对拍点，\n再数镜头。',
+    observationDescription: '四项人工评分分开记录：拍点覆盖、因果连续、制作明确和时长可用。遗漏、错并、虚构、对白归属错误与秒数失衡分别打标签。',
+    recordBoard: 'storyboard-audit',
+    nextSteps: [
+      '冻结三篇故事的当前文字版本，并在测试前完成三张人工最低拍点清单。',
+      '执行当天记录真实模型、版本和入口；按 A、B、C 顺序保存九份未经人工修改的原始输出。',
+      '把九份输出分别导入分镜整理器，统一字段后再核对镜头数、总秒数、空字段和对白归属。',
+      '逐项对照人工基准，只报告本轮覆盖、因果、可拍性、时长与错误标签，再决定是否保留“先提拍点”流程。',
+    ],
+    currentConclusion: '三篇固定故事、人工基准定义、三种拆镜流程、九格空白输出墙与本地审计台已经准备好；当前 0 / 9，没有自动拆镜输出，因此不能判断哪种流程更可靠。',
+    conclusionBadge: '0 / 9 · 无结论',
+    relatedHref: '/notes/ninety-second-storyboard/',
+    relatedLabel: '阅读 90 秒故事拆镜方法 ↗',
+    toolHref: '/tools/shot-list-cleaner/',
+    toolLabel: '打开分镜整理器 ↗',
   },
 ];
 
