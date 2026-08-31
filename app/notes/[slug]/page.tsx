@@ -32,9 +32,10 @@ export default async function NoteDetailPage({ params }: { params: Promise<{ slu
   if (!note) notFound();
   const related = getRelatedNotes(note);
   const isLongTitle = note.title.length >= 24;
-  const titleDivider = isLongTitle ? note.title.indexOf('：') : -1;
-  const titleLead = titleDivider >= 0 ? note.title.slice(0, titleDivider + 1) : note.title;
-  const titleTail = titleDivider >= 0 ? note.title.slice(titleDivider + 1) : '';
+  const titleBreakToken = note.titleBreakAfter ?? (isLongTitle ? '：' : '');
+  const titleDivider = titleBreakToken ? note.title.indexOf(titleBreakToken) : -1;
+  const titleLead = titleDivider >= 0 ? note.title.slice(0, titleDivider + titleBreakToken.length) : note.title;
+  const titleTail = titleDivider >= 0 ? note.title.slice(titleDivider + titleBreakToken.length) : '';
 
   return (
     <main>

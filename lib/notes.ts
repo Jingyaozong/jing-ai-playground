@@ -11,6 +11,7 @@ export type NoteMeta = {
   issue: string;
   date: string;
   description: string;
+  titleBreakAfter?: string;
   cover: string;
   featured: boolean;
   tags: string[];
@@ -47,6 +48,7 @@ function parseNote(filename: string): NoteDocument {
     issue: String(data.issue ?? '001'),
     date: String(data.date ?? ''),
     description: String(data.description ?? ''),
+    titleBreakAfter: data.titleBreakAfter ? String(data.titleBreakAfter) : undefined,
     cover: String(data.cover ?? 'tips-yellow'),
     featured: Boolean(data.featured),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
