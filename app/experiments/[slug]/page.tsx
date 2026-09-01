@@ -20,6 +20,7 @@ import { ShadowOffsetRecordBoard } from '../../components/shadow-offset-record-b
 import { ContactActionRecordBoard } from '../../components/contact-action-record-board';
 import { StoryboardAuditBoard } from '../../components/storyboard-audit-board';
 import { PosterStoryAuditBoard } from '../../components/poster-story-audit-board';
+import { WaterlineMotionRecordBoard } from '../../components/waterline-motion-record-board';
 import { experimentDetails, getExperimentBySlug } from '../../data/experiments';
 
 export const dynamicParams = false;
@@ -141,6 +142,8 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
                 ? <div className="experiment-reference-image is-contact-layout" aria-label="右手、杯柄与桌面的接触关系示意图"><div className="contact-reference-hand"><i /><i /><i /><b /></div><div className="contact-reference-cup"><i /><b /></div><em>＋</em><span className="mono">GAP → CONTACT → SUPPORT</span></div>
                 : reference.kind === 'storyboard-benchmark'
                   ? <div className="experiment-reference-image is-storyboard-benchmark" aria-label="原故事、人工最低拍点与自动分镜输出的对照关系图"><article><span className="mono">01 / SOURCE</span><b>原故事</b><i /><i /><i /></article><em>→</em><article><span className="mono">02 / BASELINE</span><b>人工拍点</b><i /><i /><i /></article><em>↔</em><article><span className="mono">03 / AUDIT</span><b>自动输出</b><i /><i /><i /></article><strong className="mono">FACTS → MINIMUM BEATS → COMPARE</strong></div>
+                : reference.kind === 'waterline-sequence'
+                  ? <div className="experiment-reference-image is-waterline-sequence" aria-label="红伞先完全撑开，水线随后沿左前到右后的单一方向退去"><span className="mono">CAUSAL ORDER / 因果顺序</span><div><figure><b>01</b><i /><small>伞保持合拢</small></figure><em>→</em><figure><b>02</b><i className="is-open" /><small>伞骨完全锁定</small></figure><em>→</em><figure><b>03</b><i className="is-receding" /><small>水线单向后退</small></figure></div><strong className="mono">CLOSED → LOCKED OPEN → WATER RECEDES</strong></div>
                 : reference.kind === 'poster-inputs-v2'
                   ? <div className="experiment-reference-image is-poster-inputs-v2" aria-label="三张 AI 生成虚构电影海报输入：水中图书馆、果园电梯与海中洗衣机"><figure style={{ backgroundImage: `url("${floodedLibraryPoster.src}")` }}><span className="mono">P04 · FLOODED LIBRARY</span></figure><figure style={{ backgroundImage: `url("${orchardElevatorPoster.src}")` }}><span className="mono">P05 · ORCHARD ELEVATOR</span></figure><figure style={{ backgroundImage: `url("${oceanLaundromatPoster.src}")` }}><span className="mono">P06 · OCEAN LAUNDROMAT</span></figure><b className="mono">AI-GENERATED INPUTS · NO TITLE · NO REAL FILM</b></div>
                 : reference.kind === 'poster-inputs'
@@ -205,6 +208,8 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
             ? <PosterStoryAuditBoard />
           : experiment.recordBoard === 'poster-story-retest'
             ? <PosterStoryAuditBoard mode="retest" />
+          : experiment.recordBoard === 'waterline-motion'
+            ? <WaterlineMotionRecordBoard />
           : <ExperimentRecordBoard />}
 
       <section className="experiment-next section-shell">

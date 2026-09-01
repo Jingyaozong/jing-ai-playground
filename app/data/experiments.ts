@@ -41,7 +41,7 @@ export type ExperimentDetail = {
   sampleTitle?: string;
   sampleDescription?: string;
   reference?: {
-    kind: 'character' | 'reference-pack' | 'light-map' | 'contact-layout' | 'storyboard-benchmark' | 'poster-inputs' | 'poster-inputs-v2';
+    kind: 'character' | 'reference-pack' | 'light-map' | 'contact-layout' | 'storyboard-benchmark' | 'poster-inputs' | 'poster-inputs-v2' | 'waterline-sequence';
     label: string;
     title: string;
     description: string;
@@ -56,7 +56,7 @@ export type ExperimentDetail = {
   }>;
   observationTitle?: string;
   observationDescription?: string;
-  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset' | 'contact-action' | 'storyboard-audit' | 'poster-story-audit' | 'poster-story-retest';
+  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset' | 'contact-action' | 'storyboard-audit' | 'poster-story-audit' | 'poster-story-retest' | 'waterline-motion';
   sources?: Array<{ title: string; url: string; note: string }>;
   nextSteps: string[];
   currentConclusion?: string;
@@ -714,6 +714,77 @@ export const experimentDetails: ExperimentDetail[] = [
     relatedLabel: '阅读短证据账本方法 ↗',
     toolHref: '/tools/poster-story-builder/',
     toolLabel: '打开海报反推故事组装器 ↗',
+  },
+  {
+    slug: 'can-water-recede-after-the-umbrella-opens',
+    number: '010',
+    title: '撑伞以后，水面能沿一个方向连续退去吗？',
+    titleLines: ['撑伞以后，', '水面能沿一个方向，', '连续退去吗？'],
+    englishTitle: 'Can Water Recede After the Umbrella Opens?',
+    category: 'Causal Motion Study',
+    date: '2026.09.01',
+    status: '动作协议完成 · 0 / 9 待执行',
+    demo: true,
+    testCount: 9,
+    testUnit: 'MOTION TESTS',
+    pilotLabel: 'PROTOCOL READY · 0 / 9',
+    notice: '本页来自编辑候选故事《退水以前》的第 11 镜，只建立待执行的视频测试协议。顾岚、档案馆与红伞均为虚构视觉开发内容；目前没有生成视频、真实模型评分或实验结论，三张 Story 概念关键帧也不会被当成动作样本。',
+    summary: '固定同一名虚构角色、同一把红伞、同一座档案馆和同一条斜向水线，把“撑伞”和“退水”拆成三个固定任务；比较一句动作描述、因果状态链和带空间端点的水线账本，找出哪种提示结构更容易守住先后关系与单向连续运动。',
+    question: '红伞完全撑开以后，水面能否才开始后退，并沿左前到右后的同一方向连续退去？',
+    questionLines: ['红伞完全撑开以后，', '水面能否沿同一方向，', '连续退去？'],
+    hypothesis: '只写“撑伞，水退去”可能让两件事同时发生或互相倒置；把合伞、展开、伞骨锁定、水线起点和水线终点写成独立状态，可能提高因果可读性，但约束过多也可能造成停顿、隐性切镜或背景融化。',
+    constants: [
+      '固定使用《退水以前》的虚构人物顾岚：齐下巴黑发、左侧芥末黄发夹、浅蓝衬衫、珊瑚红防水背心',
+      '全程只出现一把珊瑚红长柄伞；镜头开始时保持合拢，撑开后伞盖、伞柄与人物位置不跳变',
+      '固定明亮档案馆、象牙白书架、干燥书页、木地板与右后方出口；机位和焦段在单条样本内不变',
+      '固定六秒、16:9、单一连续镜头；不使用剪辑、转场、镜头重置或遮挡来隐藏动作错误',
+      '固定水线从左前方退向右后方，水深从脚踝高度降为零；不允许倒流、分叉或局部随机消失',
+      '每组执行相同三个任务；记录真实模型、版本、参数与结果文件，空白样本不参与平均分',
+    ],
+    protocolTitle: '先锁住伞，\n再移动水线。',
+    protocolDescription: '三组都执行相同任务，只改变动作描述结构。A 检查一句话的自然表现，B 明确因果状态，C 再加入五个水线端点；不是三个不同模型。',
+    groups: [
+      { code: 'A', title: '一句动作描述', shots: 'A01—A03', variable: '只写“她撑开红伞，水面随后退去”，不拆状态，也不标水线端点', tone: 'blue' },
+      { code: 'B', title: '因果状态链', shots: 'B01—B03', variable: '合伞 → 展开 → 伞骨锁定 → 水开始后退 → 地面干燥', tone: 'yellow' },
+      { code: 'C', title: '状态链＋空间端点', shots: 'C01—C03', variable: '在 B 组基础上增加 0 / 25 / 50 / 75 / 100% 水线位置与固定出口方向', tone: 'mint' },
+    ],
+    reference: {
+      kind: 'waterline-sequence',
+      label: 'SHOT 11 · STORY MOTION BRIEF · NO VIDEO',
+      title: '伞先锁定，水才开始退。',
+      description: '这张图是动作顺序示意，不是生成结果。验收只看一个清楚因果：红伞从合拢到完全撑开并稳定以后，斜水线才从左前方连续退向右后方；人物、书架、出口和书页保持不动。',
+    },
+    sampleTitle: '三种提示结构，\n九个待执行样本。',
+    sampleDescription: '每组依次测试撑伞、退水和组合动作。九个位置全部留空；只有实际生成并登记文件后，才会从“待执行”改成“已生成”或“已评估”。',
+    samples: [
+      { shot: 'A01', title: '只测试撑伞', setting: '一句动作描述 · 6 秒', observation: '检查单把红伞是否能从合拢自然撑开并保持，水面本轮必须完全不动。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'blue', generated: false },
+      { shot: 'A02', title: '只测试斜向退水', setting: '一句动作描述 · 6 秒', observation: '伞从开始到结束保持完全撑开，只让水线沿左前到右后方向退去。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'blue', generated: false },
+      { shot: 'A03', title: '组合撑伞与退水', setting: '一句动作描述 · 6 秒', observation: '检查一句话是否会让伞与水同时动作、顺序倒置或用切镜跳过因果。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'blue', generated: false },
+      { shot: 'B01', title: '四状态撑伞', setting: '因果状态链 · 6 秒', observation: '合拢、展开、锁定、保持四个伞状态逐步发生；水面继续保持静止。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'yellow', generated: false },
+      { shot: 'B02', title: '五状态退水', setting: '因果状态链 · 6 秒', observation: '水线依次经过起点、中段和终点；红伞、人物与背景不发生次级动作。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'yellow', generated: false },
+      { shot: 'B03', title: '锁定以后再退水', setting: '因果状态链 · 6 秒', observation: '重点核对伞骨完全锁定与水线第一次移动之间是否留有可见先后。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'yellow', generated: false },
+      { shot: 'C01', title: '撑伞端点证据', setting: '状态链＋空间端点 · 6 秒', observation: '首帧、半开帧与全开帧的伞柄、伞尖、人物手位和出口坐标都有明确参照。', status: '待执行 · 无视频', framePosition: 'left bottom', tone: 'mint', generated: false },
+      { shot: 'C02', title: '五点水线账本', setting: '状态链＋空间端点 · 6 秒', observation: '记录 0 / 25 / 50 / 75 / 100% 五个水线位置，检查轨迹是否单调后退。', status: '待执行 · 无视频', framePosition: 'right bottom', tone: 'mint', generated: false },
+      { shot: 'C03', title: '完整因果长镜头', setting: '状态链＋空间端点 · 6 秒', observation: '同时验收伞、因果、水线和世界连续性；约束增加后也要检查停顿与背景融化。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'mint', generated: false },
+    ],
+    checks: [
+      { label: 'ORDER', question: '水是否真的等到伞完全打开？', note: '逐帧找到伞骨锁定时刻与水线第一次位移；水提前动、同时动或先退后开都记为因果失败。', tone: 'blue' },
+      { label: 'DIRECTION', question: '水线是否始终朝同一方向后退？', note: '记录五个时间点的水线位置。只要出现倒流、分叉、局部随机消失或无清楚边界，就不能算连续退水。', tone: 'yellow' },
+      { label: 'WORLD LOCK', question: '退水时，其他东西有没有一起融化？', note: '单独检查人物身份、红伞数量、书架直线、书页干燥、地板纹理和右后出口坐标。', tone: 'coral' },
+    ],
+    observationTitle: '不要只写“水退了”，\n要记它从哪里开始错。',
+    observationDescription: '评分拆成红伞完整、因果顺序、水线方向和世界连续四项；失败标签记录最早出现的错误，五点账本只填写真实画面。',
+    recordBoard: 'waterline-motion',
+    nextSteps: [
+      '执行前冻结顾岚人物锚点、单把红伞、档案馆起始帧和水线方向示意，保存同一份输入包。',
+      '先生成 A01、B01、C01 三条纯撑伞样本；若伞本身无法稳定，不继续解释退水结果。',
+      '撑伞通过后再生成 A02、B02、C02，核对五点水线是否单调后退且背景保持。',
+      '最后执行三条组合镜头；把伞骨锁定与水线首动的帧号写进记录台，再决定哪种结构进入 Story 正式制作。',
+    ],
+    currentConclusion: '当前只有完整实验协议和《退水以前》的静态概念帧，真实视频样本为 0 / 9。现在不能判断哪种提示结构更稳定，也不能把静态图中的退水画面当成动作成功证据。',
+    conclusionBadge: 'PROTOCOL ONLY · 0 / 9',
+    relatedHref: '/stories/before-the-water-recedes/',
+    relatedLabel: '返回《退水以前》故事档案 ↗',
   },
 ];
 

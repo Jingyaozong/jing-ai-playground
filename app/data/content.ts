@@ -215,6 +215,17 @@ export const experiments: Experiment[] = [
     stage: 'documented',
     visual: 'posterretest',
   },
+  {
+    id: 'experiment-010',
+    slug: 'can-water-recede-after-the-umbrella-opens',
+    title: '撑伞以后，水面能沿一个方向连续退去吗？',
+    description: '九格动作协议：固定顾岚、单把红伞与档案馆，比较直接动作句、因果状态链和带空间端点的水线账本。目前 0 / 9，没有视频结论。',
+    category: 'Causal Motion Study',
+    date: '2026.09.01',
+    status: '协议完成 · 0 / 9 待执行',
+    stage: 'documented',
+    visual: 'waterline',
+  },
 ];
 
 export const tools: Tool[] = [

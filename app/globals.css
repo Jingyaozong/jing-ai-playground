@@ -3384,6 +3384,37 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .shadow-offset-diagram > strong { position: absolute; left: 17px; bottom: 14px; z-index: 3; color: var(--blue); font-size: 6px; }
 .contact-action-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
 .contact-action-record-board .experiment-record-meta > label:last-child { grid-column: 1/-1; }
+.waterline-motion-record-board .experiment-record-filters > span { align-self: center; color: var(--blue); font-size: 7px; }
+.waterline-motion-record-board .experiment-record-meta > label:nth-child(3), .waterline-motion-record-board .experiment-record-meta > label:nth-child(4) { grid-column: 1/-1; }
+.waterline-frame-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+.is-waterline-sequence { position: relative; display: flex; flex-direction: column; justify-content: space-between; padding: 34px; overflow: hidden; background: linear-gradient(155deg,var(--white) 0 48%,var(--sky) 48% 100%); }
+.is-waterline-sequence::before { content: ''; position: absolute; left: -8%; right: -8%; bottom: 28%; height: 70px; border-block: 2px solid var(--ink); background: rgba(173,218,255,.82); transform: rotate(-6deg); }
+.is-waterline-sequence > span { position: relative; z-index: 2; color: var(--blue); font-size: 8px; font-weight: 800; }
+.is-waterline-sequence > div { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 12px; align-items: center; margin-block: auto; }
+.is-waterline-sequence figure { min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; margin: 0; padding: 18px; border: 2px solid var(--ink); border-radius: 24px; background: rgba(255,255,255,.86); box-shadow: 5px 5px 0 var(--ink); }
+.is-waterline-sequence figure b { align-self: flex-start; color: var(--blue); font-family: var(--display); font-size: 2.4rem; line-height: .8; }
+.is-waterline-sequence figure i { position: relative; width: 72px; height: 116px; border-right: 3px solid var(--ink); transform: rotate(-5deg); }
+.is-waterline-sequence figure i::before { content: ''; position: absolute; top: 3px; right: -2px; width: 28px; height: 76px; border: 2px solid var(--ink); border-radius: 99px; background: var(--coral); }
+.is-waterline-sequence figure i.is-open::before, .is-waterline-sequence figure i.is-receding::before { top: 3px; right: -34px; width: 70px; height: 36px; border-radius: 70px 70px 8px 8px; }
+.is-waterline-sequence figure i::after { content: ''; position: absolute; right: -15px; bottom: 0; width: 17px; height: 17px; border-right: 3px solid var(--ink); border-bottom: 3px solid var(--ink); border-radius: 0 0 12px; }
+.is-waterline-sequence figure i.is-receding { box-shadow: -28px 51px 0 -25px var(--blue), -45px 69px 0 -42px var(--blue); }
+.is-waterline-sequence figure small { color: var(--muted); font-size: 10px; font-weight: 700; text-align: center; }
+.is-waterline-sequence > div > em { color: var(--blue); font-family: var(--display); font-size: 2.3rem; font-style: normal; font-weight: 800; }
+.is-waterline-sequence > strong { position: relative; z-index: 2; align-self: flex-start; padding: 8px 11px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--yellow); color: var(--blue); font-size: 8px; }
+.waterline-motion-diagram { position: relative; min-height: 285px; margin-bottom: 24px; overflow: hidden; border: 2px solid var(--ink); border-radius: 24px; background: linear-gradient(155deg,var(--white) 0 46%,var(--sky) 46%); }
+.waterline-motion-diagram > span { position: absolute; left: 17px; top: 15px; z-index: 4; color: var(--blue); font-size: 7px; font-weight: 800; }
+.waterline-record-umbrella { position: absolute; z-index: 3; right: 13%; top: 53px; width: 112px; height: 150px; }
+.waterline-record-umbrella::before { content: ''; position: absolute; top: 0; left: 8px; width: 95px; height: 48px; border: 2px solid var(--ink); border-radius: 95px 95px 8px 8px; background: var(--coral); }
+.waterline-record-umbrella::after { content: ''; position: absolute; left: 56px; top: 42px; width: 2px; height: 96px; background: var(--ink); }
+.waterline-record-umbrella i { position: absolute; left: 55px; bottom: 3px; width: 22px; height: 19px; border-right: 3px solid var(--ink); border-bottom: 3px solid var(--ink); border-radius: 0 0 14px; }
+.waterline-record-level { position: absolute; z-index: 2; left: -7%; right: -7%; bottom: 30px; height: 92px; border-block: 2px solid var(--ink); background: rgba(173,218,255,.88); transform: rotate(-7deg); }
+.waterline-record-level i { position: absolute; top: -7px; width: 14px; height: 14px; border: 2px solid var(--ink); border-radius: 50%; background: var(--yellow); }
+.waterline-record-level i:nth-child(1) { left: 12%; }
+.waterline-record-level i:nth-child(2) { left: 31%; }
+.waterline-record-level i:nth-child(3) { left: 50%; background: var(--coral); }
+.waterline-record-level i:nth-child(4) { left: 69%; }
+.waterline-record-level i:nth-child(5) { left: 88%; }
+.waterline-motion-diagram > strong { position: absolute; z-index: 4; left: 17px; bottom: 13px; color: var(--blue); font-size: 6px; }
 .contact-action-diagram { position: relative; min-height: 285px; margin-bottom: 24px; overflow: hidden; border: 2px solid var(--ink); border-radius: 24px; background: linear-gradient(150deg,var(--sky) 0 57%,var(--yellow) 57%); }
 .contact-action-diagram::before { content: ''; position: absolute; left: 7%; right: 7%; bottom: 50px; height: 12px; border: 2px solid var(--ink); border-radius: 4px; background: var(--mint); }
 .contact-action-diagram > span { position: absolute; left: 17px; top: 15px; z-index: 4; color: var(--blue); font-size: 7px; font-weight: 750; }
@@ -3466,6 +3497,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .rain-record-board .experiment-record-filters > span { align-self: flex-start; }
   .shadow-offset-record-board .experiment-record-filters > span { align-self: flex-start; }
   .contact-action-record-board .experiment-record-filters > span { align-self: flex-start; }
+  .waterline-motion-record-board .experiment-record-filters > span { align-self: flex-start; }
   .storyboard-audit-record-board .experiment-record-filters > span { align-self: flex-start; }
   .poster-story-audit-board .experiment-record-filters > span { align-self: flex-start; }
   .lighting-record-board .experiment-record-filters > span { align-self: flex-start; }
@@ -3475,6 +3507,14 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .rain-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
   .shadow-offset-record-board .experiment-record-meta > label:last-child { grid-column: auto; }
   .shadow-offset-diagram { min-height: 220px; }
+  .waterline-motion-diagram { min-height: 220px; }
+  .waterline-record-umbrella { right: 4%; top: 42px; transform: scale(.82); transform-origin: right top; }
+  .is-waterline-sequence { padding: 22px; }
+  .is-waterline-sequence > div { grid-template-columns: 1fr; gap: 10px; }
+  .is-waterline-sequence > div > em { display: none; }
+  .is-waterline-sequence figure { min-height: 115px; flex-direction: row; justify-content: space-between; }
+  .is-waterline-sequence figure i { transform: rotate(-5deg) scale(.62); }
+  .waterline-frame-inputs { grid-template-columns: 1fr; }
   .contact-action-diagram { min-height: 220px; }
   .storyboard-audit-map { min-height: 300px; }
   .storyboard-audit-map > div { grid-template-columns: 1fr; gap: 7px; }
