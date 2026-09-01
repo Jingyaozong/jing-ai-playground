@@ -1,5 +1,6 @@
 export type Story = {
   id: string;
+  number: string;
   slug?: string;
   title: string;
   englishTitle: string;
@@ -38,6 +39,7 @@ export type Tool = {
 export const stories: Story[] = [
   {
     id: 'story-001',
+    number: '001',
     slug: 'she-forgets-yesterday',
     title: '她每天醒来都会忘记昨天',
     englishTitle: 'She Forgets Yesterday',
@@ -51,6 +53,7 @@ export const stories: Story[] = [
   },
   {
     id: 'story-002',
+    number: '002',
     slug: 'no-boat-at-pier-seven',
     title: '第七码头没有船',
     englishTitle: 'No Boat at Pier Seven',
@@ -64,6 +67,7 @@ export const stories: Story[] = [
   },
   {
     id: 'story-003',
+    number: '003',
     slug: 'before-the-rain-ends',
     title: '雨停以前',
     englishTitle: 'Before the Rain Ends',
@@ -77,6 +81,7 @@ export const stories: Story[] = [
   },
   {
     id: 'story-004',
+    number: '004',
     slug: 'shadow-arrives-five-minutes-early',
     title: '影子比她早到五分钟',
     englishTitle: 'Her Shadow Arrives Five Minutes Early',
@@ -90,6 +95,7 @@ export const stories: Story[] = [
   },
   {
     id: 'story-005',
+    number: '005',
     slug: 'objects-remember-the-last-sentence',
     title: '她碰过的东西，会记住最后一句话',
     englishTitle: 'Objects Remember the Last Sentence',
@@ -103,6 +109,7 @@ export const stories: Story[] = [
   },
   {
     id: 'story-006',
+    number: '006',
     slug: 'before-the-water-recedes',
     title: '退水以前',
     englishTitle: 'Before the Water Recedes',

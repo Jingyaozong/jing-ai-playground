@@ -67,7 +67,7 @@ export default function Home() {
       <Reveal><section className="stories-preview section-shell">
         <div className="section-index mono">Archive A / AI Stories</div>
         <div className="section-title-row compact"><div><p className="eyebrow mono">Stories</p><h2>把脑子里的<br />奇怪故事做出来。</h2></div><Link className="text-link" href="/stories">View all stories ↗</Link></div>
-        <div className="story-grid">{recentStories.map((story, index) => <StoryCard story={story} index={index} key={story.id} />)}</div>
+        <div className="story-grid">{recentStories.map((story, index) => <StoryCard story={story} isLatest={index === 0} key={story.id} />)}</div>
       </section></Reveal>
 
       <Reveal><section className="experiments-preview dark-section"><div className="dark-inner">
