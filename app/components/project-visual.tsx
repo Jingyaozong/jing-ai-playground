@@ -6,6 +6,7 @@ import rainKitchenFrame from '../assets/generated/before-the-rain-ends-frame-01.
 import earlyShadowFrame from '../assets/generated/shadow-arrives-five-minutes-early-frame-03.webp';
 import objectMemoryFrame from '../assets/generated/objects-remember-frame-03.webp';
 import memoryMorningFrame from '../assets/generated/she-forgets-yesterday-frame-01-v2.webp';
+import waterRecedesFrame from '../assets/generated/before-the-water-recedes-frame-01.png';
 
 const generatedVisuals = {
   memory: { image: memoryMorningFrame, caption: 'Scene 01 · AI concept frame · no video' },
@@ -17,6 +18,7 @@ const generatedVisuals = {
   rainstudy: { image: rainKitchenFrame, caption: 'Story concept frame · no video' },
   earlyshadow: { image: earlyShadowFrame, caption: 'AI concept frame · no video' },
   echo: { image: objectMemoryFrame, caption: 'AI concept frame · no video' },
+  waterrecedes: { image: waterRecedesFrame, caption: 'Editorial candidate · 3 concept frames · no video' },
 };
 
 export function ProjectVisual({ variant, label }: { variant: string; label: string }) {

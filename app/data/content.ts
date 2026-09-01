@@ -100,6 +100,19 @@ export const stories: Story[] = [
     stage: 'documented',
     visual: 'echo',
   },
+  {
+    id: 'story-006',
+    slug: 'before-the-water-recedes',
+    title: '退水以前',
+    englishTitle: 'Before the Water Recedes',
+    description: '档案安全员顾岚走进一座被清水淹没、书页却全干的图书馆。她只能带走一条撤离路线，并用撑开红伞的动作删除全部预演。',
+    type: 'Editorial Story Candidate',
+    date: '2026.09',
+    duration: '01:12',
+    status: '编辑候选 · 待荆确认',
+    stage: 'documented',
+    visual: 'waterrecedes',
+  },
 ];
 
 export const experiments: Experiment[] = [

@@ -27,6 +27,10 @@ import memoryFrame02 from '../../assets/generated/she-forgets-yesterday-frame-02
 import memoryFrame03 from '../../assets/generated/she-forgets-yesterday-frame-03-v2.webp';
 import memoryFrame04 from '../../assets/generated/she-forgets-yesterday-frame-04-v2.webp';
 import storyKeyframes from '../../assets/generated/she-forgets-yesterday-keyframes.png';
+import waterRecedesCharacterAnchor from '../../assets/generated/before-the-water-recedes-character-anchor.png';
+import waterRecedesFrame01 from '../../assets/generated/before-the-water-recedes-frame-01.png';
+import waterRecedesFrame02 from '../../assets/generated/before-the-water-recedes-frame-02.png';
+import waterRecedesFrame03 from '../../assets/generated/before-the-water-recedes-frame-03.png';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 import { EditorialHeading, editorialLines } from '../../components/editorial-heading';
@@ -70,6 +74,8 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         ? [shadowFrame01, shadowFrame02, shadowFrame03, shadowFrame04]
         : story.slug === 'objects-remember-the-last-sentence'
           ? [objectMemoryFrame01, objectMemoryFrame02, objectMemoryFrame03, objectMemoryFrame04]
+        : story.slug === 'before-the-water-recedes'
+          ? [waterRecedesFrame01, waterRecedesFrame02, waterRecedesFrame03]
         : null;
   const characterAnchorImage = story.slug === 'she-forgets-yesterday'
     ? memoryCharacterAnchor
@@ -81,6 +87,8 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         ? shadowCharacterAnchor
         : story.slug === 'objects-remember-the-last-sentence'
           ? objectMemoryCharacterAnchor
+        : story.slug === 'before-the-water-recedes'
+          ? waterRecedesCharacterAnchor
         : null;
   const ending = story.ending ?? { label: 'CURRENT ENDING', copy: '故事还没有结束。\n它正在被做出来。', href: '/experiments/', link: '查看相关实验 ↗' };
   const related = story.related ?? { href: '/notes/ninety-second-storyboard/', label: '阅读拆镜方法 ↗' };
@@ -98,7 +106,18 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
             <p>{story.logline}</p>
             <div className="story-title-footer mono"><span>{story.englishTitle}</span><span>{story.date}</span></div>
           </div>
-          {story.heroVisual === 'echo-cup' ? (
+          {story.heroVisual === 'water-ledger' ? (
+            <div className="water-ledger-card" aria-label="一条路线与一次退水选择的概念视觉">
+              <div className="water-ledger-head mono"><span>ROUTE LEDGER / 撤离证据</span><b>12:00</b></div>
+              <div className="water-ledger-stage" aria-hidden="true">
+                <div className="water-ledger-route"><i /><i /><i /><i /><i /><i /><i /></div>
+                <div className="water-ledger-umbrella"><span /><b /></div>
+                <div className="water-ledger-level"><span className="mono">WATERLINE</span></div>
+              </div>
+              <div className="water-ledger-choice mono"><span><b>09</b> ROUTES SEEN</span><span><b>01</b> ROUTE KEPT</span></div>
+              <div className="water-ledger-foot mono"><span>SKIN STORES</span><span>UMBRELLA ERASES</span><b>ONE CHOICE ↗</b></div>
+            </div>
+          ) : story.heroVisual === 'echo-cup' ? (
             <div className="echo-cup-card" aria-label="白杯接触后播放最后一句话的概念视觉">
               <div className="echo-cup-head mono"><span>TOUCH TO HEAR / 接触后播放</span><b>01×</b></div>
               <div className="echo-cup-stage" aria-hidden="true">
@@ -180,9 +199,9 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
           <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.stills.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.stills.heading)} /></div><p>{sectionCopy.stills.description}</p></div>
           {story.characterAnchor && <article className={`story-character-anchor${characterAnchorImage ? '' : ' is-brief'}`} id="character-anchor">
             {characterAnchorImage ? <div className="story-character-anchor-image" role="img" aria-label={`${story.characterAnchor.name} AI 角色锚点图`} style={{ backgroundImage: `url("${characterAnchorImage.src}")` }} /> : <div className="story-character-anchor-image is-brief" role="img" aria-label={`${story.characterAnchor.name}角色与道具锚点任务书`}><div className="anchor-brief-person" aria-hidden="true"><i /><b /></div><div className="anchor-brief-cup" aria-hidden="true"><span /></div><div className="anchor-brief-rule mono" aria-hidden="true">FACE / HAND / CUP<br />LOCK BEFORE GENERATION</div></div>}
-            <div className="story-character-anchor-copy"><span className="mono">CHARACTER ANCHOR / AI 视觉开发</span><h3>{story.characterAnchor.titleLines ? story.characterAnchor.titleLines.map((line) => <span key={line}>{line}</span>) : story.characterAnchor.title}</h3><p>{story.characterAnchor.copy}</p><ul>{story.characterAnchor.locks.map((lock) => <li key={lock}>{lock}</li>)}</ul><small className="mono">{characterAnchorImage ? 'GENERATED 2026.08 · FICTIONAL CHARACTER' : 'BRIEF 2026.08 · NO GENERATED IMAGE'}</small></div>
+            <div className="story-character-anchor-copy"><span className="mono">CHARACTER ANCHOR / AI 视觉开发</span><h3>{story.characterAnchor.titleLines ? story.characterAnchor.titleLines.map((line) => <span key={line}>{line}</span>) : story.characterAnchor.title}</h3><p>{story.characterAnchor.copy}</p><ul>{story.characterAnchor.locks.map((lock) => <li key={lock}>{lock}</li>)}</ul><small className="mono">{characterAnchorImage ? (story.characterAnchor.generatedLabel ?? 'GENERATED 2026.08 · FICTIONAL CHARACTER') : 'BRIEF 2026.08 · NO GENERATED IMAGE'}</small></div>
           </article>}
-          <div className="story-still-grid">
+          <div className={`story-still-grid${story.stills.length === 3 ? ' is-three' : ''}`}>
             {story.stills.map((still, index) => <article className="story-still-card" key={still.shot}><div className={`story-still-placeholder tone-${still.tone}${stillsGenerated ? ' has-generated-frame' : ' is-brief'}`} aria-label={stillsGenerated ? `${still.title} AI 概念关键帧` : `${still.title} 待生成关键帧任务书`} style={stillsGenerated ? { backgroundImage: `url("${(individualFrames?.[index] ?? storyKeyframes).src}")`, backgroundPosition: individualFrames ? 'center' : still.framePosition, backgroundSize: individualFrames ? 'cover' : '200% 200%' } : undefined}><span className="story-frame-corner corner-a" /><span className="story-frame-corner corner-b" />{!stillsGenerated && <div className="story-frame-brief mono" aria-hidden="true"><span>IMAGE<br />PENDING</span><strong>{String(index + 1).padStart(2, '0')}</strong><i /></div>}<b className="mono">{stillsGenerated ? 'AI 概念关键帧' : '待生成 · 画面任务书'}</b></div><div className="story-still-copy"><div className="mono"><span>{still.shot}</span><span>{still.status}</span></div><h3>{still.title}</h3><p>{still.direction}</p><small className="mono">FRAME {String(index + 1).padStart(2, '0')} / {String(story.stills.length).padStart(2, '0')}</small></div></article>)}
           </div>
         </div>

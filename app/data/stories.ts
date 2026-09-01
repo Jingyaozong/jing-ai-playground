@@ -9,7 +9,7 @@ export type StoryDetail = {
   duration: string;
   status: string;
   draft: boolean;
-  heroVisual?: 'memory-letter' | 'pier-ticket' | 'personal-rain' | 'early-shadow' | 'echo-cup';
+  heroVisual?: 'memory-letter' | 'pier-ticket' | 'personal-rain' | 'early-shadow' | 'echo-cup' | 'water-ledger';
   draftNotice?: string;
   logline: string;
   premise: string;
@@ -29,6 +29,7 @@ export type StoryDetail = {
     titleLines?: string[];
     copy: string;
     locks: string[];
+    generatedLabel?: string;
   };
   ending?: { label: string; copy: string; href: string; link: string };
   related?: { href: string; label: string };
@@ -750,6 +751,121 @@ export const storyDetails: StoryDetail[] = [
       '复核人物锚点与四张概念关键帧中的脸、发夹、服装、白杯和旧家配色，再决定是否锁为正式视觉参考。',
       '用接触动作卡分别测试镜头 08、09、10，记录接触时点、手部完整、道具保持和承重逻辑。',
       '确认四句虚构台词与声音表演方向后，按触发时间线制作临时配音和动作拟音。',
+    ],
+  },
+  {
+    slug: 'before-the-water-recedes',
+    number: '006',
+    title: '退水以前',
+    titleLines: ['退水以前'],
+    englishTitle: 'Before the Water Recedes',
+    type: 'Editorial Story Candidate',
+    date: '2026.09',
+    duration: '01:12',
+    status: '编辑候选 · 待荆确认',
+    draft: true,
+    heroVisual: 'water-ledger',
+    draftNotice: '这是从 EXP.009 的 A01 样本继续发展的 AI 编辑候选。顾岚、档案馆与全部情节均为虚构；人物锚点和三张概念关键帧生成于 2026-09-01，用于视觉开发。它尚未由荆确认，也没有生成视频或真实制作结果。',
+    logline: '档案安全员顾岚进入一座被清水淹没、书页却全干的图书馆。水面正在预演今晚被淹的街区；她只能把一条撤离路线写在身上，再撑开红伞，让所有预演永远消失。',
+    premise: '这不是一个关于预测灾难的故事，而是一个关于取舍的故事：当你只能带走一条路，是否愿意让剩下的预言全部消失？',
+    premiseLines: ['如果只能带走一条路，', '你愿意让所有预言，', '从此消失吗？'],
+    sectionCopy: {
+      beats: { eyebrow: '01 / The countdown', heading: '十二分钟，\n从全部路线到一条路。', description: '馆内时间从 11:48 走向正午。六个拍点只推进三件事：看懂水面、接受限制、做出不可撤销的选择。' },
+      rules: { eyebrow: '02 / World rules', heading: '三条规则，\n把预警变成选择。', description: '水、皮肤与红伞各自承担一种叙事功能。规则越少，观众越容易在七十二秒内看懂代价。' },
+      stills: { eyebrow: '03 / Visual anchors', heading: '一个人物锚点，\n三个决定时刻。', description: '人物与三张关键帧是 AI 视觉开发素材。它们先验证服装、红伞、水位和空间方向，不代表视频已经制作。' },
+      script: { eyebrow: '04 / Screenplay draft', heading: '七十二秒，\n只带走一条路。', description: '六场戏按画面行为编排，不用旁白解释规则。唯一一句台词仍是编辑草案，等待荆确认。' },
+      shots: { eyebrow: '05 / Shot list', heading: '十二个镜头，\n从进水到退水。', description: '十二镜各六秒，先把空间、因果和三个高风险动作拆清楚，再决定是否进入视频生成。' },
+    },
+    shotSummary: ['12 SHOTS', '72 SECONDS', '1 ROUTE', 'DRAFT 01'],
+    stillsGenerated: true,
+    characterAnchor: {
+      name: '顾岚',
+      title: '先锁住顾岚，再让水面改变。',
+      titleLines: ['先锁住顾岚，', '再让水面改变。'],
+      copy: '顾岚是虚构的档案安全员。人物锚点固定齐下巴黑发、左侧芥末黄发夹、浅蓝工作衬衫与珊瑚红防水背心；道具锚点固定芥末黄工具包和唯一一把珊瑚红长柄伞。任何真实人物都不是她的原型。',
+      locks: ['齐下巴黑发＋左侧芥末黄发夹＋克制表情', '浅蓝工作衬衫＋珊瑚红防水背心＋深藏蓝阔腿裤', '薄荷绿雨靴＋芥末黄工具包＋唯一一把珊瑚红长柄伞'],
+      generatedLabel: 'GENERATED 2026.09 · FICTIONAL CHARACTER',
+    },
+    ending: { label: 'EDITORIAL CANDIDATE', copy: '故事已经有了路线。\n还没有成为荆的作品。', href: '/experiments/does-the-short-evidence-ledger-travel/', link: '回看来源实验 ↗' },
+    related: { href: '/notes/poster-to-story-evidence-ledger/', label: '阅读证据账本方法 ↗' },
+    beats: [
+      { time: '11:48', title: '清水已经没过脚踝', copy: '顾岚从左侧安全门进入档案馆。水面平静，书架没有倒，所有摊开的纸页却完全干燥。', tone: 'blue' },
+      { time: '11:51', title: '水面映出不存在的街道', copy: '她低头时，倒影不是天花板，而是几条正在涨水的街。每次水纹散开，路线都会换一组。', tone: 'yellow' },
+      { time: '11:54', title: '手机与纸张都带不走预演', copy: '拍下的画面只剩普通水面；她把路线抄进干书，墨迹也在离开水面后消失。', tone: 'coral' },
+      { time: '11:57', title: '她认出一条通往旧社区的路', copy: '九条街里，只有一条连接低洼社区与高架站。她不再继续寻找更完整的答案。', tone: 'mint' },
+      { time: '11:59', title: '路线被写在左臂上', copy: '活着的皮肤能留下水面的信息。顾岚用防水笔把七个转向点写到左前臂，逐一复核。', tone: 'yellow' },
+      { time: '12:00', title: '红伞打开，水开始退', copy: '她撑开馆里唯一一把红伞。水沿对角线退去，所有预演归零；她只带着手臂上的一条路线离开。', tone: 'blue' },
+    ],
+    rules: [
+      { label: 'THE WATER', title: '水面只预演今晚的淹水路线', copy: '预演会随水纹切换，无法暂停。照片、录像与普通抄写只能留下正常水面，不能复制路线。' },
+      { label: 'THE SKIN', title: '只有活着的皮肤能把路线带出去', copy: '写在皮肤上的转向点不会消失，但容量有限。顾岚必须主动选择一条路线，而不是带走完整预测。' },
+      { label: 'THE UMBRELLA', title: '撑开红伞会退水，也会删除全部预演', copy: '伞只能打开一次。动作发生后馆内恢复干燥，水面不再出现未来，选择无法重来。' },
+    ],
+    stills: [
+      { shot: 'FRAME 01', title: '唯一一把伞', direction: '明亮档案馆被浅蓝清水覆盖。顾岚从左侧进入，唯一一把合拢的珊瑚红伞立在远处，先建立空间方向与关键道具。', status: 'AI 概念关键帧 · 2026-09-01', framePosition: 'left top', tone: 'blue' },
+      { shot: 'FRAME 02', title: '把路线写在手臂上', direction: '中近景锁住左前臂、黑色防水笔和干燥书页。路线只用抽象线段表达，不生成可误读的地名或界面文字。', status: 'AI 概念关键帧 · 2026-09-01', framePosition: 'right top', tone: 'yellow' },
+      { shot: 'FRAME 03', title: '退水以前', direction: '顾岚撑开唯一一把珊瑚红伞。水位沿明确对角线退去，木地板重新出现，出口保持在画面右后方。', status: 'AI 概念关键帧 · 2026-09-01', framePosition: 'left bottom', tone: 'coral' },
+    ],
+    production: [
+      { phase: '来源与命题', status: '完成草案', note: '从 EXP.009 的 A01 短证据账本继续发展；来源关系与编辑候选身份已明确标注。' },
+      { phase: '人物与世界规则', status: '完成草案', note: '已建立虚构角色顾岚，并把水面、皮肤和红伞收束为三条可拍摄规则。' },
+      { phase: '72 秒剧本', status: '完成草案', note: '六场共 72 秒，冲突从读取全部路线收束到只带走一条路线。' },
+      { phase: '十二镜分镜', status: '完成草案', note: '十二镜共 72 秒，每镜六秒；空间方向与关键动作已拆开。' },
+      { phase: '人物锚点', status: '完成草案', note: '已生成顾岚全身视觉锚点，锁定发夹、服装、工具包、雨靴与单把红伞。' },
+      { phase: '概念关键帧', status: '完成草案', note: '已生成进入、水上记录与撑伞退水三张概念关键帧；均为静态视觉开发素材。' },
+      { phase: '视频与声音', status: '待开始', note: '尚未生成视频、录制台词或完成拟音；需先测试写字、撑伞和退水三个高风险动作。' },
+    ],
+    script: [
+      { timecode: '00:00—00:12', scene: '档案馆入口 / 进入', visual: '顾岚推开安全门，薄荷绿雨靴踏入脚踝深的清水。远处只有一把合拢的红伞，摊开的书页保持干燥。', voice: '无对白。', sound: '门轴、浅水脚步、远处换气扇；不使用神秘配乐。' },
+      { timecode: '00:12—00:24', scene: '书架通道 / 看懂水面', visual: '俯拍水面。九条抽象街线依次亮起，倒影里出现今晚的水位；顾岚用书架编号确认方向。', voice: '馆内广播草案：“距离正午，还有九分钟。”', sound: '水纹、旧广播底噪；路线变化用细小纸张摩擦声提示。' },
+      { timecode: '00:24—00:36', scene: '阅览桌 / 复制失败', visual: '她拍照，屏幕里只剩普通水面；再把路线写进干书，墨迹从纸上退去。她看向自己的左臂。', voice: '无对白。', sound: '快门、笔尖、墨迹消失后的短暂静默。' },
+      { timecode: '00:36—00:49', scene: '中央通道 / 选择', visual: '九条路线在水面交错。她认出通往低洼社区的七个转向点，划掉其余路线，把这七点写在左前臂。', voice: '顾岚低声草案：“只带这一条。”', sound: '防水笔连续七次短划；其余环境声逐渐变薄。' },
+      { timecode: '00:49—01:02', scene: '红伞前 / 删除预演', visual: '她逐点复核手臂，取下红伞，停一拍后撑开。水面从左前方向右后方退去，路线同时消失。', voice: '无对白。', sound: '伞骨弹开、连续退水声；不使用爆炸或魔法音效。' },
+      { timecode: '01:02—01:12', scene: '安全门 / 离开', visual: '干燥木地板重新出现。顾岚收起已无作用的伞，左臂路线仍在；她从右侧出口离开，书页全部空白。', voice: '广播只剩整点提示音。', sound: '雨靴踩木地板、单次整点音、关门。' },
+    ],
+    shotList: [
+      { shot: '01', duration: 6, size: '入口大全景', visual: '顾岚从左侧门进入被清水覆盖的明亮档案馆。', camera: '固定', sound: '门轴与水步' },
+      { shot: '02', duration: 6, size: '脚部特写', visual: '薄荷绿雨靴落入脚踝深的水，干书页倒映在旁。', camera: '低机位跟半步', sound: '一次清楚落水声' },
+      { shot: '03', duration: 6, size: '通道远景', visual: '唯一一把合拢的红伞立在通道尽头，顾岚停在左侧。', camera: '缓慢推近', sound: '换气扇与水纹' },
+      { shot: '04', duration: 6, size: '水面俯拍', visual: '九条抽象街线在水面依次出现，不生成地名。', camera: '垂直固定', sound: '广播倒计时' },
+      { shot: '05', duration: 6, size: '书页近景', visual: '干燥书页映出其中一条路线，手指沿七个转向点确认。', camera: '轻微横移', sound: '纸张与指尖' },
+      { shot: '06', duration: 6, size: '桌面中近景', visual: '手机拍摄失败，写进纸页的线也逐段消失。', camera: '固定匹配切', sound: '快门与笔尖' },
+      { shot: '07', duration: 6, size: '人物近景', visual: '顾岚看向左前臂，再看向低洼社区方向，做出选择。', camera: '缓慢推近', sound: '环境声变薄' },
+      { shot: '08', duration: 6, size: '手臂特写', visual: '右手用防水笔在左前臂画下七个连续转向点。', camera: '固定', sound: '七次短划' },
+      { shot: '09', duration: 6, size: '极近景', visual: '手指沿左臂路线逐点复核，最后一点与水面路线对齐。', camera: '固定', sound: '低声“只带这一条”' },
+      { shot: '10', duration: 6, size: '手伞近景', visual: '右手握住唯一一把红伞，伞尖离地，人物先停一拍。', camera: '侧面固定', sound: '伞柄离架' },
+      { shot: '11', duration: 6, size: '馆内大全景', visual: '红伞完整撑开，水沿对角线连续退去，木地板显露。', camera: '固定长镜头', sound: '伞骨与退水' },
+      { shot: '12', duration: 6, size: '出口远景', visual: '顾岚收伞，从右侧出口离开；手臂路线可见，书页恢复空白。', camera: '固定', sound: '木地板脚步与关门' },
+    ],
+    promptGuide: {
+      identityLock: 'same fictional East Asian Chinese woman, early 30s, jaw-length straight black hair, small mustard-yellow hair clip on her left side, calm observant expression, pale sky-blue utility shirt, coral-red waterproof work vest, dark navy wide-leg trousers, mint-green rubber boots, mustard canvas satchel, consistent natural face and hands',
+      styleLock: 'bright cinematic magical realism, sunlit public archive library, ivory shelving, pale blue ankle-deep clear water, coral mustard mint accents, clean daylight, natural photographic texture, restrained performance, readable spatial direction, 16:9, no on-screen text',
+      negative: 'different person, hairstyle change, missing hair clip, wardrobe change, duplicate woman, duplicate umbrella, open umbrella before shot 11, dark horror, neon cyberpunk, dirty floodwater, floating books, wet pages, extra hands, fused fingers, warped arm, illegible generated text, subtitles, logo, watermark',
+    },
+    prompts: [
+      { shot: '01', title: '从左侧进入水面', prompt: 'Wide locked shot in a bright flooded archive library. Gu Lan enters through the left safety door and pauses in ankle-deep clear pale-blue water; one closed coral umbrella stands far ahead.', constraint: '人物只出现一次；入口保持左、出口保持右后方；书页干燥。' },
+      { shot: '02', title: '雨靴落进清水', prompt: 'Low close-up of the same mint-green rubber boots taking one careful step into ankle-deep clear water. Dry open pages reflect beside the boot.', constraint: '只完成一步；水位不变，书页不湿、不漂浮。' },
+      { shot: '03', title: '远处唯一的红伞', prompt: 'Symmetrical aisle view. Gu Lan stands on the left third while exactly one closed coral-red long umbrella remains upright at the far end.', constraint: '只出现一把伞且保持合拢；人物与伞不换侧。' },
+      { shot: '04', title: '九条路线浮现', prompt: 'Top-down locked view of clear water showing nine abstract thin route lines and simple turn nodes, reflected as physical light patterns rather than a digital interface.', constraint: '不生成地名、数字或界面；水下不出现城市模型。' },
+      { shot: '05', title: '沿七个点确认', prompt: 'Close view of one dry open archive book above clear water. Gu Lan’s index finger follows seven abstract turn nodes reflected across the blank page.', constraint: '书页保持干燥；手指完整，路线不变成可读文字。' },
+      { shot: '06', title: '复制失败', prompt: 'Locked tabletop shot. A phone camera shows only ordinary water while black marker lines on a dry blank page fade away from left to right.', constraint: '屏幕不生成 UI 文字；纸张不湿，消失方向单一。' },
+      { shot: '07', title: '决定只带一条', prompt: 'Restrained medium close-up of Gu Lan looking from the water route to her bare left forearm, then making one small decisive nod.', constraint: '脸、发夹与服装稳定；不哭、不说话、不夸张表演。' },
+      { shot: '08', title: '路线写在左臂', prompt: 'Clear close-up. Her right hand uses one black waterproof marker to draw seven simple connected turn marks along her left forearm.', constraint: '固定左右手关系；每个点依次出现，禁止多指、穿模和生成文字。' },
+      { shot: '09', title: '逐点复核路线', prompt: 'Extreme close-up matching the previous shot. Her right index finger checks the seven marks on her left forearm one by one and stops at the final node.', constraint: '路线形状与镜头 08 一致；不新增点，不改变手臂结构。' },
+      { shot: '10', title: '拿起唯一一把伞', prompt: 'Side close-up of her right hand gripping the handle of the same closed coral umbrella, lifting its tip from the floor, then holding still.', constraint: '伞保持合拢；只出现一只手与一把伞，不提前退水。' },
+      { shot: '11', title: '撑伞以后退水', prompt: 'Wide locked shot. Gu Lan opens the single coral umbrella fully; only after the canopy locks, the clear water recedes diagonally from front-left to back-right and reveals dry wood flooring.', constraint: '顺序必须是握持→撑开→锁定→退水；人物、伞与书架保持稳定。' },
+      { shot: '12', title: '带着一条路离开', prompt: 'Wide locked exit view. On the dry floor Gu Lan closes the umbrella, keeps the seven marks visible on her left forearm, and walks out through the right-side door.', constraint: '路线保留，书页空白；不再出现水或第二把伞。' },
+    ],
+    motionTests: [
+      { shot: '08', title: '右手在左前臂连续写字', duration: '6 秒', purpose: '验证手部结构、左右关系与路线累计是否稳定。', action: '笔尖接触 → 七次短划 → 路线完整 → 手离开。', pass: '左臂稳定、右手五指完整，七个节点依次增加且不漂移。', fail: '手指融合、笔穿过皮肤、路线跳变、节点重复或左右手互换。', status: '待生成' },
+      { shot: '10', title: '合伞保持与单手取伞', duration: '6 秒', purpose: '验证唯一道具在抓握和离地过程中不复制、不提前展开。', action: '手接近 → 握住弯柄 → 伞尖离地 → 停一拍。', pass: '始终只有一把合拢红伞，握点与伞长不变。', fail: '伞复制、自动撑开、柄形改变、手穿柄或伞尖跳位。', status: '待生成' },
+      { shot: '11', title: '撑开以后水才退', duration: '6 秒', purpose: '验证撑伞动作与空间退水的因果顺序。', action: '握持 → 伞骨撑开并锁定 → 水线沿单一对角线后退。', pass: '伞先完整打开，水随后连续退去；人物、地板和书架无形变。', fail: '水提前退、伞盖穿人、出现第二把伞、水线倒流或背景融化。', status: '待生成' },
+    ],
+    nextSteps: [
+      '由荆确认“只能带走一条路线”的核心选择，以及顾岚最后是否收起红伞。',
+      '复核人物锚点与三张关键帧中的脸、发夹、服装、雨靴、工具包和唯一红伞，再决定是否锁为正式参考。',
+      '优先测试镜头 08、10、11，分别记录手臂书写、单手取伞与撑伞退水的通过条件。',
+      '故事确认后再制作广播、笔尖、伞骨与退水声音时间线；当前不生成或模仿任何真实人物声线。',
     ],
   },
 ];
