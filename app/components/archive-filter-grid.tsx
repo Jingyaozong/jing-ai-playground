@@ -59,8 +59,7 @@ export function ArchiveFilterGrid(props: ArchiveFilterGridProps) {
               return <Reveal key={story.id}><StoryCard story={story} index={index} /></Reveal>;
             })
           : (filter === 'all' ? props.items : props.items.filter((experiment) => experiment.stage === filter)).map((experiment) => {
-              const index = props.items.findIndex((item) => item.id === experiment.id);
-              return <Reveal key={experiment.id}><ExperimentCard experiment={experiment} index={index} /></Reveal>;
+              return <Reveal key={experiment.id}><ExperimentCard experiment={experiment} isLatest={experiment.id === props.items[0]?.id} /></Reveal>;
             })}
       </div>
     </>

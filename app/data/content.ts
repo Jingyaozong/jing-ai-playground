@@ -14,6 +14,7 @@ export type Story = {
 
 export type Experiment = {
   id: string;
+  number: string;
   slug?: string;
   title: string;
   description: string;
@@ -118,6 +119,7 @@ export const stories: Story[] = [
 export const experiments: Experiment[] = [
   {
     id: 'experiment-001',
+    number: '001',
     slug: 'forty-shots-one-character',
     title: '同一个她，四十个镜头',
     description: '跨景别、光线、情绪和动作测试角色一致性。现有一张四格静态 Pilot 样本板；正式四十镜视频测试尚未开始。',
@@ -129,6 +131,7 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-002',
+    number: '002',
     slug: 'what-reference-images-lock',
     title: '参考图到底锁住了什么？',
     description: '三组、四种相同镜头任务，对比无参考、单张正面锚点与三张多角度参考。协议已完成，目前 0 / 12，无模型结论。',
@@ -140,6 +143,7 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-005',
+    number: '003',
     slug: 'can-local-rain-follow-a-character',
     title: '局部雨区能否稳定跟随人物？',
     description: '九格对照协议：让三个相同高风险镜头分别使用纯文字、空间约束和角色锚点条件。目前 0 / 9，没有视频结论。',
@@ -151,6 +155,7 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-006',
+    number: '004',
     slug: 'can-one-light-survive-a-reverse-angle',
     title: '同一盏灯换机位后还能保持方向吗？',
     description: '十二格对照协议：固定北窗冷光与桌灯暖光，比较氛围词、世界坐标账本和账本加起点证据。目前 0 / 12，没有视频结论。',
@@ -162,6 +167,7 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-007',
+    number: '005',
     slug: 'can-a-shadow-move-on-its-own',
     title: '影子能否在人物静止时独立行动？',
     description: '九格对照协议：固定人物、硬光与三个影子任务，比较直接描述、动作账本和分层合成。目前 0 / 9，没有视频结论。',
@@ -173,6 +179,7 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-008',
+    number: '006',
     slug: 'can-one-hand-lift-the-same-cup',
     title: '一只手能否稳定拿起同一个杯子？',
     description: '九格对照协议：固定同一只手、同一个杯子与三个接触任务，比较普通动作句、五状态顺序和端点证据。目前 0 / 9，没有视频结论。',
@@ -184,6 +191,7 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-004',
+    number: '007',
     slug: 'where-auto-storyboarding-loses-the-story',
     title: '自动分镜机，第一次走神',
     description: '九格对照协议：三篇固定短故事分别经过直接拆镜、固定字段和先提拍点三种流程，再与人工最低拍点基准核对。目前 0 / 9，没有输出结论。',
@@ -195,6 +203,7 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-003',
+    number: '008',
     slug: 'can-a-fictional-poster-grow-a-story',
     title: '让 AI 先画一张不会发生的海报',
     description: '三张固定海报均完成直接反推、证据优先和三栏反推，共九份原始文本与编辑初审；当前结论只适用于本轮固定样本。',
@@ -206,6 +215,7 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-009',
+    number: '009',
     slug: 'does-the-short-evidence-ledger-travel',
     title: '短证据账本，换海报以后还能成立吗？',
     description: '三张新生成虚构海报各保留三份短证据账本故事，共九份原始文本与编辑初审；来源边界稳定，但故事机制仍出现趋同。',
@@ -217,6 +227,7 @@ export const experiments: Experiment[] = [
   },
   {
     id: 'experiment-010',
+    number: '010',
     slug: 'can-water-recede-after-the-umbrella-opens',
     title: '撑伞以后，水面能沿一个方向连续退去吗？',
     description: '九格动作协议：固定顾岚、单把红伞与档案馆，比较直接动作句、因果状态链和带空间端点的水线账本。目前 0 / 9，没有视频结论。',

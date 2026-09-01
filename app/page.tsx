@@ -72,7 +72,7 @@ export default function Home() {
 
       <Reveal><section className="experiments-preview dark-section"><div className="dark-inner">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Experiments</p><h2>不急着有用，<br />先看看会发生什么。</h2></div><Link className="text-link" href="/experiments">Open the lab ↗</Link></div>
-        <div className="experiment-preview-grid">{recentExperiments.map((experiment, index) => <ExperimentCard experiment={experiment} index={index} key={experiment.id} />)}</div>
+        <div className="experiment-preview-grid">{recentExperiments.map((experiment, index) => <ExperimentCard experiment={experiment} isLatest={index === 0} key={experiment.id} />)}</div>
       </div></section></Reveal>
 
       <Reveal><section className="home-notes section-shell">
