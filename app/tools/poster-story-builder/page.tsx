@@ -26,7 +26,7 @@ export default function PosterStoryBuilderPage() {
         <section className="poster-story-method">
           <div><span className="mono">E → I → C / 来源不是灵感</span><h2>海报可以触发故事，<br />但不能替故事背书。</h2></div>
           <p>这个工具只整理创作输入，不读取图片、不调用模型，也不验证推测。示例来自现有海报反推故事实验，用来演示方法，不代表已经完成的个人作品。</p>
-          <nav><Link href="/experiments/can-a-fictional-poster-grow-a-story/">查看 9 格实验记录 ↗</Link><Link href="/prompts/#production-templates">打开配套 Prompt 模板 ↗</Link><Link href="/tools/story-seed/">从零生成故事种子 ↗</Link><Link href="/stories/">查看故事档案 ↗</Link></nav>
+          <nav><Link href="/experiments/can-a-fictional-poster-grow-a-story/">查看首轮 9 格实验 ↗</Link><Link href="/experiments/does-the-short-evidence-ledger-travel/">查看第二轮复测 ↗</Link><Link href="/prompts/#production-templates">打开配套 Prompt 模板 ↗</Link><Link href="/tools/story-seed/">从零生成故事种子 ↗</Link></nav>
         </section>
       </div>
       <SiteFooter />

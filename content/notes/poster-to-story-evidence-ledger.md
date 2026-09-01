@@ -21,6 +21,11 @@ connections:
     description: "查看三张输入海报、九份原始故事、四项评分与首轮局限。"
     href: "/experiments/can-a-fictional-poster-grow-a-story/"
     tone: "coral"
+  - label: "RETEST"
+    title: "短证据账本，换海报以后还能成立吗？"
+    description: "查看三张新海报、九份候选与跨题材复测的当前局限。"
+    href: "/experiments/does-the-short-evidence-ledger-travel/"
+    tone: "sky"
   - label: "TOOL"
     title: "海报反推故事组装器"
     description: "填写 E／I／C 来源链，生成证据账本、故事任务卡和完整 Prompt。"
@@ -31,11 +36,6 @@ connections:
     description: "复制经过九份文本 Pilot 压缩后的制作模板。"
     href: "/prompts/#production-templates"
     tone: "yellow"
-  - label: "TOOL"
-    title: "故事种子生成器"
-    description: "如果没有输入海报，从人物、欲望、阻力与世界规则开始。"
-    href: "/tools/story-seed/"
-    tone: "sky"
 ---
 
 一张虚构海报已经很像一个故事：异常天空、空荡站台、亮着灯的旧电影院，或者晴天街道旁只在室内落下的雪。看见这些画面时，人会立刻补上人物、原因、过去和结局。
@@ -235,9 +235,10 @@ E／I／C 适合从单张视觉输入发展故事，但不是所有创作都需�
 ## 本站记录
 
 - [EXP.008：让 AI 先画一张不会发生的海报](/experiments/can-a-fictional-poster-grow-a-story/)
+- [EXP.009：短证据账本，换海报以后还能成立吗？](/experiments/does-the-short-evidence-ledger-travel/)
 - [海报反推故事 · 短证据账本 Prompt](/prompts/#production-templates)
 - [海报反推故事组装器](/tools/poster-story-builder/)
 - [P02 / B 组原始文本：证据优先](/records/poster-to-story/p02-b-evidence-first.md)
 - [P02 / C 组原始文本：三栏反推](/records/poster-to-story/p02-c-three-column.md)
 
-本文是基于本站首轮文本 Pilot 整理的**资料方法文章**。九份样本均来自同一次会话与三张固定海报；当前评分仍待荆或第二位评审者独立复核，也需要更换题材与会话继续验证。
+本文是基于本站首轮文本 Pilot 整理的**资料方法文章**。EXP.009 已经换用水中图书馆、果园电梯和海中洗衣机三张新海报完成 9 份同会话复测：来源边界继续清楚，但规则代价与选择强度仍会失分。两轮评分都待荆或第二位评审者独立复核；由于第二轮仍来自同一次会话，目前不能宣称跨会话稳定。

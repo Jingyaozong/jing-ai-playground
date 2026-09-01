@@ -739,7 +739,7 @@ C｜主动创作选择
     variables: ['输入海报', '故事类型或限制', '不希望出现的套路'],
     tags: ['STORY', '海报反推', '证据边界', '创意开发'],
     model: '支持图片输入的多模态模型',
-    usageNote: '这是根据 EXP.008 九份文本 Pilot 整理的本站编辑短版：保留 B 组的简洁证据清单和 C 组的来源边界，同时限制账本长度。当前只经过固定三张海报的页面初审，仍需更多题材复测。',
+    usageNote: '这是根据 EXP.008 九份文本 Pilot 整理的本站编辑短版：保留 B 组的简洁证据清单和 C 组的来源边界。EXP.009 又在三张新海报、九份同会话候选中保持了来源分层，但规则代价与选择强度仍会失分；下一步仍需跨会话或跨模型复测。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
     sourceHref: '/experiments/can-a-fictional-poster-grow-a-story/',
     sourceLabel: '查看 9 / 9 实验依据 ↗',

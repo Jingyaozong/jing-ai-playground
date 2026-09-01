@@ -41,7 +41,7 @@ export type ExperimentDetail = {
   sampleTitle?: string;
   sampleDescription?: string;
   reference?: {
-    kind: 'character' | 'reference-pack' | 'light-map' | 'contact-layout' | 'storyboard-benchmark' | 'poster-inputs';
+    kind: 'character' | 'reference-pack' | 'light-map' | 'contact-layout' | 'storyboard-benchmark' | 'poster-inputs' | 'poster-inputs-v2';
     label: string;
     title: string;
     description: string;
@@ -56,7 +56,7 @@ export type ExperimentDetail = {
   }>;
   observationTitle?: string;
   observationDescription?: string;
-  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset' | 'contact-action' | 'storyboard-audit' | 'poster-story-audit';
+  recordBoard?: 'forty-shots' | 'reference-comparison' | 'rain-follow' | 'lighting-continuity' | 'shadow-offset' | 'contact-action' | 'storyboard-audit' | 'poster-story-audit' | 'poster-story-retest';
   sources?: Array<{ title: string; url: string; note: string }>;
   nextSteps: string[];
   currentConclusion?: string;
@@ -639,6 +639,79 @@ export const experimentDetails: ExperimentDetail[] = [
     conclusionBadge: 'PILOT COMPLETE · 9 / 9',
     relatedHref: '/prompts/',
     relatedLabel: '查看现有 Prompt 工作台 ↗',
+    toolHref: '/tools/poster-story-builder/',
+    toolLabel: '打开海报反推故事组装器 ↗',
+  },
+  {
+    slug: 'does-the-short-evidence-ledger-travel',
+    number: '009',
+    title: '短证据账本，换海报以后还能成立吗？',
+    titleLines: ['短证据账本，', '换海报以后，', '还能成立吗？'],
+    englishTitle: 'Does the Short Evidence Ledger Travel?',
+    category: 'Poster-to-Story Retest',
+    date: '2026.09.01',
+    status: '跨题材文本复测完成 · 9 / 9',
+    demo: true,
+    testCount: 9,
+    testUnit: 'STORY CANDIDATES',
+    pilotLabel: 'RETEST COMPLETE · 9 / 9',
+    notice: '三张新海报均为 2026 年 8 月 31 日生成的虚构视觉输入，九份故事候选来自同一次 Codex 会话并保留原始文本。它们不是九次独立运行；评分是页面编辑初审，只描述本批样本，不代表荆已确认的个人观点，也不能作为模型能力排名。',
+    summary: '把首轮得到的短证据账本原样换到水中图书馆、果园电梯和海中洗衣机三种空间异常上，每张图保留三份故事候选；检查来源边界能否继续清楚，以及规则和选择是否会跨题材重复。',
+    question: '同一份短证据账本，换到三种空间异常以后，还能守住来源边界，并长出彼此不同的故事机制吗？',
+    questionLines: ['同一份短证据账本，', '换到三种空间异常，', '还能守住来源边界吗？'],
+    hypothesis: '短账本仍可能让可见证据、合理推测与主动创作选择保持清楚，同时减少首轮三栏法的解释负担；但同一会话可能反复调用熟悉的牺牲、交换或封存机制，因此边界透明不等于故事机制天然多样。',
+    constants: [
+      '固定使用三张新生成的无片名虚构海报：水中图书馆、果园电梯、海中洗衣机',
+      '三张图均无片名、文案、品牌或真实电影信息；不联网补充所谓背景资料',
+      '九份候选全部使用同一份 6／3／3 短证据账本和相同的六项故事输出字段',
+      '每张海报保留三份未经审计意见改写的原始 Markdown，编辑修改必须另存',
+      '四项评分统一为线索利用、边界透明、故事连贯和海报关联',
+      '九份输出来自同一次 Codex 会话，因此本轮只检验跨输入表现，不检验跨会话稳定性',
+    ],
+    protocolTitle: '不换来源规则，\n只换三种空间。',
+    protocolDescription: '每张新海报连续生成三份候选，保持短账本结构与故事字段不变。分组只代表候选次序，不代表三种不同模型或不同方法。',
+    groups: [
+      { code: 'A', title: '候选 01', shots: 'P04—P06', variable: '同一短账本下的第一份故事候选；检查规则是否直接闭合', tone: 'blue' },
+      { code: 'B', title: '候选 02', shots: 'P04—P06', variable: '同一短账本下的第二份故事候选；检查是否复用站内既有题材', tone: 'yellow' },
+      { code: 'C', title: '候选 03', shots: 'P04—P06', variable: '同一短账本下的第三份故事候选；检查解释负担和选择强度', tone: 'mint' },
+    ],
+    reference: {
+      kind: 'poster-inputs-v2',
+      label: '3 AI-GENERATED INPUT POSTERS · 2026.08.31',
+      title: '换三种空间，不换来源规则。',
+      description: 'P04 是清水覆盖地面、书本仍干燥的图书馆；P05 是盛夏果园里通向雪走廊的独立电梯；P06 是深夜洗衣店里装着风暴海面的滚筒。图片只提供可见起点，人物、规则、原因和结局仍属于创作。',
+    },
+    sampleTitle: '三张新海报，\n九份新故事。',
+    sampleDescription: '每张输入保留候选 01、02、03 三份完整输出。卡片展示选择与编辑初审，原始 Markdown 保存短证据账本、故事字段、梗概和来源声明。',
+    samples: [
+      { shot: 'A01', title: '《退水以前》', setting: '短账本 · 水中图书馆', observation: '编辑初审 5.00 / 5：六条主要证据都进入规则与选择；人物身份、预测机制和红伞作用明确属于主动创作。', status: '已生成 · 已初审', framePosition: 'left top', tone: 'blue', generated: true, outputText: '她把撤离路线写满手臂，随后撑开红伞；水声停止，书页恢复空白。', rawHref: '/records/poster-to-story-retest/p04-a01.md' },
+      { shot: 'A02', title: '《苹果成熟前的楼层》', setting: '短账本 · 果园电梯', observation: '编辑初审 4.75 / 5：季节边界和红按钮均参与故事；拆下按钮为何不能修复仍需更强规则支持。', status: '已生成 · 已初审', framePosition: 'right top', tone: 'blue', generated: true, outputText: '她空手退回阳光下，拆掉唯一的红色呼叫按钮，让雪走廊永久熄灭。', rawHref: '/records/poster-to-story-retest/p05-a02.md' },
+      { shot: 'A03', title: '《一桶远海》', setting: '短账本 · 海中洗衣机', observation: '编辑初审 4.75 / 5：异常滚筒、灯塔与干燥街道共同推动冲突；灯塔被淹的代价仍偏象征。', status: '已生成 · 已初审', framePosition: 'left bottom', tone: 'blue', generated: true, outputText: '他拆下总闸保险片，让最后一次脱水完整结束，为海岸换来十二分钟平静。', rawHref: '/records/poster-to-story-retest/p06-a03.md' },
+      { shot: 'B01', title: '《静水目录》', setting: '短账本 · 水中图书馆', observation: '编辑初审 4.50 / 5：来源边界清楚，但记忆交换与站内既有失忆题材接近，红伞作用偏弱。', status: '已生成 · 已初审', framePosition: 'right bottom', tone: 'yellow', generated: true, outputText: '她把旧街记忆写进目录并合上书，从此无法认出自己的出生地。', rawHref: '/records/poster-to-story-retest/p04-b01.md' },
+      { shot: 'B02', title: '《门外八月》', setting: '短账本 · 果园电梯', observation: '编辑初审 5.00 / 5：季节边界、苹果、电梯、雪与按钮都进入规则，限制和选择形成完整闭环。', status: '已生成 · 已初审', framePosition: 'left top', tone: 'yellow', generated: true, outputText: '她让电梯沉入地下，放弃延长果园寿命，也把陌生人的冬天留在门内。', rawHref: '/records/poster-to-story-retest/p05-b02.md' },
+      { shot: 'B03', title: '《最后一次脱水》', setting: '短账本 · 海中洗衣机', observation: '编辑初审 4.75 / 5：线索利用充分；机器吸收自身结构缺少前置机制，结局仍有方便性。', status: '已生成 · 已初审', framePosition: 'right top', tone: 'yellow', generated: true, outputText: '她把红洗衣篮卡进异常滚筒，让机器连同积水规则一起消失。', rawHref: '/records/poster-to-story-retest/p06-b03.md' },
+      { shot: 'C01', title: '《不借出的雨》', setting: '短账本 · 水中图书馆', observation: '编辑初审 4.50 / 5：来源分层成立，但教室映射和停课名单需要较长解释，规则负担偏大。', status: '已生成 · 已初审', framePosition: 'left bottom', tone: 'mint', generated: true, outputText: '她折断伞柄，让全部作业随水流出正门，迫使城市看见停课名单。', rawHref: '/records/poster-to-story-retest/p04-c01.md' },
+      { shot: 'C02', title: '《零层以北》', setting: '短账本 · 果园电梯', observation: '编辑初审 4.75 / 5：时间设定明确属于主动创作，药箱也直接制造选择；按钮能否永久停机仍待复测。', status: '已生成 · 已初审', framePosition: 'right bottom', tone: 'mint', generated: true, outputText: '他把迟到一年的药箱推进雪线，击碎按钮，让电梯停在过去。', rawHref: '/records/poster-to-story-retest/p05-c02.md' },
+      { shot: 'C03', title: '《洗到天亮》', setting: '短账本 · 海中洗衣机', observation: '编辑初审 4.75 / 5：输出主动标明推测与设定；锁死舱门仍不足以证明选择不可逆。', status: '已生成 · 已初审', framePosition: 'left top', tone: 'mint', generated: true, outputText: '她释放最后一条警报并锁死舱门，让街区只承受三分钟暴雨。', rawHref: '/records/poster-to-story-retest/p06-c03.md' },
+    ],
+    checks: [
+      { label: 'EVIDENCE', question: '换题材后，还能先说清看见什么吗？', note: '逐张核对主体、异常、边界、光线和道具；故事写得完整不能抵消证据来源不清。', tone: 'blue' },
+      { label: 'BOUNDARY', question: '新设定有没有重新伪装成画面事实？', note: '人物身份、异常原因、交换规则和过去都应归入主动创作；合理联想仍不是已知事实。', tone: 'yellow' },
+      { label: 'CONVERGENCE', question: '不同候选是否反复走向同一种牺牲？', note: '检查失去记忆、封死入口、毁掉装置等结局是否只是换了道具的同一机制。', tone: 'coral' },
+    ],
+    observationTitle: '边界清楚以后，\n再检查故事是否趋同。',
+    observationDescription: '九份候选沿用四项评分，并额外记录类型套壳、规则代价抽象、解释过量和选择不可逆性不足。复测重点不是挑冠军，而是找出方法仍会漏掉什么。',
+    recordBoard: 'poster-story-retest',
+    nextSteps: [
+      '由荆或第二位评审者独立复核四项分数，特别检查满分样本是否被页面编辑高估。',
+      '另开新会话或更换模型，复用同一组三张海报和短账本，才开始检验跨会话稳定性。',
+      '统计九份候选里的交换、牺牲、封存和毁坏装置结局，判断方法是否需要增加“避免重复机制”约束。',
+      '只把经确认的一个候选推进 Story 档案；保留海报证据链，并把编辑候选与荆的个人创作明确区分。',
+    ],
+    currentConclusion: '本轮九份样本的线索利用与边界透明均为 5.00 / 5；故事连贯 4.22，海报关联 4.78，总均值 4.75。短账本在三种空间异常中都保持了来源分层，但九份来自同一次会话，不能证明跨会话稳定；四份被标记规则代价或选择强度问题，另有类型套壳与解释过量各一份。来源透明并不会自动带来更强、更不同的故事机制。结论仅适用于这批输入和页面编辑初审。',
+    conclusionBadge: 'RETEST COMPLETE · 9 / 9',
+    relatedHref: '/notes/poster-to-story-evidence-ledger/',
+    relatedLabel: '阅读短证据账本方法 ↗',
     toolHref: '/tools/poster-story-builder/',
     toolLabel: '打开海报反推故事组装器 ↗',
   },

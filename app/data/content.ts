@@ -191,6 +191,17 @@ export const experiments: Experiment[] = [
     stage: 'documented',
     visual: 'poster',
   },
+  {
+    id: 'experiment-009',
+    slug: 'does-the-short-evidence-ledger-travel',
+    title: '短证据账本，换海报以后还能成立吗？',
+    description: '三张新生成虚构海报各保留三份短证据账本故事，共九份原始文本与编辑初审；来源边界稳定，但故事机制仍出现趋同。',
+    category: 'Poster-to-Story Retest',
+    date: '2026.09.01',
+    status: '跨题材复测 · 9 / 9 完成',
+    stage: 'documented',
+    visual: 'posterretest',
+  },
 ];
 
 export const tools: Tool[] = [

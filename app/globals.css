@@ -3250,6 +3250,11 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .experiment-reference-image.is-poster-inputs > span:nth-of-type(2) { left: 36%; }
 .experiment-reference-image.is-poster-inputs > span:nth-of-type(3) { left: 69%; }
 .experiment-reference-image.is-poster-inputs > b { position: absolute; left: 22px; bottom: 20px; z-index: 2; padding: 6px 8px; border: 1px solid var(--ink); border-radius: 99px; background: rgba(255,255,255,.92); color: var(--blue); font-size: 6px; }
+.experiment-reference-image.is-poster-inputs-v2 { position: relative; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; padding: 16px 16px 52px; overflow: hidden; background: var(--yellow); }
+.experiment-reference-image.is-poster-inputs-v2 figure { position: relative; min-width: 0; height: 100%; margin: 0; overflow: hidden; border: 2px solid var(--ink); border-radius: 18px; background-position: center; background-size: cover; box-shadow: 4px 4px 0 var(--ink); }
+.experiment-reference-image.is-poster-inputs-v2 figure:nth-child(2) { transform: translateY(13px); }
+.experiment-reference-image.is-poster-inputs-v2 figure span { position: absolute; top: 10px; left: 9px; right: 9px; padding: 5px 7px; border: 1px solid var(--ink); border-radius: 99px; background: rgba(255,255,255,.9); color: var(--blue); font-size: 5px; text-align: center; }
+.experiment-reference-image.is-poster-inputs-v2 > b { position: absolute; left: 19px; bottom: 16px; color: var(--blue); font-size: 6px; }
 .experiment-reference-image.is-contact-layout { position: relative; overflow: hidden; background: linear-gradient(150deg,var(--sky) 0 58%,var(--yellow) 58%); }
 .experiment-detail-title h1 > span { display: block; }
 .experiment-reference-image.is-contact-layout::before { content: ''; position: absolute; left: 8%; right: 8%; bottom: 18%; height: 14px; border: 2px solid var(--ink); border-radius: 5px; background: var(--mint); }
@@ -3405,6 +3410,8 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
   .experiment-reference-image.is-contact-layout { min-height: 410px; border-right: 0; border-bottom: 2px solid var(--ink); }
   .experiment-reference-image.is-storyboard-benchmark { min-height: 560px; grid-template-columns: 1fr; gap: 9px; padding: 28px 34px 55px; border-right: 0; border-bottom: 2px solid var(--ink); }
   .experiment-reference-image.is-poster-inputs { min-height: 430px; border-right: 0; border-bottom: 2px solid var(--ink); }
+  .experiment-reference-image.is-poster-inputs-v2 { min-height: 900px; grid-template-columns: 1fr; padding: 18px 18px 54px; border-right: 0; border-bottom: 2px solid var(--ink); }
+  .experiment-reference-image.is-poster-inputs-v2 figure:nth-child(2) { transform: none; }
   .experiment-reference-image.is-storyboard-benchmark article { min-height: 105px; gap: 7px; padding: 12px; }
   .experiment-reference-image.is-storyboard-benchmark article:nth-of-type(2) { transform: none; }
   .experiment-reference-image.is-storyboard-benchmark article i { height: 8px; }
