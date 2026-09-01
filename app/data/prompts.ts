@@ -16,13 +16,14 @@ export type PromptItem = {
   editorial?: boolean;
   sourceHref?: string;
   sourceLabel?: string;
+  relatedLinks?: Array<{ href: string; label: string }>;
 };
 
 export const promptSource = {
   title: '都 Agent 时代了，我还是想分享给你这 12 个我最常用的 Prompt',
   author: '数字生命卡兹克',
   url: 'https://mp.weixin.qq.com/s/NAdhdFrUq9-BKelqzqpwBQ',
-  note: '首批 12 条 Prompt 根据作者公开分享整理，只保留 Prompt、适用场景和必要提示；新增的 9 条 AI 创作制作内容是本站编辑模板，不归于原作者，也不冒充荆已确认的个人方法。',
+  note: '首批 12 条 Prompt 根据作者公开分享整理，只保留 Prompt、适用场景和必要提示；新增的 10 条 AI 创作制作内容是本站编辑模板，不归于原作者，也不冒充荆已确认的个人方法。',
 };
 
 export const promptItems: PromptItem[] = [
@@ -690,6 +691,53 @@ export const promptItems: PromptItem[] = [
     model: '支持视频输入的多模态模型',
     usageNote: '候选 ID 和生成设置必须保留。没有真实样本时，只使用它生成空表，不让模型假装完成评测。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
+  },
+  {
+    id: 'video-causal-motion-gate',
+    title: '因果动作闸门',
+    category: 'AI 视频制作',
+    description: '先让动作 A 完成并锁定，再允许动作 B 沿唯一方向变化，把“随后”写成可以逐帧验收的时序协议。',
+    prompt: String.raw`请把下面的双阶段镜头整理成一份可测试的因果动作协议。不要生成或虚构实验结果。
+
+镜头名称：【填写】
+时长与帧率：【例如 6 秒、24 fps】
+人物与道具：【身份、手位、数量与接触关系】
+摄影机：【机位、景别、焦段、构图与是否允许运镜】
+
+动作 A 起点：【0% 时可以直接看见的状态】
+动作 A 锁定状态：【完成后必须保持的状态】
+动作 A 锁定时刻：【占镜头百分比】
+
+动作 B 起点：【启动前必须保持的状态与画面坐标】
+动作 B 唯一方向：【从哪里连续移动到哪里】
+动作 B 终点：【100% 时可以验收的状态】
+动作 B 首动时刻：【必须严格晚于动作 A 锁定时刻】
+
+环境常量：【背景结构、材质、光线与不得移动的物体】
+
+先检查因果闸门：
+1. 如果动作 B 首动不晚于动作 A 锁定，立即停止并标记“不可测试”，不要生成一份顺序矛盾的 Prompt；
+2. 如果两者间隔短到无法看见稳定状态，标记“间隔待确认”；
+3. 不要根据语义替我补写画面中不存在的事实。
+
+检查通过后，按以下顺序输出：
+1. 五点动作账本：列出 0 / 25 / 50 / 75 / 100% 的时间、计划帧号、动作 A 状态和动作 B 状态；
+2. 完整视频 Prompt：明确写出 A 变化、A 锁定、可见停顿、B 单向变化和最终状态；
+3. 负面约束：排除同时动作、顺序倒置、动作回弹、路径分叉、身份或道具复制、隐性切镜与环境漂移；
+4. 逐帧验收清单：保留“实际 A 锁定帧”“实际 B 首动帧”和五点位置的空白记录栏；
+5. 失败标签：至少包括 EARLY_START、SIMULTANEOUS、ORDER_REVERSED、ACTION_DRIFT、PATH_REVERSE、WORLD_DRIFT、HIDDEN_CUT。
+
+所有计划帧号只能作为生成前参考。结尾必须写：
+“STATUS: 待测试 Prompt，不代表已经生成或通过；结论只填写真实视频观察。”`,
+    variables: ['镜头名称', '时长与帧率', '人物与道具', '摄影机', '动作 A 起点', '动作 A 锁定状态', '动作 A 锁定时刻', '动作 B 起点', '动作 B 唯一方向', '动作 B 终点', '动作 B 首动时刻', '环境常量'],
+    tags: ['AI VIDEO', '因果顺序', '动作闸门', '逐帧验收'],
+    model: '通用推理模型',
+    usageNote: '本站编辑候选，待荆确认。适合“先完成一件事，随后环境或第二个主体再变化”的单镜任务；先用工具核对时序，再把 Prompt 交给视频模型。没有真实视频时只生成空白验收表。',
+    dateAdded: '2026-09-01', featured: false, demo: false, editorial: true,
+    relatedLinks: [
+      { href: '/tools/waterline-motion-card/', label: '打开水线动作卡 ↗' },
+      { href: '/experiments/can-water-recede-after-the-umbrella-opens/', label: '查看 EXP.010 ↗' },
+    ],
   },
   {
     id: 'poster-to-story-short-ledger',

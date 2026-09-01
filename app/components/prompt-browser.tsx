@@ -37,7 +37,10 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
         <div>{item.variables.map((variable) => <span key={variable}>【{variable}】</span>)}</div>
       </div>}
       <blockquote><span className="mono">使用提示 / HOW TO USE</span>{item.usageNote}</blockquote>
-      {item.sourceHref && <Link className="prompt-source-link" href={item.sourceHref}>{item.sourceLabel ?? '查看模板来源 ↗'}</Link>}
+      {(item.sourceHref || item.relatedLinks?.length) && <nav className="prompt-related-links" aria-label={`${item.title} 关联入口`}>
+        {item.sourceHref && <Link className="prompt-source-link" href={item.sourceHref}>{item.sourceLabel ?? '查看模板来源 ↗'}</Link>}
+        {item.relatedLinks?.map((link) => <Link className="prompt-source-link" href={link.href} key={link.href}>{link.label}</Link>)}
+      </nav>}
       <div className="prompt-card-bottom">
         <div className="note-tags">{item.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
         <button type="button" onClick={copyPrompt} aria-live="polite">{copied ? '已复制 ✓' : '复制 Prompt'}</button>
