@@ -4889,6 +4889,7 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
 .waterline-builder-heading button:first-child, .waterline-output-card button { background: var(--yellow); box-shadow: 3px 3px 0 var(--ink); }
 .waterline-builder-heading button:last-child { background: var(--coral); }
 .waterline-builder-heading button:hover, .waterline-output-card button:hover { transform: translateY(-2px); }
+.waterline-output-card button:disabled { background: var(--sky); color: var(--muted); box-shadow: none; cursor: not-allowed; transform: none; }
 .waterline-field-group { margin-top: 13px; padding: 24px; border: 1.5px solid var(--ink); border-radius: 23px; }
 .waterline-group-shot { background: var(--sky); }
 .waterline-group-umbrella { background: var(--coral); }

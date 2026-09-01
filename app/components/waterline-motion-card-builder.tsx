@@ -118,7 +118,12 @@ export function WaterlineMotionCardBuilder() {
       '', '说明：这是生成前协议。实际结果必须另记真实帧号，不能用计划帧号替代观察。',
     ].join('\n');
 
-    const prompt = [
+    const prompt = derived.status === 'blocked' ? [
+      'BLOCKED / 因果顺序未通过', '',
+      `当前时序：伞在 ${values.umbrellaLockAt}% 锁定，水在 ${values.waterStartAt}% 首动。`,
+      '水首动必须严格晚于伞锁定；请先调整上方滑杆，再生成并复制完整视频 Prompt。', '',
+      'STATUS: 不可测试，未生成视频 Prompt。',
+    ].join('\n') : [
       `生成一个 ${values.duration} 秒、${values.fps} fps、16:9 的单一连续镜头。`, '',
       `镜头任务：${name}`,
       `人物与道具：${safe(values.subject, '待填写')}`, '',
@@ -170,6 +175,7 @@ export function WaterlineMotionCardBuilder() {
   }
 
   async function handleCopy(key: OutputKey) {
+    if (derived.status === 'blocked') return;
     if (await copyText(outputs[key])) {
       setCopied(key);
       window.setTimeout(() => setCopied(null), 1600);
@@ -244,7 +250,7 @@ export function WaterlineMotionCardBuilder() {
             ['ledger', '五点动作账本', '把百分比换算为时间和计划帧号，保留伞与水的双轨状态。'],
             ['prompt', '完整视频 Prompt', '只允许一个连续镜头，并把“先锁定、后退水”写成可执行顺序。'],
             ['review', '负面约束与验收', '生成前排除常见失败，生成后填写真实帧号与失败标签。'],
-          ] as Array<[OutputKey, string, string]>).map(([key, title, note]) => <article className={`waterline-output-card waterline-output-${key}`} key={key}><div><span className="mono">{key.toUpperCase()}</span><button type="button" onClick={() => handleCopy(key)}>{copied === key ? '已复制 ✓' : '复制内容'}</button></div><h3>{title}</h3><p>{note}</p><pre>{outputs[key]}</pre></article>)}
+          ] as Array<[OutputKey, string, string]>).map(([key, title, note]) => <article className={`waterline-output-card waterline-output-${key}`} key={key}><div><span className="mono">{key.toUpperCase()}</span><button type="button" disabled={derived.status === 'blocked'} onClick={() => handleCopy(key)}>{derived.status === 'blocked' ? '先修正时序' : copied === key ? '已复制 ✓' : '复制内容'}</button></div><h3>{title}</h3><p>{note}</p><pre>{outputs[key]}</pre></article>)}
         </div>
         {manualCopy && <aside className="waterline-copy-fallback"><div><b>浏览器没有开放自动复制。</b><p>点击文本框后全选复制。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} onFocus={(event) => event.currentTarget.select()} /></aside>}
       </section>
