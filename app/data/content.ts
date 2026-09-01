@@ -47,7 +47,7 @@ export const stories: Story[] = [
     type: 'AI Short Film',
     date: '2026.08',
     duration: '01:30',
-    status: 'AI 共创草案 · 有详情记录',
+    status: 'AI 共创草案 · 无视频',
     stage: 'documented',
     visual: 'memory',
   },

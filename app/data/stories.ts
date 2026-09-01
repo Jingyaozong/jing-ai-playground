@@ -122,7 +122,7 @@ export const storyDetails: StoryDetail[] = [
     type: 'AI Short Film',
     date: '2026.08',
     duration: '01:30',
-    status: 'AI 共创概念稿',
+    status: 'AI 共创草案 · 无视频',
     draft: true,
     draftNotice: '这是由 AI 协助整理的原创短片开发稿，知夏、林澈及全部情节均为虚构。人物锚点生成于 2026-08-25，四张独立概念画面生成于 2026-08-31，用于确认人物、道具、光线与情绪方向；尚未生成视频或实验结论，也不代表已经完成的成片。',
     heroVisual: 'memory-letter',
@@ -160,7 +160,7 @@ export const storyDetails: StoryDetail[] = [
       { phase: '人物设定', status: '完成草案', note: '已建立短发、蓝色发夹、红色三角耳饰和黄色外套四个视觉锚点。' },
       { phase: '概念关键帧', status: '完成草案', note: '已从四格拼板升级为四张独立概念关键帧，用于检查人物、道具、一天中的光线与情绪节奏；它们不是成片剧照。' },
       { phase: '90 秒剧本', status: '完成草案', note: '已写成六场、十四镜的第一版可拍摄文本；对白、旁白和声音仍待荆确认。' },
-      { phase: '视频生成', status: '制作中', note: '已完成十四镜 Prompt 包并选定三镜动作测试；尚未调用外部视频模型，也没有生成结果。' },
+      { phase: '视频生成', status: '待开始', note: '已完成十四镜 Prompt 包并选定三镜动作测试；尚未调用外部视频模型，也没有生成结果。' },
       { phase: '剪辑与声音', status: '待开始', note: '以信件旁白和清晨/夜晚的环境声构建循环感。' },
     ],
     script: [
