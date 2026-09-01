@@ -19,6 +19,8 @@ export default function Home() {
   const recentTools = tools.slice(-4).reverse();
   const latestNotes = getAllNotes().slice(0, 4);
   const jingPicks = libraryItems.filter((item) => item.jingPick).slice(0, 4);
+  const causalExperiment = experiments.find((experiment) => experiment.slug === 'can-water-recede-after-the-umbrella-opens') ?? recentExperiments[0];
+  const causalStory = stories.find((story) => story.slug === 'before-the-water-recedes') ?? recentStories[0];
   return (
     <main>
       <SiteHeader />
@@ -53,12 +55,12 @@ export default function Home() {
       </section></Reveal>
 
       <Reveal><section className="latest section-shell">
-        <div className="section-title-row"><div><p className="eyebrow mono">Latest experiments</p><h2>最近又<br />折腾了什么？</h2></div><p>三套新协议已经把光线、影子和手持道具拆成可以记录的变量；模型测试仍未开始，所以这里只展示问题和方法。</p></div>
+        <div className="section-title-row"><div><p className="eyebrow mono">Current research / 最近在研究</p><h2>先后不是同时，<br />要留下可见间隔。</h2></div><p>从《退水以前》的一个高风险镜头出发，把故事问题拆成九格实验、五点账本和浏览器本地工具。真实视频仍是 0 / 9，所以这里展示研究路径，不提前展示结论。</p></div>
         <div className="latest-grid">
-          <Link className="latest-lead" href={`/experiments/${recentExperiments[0].slug}/`}><ProjectVisual variant={recentExperiments[0].visual} label={recentExperiments[0].title} /><span className="mono">LATEST PROTOCOL · {recentExperiments[0].status}</span><h3>{recentExperiments[0].title}</h3></Link>
-          <article className="latest-note note-violet"><span className="mono">Research question / 待验证</span><blockquote>“接触、承重和释放，能否保持同一条因果链？”</blockquote><small>需要九格真实模型样本才能回答</small></article>
-          <Link className="latest-small" href={`/experiments/${recentExperiments[1].slug}/`}><ProjectVisual variant={recentExperiments[1].visual} label={recentExperiments[1].title} /><span className="mono">LATEST PROTOCOL · {recentExperiments[1].status}</span><h3>{recentExperiments[1].title}</h3></Link>
-          <article className="latest-note note-apricot"><span className="note-number">30</span><p>个对照样本等待执行：接触 9 格、影子 9 格、光线 12 格。没有模型输出，就不写结果。</p><span className="mono">CURRENT STATUS · 0 / 30</span></article>
+          <Link className="latest-lead" href={`/experiments/${causalExperiment.slug}/`}><ProjectVisual variant={causalExperiment.visual} label={causalExperiment.title} /><span className="mono">EXPERIMENT / {causalExperiment.status}</span><h3>{causalExperiment.title}</h3></Link>
+          <Link className="latest-note note-violet latest-method-note" href="/notes/causal-motion-five-point-ledger/"><span className="mono">METHOD NOTE / EDITING DRAFT</span><blockquote>“随后”不是气氛描述，<br />而是一个可以失败的时间条件。</blockquote><small>阅读五点账本与逐帧验收方法 ↗</small></Link>
+          <Link className="latest-small" href={`/stories/${causalStory.slug}/`}><ProjectVisual variant={causalStory.visual} label={causalStory.title} /><span className="mono">STORY / {causalStory.status}</span><h3>{causalStory.title}</h3></Link>
+          <Link className="latest-note note-apricot latest-causal-tool" href="/tools/waterline-motion-card/"><div><span className="mono">LOCAL TOOL / 五点动作账本</span><h3>先锁定，<br />再移动。</h3><p>填写伞锁定与水首动时刻，导出待测试 Prompt 和空白验收表。</p></div><div className="latest-causal-ruler" aria-label="锁定、保持、移动的五点动作轨道"><span>LOCK</span><span>MOVE</span>{[0,25,50,75,100].map((point) => <i key={point}><b>{point}%</b></i>)}</div><strong>打开水线动作卡 ↗</strong></Link>
         </div>
       </section></Reveal>
 
