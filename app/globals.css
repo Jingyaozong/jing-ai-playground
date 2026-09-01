@@ -1419,6 +1419,15 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .note-visual-making-coral .note-visual-orbit { background: var(--yellow); }
 .note-visual-briefing-sky { background: var(--sky); }
 .note-visual-briefing-sky .note-visual-orbit { border-radius: 18%; background: var(--mint); transform: rotate(11deg); }
+.note-visual-causal-gate { background: var(--blue); color: var(--white); }
+.note-visual-causal-gate .note-visual-grid { opacity: .52; background-size: 42px 42px; }
+.note-visual-causal-gate .note-visual-orbit { width: 78%; height: 19%; aspect-ratio: auto; left: 11%; right: auto; top: 39%; border-radius: 99px; background: linear-gradient(90deg,var(--coral) 0 38%,var(--yellow) 38% 57%,var(--sky) 57% 100%); box-shadow: 7px 7px 0 var(--ink); transform: rotate(-4deg); }
+.note-visual-causal-gate .note-visual-orbit::before, .note-visual-causal-gate .note-visual-orbit::after { content: ''; position: absolute; top: 50%; width: 13%; aspect-ratio: 1; border: 3px solid var(--ink); border-radius: 50%; background: var(--white); transform: translate(-50%,-50%); }
+.note-visual-causal-gate .note-visual-orbit::before { left: 38%; background: var(--coral); }
+.note-visual-causal-gate .note-visual-orbit::after { left: 57%; background: var(--sky); }
+.note-visual-causal-gate .note-visual-mark { left: 8%; right: 8%; bottom: 9%; color: var(--yellow); font-size: 0; line-height: 1; }
+.note-visual-causal-gate .note-visual-mark::after { content: 'LOCK → HOLD → MOVE'; font: 760 clamp(1.25rem,3vw,2.6rem)/1 var(--display); letter-spacing: -.03em; }
+.note-visual-causal-gate small { background: var(--mint); color: var(--ink); }
 
 /* Note detail */
 .note-detail-hero { width: min(100% - 56px,1420px); margin-inline: auto; padding: 48px 0 78px; }
