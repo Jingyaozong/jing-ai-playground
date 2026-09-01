@@ -5034,3 +5034,237 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
 @media (prefers-reduced-motion: reduce) {
   .waterline-builder-heading button, .waterline-output-card button { transition: none; }
 }
+
+/* Airier editorial density pass
+   Keep the existing visual language, but give every page a narrower stage,
+   a quieter type scale and more space between major reading beats. */
+:root {
+  --layout-max: 1240px;
+  --reading-max: 1040px;
+  --desktop-gutter: 72px;
+  --section-air: 148px;
+}
+
+body { font-size: 15px; }
+
+.section-shell,
+.archive-shell,
+.site-footer,
+.page-intro,
+.dark-inner,
+.site-header,
+.hero,
+.featured,
+.tool-detail-hero,
+.tool-detail-shell,
+.note-detail-hero,
+.experiment-detail-hero,
+.experiment-demo-notice,
+.experiment-section-inner,
+.experiment-detail-back,
+.experiment-record-board,
+.story-detail-hero,
+.story-draft-notice,
+.story-section-inner,
+.story-detail-back {
+  width: min(100% - var(--desktop-gutter), var(--layout-max));
+}
+
+.section-shell,
+.dark-inner { padding-block: var(--section-air); }
+
+.hero { padding-block: 54px 92px; }
+.hero-layout { gap: 8vw; padding-block: 96px 60px; }
+.hero h1 { font-size: clamp(3.8rem,6.45vw,6.7rem); line-height: 1.01; }
+.hero-card { min-height: 236px; padding: 25px; }
+.hero-card p { font-size: clamp(1.2rem,1.7vw,1.65rem); line-height: 1.14; }
+.letter-board > span { min-height: clamp(165px,16vw,230px); font-size: clamp(6rem,11vw,11rem); }
+.live-label { padding-left: max(36px,calc((100vw - var(--layout-max))/2)); }
+
+.featured { padding-block: 165px 140px; }
+.page-intro { padding-block: 82px 122px; }
+.page-intro h1 { margin-block: 96px 38px; font-size: clamp(4.25rem,7.7vw,7.65rem); line-height: .9; }
+.page-intro > p { max-width: 580px; font-size: clamp(.95rem,1.4vw,1.15rem); }
+.archive-shell { padding-block: 118px 165px; }
+
+.section-heading,
+.section-title-row,
+.story-section-heading,
+.experiment-section-heading { margin-bottom: 72px; }
+
+.section-heading h2,
+.section-title-row h2,
+.experiment-question h2,
+.story-premise h2 { font-size: clamp(2.7rem,4.4vw,4.95rem); line-height: 1.1; }
+.section-title-row.compact h2 { font-size: clamp(2.55rem,4vw,4.45rem); }
+
+.experiment-section-heading h2,
+.experiment-record-top h2,
+.story-section-heading h2,
+.tool-workflow-heading h2,
+.tool-archive-heading h2,
+.about-status-heading h2,
+.about-columns h2 { font-size: clamp(2.45rem,3.8vw,4.25rem); line-height: 1.1; }
+
+.experiment-reference-card h3,
+.story-character-anchor-copy h3,
+.about-answer-card h3,
+.reading-path-card h3,
+.featured-note-copy h2,
+.prompt-entry-card h2,
+.prompt-story-bridge-card h2 { font-size: clamp(2.2rem,3.25vw,3.75rem); line-height: 1.11; }
+
+.feature-meta h3 { font-size: clamp(1.8rem,2.6vw,3rem); }
+.story-card h3,
+.experiment-card h3,
+.note-card h3,
+.library-copy h3 { font-size: clamp(1.75rem,2.45vw,2.75rem); line-height: 1.07; }
+.note-card-small h3,
+.note-card-tall h3 { font-size: clamp(1.6rem,2.15vw,2.35rem); }
+.tool-card h3 { font-size: 1.95rem; }
+.playing-title h2 { font-size: clamp(3.25rem,5.25vw,5.4rem); line-height: 1; }
+.about-copy h2 { font-size: clamp(3.25rem,6vw,6.2rem); }
+.footer-lead h2 { font-size: clamp(3.2rem,5.8vw,6rem); line-height: 1; }
+
+.tool-detail-hero,
+.note-detail-hero,
+.experiment-detail-hero,
+.story-detail-hero { padding-block: 64px 116px; }
+.tool-detail-title,
+.note-detail-grid,
+.experiment-detail-hero-grid,
+.story-detail-hero-grid { padding-top: 92px; }
+
+.tool-detail-hero .tool-detail-title h1,
+.note-detail-title h1,
+.experiment-detail-title h1,
+.story-detail-title h1 { font-size: clamp(3.35rem,5.5vw,5.95rem); line-height: 1.07; }
+.note-detail-title.is-long-title h1 { font-size: clamp(3rem,4.7vw,5rem); line-height: 1.1; }
+.tool-detail-title > p,
+.note-detail-title > p,
+.experiment-detail-title > p,
+.story-detail-title > p { font-size: 1rem; line-height: 1.82; }
+
+.tool-detail-shell { padding-block: 120px 160px; }
+.story-premise,
+.experiment-question { padding-block: 165px; }
+.story-section-inner,
+.experiment-section-inner { padding-block: 150px; }
+.story-sound-map .story-section-inner { padding-block: 160px; }
+.story-rules,
+.story-production,
+.experiment-samples,
+.experiment-record-board { padding-block: 160px; }
+
+.article-layout {
+  width: min(100% - var(--desktop-gutter), var(--reading-max));
+  grid-template-columns: 205px minmax(0,700px);
+  padding-block: 125px 165px;
+}
+.article-body { font-size: 16px; line-height: 1.95; }
+.article-body h2 { font-size: clamp(2.35rem,3.7vw,3.8rem); line-height: 1.12; }
+.article-body h3 { font-size: 1.65rem; }
+
+.about-page { padding-top: 135px; }
+.about-manifesto { padding-bottom: 140px; }
+.about-answers,
+.about-status { padding-block: 140px; }
+.about-boundaries { margin-top: 135px; }
+.about-columns { padding-block: 125px; }
+.site-footer { margin-top: 48px; padding-block: 125px 38px; }
+.prompt-attribution { padding-top: 0; }
+
+@media (max-width: 920px) {
+  :root { --desktop-gutter: 48px; --section-air: 120px; }
+  .hero-layout,
+  .tool-detail-title,
+  .note-detail-grid,
+  .experiment-detail-hero-grid,
+  .story-detail-hero-grid { padding-top: 76px; }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --desktop-gutter: 40px;
+    --section-air: 96px;
+  }
+
+  body { font-size: 14px; }
+  .hero { padding-block: 32px 72px; }
+  .hero-layout { padding-block: 60px 45px; }
+  .hero h1,
+  .page-intro h1,
+  .prompt-title-lockup h1 { font-size: clamp(2.85rem,11.8vw,4.2rem); line-height: 1.08; }
+  .hero-card { min-height: 198px; }
+  .letter-board > span { min-height: 150px; font-size: 6.6rem; }
+  .featured { padding-block: 105px; }
+  .page-intro { padding-block: 58px 88px; }
+  .page-intro h1 { margin-block: 70px 34px; }
+  .archive-shell { padding-block: 82px 112px; }
+
+  .section-heading h2,
+  .section-title-row h2,
+  .section-title-row.compact h2,
+  .experiment-question h2,
+  .experiment-section-heading h2,
+  .experiment-record-top h2,
+  .experiment-next-title h2,
+  .story-premise h2,
+  .story-section-heading h2,
+  .tool-workflow-heading h2,
+  .tool-archive-heading h2,
+  .about-status-heading h2,
+  .about-columns h2 { font-size: clamp(2.15rem,9.2vw,3.2rem); line-height: 1.12; }
+
+  .experiment-reference-card h3,
+  .story-character-anchor-copy h3,
+  .about-answer-card h3,
+  .reading-path-card h3,
+  .featured-note-copy h2,
+  .prompt-entry-card h2,
+  .prompt-story-bridge-card h2 { font-size: clamp(1.95rem,8.2vw,2.85rem); line-height: 1.13; }
+
+  .tool-detail-hero,
+  .note-detail-hero,
+  .experiment-detail-hero,
+  .story-detail-hero { padding-block: 42px 82px; }
+  .tool-detail-title,
+  .note-detail-grid,
+  .experiment-detail-hero-grid,
+  .story-detail-hero-grid { padding-top: 62px; }
+  .tool-detail-hero .tool-detail-title h1,
+  .note-detail-title h1,
+  .experiment-detail-title h1,
+  .story-detail-title h1 { font-size: clamp(2.65rem,10.8vw,3.85rem); line-height: 1.09; }
+  .note-detail-title.is-long-title h1 { font-size: clamp(2.1rem,8.5vw,2.9rem); line-height: 1.12; }
+  .experiment-detail-title h1:has(> span) { font-size: clamp(2.25rem,9.6vw,2.65rem); }
+  .story-detail-title h1:has(> span) { font-size: clamp(2.3rem,9.8vw,2.75rem); }
+  .tool-detail-shell { padding-block: 90px 120px; }
+  .story-premise,
+  .experiment-question,
+  .story-section-inner,
+  .experiment-section-inner,
+  .story-sound-map .story-section-inner,
+  .story-rules,
+  .story-production,
+  .experiment-samples,
+  .experiment-record-board { padding-block: 105px; }
+  .article-layout {
+    width: min(100% - var(--desktop-gutter),var(--reading-max));
+    grid-template-columns: 1fr;
+    padding-block: 88px 120px;
+  }
+  .article-body { font-size: 15px; line-height: 1.9; }
+  .article-body h2 { font-size: clamp(2.05rem,8.5vw,2.8rem); }
+  .prompt-category-map,
+  .prompt-resource-grid { grid-template-columns: 1fr; }
+  .prompt-category-tile:last-child,
+  .prompt-resource-card:last-child { grid-column: auto; }
+  .about-page { padding-top: 96px; }
+  .about-manifesto { padding-bottom: 105px; }
+  .about-answers,
+  .about-status { padding-block: 105px; }
+  .about-boundaries { margin-top: 105px; }
+  .about-columns { padding-block: 100px; }
+  .site-footer { padding-block: 100px 30px; }
+}
