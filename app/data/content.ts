@@ -420,6 +420,13 @@ export const currentlyPlaying = [
     href: '/stories/she-forgets-yesterday/',
   },
   {
+    icon: '▱→',
+    title: '因果动作九格',
+    detail: '撑伞与退水协议、五点账本和本地动作卡已经就位；真实视频仍为 0 / 9。',
+    status: '协议 0 / 9',
+    href: '/experiments/can-water-recede-after-the-umbrella-opens/',
+  },
+  {
     icon: '🎭',
     title: '人物一致性',
     detail: '现有四格静态 Pilot；正式四十镜测试仍未开始。',
@@ -432,13 +439,6 @@ export const currentlyPlaying = [
     detail: '把主体、运动、镜头、时序与可用性整理成一套评测路径。',
     status: '重点笔记',
     href: '/notes/ai-video-evaluation/',
-  },
-  {
-    icon: '🧪',
-    title: '分镜整理工作流',
-    detail: '把每行一镜的散乱文字整理成可编辑、可排序的镜头表。',
-    status: '工具可用',
-    href: '/tools/shot-list-cleaner/',
   },
   {
     icon: '🔖',

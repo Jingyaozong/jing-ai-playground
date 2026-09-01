@@ -46,7 +46,7 @@ export default function Home() {
       </section>
       <div className="live-strip" aria-label="最近动态">
         <span className="live-label mono"><i /> ON THE DESK</span>
-        <div className="ticker-track"><span>完善原创短片视觉开发</span><b>✦</b><span>记录接触与影子动作实验</span><b>✦</b><span>整理 AI 视频制作方法</span><b>✦</b><span>打磨本地创作工具</span><b>✦</b><span>完善原创短片视觉开发</span></div>
+        <div className="ticker-track"><span>准备因果动作九格测试</span><b>✦</b><span>填写五点动作账本</span><b>✦</b><span>完善原创短片视觉开发</span><b>✦</b><span>核对值得留下的来源</span><b>✦</b><span>准备因果动作九格测试</span></div>
       </div>
 
       <Reveal><section className="featured">
