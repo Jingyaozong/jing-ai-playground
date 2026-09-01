@@ -26,7 +26,7 @@ export default function WaterlineMotionCardPage() {
         <section className="waterline-card-method">
           <div><span className="mono">LOCK → HOLD → MOVE / 先后不是同时</span><h2>因果关系，<br />要留下可见间隔。</h2></div>
           <p>工具只整理待测试的镜头条件，不调用视频模型，也不会把 Prompt 当作结果。生成以后仍需逐帧填写真实的伞锁定帧、水首动帧和失败标签。</p>
-          <nav><Link href="/experiments/can-water-recede-after-the-umbrella-opens/">查看配套九格实验 ↗</Link><Link href="/stories/before-the-water-recedes/">返回《退水以前》 ↗</Link><Link href="/tools/shot-prompt-builder/">继续组装单镜 Prompt ↗</Link></nav>
+          <nav><Link href="/notes/causal-motion-five-point-ledger/">阅读五点账本方法 ↗</Link><Link href="/experiments/can-water-recede-after-the-umbrella-opens/">查看配套九格实验 ↗</Link><Link href="/stories/before-the-water-recedes/">返回《退水以前》 ↗</Link><Link href="/tools/shot-prompt-builder/">继续组装单镜 Prompt ↗</Link></nav>
         </section>
       </div>
       <SiteFooter />

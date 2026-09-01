@@ -735,6 +735,7 @@ export const promptItems: PromptItem[] = [
     usageNote: '本站编辑候选，待荆确认。适合“先完成一件事，随后环境或第二个主体再变化”的单镜任务；先用工具核对时序，再把 Prompt 交给视频模型。没有真实视频时只生成空白验收表。',
     dateAdded: '2026-09-01', featured: false, demo: false, editorial: true,
     relatedLinks: [
+      { href: '/notes/causal-motion-five-point-ledger/', label: '阅读五点账本方法 ↗' },
       { href: '/tools/waterline-motion-card/', label: '打开水线动作卡 ↗' },
       { href: '/experiments/can-water-recede-after-the-umbrella-opens/', label: '查看 EXP.010 ↗' },
     ],

@@ -218,7 +218,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         <div className="experiment-open-ending"><span className="mono">CURRENT CONCLUSION</span><p>{experiment.currentConclusion ?? '四格静态样本证明这套身份锚点与观察表可以工作；四十镜正式测试尚未开始。'}</p><b>{experiment.conclusionBadge ?? '不做模型排名'}</b></div>
       </section>
 
-      <nav className="experiment-detail-back"><Link href="/experiments/">← 查看全部实验</Link>{experiment.toolHref && <Link href={experiment.toolHref}>{experiment.toolLabel ?? '打开配套工具 ↗'}</Link>}<Link href={experiment.relatedHref ?? '/notes/ninety-second-storyboard/'}>{experiment.relatedLabel ?? '阅读拆镜方法 ↗'}</Link></nav>
+      <nav className="experiment-detail-back"><Link href="/experiments/">← 查看全部实验</Link>{experiment.toolHref && <Link href={experiment.toolHref}>{experiment.toolLabel ?? '打开配套工具 ↗'}</Link>}<Link href={experiment.relatedHref ?? '/notes/ninety-second-storyboard/'}>{experiment.relatedLabel ?? '阅读拆镜方法 ↗'}</Link>{experiment.relatedLinks?.map((item) => <Link href={item.href} key={item.href}>{item.label}</Link>)}</nav>
       <SiteFooter />
     </main>
   );

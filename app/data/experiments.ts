@@ -63,6 +63,7 @@ export type ExperimentDetail = {
   conclusionBadge?: string;
   relatedHref?: string;
   relatedLabel?: string;
+  relatedLinks?: Array<{ href: string; label: string }>;
   toolHref?: string;
   toolLabel?: string;
 };
@@ -785,6 +786,9 @@ export const experimentDetails: ExperimentDetail[] = [
     conclusionBadge: 'PROTOCOL ONLY · 0 / 9',
     relatedHref: '/stories/before-the-water-recedes/',
     relatedLabel: '返回《退水以前》故事档案 ↗',
+    relatedLinks: [
+      { href: '/notes/causal-motion-five-point-ledger/', label: '阅读五点账本方法 ↗' },
+    ],
     toolHref: '/tools/waterline-motion-card/',
     toolLabel: '打开水线动作卡生成器 ↗',
   },
