@@ -21,7 +21,7 @@ export default function AboutPage() {
       label: 'WHAT I MAKE',
       title: '我做了什么',
       copy: '从故事种子、90 秒剧本和十四镜分镜开始，搭出一支 AI 短片真正进入制作前需要的结构；同时把重复工作做成浏览器本地工具。',
-      evidence: '1 个故事制作系统 · 3 个可用工具',
+      evidence: `1 个故事制作系统 · ${tools.length} 个浏览器本地工具`,
       href: '/stories/she-forgets-yesterday/',
       action: '查看故事现场',
       tone: 'yellow',
@@ -38,10 +38,10 @@ export default function AboutPage() {
     {
       label: 'WHAT I STUDY',
       title: '最近研究什么',
-      copy: '角色身份怎样穿过不同景别、光线、情绪和动作仍保持一致；以及真实生成开始后，应该怎样记录变量、失败和下一轮。',
-      evidence: '1 个开放实验 · 正式四十镜待开始',
-      href: '/experiments/forty-shots-one-character/',
-      action: '查看实验记录板',
+      copy: '动作之间的先后能否被模型清楚执行；把伞锁定、水线首动、固定方向和世界连续拆成可以逐帧核对的条件。',
+      evidence: 'EXP.010 协议完成 · 0 / 9 待执行',
+      href: '/experiments/can-water-recede-after-the-umbrella-opens/',
+      action: '查看九格实验协议',
       tone: 'coral',
     },
     {
@@ -74,7 +74,7 @@ export default function AboutPage() {
           <div className="about-status-heading"><div><span className="mono">On the desk now / 当前工作台</span><h2 id="about-status-title">现在进行到哪里？</h2></div><p>状态只描述网站里已经留下的文件、结构和记录，不把计划写成完成。</p></div>
           <div className="about-status-grid">
             <article><span className="status-chip status-draft mono">结构已完成</span><small className="mono">STORY 001</small><h3>她每天醒来都会忘记昨天</h3><p>六段时间剧本、十四镜分镜、人物锚点和三条动作测试方案已经就位；真实视频生成、剪辑和声音仍待开始。</p><Link href="/stories/she-forgets-yesterday/#generation-pack">查看生成包 ↗</Link></article>
-            <article><span className="status-chip status-open mono">记录板开放</span><small className="mono">EXPERIMENT 001</small><h3>同一个她，四十个镜头</h3><p>变量分组、观察方法和结果记录台已经完成；正式四十镜测试尚未形成可发布的模型结论。</p><Link href="/experiments/forty-shots-one-character/#record-desk">进入记录台 ↗</Link></article>
+            <article><span className="status-chip status-open mono">协议已完成</span><small className="mono">EXPERIMENT 010</small><h3>撑伞以后，<br />水面能沿一个方向<br />连续退去吗？</h3><p>九格协议、五点动作账本和浏览器本地工具已经就位；真实视频仍为 0 / 9，目前没有模型结论。</p><Link href="/experiments/can-water-recede-after-the-umbrella-opens/">查看实验协议 ↗</Link></article>
             <article><span className="status-chip status-source mono">来源已核对</span><small className="mono">CONTENT SYSTEM</small><h3>方法、Prompt 与收藏</h3><p>{notes.length} 篇笔记、{promptItems.length} 个 Prompt、{libraryItems.length} 条收藏和 {tools.length} 个工具已经进入网站；编辑稿与待确认观点仍保留状态标签。</p><Link href="/notes/">从笔记开始 ↗</Link></article>
           </div>
         </section></Reveal>
