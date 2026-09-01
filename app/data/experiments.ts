@@ -785,6 +785,8 @@ export const experimentDetails: ExperimentDetail[] = [
     conclusionBadge: 'PROTOCOL ONLY · 0 / 9',
     relatedHref: '/stories/before-the-water-recedes/',
     relatedLabel: '返回《退水以前》故事档案 ↗',
+    toolHref: '/tools/waterline-motion-card/',
+    toolLabel: '打开水线动作卡生成器 ↗',
   },
 ];
 

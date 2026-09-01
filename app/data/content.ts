@@ -400,6 +400,15 @@ export const tools: Tool[] = [
     symbol: 'E→C',
     href: '/tools/poster-story-builder/',
   },
+  {
+    id: 'tool-020',
+    title: 'Waterline Motion Card',
+    description: '把伞锁定、水线启动、固定方向、机位与环境常量拆开，生成五点动作账本、完整视频 Prompt 和逐帧验收表。',
+    label: '水线动作卡生成器',
+    status: 'Ready',
+    symbol: '▱→',
+    href: '/tools/waterline-motion-card/',
+  },
 ];
 
 export const currentlyPlaying = [
