@@ -90,6 +90,14 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         : story.slug === 'before-the-water-recedes'
           ? waterRecedesCharacterAnchor
         : null;
+  const characterAnchorPosition: Record<string, string> = {
+    'she-forgets-yesterday': 'center 28%',
+    'no-boat-at-pier-seven': 'center 30%',
+    'before-the-rain-ends': 'center 54%',
+    'shadow-arrives-five-minutes-early': 'center 55%',
+    'objects-remember-the-last-sentence': 'center 52%',
+    'before-the-water-recedes': 'center 56%',
+  };
   const ending = story.ending ?? { label: 'CURRENT ENDING', copy: '故事还没有结束。\n它正在被做出来。', href: '/experiments/', link: '查看相关实验 ↗' };
   const related = story.related ?? { href: '/notes/ninety-second-storyboard/', label: '阅读拆镜方法 ↗' };
 
@@ -198,7 +206,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         <div className="story-section-inner">
           <div className="story-section-heading"><div><p className="eyebrow mono">{sectionCopy.stills.eyebrow}</p><EditorialHeading lines={editorialLines(sectionCopy.stills.heading)} /></div><p>{sectionCopy.stills.description}</p></div>
           {story.characterAnchor && <article className={`story-character-anchor${characterAnchorImage ? '' : ' is-brief'}`} id="character-anchor">
-            {characterAnchorImage ? <div className="story-character-anchor-image" role="img" aria-label={`${story.characterAnchor.name} AI 角色锚点图`} style={{ backgroundImage: `url("${characterAnchorImage.src}")` }} /> : <div className="story-character-anchor-image is-brief" role="img" aria-label={`${story.characterAnchor.name}角色与道具锚点任务书`}><div className="anchor-brief-person" aria-hidden="true"><i /><b /></div><div className="anchor-brief-cup" aria-hidden="true"><span /></div><div className="anchor-brief-rule mono" aria-hidden="true">FACE / HAND / CUP<br />LOCK BEFORE GENERATION</div></div>}
+            {characterAnchorImage ? <div className="story-character-anchor-image" role="img" aria-label={`${story.characterAnchor.name} AI 角色锚点图`} style={{ backgroundImage: `url("${characterAnchorImage.src}")`, backgroundPosition: characterAnchorPosition[story.slug] ?? 'center 28%' }} /> : <div className="story-character-anchor-image is-brief" role="img" aria-label={`${story.characterAnchor.name}角色与道具锚点任务书`}><div className="anchor-brief-person" aria-hidden="true"><i /><b /></div><div className="anchor-brief-cup" aria-hidden="true"><span /></div><div className="anchor-brief-rule mono" aria-hidden="true">FACE / HAND / CUP<br />LOCK BEFORE GENERATION</div></div>}
             <div className="story-character-anchor-copy"><span className="mono">CHARACTER ANCHOR / AI 视觉开发</span><h3>{story.characterAnchor.titleLines ? story.characterAnchor.titleLines.map((line) => <span key={line}>{line}</span>) : story.characterAnchor.title}</h3><p>{story.characterAnchor.copy}</p><ul>{story.characterAnchor.locks.map((lock) => <li key={lock}>{lock}</li>)}</ul><small className="mono">{characterAnchorImage ? (story.characterAnchor.generatedLabel ?? 'GENERATED 2026.08 · FICTIONAL CHARACTER') : 'BRIEF 2026.08 · NO GENERATED IMAGE'}</small></div>
           </article>}
           <div className={`story-still-grid${story.stills.length === 3 ? ' is-three' : ''}`}>
