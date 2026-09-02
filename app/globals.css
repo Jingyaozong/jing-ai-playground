@@ -5269,6 +5269,87 @@ body { font-size: 15px; }
   .site-footer { padding-block: 100px 30px; }
 }
 
+/* EXP.010 / structured first-run ledger */
+.experiment-record-jump {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+  padding: 12px 16px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--yellow);
+  color: var(--ink);
+  font: 750 10px var(--body);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+.experiment-record-jump b { color: var(--blue); font-size: 1rem; }
+.experiment-record-jump:hover { transform: translate(-1px,-1px); box-shadow: 6px 6px 0 var(--ink); }
+.experiment-record-jump:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+
+.waterline-checkpoint-fields {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  margin: 22px;
+  padding: 17px;
+  border: 1.5px solid var(--ink);
+  border-radius: 18px;
+  background: color-mix(in srgb,var(--sky) 48%,var(--white));
+}
+.waterline-checkpoint-fields legend {
+  padding-inline: 8px;
+  color: var(--blue);
+  font-size: 8px;
+  font-weight: 800;
+}
+.waterline-checkpoint-head,
+.waterline-checkpoint-row {
+  display: grid;
+  grid-template-columns: 58px 86px minmax(110px,.9fr) minmax(150px,1.45fr);
+  gap: 8px;
+  align-items: center;
+}
+.waterline-checkpoint-head {
+  padding: 0 5px 3px;
+  color: var(--muted);
+  font-size: 6px;
+}
+.waterline-checkpoint-row {
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.waterline-checkpoint-row > strong {
+  color: var(--blue);
+  font-size: 10px;
+}
+.waterline-checkpoint-row label { min-width: 0; }
+.waterline-checkpoint-row label > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.waterline-checkpoint-row input { min-height: 39px; padding: 8px 9px; border-radius: 10px; font-size: 9px; }
+.waterline-score-lock { margin: 0 22px 12px; padding: 10px 12px; border: 1px solid var(--ink); border-radius: 11px; background: var(--yellow); color: var(--muted); font-size: 9px; line-height: 1.55; }
+.waterline-motion-record-board .experiment-score-fields:disabled .experiment-score-row { opacity: .48; }
+.waterline-motion-record-board .experiment-score-fields:disabled button { cursor: not-allowed; }
+
+@media (max-width: 760px) {
+  .experiment-record-jump { margin-top: 22px; }
+  .waterline-checkpoint-fields { gap: 12px; margin: 20px 16px; padding: 14px; }
+  .waterline-checkpoint-head { display: none; }
+  .waterline-checkpoint-row {
+    grid-template-columns: 58px 1fr;
+    gap: 9px 10px;
+    padding: 14px 0 2px;
+  }
+  .waterline-checkpoint-row > strong { grid-row: 1 / 4; align-self: start; padding-top: 9px; font-size: 12px; }
+  .waterline-checkpoint-row label { display: grid; grid-template-columns: 78px minmax(0,1fr); gap: 8px; align-items: center; }
+  .waterline-checkpoint-row label > span { position: static; width: auto; height: auto; overflow: visible; clip: auto; white-space: normal; color: var(--muted); font-size: 8px; font-weight: 700; }
+  .waterline-checkpoint-row input { min-width: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experiment-record-jump:hover { transform: none; }
+}
+
 /* Media rhythm and card breathing room
    Keep the editorial signatures, but let images act as pauses instead of walls. */
 .feature-card .project-visual { aspect-ratio: 16 / 9; }

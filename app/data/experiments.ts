@@ -756,7 +756,7 @@ export const experimentDetails: ExperimentDetail[] = [
       description: '这张图是动作顺序示意，不是生成结果。验收只看一个清楚因果：红伞从合拢到完全撑开并稳定以后，斜水线才从左前方连续退向右后方；人物、书架、出口和书页保持不动。',
     },
     sampleTitle: '三种提示结构，\n九个待执行样本。',
-    sampleDescription: '每组依次测试撑伞、退水和组合动作。九个位置全部留空；只有实际生成并登记文件后，才会从“待执行”改成“已生成”或“已评估”。',
+    sampleDescription: '每组依次测试撑伞、退水和组合动作。九个位置全部留空；只有实际生成并登记文件后，才会从“待执行 · 无视频”改成“有视频 · 待验收”或“已验收”。',
     samples: [
       { shot: 'A01', title: '只测试撑伞', setting: '一句动作描述 · 6 秒', observation: '检查单把红伞是否能从合拢自然撑开并保持，水面本轮必须完全不动。', status: '待执行 · 无视频', framePosition: 'left top', tone: 'blue', generated: false },
       { shot: 'A02', title: '只测试斜向退水', setting: '一句动作描述 · 6 秒', observation: '伞从开始到结束保持完全撑开，只让水线沿左前到右后方向退去。', status: '待执行 · 无视频', framePosition: 'right top', tone: 'blue', generated: false },

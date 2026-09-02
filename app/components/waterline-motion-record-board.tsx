@@ -5,6 +5,14 @@ import { useEffect, useMemo, useState } from 'react';
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type Group = 'A' | 'B' | 'C';
 type ScoreKey = 'umbrellaIntegrity' | 'causalOrder' | 'waterDirection' | 'worldContinuity';
+type CheckpointPoint = '0%' | '25%' | '50%' | '75%' | '100%';
+
+type WaterlineCheckpoint = {
+  point: CheckpointPoint;
+  frame: string;
+  umbrella: string;
+  waterline: string;
+};
 
 type WaterlineRecord = {
   id: string;
@@ -16,6 +24,7 @@ type WaterlineRecord = {
   asset: string;
   lockFrame: string;
   waterStartFrame: string;
+  checkpoints: WaterlineCheckpoint[];
   scores: Record<ScoreKey, number | null>;
   failures: string[];
   note: string;
@@ -28,6 +37,7 @@ const groups: Array<{ code: Group; label: string }> = [
   { code: 'C', label: '状态链＋空间端点' },
 ];
 const tasks = ['只测试撑伞', '只测试斜向退水', '组合撑伞与退水'];
+const checkpointPoints: CheckpointPoint[] = ['0%', '25%', '50%', '75%', '100%'];
 const scoreLabels: Array<{ key: ScoreKey; label: string; hint: string }> = [
   { key: 'umbrellaIntegrity', label: '红伞完整', hint: '始终只有一把伞；伞柄、伞骨、伞盖与手位连续可信' },
   { key: 'causalOrder', label: '因果顺序', hint: '伞骨完全锁定以后，水线才出现第一次位移' },
@@ -35,7 +45,15 @@ const scoreLabels: Array<{ key: ScoreKey; label: string; hint: string }> = [
   { key: 'worldContinuity', label: '世界连续', hint: '人物、书架、书页、木地板与出口在退水过程中保持稳定' },
 ];
 const failureOptions = ['水提前后退', '伞水同时动作', '顺序倒置', '伞复制或变形', '手穿过伞柄', '水线倒流', '水线分叉', '局部随机消失', '人物身份漂移', '书架或地板融化', '隐性切镜', '其他'];
-const statusLabels: Record<RecordStatus, string> = { untested: '待执行', generated: '已生成', reviewed: '已评估' };
+const statusLabels: Record<RecordStatus, string> = {
+  untested: '待执行 · 无视频',
+  generated: '有视频 · 待验收',
+  reviewed: '已验收 · 有视频',
+};
+
+function emptyCheckpoints(): WaterlineCheckpoint[] {
+  return checkpointPoints.map((point) => ({ point, frame: '', umbrella: '', waterline: '' }));
+}
 
 function emptyRecords(): WaterlineRecord[] {
   return groups.flatMap((group) => tasks.map((task, index) => ({
@@ -48,38 +66,86 @@ function emptyRecords(): WaterlineRecord[] {
     asset: '',
     lockFrame: '',
     waterStartFrame: '',
+    checkpoints: emptyCheckpoints(),
     scores: { umbrellaIntegrity: null, causalOrder: null, waterDirection: null, worldContinuity: null },
     failures: [],
     note: '',
   })));
 }
 
+function normalizeRecords(value: unknown): WaterlineRecord[] {
+  const defaults = emptyRecords();
+  if (!Array.isArray(value)) return defaults;
+  return defaults.map((fallback) => {
+    const saved = value.find((item) => item && typeof item === 'object' && 'id' in item && item.id === fallback.id) as Partial<WaterlineRecord> | undefined;
+    if (!saved) return fallback;
+    const checkpoints = checkpointPoints.map((point) => {
+      const checkpoint = Array.isArray(saved.checkpoints) ? saved.checkpoints.find((item) => item?.point === point) : undefined;
+      return {
+        point,
+        frame: typeof checkpoint?.frame === 'string' ? checkpoint.frame : '',
+        umbrella: typeof checkpoint?.umbrella === 'string' ? checkpoint.umbrella : '',
+        waterline: typeof checkpoint?.waterline === 'string' ? checkpoint.waterline : '',
+      };
+    });
+    const scores = Object.fromEntries(scoreLabels.map(({ key }) => {
+      const score = saved.scores?.[key];
+      return [key, typeof score === 'number' && score >= 1 && score <= 5 ? score : null];
+    })) as Record<ScoreKey, number | null>;
+    return {
+      ...fallback,
+      status: saved.status === 'generated' || saved.status === 'reviewed' ? saved.status : 'untested',
+      model: typeof saved.model === 'string' ? saved.model : '',
+      seed: typeof saved.seed === 'string' ? saved.seed : '',
+      asset: typeof saved.asset === 'string' ? saved.asset : '',
+      lockFrame: typeof saved.lockFrame === 'string' ? saved.lockFrame : '',
+      waterStartFrame: typeof saved.waterStartFrame === 'string' ? saved.waterStartFrame : '',
+      checkpoints,
+      scores,
+      failures: Array.isArray(saved.failures) ? saved.failures.filter((item): item is string => typeof item === 'string') : [],
+      note: typeof saved.note === 'string' ? saved.note : '',
+    };
+  });
+}
+
 function isComplete(record: WaterlineRecord) {
-  return scoreLabels.every(({ key }) => record.scores[key] !== null);
+  return record.status === 'reviewed' && scoreLabels.every(({ key }) => record.scores[key] !== null);
 }
 
 function average(record: WaterlineRecord) {
+  if (record.status === 'untested') return null;
   const scores = Object.values(record.scores).filter((score): score is number => score !== null);
   return scores.length ? scores.reduce((sum, score) => sum + score, 0) / scores.length : null;
 }
 
 function buildMarkdown(records: WaterlineRecord[]) {
   const groupSummary = groups.flatMap((group) => {
-    const rows = records.filter((record) => record.group === group.code);
+    const rows = records.filter((record) => record.group === group.code && record.status !== 'untested');
     return [`### ${group.code} · ${group.label}`, ...scoreLabels.map(({ key, label }) => {
       const values = rows.map((record) => record.scores[key]).filter((value): value is number => value !== null);
       return `- ${label}：${values.length ? (values.reduce((sum, value) => sum + value, 0) / values.length).toFixed(2) : '—'} / 5（${values.length} 个有效评分）`;
     }), ''];
   });
-  const rows = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${record.model || '—'} | ${record.seed || '—'} | ${record.asset || '—'} | ${record.lockFrame || '—'} | ${record.waterStartFrame || '—'} | ${record.scores.umbrellaIntegrity ?? '—'} | ${record.scores.causalOrder ?? '—'} | ${record.scores.waterDirection ?? '—'} | ${record.scores.worldContinuity ?? '—'} | ${record.failures.join('、') || '—'} | ${(record.note || '—').replaceAll('|', '\\|').replaceAll('\n', ' ')} |`);
+  const clean = (value: string) => (value || '—').replaceAll('|', '\\|').replaceAll('\n', ' ');
+  const rows = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${clean(record.model)} | ${clean(record.seed)} | ${clean(record.asset)} | ${clean(record.lockFrame)} | ${clean(record.waterStartFrame)} | ${record.scores.umbrellaIntegrity ?? '—'} | ${record.scores.causalOrder ?? '—'} | ${record.scores.waterDirection ?? '—'} | ${record.scores.worldContinuity ?? '—'} | ${record.failures.join('、') || '—'} | ${clean(record.note)} |`);
+  const checkpointSections = records.flatMap((record) => [
+    `### ${record.id} · ${record.task} · ${statusLabels[record.status]}`,
+    '',
+    '| 时间点 | 真实帧号 | 红伞状态 | 水线位置 / 世界状态 |',
+    '| --- | --- | --- | --- |',
+    ...record.checkpoints.map((checkpoint) => `| ${checkpoint.point} | ${clean(checkpoint.frame)} | ${clean(checkpoint.umbrella)} | ${clean(checkpoint.waterline)} |`),
+    '',
+  ]);
   return [
     '# 撑伞以后，水面能沿一个方向连续退去吗？｜9 格实验记录', '',
     '> A 一句动作描述、B 因果状态链、C 状态链加空间端点。空白项不进入平均分；静态概念帧不算视频结果。', '',
     '## 分组平均', '', ...groupSummary,
     '## 样本明细', '',
-    '| 编号 | 固定任务 | 状态 | 模型 / 版本 | Seed | 结果文件 | 伞锁定帧 | 水首动帧 | 红伞完整 | 因果顺序 | 水线方向 | 世界连续 | 失败标签 | 五点观察 |',
+    '| 编号 | 固定任务 | 视频状态 | 模型 / 版本 | Seed | 结果文件 | 伞锁定帧 | 水首动帧 | 红伞完整 | 因果顺序 | 水线方向 | 世界连续 | 失败标签 | 补充观察 |',
     '| --- | --- | --- | --- | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- | --- |',
-    ...rows,
+    ...rows, '',
+    '## 五点逐帧账本', '',
+    ...checkpointSections,
   ].join('\n');
 }
 
@@ -116,8 +182,7 @@ export function WaterlineMotionRecordBoard() {
       try {
         const saved = window.localStorage.getItem(storageKey);
         if (saved) {
-          const parsed = JSON.parse(saved) as WaterlineRecord[];
-          if (Array.isArray(parsed) && parsed.length === 9) setRecords(parsed);
+          setRecords(normalizeRecords(JSON.parse(saved)));
         }
       } catch {
         // A damaged local draft should not block the worksheet.
@@ -136,7 +201,7 @@ export function WaterlineMotionRecordBoard() {
   const generated = records.filter((record) => record.status !== 'untested').length;
   const completed = records.filter(isComplete).length;
   const flagged = records.filter((record) => record.failures.length > 0).length;
-  const allScores = records.flatMap((record) => Object.values(record.scores)).filter((score): score is number => score !== null);
+  const allScores = records.filter((record) => record.status !== 'untested').flatMap((record) => Object.values(record.scores)).filter((score): score is number => score !== null);
   const overall = allScores.length ? (allScores.reduce((sum, score) => sum + score, 0) / allScores.length).toFixed(1) : '—';
   const markdown = useMemo(() => buildMarkdown(records), [records]);
 
@@ -146,13 +211,17 @@ export function WaterlineMotionRecordBoard() {
   }
 
   function updateScore(key: ScoreKey, value: number | null) {
+    if (active.status === 'untested') return;
     setRecords((current) => current.map((record) => {
       if (record.id !== activeId) return record;
       const scores = { ...record.scores, [key]: value };
-      const complete = Object.values(scores).every((score) => score !== null);
-      return { ...record, scores, status: complete ? 'reviewed' : value !== null && record.status === 'untested' ? 'generated' : record.status };
+      return { ...record, scores };
     }));
     setCopyState('idle');
+  }
+
+  function updateCheckpoint(point: CheckpointPoint, field: 'frame' | 'umbrella' | 'waterline', value: string) {
+    updateActive({ checkpoints: active.checkpoints.map((checkpoint) => checkpoint.point === point ? { ...checkpoint, [field]: value } : checkpoint) });
   }
 
   function toggleFailure(label: string) {
@@ -198,20 +267,21 @@ export function WaterlineMotionRecordBoard() {
             })}
           </div>
           <div className="reference-task-key rain-task-key">{tasks.map((task, index) => <span key={task}><b>{String(index + 1).padStart(2, '0')}</b>{task}</span>)}</div>
-          <div className="experiment-record-legend mono"><span><i className="status-untested" />待执行</span><span><i className="status-generated" />已生成</span><span><i className="status-reviewed" />已评估</span></div>
+          <div className="experiment-record-legend mono"><span><i className="status-untested" />待执行 · 无视频</span><span><i className="status-generated" />有视频 · 待验收</span><span><i className="status-reviewed" />已验收</span></div>
         </div>
 
         <form className="experiment-record-editor" onSubmit={(event) => event.preventDefault()}>
-          <header><div><span className="mono">GROUP {active.group} · CELL</span><strong>{active.id}</strong></div><label><span className="mono">当前状态</span><select value={active.status} onChange={(event) => updateActive({ status: event.target.value as RecordStatus })}><option value="untested">待执行</option><option value="generated">已生成</option><option value="reviewed">已评估</option></select></label></header>
+          <header><div><span className="mono">GROUP {active.group} · CELL</span><strong>{active.id}</strong></div><label><span className="mono">视频状态</span><select value={active.status} onChange={(event) => updateActive({ status: event.target.value as RecordStatus })}><option value="untested">待执行 · 无视频</option><option value="generated">有视频 · 待验收</option><option value="reviewed">已验收 · 有视频</option></select></label></header>
           <div className="reference-active-task"><span className="mono">FIXED MOTION TASK</span><strong>{active.task}</strong></div>
           <div className="experiment-record-meta"><label><span>模型 / 版本 / 制作入口</span><input value={active.model} onChange={(event) => updateActive({ model: event.target.value })} placeholder="执行当天填写真实模型版本" /></label><label><span>Seed / 固定参数</span><input value={active.seed} onChange={(event) => updateActive({ seed: event.target.value })} placeholder="不支持则写“不支持”" /></label><label><span>结果文件 / 链接</span><input value={active.asset} onChange={(event) => updateActive({ asset: event.target.value })} placeholder={`例：${active.id}.mp4`} /></label><label><span>伞锁定帧 / 水首动帧</span><span className="waterline-frame-inputs"><input value={active.lockFrame} onChange={(event) => updateActive({ lockFrame: event.target.value })} placeholder="例：F42" /><input value={active.waterStartFrame} onChange={(event) => updateActive({ waterStartFrame: event.target.value })} placeholder="例：F47" /></span></label></div>
-          <fieldset className="experiment-score-fields"><legend className="mono">人工评分 · 1 差 / 5 稳定</legend>{scoreLabels.map(({ key, label, hint }) => <div className="experiment-score-row" key={key}><div><strong>{label}</strong><small>{hint}</small></div><div><button type="button" className={active.scores[key] === null ? 'is-active' : ''} onClick={() => updateScore(key, null)} aria-label={`${label}未评分`}>—</button>{[1, 2, 3, 4, 5].map((score) => <button type="button" className={active.scores[key] === score ? 'is-active' : ''} onClick={() => updateScore(key, score)} aria-label={`${label}${score}分`} key={score}>{score}</button>)}</div></div>)}</fieldset>
+          <fieldset className="waterline-checkpoint-fields"><legend className="mono">五点逐帧账本 · 只填真实画面</legend><div className="waterline-checkpoint-head mono"><span>时间点</span><span>真实帧号</span><span>红伞状态</span><span>水线 / 世界状态</span></div>{active.checkpoints.map((checkpoint) => <div className="waterline-checkpoint-row" key={checkpoint.point}><strong className="mono">{checkpoint.point}</strong><label><span>真实帧号</span><input value={checkpoint.frame} onChange={(event) => updateCheckpoint(checkpoint.point, 'frame', event.target.value)} placeholder="例：F01" /></label><label><span>红伞状态</span><input value={checkpoint.umbrella} onChange={(event) => updateCheckpoint(checkpoint.point, 'umbrella', event.target.value)} placeholder="合拢 / 展开 / 锁定" /></label><label><span>水线 / 世界状态</span><input value={checkpoint.waterline} onChange={(event) => updateCheckpoint(checkpoint.point, 'waterline', event.target.value)} placeholder="位置、方向与最早错误" /></label></div>)}</fieldset>
+          <fieldset className="experiment-score-fields" disabled={active.status === 'untested'}><legend className="mono">人工评分 · 1 差 / 5 稳定</legend>{active.status === 'untested' && <p className="waterline-score-lock">先将视频状态改为“有视频 · 待验收”，再填写真实评分。</p>}{scoreLabels.map(({ key, label, hint }) => <div className="experiment-score-row" key={key}><div><strong>{label}</strong><small>{hint}</small></div><div><button type="button" className={active.scores[key] === null ? 'is-active' : ''} onClick={() => updateScore(key, null)} aria-label={`${label}未评分`}>—</button>{[1, 2, 3, 4, 5].map((score) => <button type="button" className={active.scores[key] === score ? 'is-active' : ''} onClick={() => updateScore(key, score)} aria-label={`${label}${score}分`} key={score}>{score}</button>)}</div></div>)}</fieldset>
           <fieldset className="experiment-failure-fields"><legend className="mono">失败标签 · 可多选</legend><div>{failureOptions.map((label) => <button type="button" className={active.failures.includes(label) ? 'is-active' : ''} onClick={() => toggleFailure(label)} aria-pressed={active.failures.includes(label)} key={label}>{label}</button>)}</div></fieldset>
-          <label className="experiment-record-note"><span>五点水线观察</span><textarea value={active.note} onChange={(event) => updateActive({ note: event.target.value })} placeholder="记录 0 / 25 / 50 / 75 / 100%：伞是否锁定、水线坐标、人物与书架是否稳定，以及错误最早出现在哪一帧。" /></label>
+          <label className="experiment-record-note"><span>补充观察</span><textarea value={active.note} onChange={(event) => updateActive({ note: event.target.value })} placeholder="记录五点账本之外的环境、参数、异常或复核说明。" /></label>
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>伞锁定帧与水首动帧分开记录。</strong><p>复制 Markdown 时保留九格编号、两类帧号、四项评分和失败标签；空白格不会被包装成实验结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制撑伞退水实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>伞锁定帧与水首动帧分开记录。</strong><p>复制 Markdown 时保留九格编号、五点真实帧号、四项评分和失败标签；空白格仍标为“待执行 · 无视频”，不会被包装成实验结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制撑伞退水实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

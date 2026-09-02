@@ -79,6 +79,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
               <span>{experiment.englishTitle}</span>
               <span>{experiment.status}</span>
             </div>
+            {experiment.recordBoard === 'waterline-motion' && <Link className="experiment-record-jump" href="#record-desk"><span>填写首轮 0 / 9 执行记录</span><b>↓</b></Link>}
           </div>
           <div className="forty-board" aria-label={`${testCount} 个测试单元编号板`}>
             <div className="forty-board-top mono"><span>{testUnit}</span><span>01—{String(testCount).padStart(2, '0')}</span></div>
