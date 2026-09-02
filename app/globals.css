@@ -5268,3 +5268,76 @@ body { font-size: 15px; }
   .about-columns { padding-block: 100px; }
   .site-footer { padding-block: 100px 30px; }
 }
+
+/* Media rhythm and card breathing room
+   Keep the editorial signatures, but let images act as pauses instead of walls. */
+.feature-card .project-visual { aspect-ratio: 16 / 9; }
+.feature-meta { padding: 34px 26px 26px; }
+
+.story-card .project-visual,
+.experiment-grid .experiment-card .project-visual { aspect-ratio: 3 / 2; }
+.experiment-preview-grid .experiment-card:first-child .project-visual { aspect-ratio: 5 / 6; }
+.experiment-preview-grid .experiment-card,
+.experiment-grid .experiment-card { padding: 14px 14px 28px; }
+.card-topline { margin-block: 20px 12px; }
+.story-card > p,
+.experiment-card > p { margin-block: 18px 28px; }
+.card-footer { padding-top: 18px; }
+.story-card-link,
+.experiment-card-link { margin-top: 24px; }
+
+.note-card-copy { padding: 28px; }
+.note-card h3 { margin-block: 40px 18px; }
+.note-card p { margin-bottom: 34px; }
+
+.tool-card { min-height: 400px; padding: 30px; }
+.tools-page-grid .tool-card { min-height: 470px; }
+.tool-symbol { margin-block: 44px 46px; }
+.tool-action { left: 30px; bottom: 28px; }
+
+.featured-library > .library-card .library-cover { min-height: 560px; }
+.library-card.is-compact .library-copy { padding: 26px; }
+
+.memory-letter,
+.pier-ticket,
+.early-shadow-card,
+.echo-cup-card,
+.water-ledger-card,
+.personal-rain-card { min-height: 550px; }
+
+.story-character-anchor { min-height: 500px; }
+.story-character-anchor-image { min-height: 500px; }
+.story-character-anchor-copy { padding: clamp(34px,4.5vw,58px); }
+.story-still-placeholder { min-height: 360px; }
+.story-still-grid.is-three .story-still-card:last-child .story-still-placeholder { min-height: 450px; }
+.story-still-copy { min-height: 250px; padding: 30px; }
+
+@media (max-width: 760px) {
+  .feature-card .project-visual { aspect-ratio: 4 / 3; }
+  .feature-meta { padding: 26px 20px 22px; }
+
+  .story-card .project-visual,
+  .experiment-grid .experiment-card .project-visual { aspect-ratio: 4 / 3; }
+  .experiment-preview-grid .experiment-card:first-child .project-visual { aspect-ratio: 4 / 3; }
+  .experiment-preview-grid .experiment-card,
+  .experiment-grid .experiment-card { padding: 12px 12px 25px; }
+
+  .note-card-copy { padding: 24px; }
+  .note-card h3 { margin-block: 34px 16px; }
+  .tool-card,
+  .tools-page-grid .tool-card { min-height: 410px; padding: 25px; }
+  .tool-action { left: 25px; bottom: 24px; }
+
+  .memory-letter,
+  .pier-ticket,
+  .early-shadow-card,
+  .echo-cup-card,
+  .water-ledger-card,
+  .personal-rain-card { min-height: 500px; }
+  .story-character-anchor-image { min-height: 390px; }
+  .story-character-anchor-copy { min-height: 0; padding: 34px 24px 38px; }
+  .story-still-placeholder,
+  .story-still-grid.is-three .story-still-card:last-child .story-still-placeholder { min-height: 290px; }
+  .story-still-copy { min-height: 0; padding: 26px 24px 28px; }
+  .featured-library > .library-card .library-cover { min-height: 320px; }
+}
