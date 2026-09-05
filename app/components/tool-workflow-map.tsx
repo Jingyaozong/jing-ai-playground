@@ -7,7 +7,7 @@ const stages = [
     label: 'DEVELOP',
     title: '故事与分镜',
     description: '先把想法变成可执行的镜头任务，再分配每一镜的职责和秒数。',
-    toolIds: ['tool-001', 'tool-019', 'tool-002', 'tool-008'],
+    toolIds: ['tool-001', 'tool-019', 'tool-002', 'tool-008', 'tool-018'],
     note: '从一个故事种子开始',
   },
   {
@@ -63,8 +63,8 @@ export function ToolWorkflowMap() {
               <div className="tool-route-index"><span className="mono">STAGE</span><strong>{stage.number}</strong><i aria-hidden="true" /></div>
               <div className="tool-route-copy"><span className="mono">{stage.label}</span><h3>{stage.title}</h3><p>{stage.description}</p></div>
               <div className="tool-route-links">
-                {stageTools.map((tool, toolIndex) => tool && <Link href={tool.href ?? '/tools/'} key={tool.id} aria-label={`打开${tool.label}`}>
-                  <span className="mono">{stage.number}.{toolIndex + 1}</span><strong>{tool.label}</strong><i>{tool.symbol}</i>
+                {stageTools.map((tool) => tool && <Link href={tool.href ?? '/tools/'} key={tool.id} aria-label={`打开${tool.label}`}>
+                  <strong>{tool.label}</strong><i aria-hidden="true">↗</i>
                 </Link>)}
               </div>
               <small>{stage.note}</small>

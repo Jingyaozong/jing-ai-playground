@@ -4,10 +4,9 @@ import type { Tool } from '../data/content';
 export function ToolCard({ tool, index }: { tool: Tool; index: number }) {
   const card = (
     <article className={`tool-card tool-tone-${index % 3}`} id={tool.id}>
-      <div className="tool-symbol" aria-hidden="true">{tool.symbol}</div>
-      <div className="card-topline mono"><span>TOOL {String(index + 1).padStart(2, '0')}</span><span>{tool.status}</span></div>
-      <p className="tool-label">{tool.label}</p>
-      <h3>{tool.title}</h3>
+      <div className="tool-card-top"><div className="tool-symbol" aria-hidden="true">{tool.symbol}</div><span className="tool-card-status">{tool.status === 'Ready' ? '可使用' : tool.status}</span></div>
+      <p className="tool-label mono" lang="en">{tool.title}</p>
+      <h3>{tool.label}</h3>
       <p>{tool.description}</p>
       <span className="tool-action mono">{tool.href ? '立即使用 ↗' : '准备中'}</span>
     </article>
