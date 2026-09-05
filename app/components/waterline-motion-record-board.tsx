@@ -245,25 +245,25 @@ export function WaterlineMotionRecordBoard() {
   return (
     <section className="experiment-record-board waterline-motion-record-board" id="record-desk" aria-label="九格撑伞退水实验记录台">
       <div className="experiment-record-top">
-        <div><p className="eyebrow mono">04 / Record desk</p><h2>九格先空着，<br />只记水从哪一帧开始退。</h2></div>
+        <div><p className="eyebrow mono">04 / Record desk</p><h2><span>从一帧开始，</span><span>把观察留下来。</span></h2></div>
         <div className="experiment-record-intro"><p>每格对应一种提示结构和一个固定动作任务。评分、帧号与备注只保存在当前浏览器，不上传视频、人物或故事素材。</p><span className="mono">{loaded ? '已保存到当前浏览器' : '正在读取本地记录…'}</span></div>
       </div>
 
       <div className="experiment-record-summary">
-        <article><span className="mono">COMPLETE</span><strong>{completed}<i>/9</i></strong><p>四项评分完整</p></article>
-        <article><span className="mono">GENERATED</span><strong>{generated}<i>/9</i></strong><p>已有真实视频</p></article>
+        <article><span className="mono">REVIEWED</span><strong>{completed}<i>/9</i></strong><p>已验收且评分完整</p></article>
+        <article><span className="mono">VIDEO</span><strong>{generated}<i>/9</i></strong><p>已登记视频</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
       <div className="experiment-record-workspace">
         <div className="experiment-contact-sheet">
-          <div className="waterline-motion-diagram" aria-label="红伞完全撑开后，斜水线从左前方向右后方连续退去"><span className="mono">LOCK UMBRELLA → MOVE WATERLINE</span><div className="waterline-record-umbrella"><i /><b /></div><div className="waterline-record-level"><i /><i /><i /><i /><i /></div><strong className="mono">0% · 25% · 50% · 75% · 100%</strong></div>
+          <div className="waterline-desk-guide"><span className="eyebrow mono">SAMPLE INDEX</span><h3>选一个样本</h3><p>先撑伞，再退水，最后组合。<br />每格单独保存观察记录。</p></div>
           <div className="experiment-record-filters"><div aria-label="按提示结构筛选">{(['ALL', 'A', 'B', 'C'] as const).map((group) => <button type="button" className={groupFilter === group ? 'is-active' : ''} onClick={() => setGroupFilter(group)} key={group}>{group === 'ALL' ? '全部组' : `${group} 组`}</button>)}</div><span className="mono">A 一句 · B 因果链 · C 加端点</span></div>
           <div className="experiment-contact-grid rain-record-grid waterline-record-grid">
             {records.map((record) => {
               const recordAverage = average(record);
-              return <button type="button" key={record.id} className={`record-cell status-${record.status} ${activeId === record.id ? 'is-active' : ''} ${groupFilter === 'ALL' || groupFilter === record.group ? '' : 'is-muted'}`} onClick={() => setActiveId(record.id)} aria-label={`${record.id} ${record.task}，${statusLabels[record.status]}`}><span className="mono">{record.group}</span><b>{record.id.slice(1)}</b><i>{recordAverage === null ? '—' : recordAverage.toFixed(1)}</i></button>;
+              return <button type="button" key={record.id} className={`record-cell status-${record.status} ${activeId === record.id ? 'is-active' : ''} ${groupFilter === 'ALL' || groupFilter === record.group ? '' : 'is-muted'}`} onClick={() => setActiveId(record.id)} aria-pressed={activeId === record.id} aria-label={`${record.id} ${record.task}，${statusLabels[record.status]}`}><b>{record.id}</b><i>{recordAverage === null ? '未评分' : `${recordAverage.toFixed(1)} / 5`}</i></button>;
             })}
           </div>
           <div className="reference-task-key rain-task-key">{tasks.map((task, index) => <span key={task}><b>{String(index + 1).padStart(2, '0')}</b>{task}</span>)}</div>

@@ -25,7 +25,7 @@ export function SiteHeader({ active = 'Home' }: { active?: string }) {
         </nav>
         <Link className="contact-link" href="/#contact">联系我 <span>↗</span></Link>
         <details className="mobile-menu">
-          <summary>Menu</summary>
+          <summary>菜单</summary>
           <nav aria-label="移动端导航">
             {navItems.map(([id, label, href]) => <Link key={id} href={href}>{label}</Link>)}
           </nav>

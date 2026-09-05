@@ -1,0 +1,193 @@
+/* Shared editorial proportions; retain the established palette and typefaces. */
+:root { --layout-max: 1160px; }
+
+.site-header-shell { box-shadow: none; }
+.site-header { height: 80px; }
+.mobile-menu summary { display: flex; align-items: center; justify-content: center; min-width: 60px; min-height: 44px; border: 1px solid var(--line); border-radius: 99px; font: 600 12px var(--body); }
+.mobile-menu nav { top: 54px; }
+.hero-layout { align-items: center; gap: clamp(40px,7vw,108px); }
+.hero h1 { font-size: clamp(3.4rem,5.8vw,5.65rem); line-height: 1.14; }
+.hero-card { min-height: 232px; transform: rotate(2deg); }
+.hero-card-sun { width: 76px; height: 76px; }
+.hero-card p { max-width: 19ch; margin-top: 44px; font-size: 1.35rem; line-height: 1.25; }
+.letter-board > span { min-height: clamp(150px,13vw,190px); font-size: clamp(5.5rem,9vw,9rem); }
+.letter-board small { bottom: 18px; left: 22px; }
+.section-heading h2, .section-title-row h2,
+.story-section-heading h2, .experiment-section-heading h2 { line-height: 1.18; }
+.story-card h3, .experiment-card h3, .note-card h3,
+.library-copy h3, .tool-card h3 { line-height: 1.2; text-wrap: balance; }
+.section-heading p, .section-title-row > p { text-wrap: pretty; }
+.story-detail-title h1 { font-size: clamp(2.6rem,4.8vw,4.6rem); line-height: 1.2; }
+
+.site-footer { padding: clamp(40px,6vw,76px) clamp(24px,5vw,64px) 30px; }
+.footer-lead { grid-template-columns: minmax(150px,.5fr) minmax(0,1.5fr); gap: 28px; align-items: start; margin-bottom: 48px; }
+.footer-lead .eyebrow { margin-top: 10px; }
+.footer-lead h2 { font-size: clamp(2.2rem,4.25vw,4rem); line-height: 1.2; letter-spacing: -.025em; }
+.footer-lead h2 > span { display: block; }
+.social-grid { gap: 14px; }
+.social-placeholder { min-width: 0; min-height: 148px; padding: 22px; border-width: 1.5px; }
+.social-placeholder strong { font-size: clamp(1.1rem,1.6vw,1.45rem); line-height: 1.4; text-wrap: balance; }
+.social-placeholder strong > span { display: block; color: inherit; font-size: .85em; white-space: nowrap; }
+.social-placeholder small { font-size: 12px; }
+.footer-bottom { margin-top: 32px; border-top: 1px solid rgba(22,36,58,.25); line-height: 1.8; }
+
+/* The waterline study: one illustration, a quiet index, a generous worksheet. */
+.waterline-detail .experiment-detail-hero-grid { grid-template-columns: minmax(0,1.7fr) minmax(300px,1fr); gap: clamp(40px,6vw,88px); align-items: center; }
+.waterline-detail .experiment-detail-title h1 { margin-top: 36px; font-size: clamp(2.6rem,4.25vw,4.1rem); line-height: 1.18; letter-spacing: -.025em; }
+.waterline-detail .experiment-detail-title > p { max-width: 37em; font-size: 15px; line-height: 1.95; margin-bottom: 32px; }
+.waterline-detail .experiment-title-footer { flex-direction: column; gap: 12px; line-height: 1.6; }
+.waterline-detail .experiment-detail-labels { gap: 8px; flex-wrap: wrap; }
+.waterline-detail .experiment-detail-labels b { background: var(--mint); }
+.waterline-detail .experiment-record-jump { font-size: 12px; min-height: 46px; padding-inline: 20px; }
+.waterline-cover { align-self: center; margin: 0; padding: 24px; border: 2px solid var(--ink); border-radius: 30px; background: var(--sky); box-shadow: 7px 7px 0 var(--ink); transform: rotate(1.5deg); }
+.waterline-cover-label { display: grid; gap: 10px; }
+.waterline-cover-label > span:last-child { width: fit-content; padding: 6px 10px; border: 1px solid var(--ink); border-radius: 99px; background: var(--white); font-size: 11px; }
+.waterline-cover svg { display: block; width: 100%; height: auto; margin-block: 24px 12px; }
+.waterline-cover figcaption { display: flex; justify-content: space-between; align-items: end; gap: 18px; padding-top: 20px; border-top: 1px solid rgba(22,36,58,.25); }
+.waterline-cover strong { font-size: clamp(1.5rem,2.2vw,2rem); line-height: 1.4; }
+.waterline-cover p { flex-shrink: 0; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+.waterline-detail .experiment-demo-notice { background: var(--white); border-width: 1.5px; box-shadow: 5px 5px 0 var(--sky); }
+.waterline-detail .experiment-demo-notice p { font-size: 13px; font-weight: 500; line-height: 1.9; }
+.waterline-detail .experiment-group-grid { gap: 22px; }
+.waterline-detail .experiment-group-card { padding: 26px; min-height: 280px; }
+.waterline-detail .experiment-group-card h3 { font-size: 1.7rem; line-height: 1.3; }
+.waterline-detail .experiment-group-card p { font-weight: 500; font-size: 13px; line-height: 1.85; }
+.waterline-detail .experiment-sample-grid { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; margin-top: 40px; }
+.waterline-detail .experiment-sample-card { display: flex; flex-direction: column; min-height: 0; border-width: 1.5px; border-radius: 22px; }
+.waterline-detail .experiment-sample-visual { min-height: 76px; height: 76px; flex-shrink: 0; border-right: 0; border-bottom: 1px solid var(--ink); }
+.waterline-detail .experiment-sample-visual::before,
+.waterline-detail .experiment-sample-visual::after,
+.waterline-detail .sample-crosshair { display: none; }
+.waterline-detail .experiment-sample-visual > b { bottom: 20px; font-size: 10px; }
+.waterline-detail .experiment-sample-copy { padding: 24px; }
+.waterline-detail .experiment-sample-copy h3 { margin-block: 24px 14px; font-size: 1.5rem; line-height: 1.35; text-wrap: balance; }
+.waterline-detail .experiment-sample-copy p { font-size: 13px; line-height: 1.85; }
+.waterline-detail .experiment-checks { background: var(--sky); }
+.waterline-detail .experiment-check-grid { gap: 24px; }
+.waterline-detail .experiment-check-card { min-height: 310px; padding: 28px; background: var(--white); color: var(--ink); box-shadow: 5px 5px 0 var(--ink); }
+.waterline-detail .experiment-check-card > span { color: var(--blue); }
+.waterline-detail .experiment-check-card h3 { margin-top: 44px; font-size: 1.75rem; line-height: 1.3; text-wrap: balance; }
+
+.waterline-motion-record-board { scroll-margin-top: 96px; }
+.waterline-motion-record-board .experiment-record-top { grid-template-columns: 1.3fr 1fr; gap: 70px; }
+.waterline-motion-record-board .experiment-record-top h2 { font-size: clamp(2.2rem,3.4vw,3.25rem); line-height: 1.25; letter-spacing: -.025em; }
+.waterline-motion-record-board .experiment-record-top h2 > span { display: block; }
+.waterline-motion-record-board .experiment-record-intro span { font-size: 10px; }
+.waterline-motion-record-board .experiment-record-summary { margin-block: 48px 40px; border-width: 1px; border-radius: 20px; box-shadow: none; }
+.waterline-motion-record-board .experiment-record-summary article { min-height: 132px; padding: 22px 26px; gap: 12px; border-color: var(--line); background: var(--white); }
+.waterline-motion-record-board .experiment-record-summary article:nth-child(2) { background: var(--mint); }
+.waterline-motion-record-board .experiment-record-summary strong { margin: 0; font-size: 2rem; font-weight: 650; line-height: 1; }
+.waterline-motion-record-board .experiment-record-summary p { font-size: 12px; }
+.waterline-motion-record-board .experiment-record-workspace { grid-template-columns: minmax(260px,.7fr) minmax(0,1.65fr); gap: 32px; }
+.waterline-motion-record-board .experiment-contact-sheet { position: sticky; top: 104px; padding: 24px; border: 1.5px solid var(--ink); border-radius: 22px; box-shadow: 5px 5px 0 var(--sky); }
+.waterline-desk-guide { margin-bottom: 28px; }
+.waterline-desk-guide h3 { font-size: 1.5rem; margin: 0 0 12px; line-height: 1.3; }
+.waterline-desk-guide p { margin: 0; font-size: 13px; line-height: 1.85; color: var(--muted); }
+.waterline-motion-record-board .experiment-record-filters { flex-direction: column; gap: 14px; }
+.waterline-motion-record-board .experiment-record-filters > span { align-self: start; font-size: 9px; line-height: 1.8; }
+.waterline-motion-record-board .experiment-record-filters button { font-size: 11px; padding: 8px 10px; }
+.waterline-motion-record-board .waterline-record-grid { gap: 10px; }
+.waterline-motion-record-board .record-cell { aspect-ratio: 1.1; gap: 9px; border-color: var(--line); border-radius: 12px; }
+.waterline-motion-record-board .record-cell b { font-size: 1.2rem; line-height: 1; }
+.waterline-motion-record-board .record-cell i { font-family: var(--body); font-size: 10px; }
+.waterline-motion-record-board .record-cell.is-active { border-color: var(--ink); background: var(--sky); box-shadow: 3px 3px 0 var(--ink); transform: translate(-1px,-1px); }
+.waterline-motion-record-board .rain-task-key { grid-template-columns: 1fr; gap: 10px; margin-top: 24px; }
+.waterline-motion-record-board .rain-task-key span { border: 0; padding: 0; font-size: 12px; line-height: 1.6; }
+.waterline-motion-record-board .experiment-record-legend { font-family: var(--body); font-size: 10px; gap: 10px; }
+.waterline-motion-record-board .experiment-record-editor { border-width: 1.5px; border-radius: 24px; box-shadow: 6px 6px 0 var(--sky); }
+.waterline-motion-record-board .experiment-record-editor > header { padding: 28px 32px; background: var(--paper); border-bottom: 1px solid var(--line); align-items: center; }
+.waterline-motion-record-board .experiment-record-editor > header > div { align-items: start; flex-direction: column; gap: 12px; }
+.waterline-motion-record-board .experiment-record-editor > header strong { font-size: 2.5rem; line-height: 1; }
+.waterline-motion-record-board .experiment-record-editor > header label { min-width: 175px; }
+.waterline-motion-record-board .reference-active-task { padding: 20px 32px; background: var(--sky); border-bottom: 0; }
+.waterline-motion-record-board .reference-active-task strong { font-size: 1.2rem; }
+.waterline-motion-record-board .experiment-record-meta { padding: 32px 32px 0; gap: 24px 18px; }
+.waterline-motion-record-board .experiment-record-meta label,
+.waterline-motion-record-board .experiment-record-note { font-size: 12px; font-weight: 600; gap: 10px; }
+.waterline-motion-record-board .experiment-record-editor input,
+.waterline-motion-record-board .experiment-record-editor select,
+.waterline-motion-record-board .experiment-record-editor textarea { min-width: 0; min-height: 46px; border: 1px solid var(--line); font-size: 14px; font-weight: 400; line-height: 1.6; }
+.waterline-motion-record-board .experiment-record-editor input:focus,
+.waterline-motion-record-board .experiment-record-editor textarea:focus { border-color: var(--blue); box-shadow: 0 0 0 2px var(--sky); }
+.waterline-motion-record-board .waterline-checkpoint-fields { margin: 40px 32px; padding: 0; border: 0; border-radius: 0; background: var(--white); gap: 12px; }
+.waterline-motion-record-board fieldset legend { margin-bottom: 14px; padding: 0; font-size: 11px; }
+.waterline-motion-record-board .waterline-checkpoint-head,
+.waterline-motion-record-board .waterline-checkpoint-row { grid-template-columns: 44px 78px minmax(0,.8fr) minmax(0,1.3fr); gap: 12px; }
+.waterline-motion-record-board .waterline-checkpoint-head { font-size: 10px; padding: 0; }
+.waterline-motion-record-board .waterline-checkpoint-row { padding-top: 12px; }
+.waterline-motion-record-board .waterline-checkpoint-row > strong { font-size: 12px; }
+.waterline-motion-record-board .waterline-checkpoint-row input { padding-inline: 10px; font-size: 12px; }
+.waterline-motion-record-board .experiment-score-fields,
+.waterline-motion-record-board .experiment-failure-fields { margin: 40px 32px; border-color: var(--line); }
+.waterline-motion-record-board .experiment-score-row { padding-block: 18px; }
+.waterline-motion-record-board .experiment-score-row strong { font-size: 14px; }
+.waterline-motion-record-board .experiment-score-row small { font-size: 12px; line-height: 1.7; }
+.waterline-motion-record-board .experiment-score-row button { width: 34px; font-size: 11px; }
+.waterline-motion-record-board .experiment-failure-fields button { min-height: 38px; padding: 9px 13px; font-size: 12px; border-color: var(--line); }
+.waterline-motion-record-board .waterline-score-lock { margin: 0 0 12px; font-size: 12px; background: var(--paper); border-color: var(--line); }
+.waterline-motion-record-board .experiment-score-fields:disabled .experiment-score-row { opacity: .65; }
+.waterline-motion-record-board .experiment-record-note { margin: 0 32px 32px; }
+.waterline-motion-record-board .experiment-record-export { margin-top: 40px; padding: 32px; background: var(--paper); border-width: 1.5px; box-shadow: 5px 5px 0 var(--yellow); }
+.waterline-motion-record-board .experiment-record-export > div:first-child strong { font-size: 1.5rem; line-height: 1.5; text-wrap: balance; }
+.waterline-motion-record-board .experiment-record-export > div:first-child p { font-size: 13px; line-height: 1.85; }
+.waterline-motion-record-board .experiment-export-actions button { font-size: 12px; min-height: 46px; }
+
+@media (max-width: 1000px) {
+  .waterline-motion-record-board .experiment-record-workspace { grid-template-columns: 1fr; }
+  .waterline-motion-record-board .experiment-contact-sheet { position: static; }
+  .waterline-motion-record-board .record-cell { aspect-ratio: auto; min-height: 72px; }
+  .waterline-detail .experiment-detail-hero-grid { grid-template-columns: minmax(0,1.4fr) minmax(260px,1fr); gap: 32px; }
+  .waterline-detail .experiment-sample-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+
+@media (max-width: 760px) {
+  .site-header { height: 72px; }
+  .hero h1 { font-size: clamp(2.5rem,10.8vw,3.75rem); line-height: 1.2; }
+  .story-detail-title h1,
+  .story-detail-title h1:has(> span) { font-size: clamp(2.1rem,9vw,3.2rem); line-height: 1.24; }
+  .hero-layout { gap: 38px; }
+  .hero-card { min-height: 200px; }
+  .letter-board > span { min-height: 120px; font-size: 4.5rem; }
+  .letter-board small { left: 10px; bottom: 14px; font-size: 7px; }
+  .site-footer { padding: 40px 22px 24px; border-radius: 28px 28px 0 0; }
+  .footer-lead { grid-template-columns: 1fr; gap: 12px; margin-bottom: 32px; }
+  .footer-lead h2 { font-size: clamp(1.75rem,7.2vw,2.7rem); line-height: 1.3; }
+  .social-grid { gap: 10px; }
+  .social-placeholder { min-height: 140px; padding: 16px 12px; border-radius: 16px; }
+  .social-placeholder strong { font-size: 16px; }
+  .social-placeholder small { font-size: 11px; }
+  .footer-bottom { gap: 14px; flex-direction: column; margin-top: 24px; font-size: 8px; }
+  .waterline-detail .experiment-detail-hero-grid { grid-template-columns: 1fr; gap: 44px; }
+  .waterline-detail .experiment-detail-title h1 { font-size: clamp(1.9rem,8.1vw,3.3rem); line-height: 1.25; }
+  .waterline-cover { max-width: 420px; width: 100%; justify-self: center; padding: 24px; transform: none; }
+  .waterline-cover svg { max-height: 240px; margin-block: 12px; }
+  .waterline-cover strong { font-size: 1.75rem; }
+  .waterline-detail .experiment-sample-grid { grid-template-columns: 1fr; }
+  .waterline-detail .experiment-check-card { min-height: 0; }
+  .waterline-detail .experiment-check-card h3 { margin-block: 28px 20px; font-size: 1.6rem; }
+  .waterline-motion-record-board .experiment-record-top { grid-template-columns: 1fr; gap: 28px; }
+  .waterline-motion-record-board .experiment-record-top h2 { font-size: clamp(1.9rem,8vw,2.75rem); }
+  .waterline-motion-record-board .experiment-record-summary { margin-block: 32px; }
+  .waterline-motion-record-board .experiment-record-summary article { min-height: 125px; padding: 20px; }
+  .waterline-motion-record-board .experiment-record-workspace { gap: 32px; }
+  .waterline-motion-record-board .experiment-contact-sheet { padding: 22px; }
+  .waterline-motion-record-board .experiment-record-editor > header { padding: 24px 20px; gap: 12px; flex-wrap: wrap; }
+  .waterline-motion-record-board .experiment-record-editor > header label { min-width: 0; flex: 1 1 160px; }
+  .waterline-motion-record-board .reference-active-task { padding: 20px; gap: 10px; }
+  .waterline-motion-record-board .experiment-record-meta { padding: 24px 20px 0; grid-template-columns: minmax(0,1fr); }
+  .waterline-motion-record-board .experiment-record-editor input,
+  .waterline-motion-record-board .experiment-record-editor select,
+  .waterline-motion-record-board .experiment-record-editor textarea { font-size: 16px; }
+  .waterline-motion-record-board .waterline-checkpoint-fields { margin: 32px 20px; gap: 20px; }
+  .waterline-motion-record-board .waterline-checkpoint-head { display: none; }
+  .waterline-motion-record-board .waterline-checkpoint-row { grid-template-columns: 40px minmax(0,1fr); gap: 14px 12px; padding-top: 20px; }
+  .waterline-motion-record-board .waterline-checkpoint-row > strong { grid-row: 1 / 4; padding-top: 0; }
+  .waterline-motion-record-board .waterline-checkpoint-row label { display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .waterline-motion-record-board .waterline-checkpoint-row label > span { font-size: 12px; }
+  .waterline-motion-record-board .experiment-score-fields,
+  .waterline-motion-record-board .experiment-failure-fields { margin: 32px 20px; }
+  .waterline-motion-record-board .experiment-score-row { grid-template-columns: 1fr; }
+  .waterline-motion-record-board .experiment-score-row button { width: 36px; }
+  .waterline-motion-record-board .experiment-record-note { margin: 0 20px 24px; }
+  .waterline-motion-record-board .experiment-record-export { padding: 24px; grid-template-columns: 1fr; }
+}

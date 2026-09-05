@@ -21,6 +21,7 @@ import { ContactActionRecordBoard } from '../../components/contact-action-record
 import { StoryboardAuditBoard } from '../../components/storyboard-audit-board';
 import { PosterStoryAuditBoard } from '../../components/poster-story-audit-board';
 import { WaterlineMotionRecordBoard } from '../../components/waterline-motion-record-board';
+import { WaterlineCover } from '../../components/waterline-cover';
 import { experimentDetails, getExperimentBySlug } from '../../data/experiments';
 
 export const dynamicParams = false;
@@ -58,7 +59,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
       : characterAnchor;
 
   return (
-    <main className="experiment-detail-page">
+    <main className={`experiment-detail-page${experiment.recordBoard === 'waterline-motion' ? ' waterline-detail' : ''}`}>
       <SiteHeader active="Experiments" />
 
       <header className="experiment-detail-hero">
@@ -79,15 +80,15 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
               <span>{experiment.englishTitle}</span>
               <span>{experiment.status}</span>
             </div>
-            {experiment.recordBoard === 'waterline-motion' && <Link className="experiment-record-jump" href="#record-desk"><span>填写首轮 0 / 9 执行记录</span><b>↓</b></Link>}
+            {experiment.recordBoard === 'waterline-motion' && <a className="experiment-record-jump" href="#record-desk"><span>打开本地执行记录</span><b>↓</b></a>}
           </div>
-          <div className="forty-board" aria-label={`${testCount} 个测试单元编号板`}>
+          {experiment.recordBoard === 'waterline-motion' ? <WaterlineCover /> : <div className="forty-board" aria-label={`${testCount} 个测试单元编号板`}>
             <div className="forty-board-top mono"><span>{testUnit}</span><span>01—{String(testCount).padStart(2, '0')}</span></div>
             <strong>{testCount}</strong>
             <div className="forty-cells" aria-hidden="true">
               {Array.from({ length: testCount }, (_, index) => <i key={index}>{String(index + 1).padStart(2, '0')}</i>)}
             </div>
-          </div>
+          </div>}
         </div>
       </header>
 
