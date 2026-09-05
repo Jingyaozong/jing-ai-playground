@@ -8,6 +8,7 @@ import './globals.css';
 import './editorial-refinement.css';
 import './tool-form-refinement.css';
 import './tool-directory.css';
+import './note-list-refinement.css';
 
 const siteUrl = `${(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/$/, '')}/`;
 const metadataBase = new URL(siteUrl);

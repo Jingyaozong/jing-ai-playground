@@ -58,7 +58,7 @@ export default function NotesPage() {
   const latest = notes.filter((note) => note.slug !== featured.slug);
 
   return (
-    <main>
+    <main className="notes-index-page">
       <SiteHeader active="Notes" />
       <section className="notes-hero page-intro">
         <div className="page-intro-top mono"><span>JING NOTES / 荆的 AI 笔记</span><span>{notes.length} 篇内容正在生长</span></div>

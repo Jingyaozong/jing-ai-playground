@@ -1,0 +1,46 @@
+/* Retain the illustrated mosaic; let titles and summaries breathe. */
+.notes-mosaic, .home-notes-grid { gap: 32px; }
+.note-card-copy { padding: 32px; }
+.note-card h3, .note-card-small h3, .note-card-tall h3 {
+  margin: 28px 0 20px;
+  font-size: clamp(1.35rem, 1.9vw, 1.85rem);
+  line-height: 1.5;
+  letter-spacing: -.015em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.note-card h3 > span { display: block; text-wrap: balance; }
+.note-card p { min-height: 0; margin-bottom: 32px; font-size: 14px; line-height: 1.9; text-wrap: pretty; }
+.note-card-meta { flex-wrap: wrap; gap: 10px 16px; font-size: 10px; line-height: 1.7; }
+.note-card-bottom { flex-wrap: wrap; align-items: center; gap: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+.note-card .note-tags { gap: 8px; }
+.note-card .note-tags span { font-size: 9px; line-height: 1.4; }
+.note-card .note-arrow { margin-left: auto; font-size: 12px; }
+.note-card-link:focus-visible { outline: 3px solid var(--blue); outline-offset: -6px; border-radius: 24px; }
+.notes-index-page .reading-path-card h3 { margin-top: 40px; font-size: clamp(1.65rem,2.5vw,2.25rem); line-height: 1.4; }
+.notes-index-page .reading-path-card li strong { font-size: 15px; line-height: 1.65; text-wrap: pretty; }
+.notes-index-page .reading-path-card li a { gap: 10px; padding: 18px; }
+.notes-index-page .reading-path-card li i { grid-column: 1 / -1; justify-self: end; font-size: 11px; }
+.notes-index-page .reading-path-card li small { font-size: 10px; }
+.notes-index-page .featured-note-copy h2 { font-size: clamp(1.8rem,2.7vw,2.6rem); line-height: 1.4; text-wrap: balance; }
+.notes-index-page .section-title-row h2 { font-size: clamp(1.9rem,3.2vw,3rem); line-height: 1.3; }
+.notes-index-page .section-title-row > p { text-wrap: pretty; }
+.note-browser .browser-toolbar { padding: 28px; margin-bottom: 24px; }
+.note-browser .search-field { grid-template-columns: 140px minmax(0,1fr); }
+.note-browser .search-field input { min-width: 0; min-height: 48px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; font: 400 16px/1.6 var(--body); }
+.note-browser .filter-row { gap: 10px; padding-top: 24px; }
+.note-browser .filter-row button { min-height: 44px; padding: 10px 16px; font: 500 12px/1.5 var(--body); }
+.note-browser :is(input,button):focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+.note-result-count { margin: 0 0 32px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.note-browser .empty-result { align-items: center; gap: 18px; }
+.note-browser .empty-result button { min-height: 44px; padding: 12px 18px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--yellow); color: var(--ink); font: 600 13px var(--body); cursor: pointer; }
+@media (max-width: 760px) {
+  .notes-mosaic, .home-notes-grid { gap: 28px; }
+  .note-card-copy { padding: 26px; }
+  .note-card h3, .note-card-small h3, .note-card-tall h3 { font-size: 1.4rem; line-height: 1.5; }
+  .note-card-meta { flex-direction: column; gap: 8px; }
+  .note-browser .browser-toolbar { padding: 22px; }
+  .note-browser .search-field { grid-template-columns: minmax(0,1fr); gap: 14px; }
+  .notes-index-page .reading-path-card li a { padding: 14px; }
+  .notes-index-page .reading-path-card li strong { grid-column: 1 / -1; font-size: 14px; }
+}
