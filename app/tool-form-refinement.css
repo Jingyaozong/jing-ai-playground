@@ -1,0 +1,129 @@
+/* Local tools share a readable worksheet scale, not a new visual theme.
+   Keep range sliders, native checkboxes and custom switches out of text rules. */
+.tool-detail-shell {
+  --tool-field-size: 14px;
+  --tool-field-height: 48px;
+  --tool-field-gap: 24px;
+}
+
+.tool-detail-shell :is(textarea, select, input):not([hidden]):where(:not([type='range'], [type='checkbox'], [type='radio'], [type='hidden'], [type='file'])) {
+  min-width: 0;
+  min-height: var(--tool-field-height);
+  font-size: var(--tool-field-size);
+  font-weight: 500;
+  line-height: 1.65;
+}
+.tool-detail-shell textarea { padding: 14px 16px; }
+.tool-detail-shell label { min-width: 0; }
+.tool-detail-shell label :is(strong, small) { line-height: 1.6; }
+.tool-detail-shell label small { font-size: 11px; }
+.tool-detail-shell :is(input, select, textarea, button):focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 4px;
+}
+.tool-detail-shell label:has(input:is([type='checkbox'], [type='radio']):focus-visible) {
+  outline: 3px solid var(--blue);
+  outline-offset: 4px;
+}
+.tool-detail-shell button { min-height: 44px; }
+.tool-detail-shell pre { font-size: 12px; line-height: 1.8; }
+.tool-detail-shell h2 {
+  font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+  line-height: 1.3;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.release-detail-hero .tool-detail-title h1 { font-size: clamp(2.6rem, 4.5vw, 4.6rem); line-height: 1.2; }
+
+/* Long creative briefs get their own writing line. Labels stay above the text. */
+.tool-detail-shell :is(.waterline-card-field, .waterline-range-field,
+  .shadow-card-field, .shadow-duration-field, .contact-card-field,
+  .contact-duration-field, .effect-text-field, .effect-select-field,
+  .risk-task-field, .lighting-practical-field) {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  padding-block: 22px;
+}
+.tool-detail-shell :is(.waterline-card-field, .shadow-card-field,
+  .contact-card-field, .effect-text-field, .lighting-practical-field) textarea {
+  min-height: 104px;
+}
+.tool-detail-shell :is(.anchor-field, .scene-field, .sound-field) {
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px 16px;
+  padding-block: 24px;
+}
+.tool-detail-shell :is(.anchor-field, .scene-field, .sound-field) textarea {
+  grid-column: 2;
+  min-height: 112px;
+}
+.tool-detail-shell :is(.waterline-field-group, .contact-field-group,
+  .effect-field-group, .shadow-card-fields) {
+  margin-top: var(--tool-field-gap);
+  padding: 28px;
+}
+.tool-detail-shell :is(.waterline-builder-heading, .shadow-card-heading,
+  .contact-card-heading, .effect-panel-heading) {
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 24px;
+  padding-bottom: 20px;
+}
+.tool-detail-shell :is(.waterline-builder-heading, .shadow-card-heading,
+  .contact-card-heading, .effect-panel-heading) h2 {
+  font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+  line-height: 1.3;
+  letter-spacing: -.025em;
+}
+.tool-detail-shell :is(.waterline-group-heading, .contact-group-heading, .shadow-group-heading, .effect-group-heading) {
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 20px;
+}
+.tool-detail-shell :is(.waterline-group-heading, .contact-group-heading, .shadow-group-heading, .effect-group-heading) p {
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: left;
+}
+.tool-detail-shell :is(.waterline-card-field, .shadow-card-field, .contact-card-field,
+  .effect-text-field, .effect-select-field) strong { font-size: 15px; }
+.tool-detail-shell :is(.waterline-number-pair, .effect-compact-grid,
+  .budget-project-grid, .budget-fixed-grid, .delivery-basic-grid, .delivery-spec-grid,
+  .release-master-grid, .lighting-basic-grid, .lighting-shot-fields,
+  .shot-prompt-fields, .shot-prompt-basics) { gap: 20px; }
+.tool-detail-shell :is(.lighting-basic-grid, .release-fields) label {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  padding: 16px;
+}
+.tool-detail-shell :is(.waterline-number-pair, .lighting-basic-grid,
+  .lighting-shot-fields, .release-fields) label > span { font-size: 12px; line-height: 1.6; }
+.tool-detail-shell :is(.shadow-timeline-row, .contact-stage-row) { gap: 12px; padding-block: 12px; }
+.tool-detail-shell :is(.waterline-output-grid, .shadow-output-grid,
+  .contact-output-grid, .effect-output-grid, .shot-output-grid) { gap: 24px; }
+.tool-detail-shell :is(.waterline-output-card, .shadow-output-card,
+  .contact-output-card, .effect-output-card) h3 { font-size: 1.5rem; line-height: 1.4; text-wrap: balance; }
+.tool-detail-shell :is(.waterline-output-card, .shadow-output-card,
+  .contact-output-card, .effect-output-card) > p { font-size: 12px; line-height: 1.8; }
+
+@media (max-width: 1120px) {
+  /* Keep absolute seals inside their cards when sticky positioning is removed. */
+  .tool-detail-shell :is(.seed-result-ticket, .anchor-status-card, .sound-mix-card) { position: relative; top: auto; }
+}
+
+@media (max-width: 760px) {
+  /* 16px prevents focus zoom on iOS; smaller display type does not mean tiny inputs. */
+  .tool-detail-shell { --tool-field-size: 16px; --tool-field-gap: 24px; }
+  .tool-detail-hero .tool-detail-title h1 { font-size: clamp(1.85rem, 8.2vw, 3rem); line-height: 1.25; }
+  .tool-detail-shell :is(.waterline-field-group, .contact-field-group,
+    .effect-field-group, .shadow-card-fields) { padding: 22px 20px; }
+  .tool-detail-shell :is(.waterline-card-field, .shadow-card-field,
+    .contact-card-field, .effect-text-field, .lighting-practical-field) textarea { min-height: 152px; }
+  .tool-detail-shell :is(.anchor-field, .scene-field, .sound-field) { gap: 10px; grid-template-columns: 24px minmax(0,1fr); }
+  .tool-detail-shell :is(.anchor-field, .scene-field, .sound-field) textarea { grid-column: 1 / -1; }
+  .tool-detail-shell :is(.waterline-builder-heading, .shadow-card-heading,
+    .contact-card-heading, .effect-panel-heading) h2 { font-size: 1.8rem; }
+  .tool-detail-shell :is(.lighting-basic-grid, .lighting-shot-fields) { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+  .tool-detail-shell .lighting-basic-grid { grid-template-columns: minmax(0,1fr); }
+  .tool-detail-shell pre { font-size: 13px; }
+}

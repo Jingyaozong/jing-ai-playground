@@ -6,6 +6,7 @@ import '@fontsource/manrope/600.css';
 import '@fontsource/ibm-plex-mono/400.css';
 import './globals.css';
 import './editorial-refinement.css';
+import './tool-form-refinement.css';
 
 const siteUrl = `${(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/$/, '')}/`;
 const metadataBase = new URL(siteUrl);
