@@ -55,6 +55,14 @@ const readingPaths = [
 export default function NotesPage() {
   const notes = getAllNotes();
   const featured = notes.find((note) => note.featured) ?? notes[0];
+  const featuredBreak = featured.titleBreakAfter ? featured.title.indexOf(featured.titleBreakAfter) + featured.titleBreakAfter.length : 0;
+  const featuredStatus = featured.demo
+    ? 'Demo 内容，用于展示文章版式，不代表正式发布内容。'
+    : featured.editorialStatus === 'draft'
+      ? '编辑稿 · 待荆确认。框架与判断尚未作为正式个人观点发布。'
+      : featured.editorialStatus === 'source-backed'
+        ? '资料文章 · 来源已核对。编辑转译不代表荆已确认的个人经验。'
+        : '正式笔记';
 
   return (
     <main className="notes-index-page">
@@ -86,11 +94,11 @@ export default function NotesPage() {
         </div>
       </section></Reveal>
 
-      <Reveal><section className="featured-note section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Featured note / 重点笔记</p><h2>先从一个真正<br />需要判断的问题开始。</h2></div><p>不是给模型打一个笼统的“好看分”，而是建立可以解释、可以复用的评测框架。</p></div>
+      <Reveal><section className="featured-note section-shell" id="featured-note">
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Featured note / 重点笔记</p><h2>先读一篇，<br />再接着探索。</h2></div><p>{featured.description}</p></div>
         <Link href={`/notes/${featured.slug}/`} className="featured-note-card">
           <NoteVisual variant={featured.cover} label={featured.title} />
-          <div className="featured-note-copy"><div className="mono"><span>{featured.category} / {featured.issue}</span><span>{featured.readingTime}</span></div><h2>{featured.title}</h2><p>{featured.description}</p><span className="featured-note-action">阅读这篇笔记 ↗</span></div>
+          <div className="featured-note-copy"><div className="mono"><span>{featured.category} / {featured.issue}</span><span>{featured.readingTime}</span></div><h2>{featuredBreak > 0 ? <>{featured.title.slice(0, featuredBreak)}<br />{featured.title.slice(featuredBreak)}</> : featured.title}</h2><p>{featuredStatus}</p><span className="featured-note-action">阅读这篇笔记 ↗</span></div>
         </Link>
       </section></Reveal>
 

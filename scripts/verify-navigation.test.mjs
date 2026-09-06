@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import test from 'node:test';
 import matter from 'gray-matter';
 import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
+import { getAllNotes } from '../lib/notes.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
 function anchors(file) {
@@ -17,6 +18,21 @@ const groups = [
   { path: 'notes', key: 'category', hash: '#all-notes', values: ['AI TIPS', 'AI EVAL', 'MAKING OF', 'AI BRIEFING'] },
   { path: 'library', key: 'type', hash: '#library-all', values: ['ARTICLE', 'VIDEO', 'PDF', 'TOOL', 'JING PICKS'] },
 ];
+
+test('featured note introduction follows the selected note metadata', () => {
+  const notes = getAllNotes();
+  const featured = notes.find((note) => note.featured) ?? notes[0];
+  assert.ok(featured);
+  const html = readFileSync(join(process.cwd(), 'out/notes/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  const section = html.match(/<section\b[^>]*id="featured-note"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(section, 'Missing featured section');
+  const escape = (text) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#x27;');
+  assert.ok(section.replaceAll('<br/>', '').includes(escape(featured.title)), 'Featured title mismatch');
+  assert.ok(section.includes(escape(featured.description)), 'Featured introduction mismatch');
+  assert.ok(section.includes(`/notes/${featured.slug}/"`), 'Featured target mismatch');
+  const status = featured.demo ? 'Demo 内容' : featured.editorialStatus === 'draft' ? '编辑稿 · 待荆确认' : featured.editorialStatus === 'source-backed' ? '资料文章 · 来源已核对' : '正式笔记';
+  assert.ok(section.includes(status), 'Missing featured content status');
+});
 
 for (const group of groups) {
   test(`${group.path}: missing, empty and invalid filters fall back to all`, () => {
