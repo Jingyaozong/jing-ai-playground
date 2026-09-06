@@ -55,7 +55,6 @@ const readingPaths = [
 export default function NotesPage() {
   const notes = getAllNotes();
   const featured = notes.find((note) => note.featured) ?? notes[0];
-  const latest = notes.filter((note) => note.slug !== featured.slug);
 
   return (
     <main className="notes-index-page">
@@ -97,7 +96,7 @@ export default function NotesPage() {
 
       <Reveal><section className="note-categories section-shell">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Four shelves / 四个栏目</p><h2>写技巧，也留下<br />判断和过程。</h2></div><p>四个栏目对应四种不同的记录方式，但都来自同一个创作现场。</p></div>
-        <div className="note-category-grid">{noteCategories.map((category, index) => <a href="#all-notes" className={`note-category-card category-${category.color}`} key={category.id}><span className="mono">0{index + 1}</span><strong>{category.id}</strong><h3>{category.chinese}</h3><p>{category.description}</p><i>查看栏目 ↓</i></a>)}</div>
+        <div className="note-category-grid">{noteCategories.map((category, index) => <a href={`?category=${encodeURIComponent(category.id)}#all-notes`} className={`note-category-card category-${category.color}`} key={category.id}><span className="mono">0{index + 1}</span><strong>{category.id}</strong><h3>{category.chinese}</h3><p>{category.description}</p><i>查看栏目 ↓</i></a>)}</div>
       </section></Reveal>
 
       <Reveal><section className="prompt-entry section-shell">
@@ -109,7 +108,7 @@ export default function NotesPage() {
 
       <section className="latest-notes section-shell" id="all-notes">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近更新</p><h2>最近记下来的<br />一些东西。</h2></div><p>Demo、编辑稿和正式内容都会明确标注；真实制作过程会随着项目推进继续更新。</p></div>
-        <NoteBrowser notes={latest} />
+        <NoteBrowser notes={notes} />
       </section>
       <SiteFooter />
     </main>
