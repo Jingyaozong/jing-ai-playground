@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 };
 
 const shelves = [
-  ['ARTICLES', '文章', '真正值得读完和留着回看的文章。', 'yellow'],
-  ['VIDEOS', '视频', 'B站、YouTube 与公开视频里的好内容。', 'blue'],
-  ['PAPERS & PDF', '报告与论文', 'Benchmark、白皮书、论文和官方指南。', 'coral'],
-  ['TOOLS', '工具', '不是工具墙，只留下真正可能会用的东西。', 'mint'],
+  ['ARTICLES', '文章', '真正值得读完和留着回看的文章。', 'yellow', 'ARTICLE'],
+  ['VIDEOS', '视频', 'B站、YouTube 与公开视频里的好内容。', 'blue', 'VIDEO'],
+  ['PAPERS & PDF', '报告与论文', 'Benchmark、白皮书、论文和官方指南。', 'coral', 'PDF'],
+  ['TOOLS', '工具', '不是工具墙，只留下真正可能会用的东西。', 'mint', 'TOOL'],
 ];
 
 const libraryRoutes = [
@@ -80,7 +80,7 @@ export default function LibraryPage() {
 
       <Reveal><section className="featured-library section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">This week&apos;s candidate / 本周候选</p><h2>先看一个可能<br />值得花时间的内容。</h2></div><p>来源已经核对，并附有编辑推荐理由；等荆确认判断后，它才会成为正式“荆选”。</p></div><LibraryCard item={featured} /></section></Reveal>
 
-      <Reveal><section className="library-shelves section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Five shelves / 收藏分类</p><h2>按内容类型收好，<br />按判断重新找到。</h2></div><p>“荆选”可以跨越所有类型，代表等待荆确认的特别推荐候选。</p></div><div className="library-shelf-grid">{shelves.map(([en, zh, description, color], index) => <a className={`library-shelf shelf-${color}`} href="#library-all" key={en}><span className="mono">0{index + 1}</span><strong>{en}</strong><h3>{zh}</h3><p>{description}</p><i>浏览 ↓</i></a>)}<a className="library-shelf shelf-picks" href="#library-all"><span className="mono">05</span><strong>JING PICKS</strong><h3>荆选</h3><p>跨越文章、视频、PDF 和工具的特别推荐候选，等待荆确认。</p><i>只看候选 ↓</i></a></div></section></Reveal>
+      <Reveal><section className="library-shelves section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Five shelves / 收藏分类</p><h2>按内容类型收好，<br />按判断重新找到。</h2></div><p>“荆选”可以跨越所有类型，代表等待荆确认的特别推荐候选。</p></div><div className="library-shelf-grid">{shelves.map(([en, zh, description, color, filter], index) => <a className={`library-shelf shelf-${color}`} href={`?type=${filter}#library-all`} key={en}><span className="mono">0{index + 1}</span><strong>{en}</strong><h3>{zh}</h3><p>{description}</p><i>浏览 ↓</i></a>)}<a className="library-shelf shelf-picks" href="?type=JING%20PICKS#library-all"><span className="mono">05</span><strong>JING PICKS</strong><h3>荆选</h3><p>跨越文章、视频、PDF 和工具的特别推荐候选，等待荆确认。</p><i>只看候选 ↓</i></a></div></section></Reveal>
 
       <section className="library-all section-shell" id="library-all"><div className="section-title-row compact"><div><p className="eyebrow mono">Saved with a reason</p><h2>这些内容，<br />为什么被留下来。</h2></div><p>资源标题、摘要和原始链接已经核对；“JING&apos;S TAKE”目前是编辑初稿，等你确认后才会转为正式荆选。</p></div><LibraryBrowser items={libraryItems} /></section>
       <SiteFooter />

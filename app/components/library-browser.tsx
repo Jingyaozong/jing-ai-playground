@@ -1,14 +1,33 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useSyncExternalStore } from 'react';
 import type { LibraryItem } from '../data/library';
 import { libraryFilters } from '../data/library';
 import { LibraryCard } from './library-card';
 
 const filterLabels: Record<string, string> = { 全部: '全部', VIDEO: '视频', ARTICLE: '文章', PDF: '报告与论文', TOOL: '工具', 'JING PICKS': '荆选候选' };
 
+function subscribeToFilter(onChange: () => void) {
+  window.addEventListener('popstate', onChange);
+  return () => window.removeEventListener('popstate', onChange);
+}
+
+function readFilter() {
+  const filter = new URLSearchParams(window.location.search).get('type');
+  return filter && libraryFilters.includes(filter) ? filter : '全部';
+}
+
+function selectFilter(filter: string) {
+  const url = new URL(window.location.href);
+  if (filter === '全部') url.searchParams.delete('type');
+  else url.searchParams.set('type', filter);
+  if (url.href === window.location.href) return;
+  window.history.pushState(null, '', url);
+  window.dispatchEvent(new PopStateEvent('popstate'));
+}
+
 export function LibraryBrowser({ items }: { items: LibraryItem[] }) {
-  const [active, setActive] = useState('全部');
+  const active = useSyncExternalStore(subscribeToFilter, readFilter, () => '全部');
   const [query, setQuery] = useState('');
   const visible = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -23,11 +42,11 @@ export function LibraryBrowser({ items }: { items: LibraryItem[] }) {
     <section className="content-browser library-browser" aria-label="筛选收藏内容">
       <div className="browser-toolbar">
         <label className="search-field"><span className="mono">搜索收藏 / Search</span><input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="输入标题、来源、主题或标签" /></label>
-        <div className="filter-row">{libraryFilters.map((filter) => <button aria-pressed={active === filter} className={active === filter ? 'is-active' : ''} onClick={() => setActive(filter)} key={filter}>{filterLabels[filter]}</button>)}</div>
+        <div className="filter-row">{libraryFilters.map((filter) => <button aria-pressed={active === filter} className={active === filter ? 'is-active' : ''} onClick={() => selectFilter(filter)} key={filter}>{filterLabels[filter]}</button>)}</div>
       </div>
       <p className="library-result-count" role="status">{filterLabels[active]} · 显示 {visible.length} 项收藏{query.trim() && ` · 关键词：${query.trim()}`}</p>
       <div className="library-grid">{visible.map((item) => <LibraryCard item={item} key={item.id} />)}</div>
-      {visible.length === 0 && <div className="empty-result"><b>这里暂时没有匹配收藏。</b><span>试试其他关键词，或清除筛选重新浏览。</span><button onClick={() => { setActive('全部'); setQuery(''); }}>查看全部收藏</button></div>}
+      {visible.length === 0 && <div className="empty-result"><b>这里暂时没有匹配收藏。</b><span>试试其他关键词，或清除筛选重新浏览。</span><button onClick={() => { selectFilter('全部'); setQuery(''); }}>查看全部收藏</button></div>}
     </section>
   );
 }
