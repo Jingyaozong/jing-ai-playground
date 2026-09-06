@@ -11,7 +11,7 @@ export function LibraryCard({ item, compact = false }: { item: LibraryItem; comp
       <div className="library-copy">
         <div className="library-meta mono"><span>{item.type} · {item.source}</span><span>{item.topic}</span></div>
         {item.takeStatus === 'draft' && <span className="take-status mono">编辑初选 · 待荆确认</span>}
-        <h3>{item.title}</h3>
+        <h3>{item.titleParts ? item.titleParts.map((part, index) => <span className="library-title-part" key={index}>{part}</span>) : item.title}</h3>
         {item.creator && <p className="library-creator">发布者 / {item.creator}</p>}
         {!compact && <>
           <p className="library-summary">{item.description}</p>

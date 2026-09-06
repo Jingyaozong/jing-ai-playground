@@ -21,6 +21,20 @@ const groups = [
   { path: 'library', key: 'type', hash: '#library-all', values: ['ARTICLE', 'VIDEO', 'PDF', 'TOOL', 'JING PICKS'] },
 ];
 
+test('library semantic title groups preserve original titles in both card contexts', () => {
+  const pages = ['index.html', 'library/index.html'].map((file) => readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ''));
+  for (const item of libraryItems.filter((item) => item.titleParts)) {
+    assert.equal(item.titleParts.join(''), item.title, `Title changed: ${item.id}`);
+    assert.ok(item.titleParts.every((part) => part.trim().length > 1), `Orphan title group: ${item.id}`);
+    const escape = (value) => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+    for (const html of pages) {
+      // A card may not be selected for the homepage, but its full library card must exist.
+      if (!html.includes(item.url.replaceAll('&', '&amp;'))) continue;
+      for (const part of item.titleParts) assert.ok(html.includes(`<span class="library-title-part">${escape(part)}</span>`), `Missing title group: ${item.id} / ${part}`);
+    }
+  }
+});
+
 test('homepage featured story and recent library picks match source data', () => {
   const html = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   const featured = stories.find((story) => story.slug === 'she-forgets-yesterday') ?? stories[0];

@@ -1,6 +1,7 @@
 /* Keep the illustrated shelves; separate source material from editorial opinion. */
 .library-grid { gap: 32px; }
 .library-copy { padding: 32px; }
+.library-title-part { display: inline-block; white-space: pre; }
 .library-meta { flex-wrap: wrap; gap: 8px 18px; font-size: 10px; line-height: 1.7; }
 .library-copy h3, .library-card.is-compact .library-copy h3 { margin: 24px 0 18px; font-size: clamp(1.4rem,1.9vw,1.9rem); line-height: 1.45; letter-spacing: -.015em; text-wrap: balance; overflow-wrap: anywhere; }
 .library-copy .take-status { font-size: 10px; line-height: 1.5; border-color: var(--line); background: var(--paper); }

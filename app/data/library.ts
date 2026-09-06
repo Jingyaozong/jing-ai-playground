@@ -3,6 +3,7 @@ export type LibraryType = 'VIDEO' | 'ARTICLE' | 'PDF' | 'TOOL';
 export type LibraryItem = {
   id: string;
   title: string;
+  titleParts?: string[];
   type: LibraryType;
   source: string;
   topic: string;
@@ -193,6 +194,7 @@ export const libraryItems: LibraryItem[] = [
   {
     id: 'google-flow-creative-workspace-2026',
     title: 'Flow：从素材管理到镜头精修的一体化工作区',
+    titleParts: ['Flow：', '从素材管理', '到镜头精修', '的一体化工作区'],
     type: 'ARTICLE',
     source: 'Google Labs',
     topic: 'Workflow',
@@ -207,6 +209,7 @@ export const libraryItems: LibraryItem[] = [
   {
     id: 'adobe-firefly-generate-sound-effects',
     title: '在 Firefly 视频编辑器中生成声音效果',
+    titleParts: ['在 Firefly ', '视频编辑器中', '生成声音效果'],
     type: 'ARTICLE',
     source: 'Adobe Help',
     topic: 'Sound',
@@ -221,6 +224,7 @@ export const libraryItems: LibraryItem[] = [
   {
     id: 'c2pa-content-credentials-explainer',
     title: 'C2PA 与 Content Credentials 入门说明',
+    titleParts: ['C2PA 与 ', 'Content ', 'Credentials ', '入门说明'],
     type: 'ARTICLE',
     source: 'C2PA',
     topic: 'Provenance',
