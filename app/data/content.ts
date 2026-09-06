@@ -18,6 +18,7 @@ export type Experiment = {
   number: string;
   slug?: string;
   title: string;
+  titleParts?: string[];
   description: string;
   category: string;
   date: string;
@@ -129,6 +130,7 @@ export const experiments: Experiment[] = [
     number: '001',
     slug: 'forty-shots-one-character',
     title: '同一个她，四十个镜头',
+    titleParts: ['同一个她，', '四十个镜头'],
     description: '跨景别、光线、情绪和动作测试角色一致性。现有一张四格静态 Pilot 样本板；正式四十镜视频测试尚未开始。',
     category: 'Character Study',
     date: '2026.08.18',
@@ -141,6 +143,7 @@ export const experiments: Experiment[] = [
     number: '002',
     slug: 'what-reference-images-lock',
     title: '参考图到底锁住了什么？',
+    titleParts: ['参考图到底', '锁住了什么？'],
     description: '三组、四种相同镜头任务，对比无参考、单张正面锚点与三张多角度参考。协议已完成，目前 0 / 12，无模型结论。',
     category: 'Reference Study',
     date: '2026.08.29',
@@ -153,6 +156,7 @@ export const experiments: Experiment[] = [
     number: '003',
     slug: 'can-local-rain-follow-a-character',
     title: '局部雨区能否稳定跟随人物？',
+    titleParts: ['局部雨区', '能否稳定', '跟随人物？'],
     description: '九格对照协议：让三个相同高风险镜头分别使用纯文字、空间约束和角色锚点条件。目前 0 / 9，没有视频结论。',
     category: 'Motion & Weather Study',
     date: '2026.08.29',
@@ -165,6 +169,7 @@ export const experiments: Experiment[] = [
     number: '004',
     slug: 'can-one-light-survive-a-reverse-angle',
     title: '同一盏灯换机位后还能保持方向吗？',
+    titleParts: ['同一盏灯', '换机位后', '还能保持方向吗？'],
     description: '十二格对照协议：固定北窗冷光与桌灯暖光，比较氛围词、世界坐标账本和账本加起点证据。目前 0 / 12，没有视频结论。',
     category: 'Lighting Continuity Study',
     date: '2026.08.29',
@@ -177,6 +182,7 @@ export const experiments: Experiment[] = [
     number: '005',
     slug: 'can-a-shadow-move-on-its-own',
     title: '影子能否在人物静止时独立行动？',
+    titleParts: ['影子能否在', '人物静止时', '独立行动？'],
     description: '九格对照协议：固定人物、硬光与三个影子任务，比较直接描述、动作账本和分层合成。目前 0 / 9，没有视频结论。',
     category: 'Motion Separation Study',
     date: '2026.08.30',
@@ -189,6 +195,7 @@ export const experiments: Experiment[] = [
     number: '006',
     slug: 'can-one-hand-lift-the-same-cup',
     title: '一只手能否稳定拿起同一个杯子？',
+    titleParts: ['一只手能否', '稳定拿起', '同一个杯子？'],
     description: '九格对照协议：固定同一只手、同一个杯子与三个接触任务，比较普通动作句、五状态顺序和端点证据。目前 0 / 9，没有视频结论。',
     category: 'Contact & Physics Study',
     date: '2026.08.30',
@@ -201,6 +208,7 @@ export const experiments: Experiment[] = [
     number: '007',
     slug: 'where-auto-storyboarding-loses-the-story',
     title: '自动分镜机，第一次走神',
+    titleParts: ['自动分镜机，', '第一次走神'],
     description: '九格对照协议：三篇固定短故事分别经过直接拆镜、固定字段和先提拍点三种流程，再与人工最低拍点基准核对。目前 0 / 9，没有输出结论。',
     category: 'Storyboard Decomposition Study',
     date: '2026.08.31',
@@ -213,6 +221,7 @@ export const experiments: Experiment[] = [
     number: '008',
     slug: 'can-a-fictional-poster-grow-a-story',
     title: '让 AI 先画一张不会发生的海报',
+    titleParts: ['让 AI 先画一张', '不会发生的海报'],
     description: '三张固定海报均完成直接反推、证据优先和三栏反推，共九份原始文本与编辑初审；当前结论只适用于本轮固定样本。',
     category: 'Poster-to-Story Study',
     date: '2026.08.31',
@@ -225,6 +234,7 @@ export const experiments: Experiment[] = [
     number: '009',
     slug: 'does-the-short-evidence-ledger-travel',
     title: '短证据账本，换海报以后还能成立吗？',
+    titleParts: ['短证据账本，', '换海报以后', '还能成立吗？'],
     description: '三张新生成虚构海报各保留三份短证据账本故事，共九份原始文本与编辑初审；来源边界稳定，但故事机制仍出现趋同。',
     category: 'Poster-to-Story Retest',
     date: '2026.09.01',
@@ -237,6 +247,7 @@ export const experiments: Experiment[] = [
     number: '010',
     slug: 'can-water-recede-after-the-umbrella-opens',
     title: '撑伞以后，水面能沿一个方向连续退去吗？',
+    titleParts: ['撑伞以后，', '水面能沿一个方向', '连续退去吗？'],
     description: '九格动作协议：固定顾岚、单把红伞与档案馆，比较直接动作句、因果状态链和带空间端点的水线账本。目前 0 / 9，没有视频结论。',
     category: 'Causal Motion Study',
     date: '2026.09.01',

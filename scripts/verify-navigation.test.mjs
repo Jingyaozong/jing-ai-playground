@@ -5,7 +5,7 @@ import test from 'node:test';
 import matter from 'gray-matter';
 import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
 import { getAllNotes } from '../lib/notes.ts';
-import { stories } from '../app/data/content.ts';
+import { stories, experiments } from '../app/data/content.ts';
 import { libraryItems } from '../app/data/library.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
@@ -20,6 +20,25 @@ const groups = [
   { path: 'notes', key: 'category', hash: '#all-notes', values: ['AI TIPS', 'AI EVAL', 'MAKING OF', 'AI BRIEFING'] },
   { path: 'library', key: 'type', hash: '#library-all', values: ['ARTICLE', 'VIDEO', 'PDF', 'TOOL', 'JING PICKS'] },
 ];
+
+test('experiment card title groups preserve titles, status and detail links', () => {
+  for (const file of ['index.html', 'experiments/index.html']) {
+    const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    for (const item of experiments) {
+      assert.equal(item.titleParts.join(''), item.title, `Title changed: ${item.id}`);
+      assert.ok(item.titleParts.every((part) => part.trim().length > 1), `Orphan group: ${item.id}`);
+      // ProjectVisual can contain nested articles; do not stop at its closing tag.
+      const start = html.indexOf(`<article class="experiment-card" id="${item.id}">`);
+      const next = html.indexOf('<article class="experiment-card"', start + 1);
+      const card = start < 0 ? undefined : html.slice(start, next < 0 ? undefined : next);
+      if (!card && file === 'index.html') continue;
+      assert.ok(card, `Missing experiment card: ${item.id}`);
+      for (const part of item.titleParts) assert.ok(card.includes(`<span class="experiment-title-part">${part}</span>`), `Missing title group: ${item.id} / ${part}`);
+      assert.ok(card.includes(item.status), `Status changed: ${item.id}`);
+      assert.ok(card.includes(`/experiments/${item.slug}/`), `Missing detail link: ${item.id}`);
+    }
+  }
+});
 
 test('library semantic title groups preserve original titles in both card contexts', () => {
   const pages = ['index.html', 'library/index.html'].map((file) => readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ''));

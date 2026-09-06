@@ -11,7 +11,7 @@ export function ExperimentCard({ experiment, isLatest = false }: { experiment: E
         <span>EXP. {experiment.number}</span>
         <span>{experiment.category}</span>
       </div>
-      <h3>{experiment.title}</h3>
+      <h3>{experiment.titleParts ? experiment.titleParts.map((part, index) => <span className="experiment-title-part" key={index}>{part}</span>) : experiment.title}</h3>
       <p>{experiment.description}</p>
       <div className="card-footer mono"><span>{experiment.date}</span><span>{experiment.status}</span></div>
       {experiment.slug && <Link className="experiment-card-link" href={`/experiments/${experiment.slug}/`}>打开实验记录 <span>↗</span></Link>}
