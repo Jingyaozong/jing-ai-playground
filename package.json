@@ -10,6 +10,7 @@
     "build": "next build",
     "verify:content": "node --experimental-strip-types scripts/verify-content-integrity.mjs",
     "verify:pages": "node scripts/verify-pages-build.mjs",
+    "verify:navigation": "node --experimental-strip-types --test scripts/verify-navigation.test.mjs",
     "lint": "eslint . --ignore-pattern out --ignore-pattern .next"
   },
   "dependencies": {

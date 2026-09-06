@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useSyncExternalStore } from 'react';
 import type { LibraryItem } from '../data/library';
+import { readUrlFilter, writeUrlFilter } from '../../lib/filter-url';
 import { libraryFilters } from '../data/library';
 import { LibraryCard } from './library-card';
 
@@ -13,14 +14,11 @@ function subscribeToFilter(onChange: () => void) {
 }
 
 function readFilter() {
-  const filter = new URLSearchParams(window.location.search).get('type');
-  return filter && libraryFilters.includes(filter) ? filter : '全部';
+  return readUrlFilter(window.location.search, 'type', libraryFilters);
 }
 
 function selectFilter(filter: string) {
-  const url = new URL(window.location.href);
-  if (filter === '全部') url.searchParams.delete('type');
-  else url.searchParams.set('type', filter);
+  const url = writeUrlFilter(window.location.href, 'type', filter);
   if (url.href === window.location.href) return;
   window.history.pushState(null, '', url);
   window.dispatchEvent(new PopStateEvent('popstate'));

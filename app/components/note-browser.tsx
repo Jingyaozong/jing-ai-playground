@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useSyncExternalStore } from 'react';
 import type { NoteMeta } from '../../lib/notes';
+import { readUrlFilter, writeUrlFilter } from '../../lib/filter-url';
 import { NoteCard } from './note-card';
 
 const filters = ['全部', 'AI TIPS', 'AI EVAL', 'MAKING OF', 'AI BRIEFING', 'AI VIDEO', 'STORYBOARD', 'PROMPT', 'EVALUATION'];
@@ -14,14 +15,11 @@ function subscribeToCategory(onChange: () => void) {
 }
 
 function readCategory() {
-  const category = new URLSearchParams(window.location.search).get('category');
-  return category && filters.includes(category) ? category : '全部';
+  return readUrlFilter(window.location.search, 'category', filters);
 }
 
 function selectCategory(category: string) {
-  const url = new URL(window.location.href);
-  if (category === '全部') url.searchParams.delete('category');
-  else url.searchParams.set('category', category);
+  const url = writeUrlFilter(window.location.href, 'category', category);
   if (url.href === window.location.href) return;
   window.history.pushState(null, '', url);
   window.dispatchEvent(new PopStateEvent('popstate'));
