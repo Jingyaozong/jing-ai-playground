@@ -14,9 +14,9 @@ export function LibraryCard({ item, compact = false }: { item: LibraryItem; comp
         <h3>{item.title}</h3>
         {item.creator && <p className="library-creator">发布者 / {item.creator}</p>}
         {!compact && <>
-          <p>{item.description}</p>
+          <p className="library-summary">{item.description}</p>
           <div className="saved-reason"><span className="mono">为什么收藏</span><p>{item.whyISavedIt}</p></div>
-          <blockquote><span className="mono">JING&apos;S TAKE {item.takeStatus === 'draft' && '· 待确认'}</span>{item.jingTake}</blockquote>
+          <blockquote><span className="mono">JING&apos;S TAKE {item.takeStatus === 'draft' && '· 待荆确认'}</span><p>{item.jingTake}</p></blockquote>
         </>}
         <div className="library-bottom">
           <div className="note-tags">{item.tags.slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}</div>
