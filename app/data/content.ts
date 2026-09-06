@@ -455,7 +455,7 @@ export const currentlyPlaying = [
     icon: '🎥',
     title: 'AI 视频怎么评',
     detail: '把主体、运动、镜头、时序与可用性整理成一套评测路径。',
-    status: '重点笔记',
+    status: '资料文章 · 来源已核对',
     href: '/notes/ai-video-evaluation/',
   },
   {

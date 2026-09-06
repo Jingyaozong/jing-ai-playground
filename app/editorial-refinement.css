@@ -1,5 +1,6 @@
 /* Shared editorial proportions; retain the established palette and typefaces. */
 :root { --layout-max: 1160px; }
+.feature-card .project-visual { width: 100%; min-width: 0; height: auto; min-height: 0; }
 
 .site-header-shell { box-shadow: none; }
 .site-header { height: 80px; }

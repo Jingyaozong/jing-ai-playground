@@ -5,6 +5,8 @@ import test from 'node:test';
 import matter from 'gray-matter';
 import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
 import { getAllNotes } from '../lib/notes.ts';
+import { stories } from '../app/data/content.ts';
+import { libraryItems } from '../app/data/library.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
 function anchors(file) {
@@ -18,6 +20,25 @@ const groups = [
   { path: 'notes', key: 'category', hash: '#all-notes', values: ['AI TIPS', 'AI EVAL', 'MAKING OF', 'AI BRIEFING'] },
   { path: 'library', key: 'type', hash: '#library-all', values: ['ARTICLE', 'VIDEO', 'PDF', 'TOOL', 'JING PICKS'] },
 ];
+
+test('homepage featured story and recent library picks match source data', () => {
+  const html = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  const featured = stories.find((story) => story.slug === 'she-forgets-yesterday') ?? stories[0];
+  const section = html.match(/<section\b[^>]*id="featured-story"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(section, 'Missing featured story');
+  for (const value of [featured.title, featured.description, featured.status, `/stories/${featured.slug}/`]) {
+    assert.ok(section.includes(value), `Featured story mismatch: ${value}`);
+  }
+  const picksSection = html.match(/<section\b[^>]*class="home-picks section-shell"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(picksSection, 'Missing home picks');
+  const expected = libraryItems.filter((item) => item.jingPick).sort((a, b) => b.dateAdded.localeCompare(a.dateAdded)).slice(0, 4);
+  let previous = -1;
+  for (const item of expected) {
+    const position = picksSection.indexOf(item.url.replaceAll('&', '&amp;'));
+    assert.ok(position > previous, `Missing or out-of-order recent pick: ${item.id}`);
+    previous = position;
+  }
+});
 
 test('featured note introduction follows the selected note metadata', () => {
   const notes = getAllNotes();

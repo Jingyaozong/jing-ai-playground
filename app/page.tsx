@@ -13,12 +13,13 @@ import { libraryItems } from './data/library';
 import { getAllNotes } from '../lib/notes';
 
 export default function Home() {
-  const featured = stories[0];
+  const featured = stories.find((story) => story.slug === 'she-forgets-yesterday') ?? stories[0];
   const recentStories = stories.slice(-2).reverse();
   const recentExperiments = experiments.filter((experiment) => experiment.stage === 'documented').slice(-3).reverse();
   const recentTools = tools.slice(-4).reverse();
   const latestNotes = getAllNotes().slice(0, 4);
-  const jingPicks = libraryItems.filter((item) => item.jingPick).slice(0, 4);
+  const jingPicks = libraryItems.filter((item) => item.jingPick)
+    .sort((a, b) => b.dateAdded.localeCompare(a.dateAdded)).slice(0, 4);
   const causalExperiment = experiments.find((experiment) => experiment.slug === 'can-water-recede-after-the-umbrella-opens') ?? recentExperiments[0];
   const causalStory = stories.find((story) => story.slug === 'before-the-water-recedes') ?? recentStories[0];
   return (
@@ -49,9 +50,9 @@ export default function Home() {
         <div className="ticker-track"><span>准备因果动作九格测试</span><b>✦</b><span>填写五点动作账本</span><b>✦</b><span>完善原创短片视觉开发</span><b>✦</b><span>核对值得留下的来源</span><b>✦</b><span>准备因果动作九格测试</span></div>
       </div>
 
-      <Reveal><section className="featured">
-        <div className="section-heading"><div><p className="eyebrow mono">Featured / 本期主角</p><h2>这次，先认真<br />做完一个故事。</h2></div><p className="featured-intro">《她每天醒来都会忘记昨天》已经完成故事、剧本、分镜和生成包草案；真实视频、剪辑与声音仍待开始。</p></div>
-        <article className="feature-card"><ProjectVisual variant="memory feature" label={featured.title} /><div className="feature-meta"><div><p className="mono">AI SHORT FILM · DRAFT / VIDEO NOT GENERATED</p><h3>{featured.title}</h3></div><Link className="round-link" href="/stories/she-forgets-yesterday/" aria-label="查看作品详情">View <span>↗</span></Link></div></article>
+      <Reveal><section className="featured" id="featured-story">
+        <div className="section-heading"><div><p className="eyebrow mono">Featured / 本期主角</p><h2>这次，先认真<br />做完一个故事。</h2></div><p className="featured-intro">{featured.description}</p></div>
+        <article className="feature-card"><ProjectVisual variant={`${featured.visual} feature`} label={featured.title} /><div className="feature-meta"><div><p className="mono">{featured.type} · {featured.status}</p><h3>{featured.title}</h3></div><Link className="round-link" href={`/stories/${featured.slug}/`} aria-label={`查看《${featured.title}》详情`}>View <span>↗</span></Link></div></article>
       </section></Reveal>
 
       <Reveal><section className="latest section-shell">
