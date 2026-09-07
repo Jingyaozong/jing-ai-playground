@@ -3,6 +3,7 @@ export type Story = {
   number: string;
   slug?: string;
   title: string;
+  titleParts?: string[];
   englishTitle: string;
   description: string;
   type: string;
@@ -43,6 +44,7 @@ export const stories: Story[] = [
     number: '001',
     slug: 'she-forgets-yesterday',
     title: '她每天醒来都会忘记昨天',
+    titleParts: ['她每天醒来', '都会忘记昨天'],
     englishTitle: 'She Forgets Yesterday',
     description: '一个关于记忆、遗忘和重复告别的短片。她每天醒来，桌上都会多一封自己写给自己的信。',
     type: 'AI Short Film',
@@ -85,6 +87,7 @@ export const stories: Story[] = [
     number: '004',
     slug: 'shadow-arrives-five-minutes-early',
     title: '影子比她早到五分钟',
+    titleParts: ['影子比她', '早到五分钟'],
     englishTitle: 'Her Shadow Arrives Five Minutes Early',
     description: '离开城市的那天，钟表修复师安澄发现自己的影子总比她早五分钟行动。傍晚，它在车站与旧钟表店之间先替她改了方向。',
     type: 'Magical Realism Draft',
@@ -99,6 +102,7 @@ export const stories: Story[] = [
     number: '005',
     slug: 'objects-remember-the-last-sentence',
     title: '她碰过的东西，会记住最后一句话',
+    titleParts: ['她碰过的东西，', '会记住', '最后一句话'],
     englishTitle: 'Objects Remember the Last Sentence',
     description: '搬空旧家那天，乔野发现每件被她碰到的东西，都会重复母亲在它身边说过的最后一句话；唯独那只白杯，她一直不敢拿起。',
     type: 'Magical Realism Draft',

@@ -1,6 +1,7 @@
 /* Shared editorial proportions; retain the established palette and typefaces. */
 :root { --layout-max: 1160px; }
 .experiment-title-part { display: inline-block; white-space: nowrap; }
+.story-title-part { display: inline-block; white-space: nowrap; }
 .feature-card .project-visual { width: 100%; min-width: 0; height: auto; min-height: 0; }
 
 .site-header-shell { box-shadow: none; }

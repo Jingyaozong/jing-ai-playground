@@ -11,7 +11,7 @@ export function StoryCard({ story, isLatest = false }: { story: Story; isLatest?
         <span>AI STORY {story.number}</span>
         <span>{story.date}</span>
       </div>
-      <h3>{story.title}</h3>
+      <h3>{story.titleParts ? story.titleParts.map((part, index) => <span className="story-title-part" key={index}>{part}</span>) : story.title}</h3>
       <p>{story.description}</p>
       <div className="card-footer mono">
         <span>{story.type}</span>

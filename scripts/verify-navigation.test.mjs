@@ -21,6 +21,28 @@ const groups = [
   { path: 'library', key: 'type', hash: '#library-all', values: ['ARTICLE', 'VIDEO', 'PDF', 'TOOL', 'JING PICKS'] },
 ];
 
+test('story cards preserve semantic titles, original status and detail links', () => {
+  for (const file of ['index.html', 'stories/index.html']) {
+    const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    for (const item of stories) {
+      const start = html.indexOf(`<article class="story-card" id="${item.id}">`);
+      if (start < 0 && file === 'index.html') continue;
+      assert.ok(start >= 0, `Missing story card: ${item.id}`);
+      const next = html.indexOf('<article class="story-card"', start + 1);
+      const card = html.slice(start, next < 0 ? undefined : next);
+      if (item.titleParts) {
+        assert.equal(item.titleParts.join(''), item.title, `Title changed: ${item.id}`);
+        assert.ok(item.titleParts.every((part) => part.trim().length > 1), `Orphan group: ${item.id}`);
+        for (const part of item.titleParts) assert.ok(card.includes(`<span class="story-title-part">${part}</span>`), `Missing title group: ${item.id} / ${part}`);
+      } else {
+        assert.ok(card.includes(`<h3>${item.title}</h3>`), `Short title changed: ${item.id}`);
+      }
+      assert.ok(card.includes(item.status), `Status changed: ${item.id}`);
+      assert.ok(card.includes(`/stories/${item.slug}/`), `Missing detail link: ${item.id}`);
+    }
+  }
+});
+
 test('experiment card title groups preserve titles, status and detail links', () => {
   for (const file of ['index.html', 'experiments/index.html']) {
     const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
