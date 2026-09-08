@@ -14,7 +14,7 @@ editorialStatus: "source-backed"
 sourceTitle: "Runway Sessions / Frame.io Comparison / Adobe Metadata / Vertex AI Veo"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/33545310653203-Generating-with-Sessions"
 sourceNote: "生成记录、资产组织、版本比较、镜头元数据与 Veo 请求参数依据 Runway、Frame.io、Adobe 和 Google Cloud 官方资料核对；三层账本、状态漏斗、淘汰原因编码和文件命名规则是本站的编辑整理，不代表不同平台或模型都能依靠 Seed 完全复现结果。"
-relatedNotes: ["ai-video-evaluation", "ai-video-scene-consistency", "ai-video-shot-continuity"]
+relatedNotes: ["ai-video-prompt-comparison", "ai-video-evaluation", "ai-video-shot-continuity"]
 connections:
   - label: "TOOL"
     title: "镜头版本记录器"

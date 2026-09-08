@@ -14,7 +14,7 @@ demo: false
 editorialStatus: "draft"
 sourceTitle: "本站 EXP.010 / 水线动作卡 / 因果动作闸门 Prompt"
 sourceNote: "本文根据本站尚待执行的 EXP.010、浏览器本地水线动作卡与因果动作 Prompt 整理，是方法编辑稿，待荆确认。当前实验记录为 0 / 9，没有真实视频、通过样本或模型结论；文中的帧号均为计划参考。"
-relatedNotes: ["ai-video-prompt-shot-facts", "first-last-frame-motion-prompt", "video-failure-cases"]
+relatedNotes: ["ai-video-prompt-comparison", "first-last-frame-motion-prompt", "video-failure-cases"]
 connections:
   - label: "EXPERIMENT"
     title: "撑伞以后，水面能沿一个方向连续退去吗？"

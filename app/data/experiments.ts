@@ -788,6 +788,7 @@ export const experimentDetails: ExperimentDetail[] = [
     relatedLabel: '返回《退水以前》故事档案 ↗',
     relatedLinks: [
       { href: '/notes/causal-motion-five-point-ledger/', label: '阅读五点账本方法 ↗' },
+      { href: '/notes/ai-video-prompt-comparison/', label: '怎样比较两版 Prompt ↗' },
     ],
     toolHref: '/tools/waterline-motion-card/',
     toolLabel: '打开水线动作卡生成器 ↗',

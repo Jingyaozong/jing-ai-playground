@@ -1,3 +1,14 @@
+.note-visual.note-visual-prompt-comparison { display: flex; flex-direction: column; justify-content: center; gap: 24px; min-height: 360px; padding: 32px; background: #dceaff; color: #16243a; }
+.note-visual.note-visual-prompt-comparison > small { position: static; align-self: flex-start; color: inherit; }
+.note-detail-grid > .note-visual.note-visual-prompt-comparison { aspect-ratio: auto; width: 100%; min-width: 0; }
+.note-visual-prompt-comparison .comparison-tracks { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.comparison-tracks > div { border: 2px solid #16243a; border-radius: 20px; background: #fffdf7; padding: 24px 12px; text-align: center; box-shadow: 4px 5px 0 #16243a; }
+.comparison-tracks > div:last-child { background: #ffd94a; }
+.comparison-tracks b { display: block; font: 700 54px/1.2 var(--display); }
+.comparison-tracks span { display: block; margin-top: 14px; font-size: 13px; }
+.note-visual-prompt-comparison p { margin: 0; font-size: 17px; font-weight: 700; }
+@media(max-width:760px) { .note-visual-prompt-comparison { padding: 26px; gap: 20px; } }
+
 :root {
   --paper: #fffdf7;
   --white: #ffffff;
