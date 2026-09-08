@@ -21,7 +21,7 @@ try {
       if (detail) {
         const text = await readDraft(directory, detail[1]);
         if (text === null) { res.writeHead(404); res.end('Not found'); return; }
-        page = renderDraftPage([], {text});
+        page = renderDraftPage([], {text, name:detail[1]});
       } else if (req.url === '/drafts/') page = renderDraftPage(await draftRecords(directory));
       else page = renderReviewPage(snapshot, file, new Date(), await draftedIds(directory));
     }

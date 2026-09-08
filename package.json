@@ -11,7 +11,7 @@
     "briefing:demo": "node scripts/briefing/cli.mjs demo",
     "briefing:collect": "node scripts/briefing/cli.mjs collect",
     "briefing:draft": "node --env-file-if-exists=.env.local scripts/briefing/cli.mjs draft",
-    "verify:briefing": "node --test scripts/briefing/pipeline.test.mjs scripts/briefing/run-guard.test.mjs scripts/briefing/selection.test.mjs scripts/briefing/review-page.test.mjs scripts/briefing/review-client.test.mjs scripts/briefing/draft-records.test.mjs scripts/briefing/draft-page.test.mjs",
+    "verify:briefing": "node --test scripts/briefing/pipeline.test.mjs scripts/briefing/run-guard.test.mjs scripts/briefing/selection.test.mjs scripts/briefing/review-page.test.mjs scripts/briefing/review-client.test.mjs scripts/briefing/draft-records.test.mjs scripts/briefing/draft-page.test.mjs scripts/briefing/remark-client.test.mjs",
     "verify:briefing-export": "node --test scripts/briefing/export.test.mjs",
     "dev": "next dev",
     "build": "next build",
