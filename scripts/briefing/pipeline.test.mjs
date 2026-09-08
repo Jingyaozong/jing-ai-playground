@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { pendingSources, sourceReport } from './sources.mjs';
+import { renderCandidates } from './pipeline.mjs';
 import { canonicalUrl, collect, generate, limits, parseFeed, readLimited, renderDraft, selectCandidates, sources, validateDraft } from './pipeline.mjs';
 
 const now = new Date('2026-09-07T12:00:00Z');
@@ -9,6 +10,24 @@ const entry = (url = 'https://huggingface.co/blog/test', date = 'Mon, 07 Sep 202
 const feed = (items) => `<rss version="2.0"><channel>${items}</channel></rss>`;
 const candidates = parseFeed(feed(entry()), source, now);
 const output = () => ({ items: [{ sourceId: candidates[0].id, title: '离线测试', summary: '虚构样例，不是新闻。', relevance: '编辑推测，待核对。', uncertainty: '未核对全文。' }] });
+
+test('candidate reading list keeps evidence limits, source links and empty state', () => {
+  const rendered = renderCandidates(candidates, now.toISOString());
+  assert.ok(rendered.includes('未审核 · 未发布 · 未调用模型'));
+  assert.ok(rendered.includes('不是本站观点或全文拆解'));
+  assert.ok(rendered.includes('[阅读原文](<https://huggingface.co/blog/test>)'));
+  assert.ok(renderCandidates([], now.toISOString()).includes('没有新的近七日候选'));
+  assert.ok(renderCandidates([{ ...candidates[0], excerpt: '' }], '').includes('订阅未提供摘要'));
+});
+
+test('candidate reading list neutralizes injected markup and rejects foreign links', () => {
+  const rendered = renderCandidates([{ ...candidates[0], title: '# Heading\n<script>', excerpt: '![image](https://example.com/a)' }], '');
+  assert.ok(!rendered.includes('<script>'));
+  assert.ok(!rendered.includes('\n<script>'));
+  assert.ok(!rendered.includes('![image]'));
+  assert.throws(() => renderCandidates([{ ...candidates[0], url: 'https://example.com/' }], ''));
+  assert.throws(() => renderCandidates([{ ...candidates[0], source: 'unknown' }], ''));
+});
 
 test('Chinese publisher RSS supports CDATA and retains original links', () => {
   const publisher = sources.find((item) => item.id === 'qbitai');

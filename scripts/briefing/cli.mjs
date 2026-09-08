@@ -1,6 +1,6 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { collect, generate, renderDraft, selectCandidates, validateDraft } from './pipeline.mjs';
+import { collect, generate, renderCandidates, renderDraft, selectCandidates, validateDraft } from './pipeline.mjs';
 import { reserveDailyRequest, shanghaiDay } from './run-guard.mjs';
 import { sourceReport } from './sources.mjs';
 
@@ -38,9 +38,14 @@ async function main() {
   }
   const candidates = selectCandidates(records, seen);
   if (command === 'collect') {
-    const path = resolve(directory, `candidates-${Date.now()}.json`);
-    await writeFile(path, JSON.stringify({ fetchedAt: new Date().toISOString(), candidates }, null, 2), { flag: 'wx' });
-    console.log(`收集 ${candidates.length} 条近七日候选：${path}\n仅收集 RSS；未调用模型、未发布。`);
+    const stamp = Date.now();
+    const fetchedAt = new Date(stamp).toISOString();
+    const path = resolve(directory, `candidates-${stamp}.json`);
+    const reviewPath = resolve(directory, `candidates-${stamp}.md`);
+    const review = renderCandidates(candidates, fetchedAt);
+    await writeFile(path, JSON.stringify({ fetchedAt, candidates }, null, 2), { flag: 'wx' });
+    await writeFile(reviewPath, review, { flag: 'wx' });
+    console.log(`收集 ${candidates.length} 条近七日候选：${path}\n可读清单：${reviewPath}\n仅收集 RSS；未调用模型、未发布。`);
     return;
   }
   if (!candidates.length) { console.log('没有新的近七日候选，未调用模型、未发布。'); return; }

@@ -128,6 +128,18 @@ export async function generate(candidates, key, fetcher = fetch) {
 }
 
 const escape = (value) => String(value).replace(/[\\`*_{}\[\]<>#!|]/g, '\\$&');
+export function renderCandidates(candidates, fetchedAt) {
+  const literal = (value) => escape(String(value).replace(/[\r\n]+/g, ' '));
+  const header = `# RSS 候选阅读清单\n\n未审核 · 未发布 · 未调用模型\n\n采集时间：${literal(fetchedAt)}\n\n以下为订阅源提供的标题与摘要，不是本站观点或全文拆解；订阅发布时间不等于事件发生日期。可能包含宣传稿，需对照原文核实。\n\n`;
+  if (!candidates.length) return header + '本轮没有新的近七日候选，不代表所有来源都没有更新。\n';
+  return header + candidates.map((item) => {
+    const source = sources.find((entry) => entry.name === item.source);
+    if (!source) throw new Error('候选来源不在白名单内');
+    const url = canonicalUrl(item.url, source);
+    return `## ${literal(item.title)}\n\n来源：${literal(item.source)} · 订阅发布时间：${literal(item.publishedAt)}\n\n${literal(item.excerpt || '订阅未提供摘要，请阅读原文。')}\n\n[阅读原文](<${url}>)\n\n- [ ] 核对原文及适用条件\n- [ ] 判断是否值得进入待审简报\n`;
+  }).join('\n---\n\n');
+}
+
 export function renderDraft(items, day, demo = false) {
   const header = `# AI 情报简报 · ${day}\n\n${demo ? '**离线虚构样例 · 不是新闻 · 未调用模型**\n\n' : ''}编辑候选 · 待荆确认 · 未发布\n\n仅据 RSS 摘要整理，未核对全文；订阅发布时间不等于事件发生日期。\n\n`;
   if (!items.length) return header + '本轮没有选出简报，不凑数。\n';

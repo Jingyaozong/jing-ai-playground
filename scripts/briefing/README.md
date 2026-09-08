@@ -6,7 +6,7 @@
 ## 使用
 
 1. `npm run briefing:demo`：离线生成明确标注为虚构样例的 Markdown 审阅稿，无网络、无 API 费用。
-2. `npm run briefing:collect`：读取白名单官方 RSS，收集近七日候选。无模型费用；不是全文核实。
+2. `npm run briefing:collect`：读取白名单官方 RSS，收集近七日候选。同步保存同名 JSON 和可阅读的 Markdown 清单，终端提供路径。清单含来源摘要、日期、原文链接和核对勾选框；无模型费用，不是全文核实。文件只在私有工作目录，不进入公开网页。清单勾选仅供人工阅读，不会触发批准、发布或影响 draft 的选稿。
 3. 在本地 `.env.local` 设置 `DEEPSEEK_API_KEY`（不要提交、截图或粘贴到聊天）。
 4. `npm run briefing:draft`：重新读取来源，调用一次 DeepSeek Flash，输出最多五条待审内容。终端打印稿件路径，可用 Markdown 预览打开。
 
