@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { pendingSources, sourceReport } from './sources.mjs';
 import { canonicalUrl, collect, generate, limits, parseFeed, readLimited, renderDraft, selectCandidates, sources, validateDraft } from './pipeline.mjs';
 
 const now = new Date('2026-09-07T12:00:00Z');
@@ -8,6 +9,25 @@ const entry = (url = 'https://huggingface.co/blog/test', date = 'Mon, 07 Sep 202
 const feed = (items) => `<rss version="2.0"><channel>${items}</channel></rss>`;
 const candidates = parseFeed(feed(entry()), source, now);
 const output = () => ({ items: [{ sourceId: candidates[0].id, title: '离线测试', summary: '虚构样例，不是新闻。', relevance: '编辑推测，待核对。', uncertainty: '未核对全文。' }] });
+
+test('Chinese publisher RSS supports CDATA and retains original links', () => {
+  const publisher = sources.find((item) => item.id === 'qbitai');
+  const records = parseFeed(feed(entry('https://www.qbitai.com/2026/09/example.html')), publisher, now);
+  assert.equal(records.length, 1);
+  assert.equal(records[0].source, '量子位官网（非公众号全量）');
+  assert.equal(records[0].url, 'https://www.qbitai.com/2026/09/example.html');
+  assert.equal(parseFeed(feed(entry('https://mp.weixin.qq.com/s/example')), publisher, now).length, 0);
+});
+
+test('pending targets have no operational endpoints and are explicitly reported', () => {
+  assert.equal(pendingSources.length, 5);
+  assert.equal(new Set(sources.map((item) => item.id)).size, sources.length);
+  for (const target of pendingSources) {
+    assert.equal(target.feed, undefined);
+    assert.ok(sourceReport().includes(target.name));
+  }
+  assert.ok(sourceReport().includes('不代表实时健康检查'));
+});
 
 test('RSS extracts plain text and preserves source publication date', () => {
   assert.equal(candidates.length, 1);

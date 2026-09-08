@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 export const sources = [
   { id: 'huggingface', name: 'Hugging Face Blog', feed: 'https://huggingface.co/blog/feed.xml', origin: 'https://huggingface.co', path: '/blog/' },
   { id: 'google-ai', name: 'Google AI Blog', feed: 'https://blog.google/innovation-and-ai/technology/ai/rss/', origin: 'https://blog.google', path: '/' },
+  { id: 'qbitai', name: '量子位官网（非公众号全量）', feed: 'https://www.qbitai.com/feed', origin: 'https://www.qbitai.com', path: '/' },
 ];
 export const limits = { feedBytes: 2_000_000, candidates: 12, items: 5, outputTokens: 2500, days: 7 };
 

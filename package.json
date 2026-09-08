@@ -6,6 +6,7 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "briefing:sources": "node scripts/briefing/cli.mjs sources",
     "briefing:demo": "node scripts/briefing/cli.mjs demo",
     "briefing:collect": "node scripts/briefing/cli.mjs collect",
     "briefing:draft": "node --env-file-if-exists=.env.local scripts/briefing/cli.mjs draft",

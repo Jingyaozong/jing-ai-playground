@@ -11,7 +11,21 @@
 4. `npm run briefing:draft`：重新读取来源，调用一次 DeepSeek Flash，输出最多五条待审内容。终端打印稿件路径，可用 Markdown 预览打开。
 
 模型接口与 JSON 格式依据：https://api-docs.deepseek.com/api/create-chat-completion/
-来源仅包括 Hugging Face 官方博客 RSS 与 Google AI 官方博客 RSS；不代表覆盖全网 AI 新闻。
+来源包括 Hugging Face 官方博客 RSS、Google AI 官方博客 RSS 和量子位官网 RSS；不代表覆盖全网 AI 新闻或公众号全量。
+
+## 中文来源接入核验 · 2026-09-08
+
+运行 `npm run briefing:sources` 可离线查看已接通与待接通清单，不调用模型或读取密钥。这不是实时健康检查。
+
+- 量子位：[官网](https://www.qbitai.com/) HTML 声明了 [官方 RSS](https://www.qbitai.com/feed)，本次两者返回 HTTP 200，RSS 2.0 可解析，已加入白名单。只取摘要，不保存全文或配图。官网订阅不保证公众号文章同步或完整性。
+- AI前线：[InfoQ 官方账号目录](https://www.infoq.cn/official/account) 确认账号 ID 为 ai-front，但未验证到账号专属订阅入口，待接通。
+- 机器之心：[官网](https://www.jiqizhixin.com/) 本次可访问，首页未发现声明的 RSS；不等于证明其不存在，待接通。
+- 极客公园：[官网](https://www.geekpark.net/) 本次请求返回 403，未继续绕过限制，待接通。
+- 数字生命卡兹克、Founder Park：尚未验证到可直接接入的官方自动订阅入口，待接通。
+
+待接通名单不含可执行采集地址，不会被 collect/draft 请求。微信公众号读取仍未接通，不要求用户每天复制文章，也不承诺已经解决自动获取。语鲸的可读摘要不等于原文或获授权的自动导出接口；本轮不接入其内部接口。
+
+下一步应验证可授权的订阅/导出服务能否覆盖这些账号，再接入统一适配器。只读到标题摘要时不生成“全文拆解”；尚无全文采集、图片授权检查、分层文章拆解、定时运行或自动发布。
 
 ## 编辑约束
 
