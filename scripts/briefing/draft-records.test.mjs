@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { draftedIds } from './draft-records.mjs';
+import { draftedIds, draftRecords, readDraft } from './draft-records.mjs';
 
 test('only complete real manifests contribute drafted IDs, and invalid data stops reading', async () => {
   const dir=await mkdtemp(join(tmpdir(),'jing-draft-record-test-'));
@@ -17,6 +17,10 @@ test('only complete real manifests contribute drafted IDs, and invalid data stop
     await assert.rejects(draftedIds(dir));
     await writeFile(join(folder,'review.md'),'离线测试');
     assert.deepEqual(await draftedIds(dir),record.ids);
+    assert.equal((await draftRecords(dir))[0].name,'2026-09-08-1');
+    assert.equal(await readDraft(dir,'2026-09-08-1'),'离线测试');
+    assert.equal(await readDraft(dir,'2026-09-08-2'),null);
+    await assert.rejects(readDraft(dir,'../.env.local'));
     for (const invalid of [{...record,demo:true},{...record,ids:['bad']},{...record,status:'invented'}]) {
       await writeFile(join(folder,'manifest.json'),JSON.stringify(invalid));await assert.rejects(draftedIds(dir));
     }
