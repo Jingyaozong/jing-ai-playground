@@ -1,9 +1,10 @@
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { collect, generate, renderCandidates, renderDraft, selectCandidates, validateDraft } from './pipeline.mjs';
 import { reserveDailyRequest, shanghaiDay } from './run-guard.mjs';
 import { sourceReport } from './sources.mjs';
 import { selectionOptions, selectedCandidates } from './selection.mjs';
+import { draftedIds } from './draft-records.mjs';
 
 const command = process.argv[2];
 const root = resolve(import.meta.dirname, '../..');
@@ -33,12 +34,7 @@ async function main() {
   if (command === 'draft' && !selection?.check && !process.env.DEEPSEEK_API_KEY?.trim()) throw new Error('缺少 DEEPSEEK_API_KEY；未请求来源或付费 API。请在本地 .env.local 配置，不要发到聊天中。');
   const records = selection ? [] : await collect();
   await mkdir(directory, { recursive: true });
-  const seen = [];
-  for (const entry of await readdir(directory, { withFileTypes: true })) {
-    if (!entry.isDirectory() || !/^\d{4}-\d{2}-\d{2}-\d+$/.test(entry.name)) continue;
-    const manifest = JSON.parse(await readFile(resolve(directory, entry.name, 'manifest.json'), 'utf8'));
-    seen.push(...manifest.ids);
-  }
+  const seen = await draftedIds(directory);
   const snapshot = selection ? JSON.parse(await readFile(resolve(directory, selection.file), 'utf8')) : null;
   const candidates = selection
     ? selectedCandidates(snapshot, selection.positions, seen)

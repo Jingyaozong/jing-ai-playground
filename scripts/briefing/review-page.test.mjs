@@ -5,6 +5,12 @@ import { renderReviewPage } from './review-page.mjs';
 const now = new Date('2026-09-08T12:00:00Z');
 const url = 'https://www.qbitai.com/2026/09/test.html';
 const data = () => ({ fetchedAt: now.toISOString(), candidates: [{ id:createHash('sha256').update(url).digest('hex').slice(0,16),source:'量子位官网（非公众号全量）',url,publishedAt:now.toISOString(),title:'虚构测试标题',excerpt:'仅用于离线测试' }] });
+test('drafted status disables selection but retains the original link', () => {
+  const snapshot=data();const page=renderReviewPage(snapshot,'candidates-1788859143946.json',now,[snapshot.candidates[0].id]);
+  assert.ok(page.includes('已生成待审稿 · 尚未发布'));
+  assert.ok(page.includes('disabled data-drafted="true"'));
+  assert.ok(page.includes(`href="${url}"`));
+});
 test('review contains explicit privacy boundary, source link and free command only', () => {
   const page = renderReviewPage(data(),'candidates-1788859143946.json',now);
   assert.ok(page.includes('未审核 · 未发布'));

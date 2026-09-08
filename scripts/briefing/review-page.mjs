@@ -3,12 +3,13 @@ import { createHash } from 'node:crypto';
 import { mountReview } from './review-client.mjs';
 const html = (value) => String(value).replace(/[&<>"']/g, (c) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 
-export function renderReviewPage(snapshot, file, now = new Date()) {
+export function renderReviewPage(snapshot, file, now = new Date(), seen = []) {
   selectionOptions(['--file', file, '--pick', '1']);
   if (!Array.isArray(snapshot?.candidates) || snapshot.candidates.length > 12) throw new Error('候选文件结构无效');
   const cards = snapshot.candidates.map((_, index) => {
     const [item] = selectedCandidates(snapshot, [index + 1], [], now);
-    return `<article><label><input type="checkbox" value="${index + 1}"><span>${html(item.title)}</span></label><p class="source">${html(item.source)} · ${html(item.publishedAt.slice(0,10))}</p><p>${html(item.excerpt)}</p><a href="${html(item.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">阅读原文 ↗</a></article>`;
+    const drafted = seen.includes(item.id);
+    return `<article>${drafted ? '<p class="hint">已生成待审稿 · 尚未发布</p>' : ''}<label><input type="checkbox" value="${index + 1}"${drafted ? ' disabled data-drafted="true"' : ''}><span>${html(item.title)}</span></label><p class="source">${html(item.source)} · ${html(item.publishedAt.slice(0,10))}</p><p>${html(item.excerpt)}</p><a href="${html(item.url)}" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">阅读原文 ↗</a></article>`;
   }).join('');
   const batch = createHash('sha256').update(file + JSON.stringify(snapshot)).digest('hex');
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>本地选稿 · JING AI PLAYGROUND</title><style>

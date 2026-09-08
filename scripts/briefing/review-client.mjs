@@ -7,10 +7,11 @@ export function mountReview(file, batch, env) {
   const status = doc.getElementById('status');
   const saved = doc.getElementById('saved');
   const key = 'jing-briefing-selection-v1:' + batch;
-  const chosen = () => boxes.filter(b => b.checked).map(b => b.value);
+  const blocked = new Set(boxes.filter(b => b.disabled));
+  const chosen = () => boxes.filter(b => b.checked && !blocked.has(b)).map(b => b.value);
   function update() {
     const values = chosen();
-    boxes.forEach(b => { b.disabled = values.length >= 5 && !b.checked; });
+    boxes.forEach(b => { b.disabled = blocked.has(b) || (values.length >= 5 && !b.checked); });
     doc.getElementById('count').textContent = '已选 ' + values.length + ' / 5 篇';
     command.value = values.length ? 'npm run briefing:draft -- --file ' + file + ' --pick ' + values.join(',') + ' --check' : '';
     copy.disabled = !values.length;
@@ -30,8 +31,12 @@ export function mountReview(file, batch, env) {
     if (raw !== null) {
       const values = JSON.parse(raw);
       if (!Array.isArray(values) || values.length > 5 || new Set(values).size !== values.length || values.some(v => !boxes.some(b => b.value === v))) throw new Error('invalid selection');
-      boxes.forEach(b => { b.checked = values.includes(b.value); });
-      saved.textContent = '已恢复本批保存的 ' + values.length + ' 篇选择。';
+      boxes.forEach(b => { b.checked = values.includes(b.value) && !blocked.has(b); });
+      const removed = values.length - chosen().length;
+      if (removed) {
+        persist();
+        saved.textContent = '已移除 ' + removed + ' 篇已生成待审稿的选择。' + saved.textContent;
+      } else saved.textContent = '已恢复本批保存的 ' + values.length + ' 篇选择。';
     } else saved.textContent = '勾选后自动保存在本机浏览器。';
   } catch {
     saved.textContent = '无法恢复本批记录，未套用旧选择；请重新勾选。';

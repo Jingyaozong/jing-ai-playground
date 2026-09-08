@@ -2,9 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mountReview } from './review-client.mjs';
 
-function view(storage, batch = 'a') {
+function view(storage, batch = 'a', blocked = []) {
   const element = (value = '') => ({ value, checked:false, disabled:false, textContent:'', handlers:{}, addEventListener(name, fn) { this.handlers[name] = fn; }, focus() {}, select() {} });
   const boxes = Array.from({length:7}, (_,i) => element(String(i+1)));
+  blocked.forEach(i=>{ boxes[i].disabled=true; });
   const nodes = Object.fromEntries(['command','copy','status','saved','count','clear'].map(id => [id,element()]));
   mountReview('candidates-1788859143946.json', batch, { document:{querySelectorAll:()=>boxes,getElementById:id=>nodes[id]}, localStorage:storage, navigator:{clipboard:{writeText:async()=>{}}} });
   return { boxes, nodes, choose(i) { boxes[i].checked=true; boxes[i].handlers.change(); } };
@@ -25,6 +26,15 @@ test('restore rejects malformed, excessive, duplicate and unknown selections', (
 test('five restored choices retain selection limit', () => {
   const storage=memory();storage.setItem('jing-briefing-selection-v1:a','["1","2","3","4","5"]');
   assert.equal(view(storage).boxes.filter(b=>b.disabled).length,2);
+});
+test('drafted saved selections are removed and stay disabled after clear', () => {
+  const storage=memory();const first=view(storage);first.choose(0);first.choose(2);
+  const page=view(storage,'a',[0]);
+  assert.ok(page.nodes.command.value.includes('--pick 3 --check'));
+  assert.ok(page.nodes.saved.textContent.includes('已移除 1 篇'));
+  assert.equal(page.boxes[0].disabled,true);
+  page.nodes.clear.handlers.click();assert.equal(page.boxes[0].disabled,true);
+  assert.equal(view(storage,'a',[0]).nodes.command.value,'');
 });
 test('blocked storage does not disable current selection and warns on save and clear', () => {
   const fail=()=>{throw new Error('blocked');};const page=view({getItem:fail,setItem:fail,removeItem:fail});

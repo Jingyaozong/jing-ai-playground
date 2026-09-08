@@ -2,6 +2,7 @@ import { createServer } from 'node:http';
 import { readFile, readdir, lstat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { renderReviewPage } from './review-page.mjs';
+import { draftedIds } from './draft-records.mjs';
 const directory = resolve(import.meta.dirname, '../../work/briefing');
 try {
   const names = (await readdir(directory)).filter(name => /^candidates-\d{13}\.json$/.test(name)).sort();
@@ -10,9 +11,12 @@ try {
   const path = resolve(directory, file);
   const stat = await lstat(path);
   if (!stat.isFile() || stat.size > 100000) throw new Error('候选文件无效或过大');
-  const page = renderReviewPage(JSON.parse(await readFile(path, 'utf8')), file);
-  const server = createServer((req, res) => {
+  const snapshot = JSON.parse(await readFile(path, 'utf8'));
+  const server = createServer(async (req, res) => {
     if (req.headers.host !== '127.0.0.1:4318' || req.method !== 'GET' || req.url !== '/') { res.writeHead(404); res.end(); return; }
+    let page;
+    try { page = renderReviewPage(snapshot, file, new Date(), await draftedIds(directory)); }
+    catch { res.writeHead(503, {'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'}); res.end('暂时无法安全选稿：候选已过期或本地待审记录异常。请重新采集或核对记录后刷新；未调用模型。'); return; }
     res.writeHead(200, { 'Content-Type':'text/html; charset=utf-8', 'Cache-Control':'no-store', 'X-Content-Type-Options':'nosniff', 'Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" });
     res.end(page);
   });
