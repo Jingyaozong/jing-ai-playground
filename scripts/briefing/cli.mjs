@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { collect, generate, renderCandidates, renderDraft, selectCandidates, validateDraft } from './pipeline.mjs';
 import { reserveDailyRequest, shanghaiDay } from './run-guard.mjs';
 import { sourceReport } from './sources.mjs';
+import { selectionOptions, selectedCandidates } from './selection.mjs';
 
 const command = process.argv[2];
 const root = resolve(import.meta.dirname, '../..');
@@ -20,6 +21,8 @@ async function save(items, usage, demo) {
 
 async function main() {
   if (!['demo', 'collect', 'draft', 'sources'].includes(command)) throw new Error('使用 briefing:sources、briefing:demo、briefing:collect 或 briefing:draft');
+  const selection = selectionOptions(process.argv.slice(3));
+  if (selection && command !== 'draft') throw new Error('选择参数仅用于 briefing:draft');
   if (command === 'sources') { console.log(sourceReport()); return; }
   if (command === 'demo') {
     const candidates = [{ id: 'demo-only', source: '离线虚构来源', url: 'https://example.com/demo-only', publishedAt: `${day}T00:00:00.000Z`, title: '虚构工具样例', excerpt: '仅测试排版和流程。' }];
@@ -27,8 +30,8 @@ async function main() {
     await save(items, null, true);
     return;
   }
-  if (command === 'draft' && !process.env.DEEPSEEK_API_KEY?.trim()) throw new Error('缺少 DEEPSEEK_API_KEY；未请求来源或付费 API。请在本地 .env.local 配置，不要发到聊天中。');
-  const records = await collect();
+  if (command === 'draft' && !selection?.check && !process.env.DEEPSEEK_API_KEY?.trim()) throw new Error('缺少 DEEPSEEK_API_KEY；未请求来源或付费 API。请在本地 .env.local 配置，不要发到聊天中。');
+  const records = selection ? [] : await collect();
   await mkdir(directory, { recursive: true });
   const seen = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -36,7 +39,15 @@ async function main() {
     const manifest = JSON.parse(await readFile(resolve(directory, entry.name, 'manifest.json'), 'utf8'));
     seen.push(...manifest.ids);
   }
-  const candidates = selectCandidates(records, seen);
+  const snapshot = selection ? JSON.parse(await readFile(resolve(directory, selection.file), 'utf8')) : null;
+  const candidates = selection
+    ? selectedCandidates(snapshot, selection.positions, seen)
+    : selectCandidates(records, seen);
+  if (selection?.check) {
+    console.log(`选择校验通过：${candidates.length} 条，原清单序号 ${selection.positions.join(',')}。以下预览重新编号，不改变原清单序号。未请求网络、未调用模型、未占用每日请求机会。`);
+    console.log(renderCandidates(candidates, snapshot.fetchedAt));
+    return;
+  }
   if (command === 'collect') {
     const stamp = Date.now();
     const fetchedAt = new Date(stamp).toISOString();
