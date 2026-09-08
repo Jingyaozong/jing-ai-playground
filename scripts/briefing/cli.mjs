@@ -1,11 +1,12 @@
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { collect, generate, renderDraft, selectCandidates, validateDraft } from './pipeline.mjs';
+import { reserveDailyRequest, shanghaiDay } from './run-guard.mjs';
 
 const command = process.argv[2];
 const root = resolve(import.meta.dirname, '../..');
 const directory = resolve(root, 'work/briefing');
-const day = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+const day = shanghaiDay();
 
 async function save(items, usage, demo) {
   const folder = resolve(directory, `${demo ? 'demo-' : ''}${day}-${Date.now()}`);
@@ -29,7 +30,7 @@ async function main() {
   await mkdir(directory, { recursive: true });
   const seen = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
-    if (!entry.isDirectory() || entry.name.startsWith('demo-')) continue;
+    if (!entry.isDirectory() || !/^\d{4}-\d{2}-\d{2}-\d+$/.test(entry.name)) continue;
     const manifest = JSON.parse(await readFile(resolve(directory, entry.name, 'manifest.json'), 'utf8'));
     seen.push(...manifest.ids);
   }
@@ -41,7 +42,8 @@ async function main() {
     return;
   }
   if (!candidates.length) { console.log('没有新的近七日候选，未调用模型、未发布。'); return; }
-  // One bounded call per manual run; no retries, scheduler or automatic publishing.
+  // Atomic daily reservation also blocks concurrent processes and uncertain retries.
+  await reserveDailyRequest(directory);
   const { items, usage } = await generate(candidates, process.env.DEEPSEEK_API_KEY);
   await save(items, usage, false);
 }
