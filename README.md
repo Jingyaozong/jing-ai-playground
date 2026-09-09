@@ -67,6 +67,12 @@ Library 收藏数据位于 `app/data/library.ts`，Prompt 位于 `app/data/promp
 完整本地检查：
 
 ```bash
+npm run verify:release
+```
+
+这个命令会按以下顺序执行，任一环节失败便停止：
+
+```text
 npm run lint
 npm run typecheck
 npm run verify:content
