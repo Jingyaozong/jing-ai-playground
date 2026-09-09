@@ -171,3 +171,14 @@ test('all notes, including featured notes, are present in the exported search li
     assert.ok(results.includes(`/notes/${slug}/"`), `Missing searchable note: ${slug}`);
   }
 });
+
+test('unpublished contact destinations remain explicit non-links', () => {
+  const html = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  const footer = html.match(/<footer\b[^>]*class="site-footer"[^>]*>([\s\S]*?)<\/footer>/)?.[1];
+  assert.ok(footer, 'Missing site footer');
+  assert.ok(footer.includes('当前没有公开的社交账号或联系邮箱'), 'Missing public contact boundary');
+  assert.ok(footer.includes('联系地址尚未公开'), 'Email placeholder is not explicit');
+  assert.equal((footer.match(/<a\b/g) ?? []).length, 1, 'Unpublished destinations must not become links');
+  assert.ok(footer.includes('Back to top'), 'Footer navigation link is missing');
+});
