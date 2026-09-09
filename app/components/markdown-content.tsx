@@ -1,4 +1,5 @@
 import { cloneElement, isValidElement, type ReactNode } from 'react';
+import Link from 'next/link';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -40,6 +41,7 @@ const components: Components = {
   a: ({ href = '#', children }) => {
     const label = textFromNode(children);
     if (label.startsWith('VIDEO:')) return <a className="article-video" href={href} target="_blank" rel="noreferrer"><span className="video-play">▶</span><span><small className="mono">External video</small><b>{label.replace('VIDEO:', '').trim()}</b></span><i>打开来源 ↗</i></a>;
+    if (href.startsWith('/')) return <Link href={href}>{children}</Link>;
     return <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined}>{children}</a>;
   },
   img: ({ src = '', alt = '' }) => (

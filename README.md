@@ -81,9 +81,12 @@ npm run verify:pages
 npm run verify:navigation
 npm run verify:briefing
 npm run verify:briefing-export
+npm run verify:pages:repository
 ```
 
 其中 `verify:briefing` 使用离线样本与模拟 API，不消耗模型额度；`verify:briefing-export` 用来确认私有候选稿、工作目录和密钥信息没有进入静态网站。
+
+最后的 `verify:pages:repository` 会模拟 `Jingyaozong/jing-ai-playground` 在 GitHub Actions 中的真实环境，使用 `/jing-ai-playground/` 子路径重新构建，并遍历全部导出 HTML 与 CSS，检查内部页面、脚本、字体和图片引用。它只生成本地 `out/`，不会连接或上传 GitHub。
 
 当前 Actions 会执行 lint、Next.js 构建和 Pages 导出检查；Next.js 构建本身会运行 TypeScript。内容、导航与本地简报检查仍应在 push 前于本机完成。没有明确批准时，只允许创建本地 commit，不上传远端。
 

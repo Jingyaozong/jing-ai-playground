@@ -44,7 +44,7 @@ export default async function NoteDetailPage({ params }: { params: Promise<{ slu
     <main>
       <SiteHeader active="Notes" />
       <header className="note-detail-hero">
-        <div className="note-detail-rail mono"><a href={categoryHref}>← 返回{categoryName}栏目</a><span>JING NOTES · {note.date.slice(0, 7).replace('-', ' / ')}</span></div>
+        <div className="note-detail-rail mono"><Link href={categoryHref}>← 返回{categoryName}栏目</Link><span>JING NOTES · {note.date.slice(0, 7).replace('-', ' / ')}</span></div>
         <div className="note-detail-grid">
           <div className={`note-detail-title ${isLongTitle ? 'is-long-title' : ''}`}><div className="note-detail-labels"><span>{note.category}</span><span>ISSUE {note.issue}</span>{note.demo && <b>DEMO</b>}{note.editorialStatus === 'draft' && <b>EDITING DRAFT</b>}{note.editorialStatus === 'source-backed' && <b>SOURCE-BACKED</b>}</div><h1>{titleLead}{titleTail && <><br /><span>{titleTail}</span></>}</h1><p>{note.description}</p><div className="note-detail-meta mono"><span>{note.date.replaceAll('-', ' / ')}</span><span>{note.readingTime}</span><span>{note.editorialStatus === 'draft' ? 'EDITED FOR JING' : note.editorialStatus === 'source-backed' ? 'SOURCE EDITION' : 'BY JING'}</span></div></div>
           <NoteVisual variant={note.cover} label={note.title} />
@@ -60,7 +60,7 @@ export default async function NoteDetailPage({ params }: { params: Promise<{ slu
 
       {note.connections.length > 0 && <section className="note-connections section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Connected work / 从这里继续</p><h2>一篇笔记，<br />连回创作现场。</h2></div><p>方法不是孤立结论。继续查看它对应的故事、实验与可执行 Prompt。</p></div><div className="note-connection-grid">{note.connections.map((item) => <Link className={`note-connection-card tone-${item.tone}`} href={item.href} key={`${item.label}-${item.href}`}><span className="mono">{item.label}</span><h3>{item.title}</h3><p>{item.description}</p><i>继续查看 ↗</i></Link>)}</div></section>}
 
-      <section className="related-notes section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Related notes</p><h2>接着往下看。</h2></div><a className="text-link" href={categoryHref}>继续浏览{categoryName} ↗</a></div><div className="related-note-grid">{related.map((item) => <NoteCard note={item} size="small" key={item.slug} />)}</div></section>
+      <section className="related-notes section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Related notes</p><h2>接着往下看。</h2></div><Link className="text-link" href={categoryHref}>继续浏览{categoryName} ↗</Link></div><div className="related-note-grid">{related.map((item) => <NoteCard note={item} size="small" key={item.slug} />)}</div></section>
       <SiteFooter />
     </main>
   );
