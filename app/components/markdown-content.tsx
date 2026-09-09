@@ -42,7 +42,14 @@ const components: Components = {
     if (label.startsWith('VIDEO:')) return <a className="article-video" href={href} target="_blank" rel="noreferrer"><span className="video-play">▶</span><span><small className="mono">External video</small><b>{label.replace('VIDEO:', '').trim()}</b></span><i>打开来源 ↗</i></a>;
     return <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined}>{children}</a>;
   },
-  img: ({ src = '', alt = '' }) => <figure className="article-image"><img src={src} alt={alt} /><figcaption>{alt}</figcaption></figure>,
+  img: ({ src = '', alt = '' }) => (
+    <figure className="article-image">
+      {/* Markdown sources do not guarantee dimensions; next/image would impose a guessed aspect ratio. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+      {alt && <figcaption>{alt}</figcaption>}
+    </figure>
+  ),
 };
 
 export function MarkdownContent({ content }: { content: string }) {
