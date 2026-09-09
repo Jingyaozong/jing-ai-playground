@@ -33,10 +33,20 @@ jobs:
         run: npm ci
       - name: Check code
         run: npm run lint
+      - name: Check types
+        run: npm run typecheck
+      - name: Verify public content
+        run: npm run verify:content
       - name: Build static site
         run: npm run build
       - name: Verify Pages output
         run: npm run verify:pages
+      - name: Verify navigation
+        run: npm run verify:navigation
+      - name: Verify briefing pipeline
+        run: npm run verify:briefing
+      - name: Verify private export boundary
+        run: npm run verify:briefing-export
       - name: Disable Jekyll processing
         run: touch out/.nojekyll
       - name: Upload Pages artifact

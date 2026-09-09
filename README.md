@@ -82,13 +82,16 @@ npm run verify:navigation
 npm run verify:briefing
 npm run verify:briefing-export
 npm run verify:pages:repository
+npm run verify:upload-readiness
 ```
 
 其中 `verify:briefing` 使用离线样本与模拟 API，不消耗模型额度；`verify:briefing-export` 用来确认私有候选稿、工作目录和密钥信息没有进入静态网站。
 
 最后的 `verify:pages:repository` 会模拟 `Jingyaozong/jing-ai-playground` 在 GitHub Actions 中的真实环境，使用 `/jing-ai-playground/` 子路径重新构建，并遍历全部导出 HTML 与 CSS，检查内部页面、脚本、字体和图片引用。它只生成本地 `out/`，不会连接或上传 GitHub。
 
-当前 Actions 会执行 lint、Next.js 构建和 Pages 导出检查；Next.js 构建本身会运行 TypeScript。内容、导航与本地简报检查仍应在 push 前于本机完成。没有明确批准时，只允许创建本地 commit，不上传远端。
+准备上传前，在已经提交且工作区干净的状态运行 `npm run verify:upload`。它会先执行完整发布检查，再核对 `main` 分支、`origin` 地址、Actions 必需步骤、`.env.local` 忽略状态和待上传提交数；命令只读，不会执行 `git push`。
+
+当前 Actions 会执行 lint、TypeScript、内容完整性、Next.js 构建、Pages 导出、导航、简报管线和私有导出边界检查。没有明确批准时，只允许创建本地 commit，不上传远端。
 
 项目仓库发布时，Actions 会自动根据仓库名加入 `basePath`。例如仓库名为 `jing-ai-playground`，页面和静态资源都会从 `/jing-ai-playground/` 加载；用户主页仓库 `用户名.github.io` 则保持根路径。
 
