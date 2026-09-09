@@ -21,13 +21,20 @@ npm run build
 
 ## 发布到 GitHub Pages
 
-当前本地仓库尚未绑定 GitHub remote。发布时：
+当前本地仓库已经绑定：
 
-1. 在 GitHub 新建一个空仓库，不要额外生成 README。
-2. 将这个项目推送到仓库的 `main` 分支。
-3. 打开仓库的 **Settings → Pages**。
-4. 在 **Build and deployment → Source** 中选择 **GitHub Actions**。
-5. 项目自带的 `.github/workflows/deploy-pages.yml` 会自动构建并发布网站。
+```text
+origin  https://github.com/Jingyaozong/jing-ai-playground.git
+```
+
+目前仍是本地开发状态。不要把“已经配置远端”理解成“已经发布”：只有明确执行 `git push origin main` 后，`main` 分支上的 GitHub Actions 才会开始构建和部署。
+
+首次发布时：
+
+1. 在本地完成下方“发布前自检”，并确认工作区干净。
+2. 明确批准上传后，才将 `main` 推送到现有 `origin`；不要在日常内容开发中自动 push。
+3. 打开仓库的 **Settings → Pages**，确认 **Build and deployment → Source** 为 **GitHub Actions**。
+4. 项目自带的 `.github/workflows/deploy-pages.yml` 会在 `main` 更新后构建并发布网站。
 
 工作流会依次执行代码检查、静态构建和 Pages 路径检查；只有全部通过才会部署。
 
@@ -57,12 +64,22 @@ Library 收藏数据位于 `app/data/library.ts`，Prompt 位于 `app/data/promp
 
 ## 发布前自检
 
-普通本地静态构建：
+完整本地检查：
 
 ```bash
+npm run lint
+npm run typecheck
+npm run verify:content
 npm run build
 npm run verify:pages
+npm run verify:navigation
+npm run verify:briefing
+npm run verify:briefing-export
 ```
+
+其中 `verify:briefing` 使用离线样本与模拟 API，不消耗模型额度；`verify:briefing-export` 用来确认私有候选稿、工作目录和密钥信息没有进入静态网站。
+
+当前 Actions 会执行 lint、Next.js 构建和 Pages 导出检查；Next.js 构建本身会运行 TypeScript。内容、导航与本地简报检查仍应在 push 前于本机完成。没有明确批准时，只允许创建本地 commit，不上传远端。
 
 项目仓库发布时，Actions 会自动根据仓库名加入 `basePath`。例如仓库名为 `jing-ai-playground`，页面和静态资源都会从 `/jing-ai-playground/` 加载；用户主页仓库 `用户名.github.io` 则保持根路径。
 
