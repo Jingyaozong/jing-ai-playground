@@ -127,6 +127,7 @@ export const storyDetails: StoryDetail[] = [
     draft: true,
     draftNotice: '这是由 AI 协助整理的原创短片开发稿，知夏、林澈及全部情节均为虚构。人物锚点生成于 2026-08-25，四张独立概念画面生成于 2026-08-31，用于确认人物、道具、光线与情绪方向；尚未生成视频或实验结论，也不代表已经完成的成片。',
     heroVisual: 'memory-letter',
+    related: { href: '/notes/memory-story-preflight/', label: '查看开拍前准备单 ↗' },
     logline: '她每天醒来都会失去昨天的记忆，只能依靠桌上那封由“昨天的自己”留下的信，重新认识正在告别的人。',
     premise: '这不是一个关于恢复记忆的故事，而是关于：如果每天都要重新选择一次，你还会不会继续爱同一个人。',
     premiseLines: ['这不是关于恢复记忆。', '如果每天都要重新选择一次，', '还会继续爱同一个人吗？'],

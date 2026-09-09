@@ -1,3 +1,11 @@
+.note-visual.note-visual-memory-preflight { display: flex; flex-direction: column; justify-content: center; gap: 22px; min-height: 390px; padding: 28px; background: #bcebd3; color: #16243a; }
+.note-detail-grid > .note-visual.note-visual-memory-preflight { aspect-ratio: auto; width: 100%; min-width: 0; }
+.note-visual.note-visual-memory-preflight > small { position: static; align-self: flex-start; color: inherit; }
+.preflight-letter { padding: 24px; border: 2px solid #16243a; border-radius: 16px; background: #fffdf7; box-shadow: 5px 6px 0 #16243a; }
+.preflight-letter b { display: block; font-size: 30px; line-height: 1.6; margin-bottom: 20px; }
+.preflight-letter p { font-size: 13px; line-height: 1.8; margin: 10px 0; border-bottom: 1px solid #bfc7d2; padding-bottom: 8px; }
+.note-visual-memory-preflight > span { font-size: 12px; }
+
 .note-visual.note-visual-prompt-comparison { display: flex; flex-direction: column; justify-content: center; gap: 24px; min-height: 360px; padding: 32px; background: #dceaff; color: #16243a; }
 .note-visual.note-visual-prompt-comparison > small { position: static; align-self: flex-start; color: inherit; }
 .note-detail-grid > .note-visual.note-visual-prompt-comparison { aspect-ratio: auto; width: 100%; min-width: 0; }

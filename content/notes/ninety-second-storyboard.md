@@ -13,7 +13,7 @@ demo: false
 editorialStatus: "draft"
 sourceTitle: "JING AI PLAYGROUND / STORY 001"
 sourceNote: "本文基于本站已经实际完成的故事梗概、90 秒剧本、14 镜分镜与 Prompt 包整理。当前没有视频模型输出，方法判断仍待荆确认。"
-relatedNotes: ["ai-video-character-consistency", "shot-size-guide", "video-vs-image-prompt"]
+relatedNotes: ["memory-story-preflight", "ai-video-character-consistency", "video-vs-image-prompt"]
 connections:
   - label: "STORY"
     title: "她每天醒来都会忘记昨天"
