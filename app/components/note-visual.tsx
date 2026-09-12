@@ -1,4 +1,12 @@
 export function NoteVisual({ variant, label }: { variant: string; label: string }) {
+  if (variant === 'synthetic-delivery') return (
+    <div className="note-visual note-visual-delivery" aria-label={`${label}：六阶段虚构项目工作单`}>
+      <small className="mono">SYNTHETIC CASE / 虚构演练</small>
+      <strong>先试标，<br />再放量。</strong>
+      <ol>{['需求确认', '执行方案', '小批试标', '团队配置', '培训放量', '终检交付'].map((stage) => <li key={stage}>{stage}</li>)}</ol>
+      <p>方法可展示 · 项目独立虚构</p>
+    </div>
+  );
   if (variant === 'memory-preflight') return (
     <div className="note-visual note-visual-memory-preflight" aria-label={`${label} 的信件准备单示意，所有动作测试待执行`}>
       <small>写给下一次生成</small><div className="preflight-letter"><b>先备齐，<br />再出发。</b><p>人物与道具参照</p><p>文字与声音位置</p><p>02 · 07 · 11 三镜测试</p></div><span>准备单 · 无视频结果</span>

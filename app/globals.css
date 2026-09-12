@@ -17,6 +17,16 @@
 .note-visual-prompt-comparison p { margin: 0; font-size: 17px; font-weight: 700; }
 @media(max-width:760px) { .note-visual-prompt-comparison { padding: 26px; gap: 20px; } }
 
+.note-visual.note-visual-delivery { display: flex; flex-direction: column; justify-content: center; gap: 24px; padding: 30px; min-height: 380px; background: var(--sky); color: var(--ink); }
+.note-visual.note-visual-delivery > small { position: static; color: inherit; }
+.note-visual-delivery > strong { font: 750 clamp(1.8rem,3vw,2.6rem)/1.35 var(--display); }
+.note-visual-delivery ol { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; padding: 0; margin: 0; list-style: none; counter-reset: stage; }
+.note-visual-delivery li { counter-increment: stage; padding: 12px 10px; border: 1.5px solid var(--ink); border-radius: 12px; background: var(--paper); font-size: 12px; line-height: 1.6; }
+.note-visual-delivery li::before { content: counter(stage) ' / '; color: var(--blue); }
+.note-visual-delivery li:nth-child(3), .note-visual-delivery li:last-child { background: var(--yellow); }
+.note-visual-delivery > p { margin: 0; font-size: 12px; line-height: 1.7; }
+.note-detail-grid > .note-visual.note-visual-delivery { width: 100%; min-width: 0; aspect-ratio: auto; }
+
 :root {
   --paper: #fffdf7;
   --white: #ffffff;

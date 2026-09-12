@@ -79,7 +79,7 @@ export default function AboutPage() {
           </div>
         </section></Reveal>
 
-        <Reveal><div className="about-boundaries"><span className="mono">Editorial boundaries / 内容边界</span><div><p>占位素材不会冒充成片。</p><p>编辑初稿不会冒充荆的观点。</p><p>单个样本不会冒充模型结论。</p><p>外部文章只保存摘要、理由和原链接。</p></div></div></Reveal>
+        <Reveal><div className="about-boundaries"><span className="mono">Editorial boundaries / 内容边界</span><div><p>项目方法通过独立虚构案例展示，不公开真实业务材料。<br /><Link href="/notes/synthetic-annotation-delivery/">阅读六阶段标注演练 ↗</Link></p><p>虚构背景、样本与数字明确标注，不作为真实履历或客户成果。</p><p>编辑初稿与荆确认的观点分开呈现。</p><p>外部文章只保存摘要、理由和原链接。</p></div></div></Reveal>
 
         <Reveal><div className="principles"><div><span>01</span><h3>好奇比熟练更重要</h3><p>工具会变，持续追问问题、验证结果的习惯可以留下。</p></div><div><span>02</span><h3>作品比术语更诚实</h3><p>少讲空泛概念，多完成一个真的能看、能玩、能用的东西。</p></div><div><span>03</span><h3>过程也值得存档</h3><p>把试错、偏差、条件和没成功的版本一起留下来。</p></div></div></Reveal>
       </section>

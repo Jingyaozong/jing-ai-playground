@@ -11,7 +11,7 @@ export function NoteCard({ note, size = 'medium' }: { note: NoteMeta; size?: 'la
       <Link href={`/notes/${note.slug}/`} className="note-card-link" aria-label={`阅读：${note.title}`}>
         <NoteVisual variant={note.cover} label={note.title} />
         <div className="note-card-copy">
-          <div className="note-card-meta mono"><span>{note.category} / {note.issue}</span><span>{note.editorialStatus === 'draft' ? '编辑稿 · 待确认' : note.editorialStatus === 'source-backed' ? '资料文章 · 已核对' : note.date.replaceAll('-', ' / ')}</span></div>
+          <div className="note-card-meta mono"><span>{note.category} / {note.issue}</span><span>{note.synthetic ? '虚构项目演练' : note.editorialStatus === 'draft' ? '编辑稿 · 待确认' : note.editorialStatus === 'source-backed' ? '资料文章 · 已核对' : note.date.replaceAll('-', ' / ')}</span></div>
           <h3>{splitAt > 0 && splitAt < note.title.length ? <><span>{note.title.slice(0, splitAt)}</span><span>{note.title.slice(splitAt)}</span></> : note.title}</h3>
           <p>{note.description}</p>
           <div className="note-card-bottom">

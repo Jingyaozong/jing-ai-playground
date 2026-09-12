@@ -52,7 +52,7 @@ export default async function NoteDetailPage({ params }: { params: Promise<{ slu
       </header>
 
       <div className="article-layout">
-        <aside className="article-sidebar"><span className="mono">这篇笔记</span><div>{note.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>{note.demo && <p><b>Demo 提醒</b>当前正文用于展示内容系统和文章版式，不代表正式发布内容。</p>}{note.editorialStatus === 'draft' && <p><b>编辑稿 · 待荆确认</b>资料来源已经核对，但框架、权重和判断仍需要荆结合真实评测经验确认。</p>}{note.editorialStatus === 'source-backed' && <p><b>资料文章 · 来源已核对</b>事实部分来自原始论文、官方文档或项目页面；实用框架是本站编辑转译，不代表荆已确认的个人经验。</p>}</aside>
+        <aside className="article-sidebar"><span className="mono">这篇笔记</span><div>{note.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>{note.demo && <p><b>Demo 提醒</b>当前正文用于展示内容系统和文章版式，不代表正式发布内容。</p>}{note.synthetic && <p><b>虚构项目演练</b>背景、样本与数字均为独立虚构，不对应真实客户或项目成果。</p>}{note.editorialStatus === 'draft' && <p><b>编辑稿 · 待荆确认</b>{note.synthetic ? '请确认方法表达；无需提供真实项目资料。' : '框架、权重和判断仍是编辑候选，尚未确认为荆的个人观点。'}</p>}{note.editorialStatus === 'source-backed' && <p><b>资料文章 · 来源已核对</b>事实部分来自原始论文、官方文档或项目页面；实用框架是本站编辑转译，不代表荆已确认的个人经验。</p>}</aside>
         <article><MarkdownContent content={note.content} />
           <section className="article-source"><span className="mono">来源信息 / Sources</span><h2>{note.sourceTitle ?? 'JING NOTES'}</h2><p>{note.sourceNote ?? '本页为荆的原创笔记。'}</p>{note.sourceUrl && <a href={note.sourceUrl} target="_blank" rel="noreferrer">查看原始来源 ↗</a>}</section>
         </article>
