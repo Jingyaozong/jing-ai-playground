@@ -1,0 +1,177 @@
+.about-methods {
+  padding: 140px 0;
+  border-top: 1px solid var(--line);
+}
+
+.about-methods-heading {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  align-items: end;
+  gap: 8vw;
+  margin-bottom: 72px;
+}
+
+.about-methods-heading .eyebrow {
+  color: var(--blue);
+}
+
+.about-methods-heading h2 {
+  margin: 24px 0 0;
+  font-family: var(--display);
+  font-size: clamp(2.65rem, 5vw, 5rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+
+.about-methods-heading > p {
+  max-width: 520px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+.about-method-route {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.about-method-route::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 35px;
+  left: 35px;
+  right: 35px;
+  border-top: 2px dashed var(--ink);
+}
+
+.about-method-card {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 2px solid var(--ink);
+  border-radius: 26px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.about-method-white { background: var(--white); }
+.about-method-sky { background: var(--sky); }
+.about-method-yellow { background: var(--yellow); }
+.about-method-mint { background: var(--mint); }
+
+.about-method-marker {
+  min-height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.about-method-marker b {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--white);
+  font: 750 .8rem var(--mono);
+}
+
+.about-method-marker span {
+  padding: 6px 8px;
+  background: inherit;
+  color: var(--blue);
+  font-weight: 700;
+}
+
+.about-method-card h3 {
+  margin: 72px 0 18px;
+  font-family: var(--display);
+  font-size: clamp(1.75rem, 2.35vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.035em;
+}
+
+.about-method-card > p {
+  margin: 0 0 34px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.about-method-card > a {
+  width: fit-content;
+  margin-top: auto;
+  color: var(--blue);
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.about-method-card > a:hover { text-decoration: underline; }
+
+.about-method-footnote {
+  display: grid;
+  grid-template-columns: .45fr 1fr auto;
+  align-items: center;
+  gap: 28px;
+  margin-top: 54px;
+  padding: 24px 28px;
+  border: 2px solid var(--ink);
+  border-radius: 22px;
+  background: var(--coral);
+  box-shadow: 6px 6px 0 var(--mint);
+}
+
+.about-method-footnote span { color: var(--blue); font-weight: 700; }
+.about-method-footnote p { margin: 0; font-size: 12px; line-height: 1.75; }
+.about-method-footnote a {
+  padding: 11px 15px;
+  border: 1.5px solid var(--ink);
+  border-radius: 99px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 9px;
+  font-weight: 750;
+  box-shadow: 3px 3px 0 var(--ink);
+  white-space: nowrap;
+}
+
+.about-method-card a:focus-visible,
+.about-method-footnote a:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 4px;
+}
+
+@media (max-width: 1050px) {
+  .about-method-route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .about-method-route::before { display: none; }
+  .about-method-card { min-height: 330px; }
+  .about-method-footnote { grid-template-columns: 1fr 1.2fr; }
+  .about-method-footnote a { grid-column: 2; width: fit-content; white-space: normal; }
+}
+
+@media (max-width: 760px) {
+  .about-methods { padding: 105px 0; }
+  .about-methods-heading { grid-template-columns: 1fr; gap: 30px; margin-bottom: 54px; }
+  .about-methods-heading h2 { font-size: clamp(2.2rem, 10vw, 3.15rem); line-height: 1.12; }
+  .about-method-route { grid-template-columns: 1fr; gap: 14px; }
+  .about-method-card { min-height: 310px; padding: 22px; border-radius: 23px; box-shadow: 5px 5px 0 var(--ink); }
+  .about-method-card h3 { margin-top: 56px; font-size: 2rem; }
+  .about-method-footnote { grid-template-columns: 1fr; gap: 18px; margin-top: 44px; padding: 22px; }
+  .about-method-footnote a { grid-column: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-method-card > a:hover { text-decoration: none; }
+}

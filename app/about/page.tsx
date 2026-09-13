@@ -8,6 +8,7 @@ import { tools } from '../data/content';
 import { libraryItems } from '../data/library';
 import { promptItems } from '../data/prompts';
 import { getAllNotes } from '../../lib/notes';
+import './about.css';
 
 export const metadata: Metadata = {
   title: 'About JING — JING AI PLAYGROUND',
@@ -54,6 +55,28 @@ export default function AboutPage() {
       tone: 'mint',
     },
   ] as const;
+  const methodRoute = [
+    {
+      step: '01', label: 'DEFINE', title: '先把交付说清楚',
+      copy: '确认目标、数据边界、周期、验收标准、争议处理与保密要求，再把口头需求拆成可以执行的规则。',
+      href: '/notes/synthetic-annotation-delivery/', action: '看六阶段演练', tone: 'white',
+    },
+    {
+      step: '02', label: 'PILOT', title: '用小批量暴露问题',
+      copy: '先试标、测产能和一致性，记录分歧点与人员适配；标准稳定以后再逐步放量。',
+      href: '/notes/synthetic-annotation-delivery/', action: '看试标位置', tone: 'sky',
+    },
+    {
+      step: '03', label: 'EVALUATE', title: '把感受变成证据',
+      copy: '按固定维度记录问题、严重度和出现位置；把模型问题、数据问题、规则问题与执行偏差分开。',
+      href: '/notes/video-evaluation-eight-dimensions/', action: '看八维框架', tone: 'yellow',
+    },
+    {
+      step: '04', label: 'CLOSE THE LOOP', title: '让交付可以追溯',
+      copy: '完成格式、有效性、质量和版本检查；高频问题回到规则库，回答保留依据并设置人工升级。',
+      href: '/notes/synthetic-rule-knowledge-desk/', action: '看规则答疑案例', tone: 'mint',
+    },
+  ] as const;
 
   return (
     <main>
@@ -68,6 +91,20 @@ export default function AboutPage() {
           <div className="about-answer-grid">
             {answers.map((answer) => <article className={`about-answer-card about-answer-${answer.tone}`} key={answer.label}><span className="mono">{answer.label}</span><h3>{answer.title}</h3><p>{answer.copy}</p><div><b className="mono">Evidence / 当前证据</b><strong>{answer.evidence}</strong></div><Link href={answer.href}>{answer.action} ↗</Link></article>)}
           </div>
+        </section></Reveal>
+
+        <Reveal><section className="about-methods" aria-labelledby="about-methods-title">
+          <div className="about-methods-heading">
+            <div><p className="eyebrow mono">How I work / 工作方法</p><h2 id="about-methods-title">从接到问题，<br />到留下证据。</h2></div>
+            <p>这里展示的是荆提供的方法框架，以及用独立虚构情境整理的公开演练。它说明怎样推进项目，不公开真实业务材料，也不把演练写成客户成果。</p>
+          </div>
+          <div className="about-method-route">
+            {methodRoute.map((method) => <article className={`about-method-card about-method-${method.tone}`} key={method.step}>
+              <div className="about-method-marker"><b>{method.step}</b><span className="mono">{method.label}</span></div>
+              <h3>{method.title}</h3><p>{method.copy}</p><Link href={method.href}>{method.action} ↗</Link>
+            </article>)}
+          </div>
+          <div className="about-method-footnote"><span className="mono">LOCAL REVIEW DESK</span><p>规则答疑演练还配有浏览器本地验收台：导入虚构题目、逐条记录回答与引用，再导出人工复核 CSV。</p><Link href="/tools/rule-review/">打开规则答疑验收台 ↗</Link></div>
         </section></Reveal>
 
         <Reveal><section className="about-status" aria-labelledby="about-status-title">
