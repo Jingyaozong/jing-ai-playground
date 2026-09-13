@@ -766,7 +766,7 @@ export const storyDetails: StoryDetail[] = [
     type: 'Editorial Story Candidate',
     date: '2026.09',
     duration: '01:12',
-    status: '编辑候选 · 待荆确认',
+    status: '编辑候选 · 无视频 · 待荆确认',
     draft: true,
     heroVisual: 'water-ledger',
     draftNotice: '这是从 EXP.009 的 A01 样本继续发展的 AI 编辑候选。顾岚、档案馆与全部情节均为虚构；人物锚点和三张概念关键帧生成于 2026-09-01，用于视觉开发。它尚未由荆确认，也没有生成视频或真实制作结果。',

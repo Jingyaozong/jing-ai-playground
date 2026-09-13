@@ -29,6 +29,7 @@ const noteSlugs = new Set(notes.map((note) => note.slug));
 const validNoteCategories = new Set(noteCategories.map((category) => category.id));
 const validEditorialStatuses = new Set(['draft', 'source-backed', 'published']);
 const validLibraryTypes = new Set(['VIDEO', 'ARTICLE', 'PDF', 'TOOL']);
+const promptsPageSource = readFileSync(new URL('../app/prompts/page.tsx', import.meta.url), 'utf8');
 
 function check(condition, message) {
   if (!condition) failures.push(message);
@@ -101,6 +102,9 @@ for (const story of stories) {
 
   if (detail.draft) {
     check(Boolean(detail.draftNotice?.trim()), `故事 ${story.number} 是草案，但缺少草案声明`);
+    if (/没有生成视频|尚未生成视频/.test(detail.draftNotice ?? '')) {
+      check(story.status.includes('无视频'), `故事 ${story.number} 尚未生成视频，但归档状态没有标注“无视频”`);
+    }
   }
 
   if (story.status.includes('无视频')) {
@@ -165,6 +169,13 @@ for (const note of notes) {
     check(/编辑|草案|待荆确认|未确认|没有视频|尚待执行/.test(note.sourceNote ?? ''), `笔记 ${note.slug} 是草案，但来源说明未标出编辑或待确认状态`);
   }
 
+  if (note.synthetic) {
+    check(note.editorialStatus === 'draft', `虚构案例 ${note.slug} 必须保留为编辑草案`);
+    check(/独立虚构/.test(note.sourceNote ?? ''), `虚构案例 ${note.slug} 的来源说明缺少“独立虚构”边界`);
+    check(/虚构/.test(source?.content.slice(0, 1200) ?? ''), `虚构案例 ${note.slug} 的正文开头没有明确标注虚构`);
+    check(/不对应|不是|不使用/.test(source?.content.slice(0, 1200) ?? ''), `虚构案例 ${note.slug} 的正文开头没有说明与真实项目的关系`);
+  }
+
   for (const relatedSlug of note.relatedNotes) {
     check(relatedSlug !== note.slug, `笔记 ${note.slug} 把自己列为关联笔记`);
     check(noteSlugs.has(relatedSlug), `笔记 ${note.slug} 指向不存在的关联笔记：${relatedSlug}`);
@@ -198,6 +209,8 @@ for (const item of libraryItems) {
   check(item.takeStatus === 'draft' || item.takeStatus === 'confirmed', `收藏 ${item.id} 的 JING'S TAKE 状态无效：${item.takeStatus}`);
   check(item.demo === false, `收藏 ${item.id} 仍被标记为演示数据`);
 }
+
+check(!promptsPageSource.includes('来自真实项目'), 'Prompt 页面不得把本站故事草案标成“来自真实项目”');
 
 if (failures.length > 0) {
   throw new Error(`内容一致性检查失败：\n${failures.map((failure) => `- ${failure}`).join('\n')}`);

@@ -122,7 +122,7 @@ export const stories: Story[] = [
     type: 'Editorial Story Candidate',
     date: '2026.09',
     duration: '01:12',
-    status: '编辑候选 · 待荆确认',
+    status: '编辑候选 · 无视频 · 待荆确认',
     stage: 'documented',
     visual: 'waterrecedes',
   },
