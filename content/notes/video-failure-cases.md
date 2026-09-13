@@ -14,7 +14,7 @@ editorialStatus: "source-backed"
 sourceTitle: "VBench / VBench 2.0 / T2V-CompBench / PhyGenBench"
 sourceUrl: "https://github.com/Vchitect/VBench"
 sourceNote: "失败维度与研究背景依据原始论文和官方项目核对；中文名称、排错顺序和处理建议是本站面向创作者的编辑转译。它们是复测方向，不是未经实验即可确认的因果结论。"
-relatedNotes: ["ai-video-evaluation", "ninety-second-storyboard", "video-vs-image-prompt"]
+relatedNotes: ["bad-case-review-loop", "ai-video-evaluation", "video-vs-image-prompt"]
 connections:
   - label: "METHOD"
     title: "AI 视频到底应该怎么评？"

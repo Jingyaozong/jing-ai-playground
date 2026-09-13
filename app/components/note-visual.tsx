@@ -1,4 +1,18 @@
 export function NoteVisual({ variant, label }: { variant: string; label: string }) {
+  const checksheets: Record<string, { heading: [string, string]; items: string[]; footer: string }> = {
+    'evaluation-checksheet': { heading: ['分开看，', '才评得清。'], items: ['语义遵循', '基础画质', '美学表现', '主体场景', '时序动作', '结构物理', '镜头叙事', '音画安全'], footer: '八维检查 · 非评分结果' },
+    'review-checksheet': { heading: ['记下问题，', '回到复验。'], items: ['记录证据', '确认原因', '修改规则', '同步团队', '重新验证'], footer: '问题闭环 · 非项目成果' },
+    'delivery-checksheet': { heading: ['能打开，', '还不够。'], items: ['格式校验', '有效性检查', '质量复核', '版本追溯'], footer: '交付关口 · 非验收记录' },
+  };
+  const checksheet = checksheets[variant];
+  if (checksheet) return (
+    <div className={`note-visual note-visual-checksheet note-visual-${variant}`} aria-label={`${label}的方法检查表示意`}>
+      <small className="mono">METHOD NOTES / 方法笔记</small>
+      <strong>{checksheet.heading[0]}<br />{checksheet.heading[1]}</strong>
+      <ul>{checksheet.items.map((item) => <li key={item}>{item}</li>)}</ul>
+      <p>{checksheet.footer}</p>
+    </div>
+  );
   if (variant === 'synthetic-delivery') return (
     <div className="note-visual note-visual-delivery" aria-label={`${label}：六阶段虚构项目工作单`}>
       <small className="mono">SYNTHETIC CASE / 虚构演练</small>
