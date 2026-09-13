@@ -41,6 +41,7 @@ const components: Components = {
   a: ({ href = '#', children }) => {
     const label = textFromNode(children);
     if (label.startsWith('VIDEO:')) return <a className="article-video" href={href} target="_blank" rel="noreferrer"><span className="video-play">▶</span><span><small className="mono">External video</small><b>{label.replace('VIDEO:', '').trim()}</b></span><i>打开来源 ↗</i></a>;
+    if (label.startsWith('DOWNLOAD:') && href.startsWith('/')) return <Link className="article-download" href={href} download><span className="download-mark">↓</span><span><small className="mono">Synthetic practice pack / 虚构演练包</small><b>{label.replace('DOWNLOAD:', '').trim()}</b><em>ZIP · v1.0 · 7 个文件 · 未执行</em></span><i>下载到本地</i></Link>;
     if (href.startsWith('/')) return <Link href={href}>{children}</Link>;
     return <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined}>{children}</a>;
   },

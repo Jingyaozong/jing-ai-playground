@@ -1,0 +1,20 @@
+{
+  "packId": "rule-knowledge-desk-practice",
+  "version": "1.0",
+  "status": "synthetic-unexecuted-practice-material",
+  "updatedAt": "2026-09-13",
+  "files": [
+    "README.md",
+    "rules-v1.0.md",
+    "test-questions.csv",
+    "answer-key.csv",
+    "review-log-template.csv",
+    "change-log.md"
+  ],
+  "boundaries": {
+    "containsRealProjectData": false,
+    "containsModelResults": false,
+    "containsSecrets": false,
+    "importableApplicationConfig": false
+  }
+}
