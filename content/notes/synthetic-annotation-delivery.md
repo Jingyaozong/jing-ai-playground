@@ -15,7 +15,7 @@ synthetic: true
 editorialStatus: "draft"
 sourceTitle: "荆提供的六阶段方法＋AI 独立虚构案例"
 sourceNote: "方法骨架来自荆提供的流程说明。业务背景、对话、角色配置、排期和数值均由 AI 独立虚构，不使用真实客户、项目文档、业务数据或脱敏材料；模拟数值不是实际执行结果。案例表达为编辑候选，待荆确认。"
-relatedNotes: ["dataset-release-gates", "bad-case-review-loop", "video-evaluation-eight-dimensions"]
+relatedNotes: ["dataset-release-gates", "bad-case-review-loop", "synthetic-rule-knowledge-desk"]
 connections:
   - label: "ABOUT"
     title: "了解展示方式"

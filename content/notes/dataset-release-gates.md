@@ -14,7 +14,7 @@ demo: false
 editorialStatus: "draft"
 sourceTitle: "荆提供的数据清洗、整理入库、提效与平台能力说明"
 sourceNote: "四层检查、风险分层、版本追溯和提效原则来自荆的工作方法说明。检查清单及示例字段由 AI 整理扩展，属于编辑候选，待荆确认；不包含业务数据、真实系统截图或交付成果。"
-relatedNotes: ["synthetic-annotation-delivery", "bad-case-review-loop", "video-evaluation-eight-dimensions"]
+relatedNotes: ["synthetic-rule-knowledge-desk", "synthetic-annotation-delivery", "bad-case-review-loop"]
 connections:
   - label: "SYNTHETIC CASE"
     title: "放回完整项目里"

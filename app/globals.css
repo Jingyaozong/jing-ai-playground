@@ -30,6 +30,10 @@
 .note-visual.note-visual-checksheet { display: flex; flex-direction: column; justify-content: center; gap: 24px; padding: 30px; min-height: 380px; aspect-ratio: auto; background: var(--sky); color: var(--ink); }
 .note-visual.note-visual-review-checksheet { background: var(--yellow); }
 .note-visual.note-visual-delivery-checksheet { background: var(--mint); }
+.note-visual.note-visual-rule-desk-checksheet { background: var(--paper); }
+.note-visual-rule-desk-checksheet li:first-child { background: var(--mint); }
+.note-visual-rule-desk-checksheet li:nth-child(2) { background: var(--yellow); }
+.note-visual-rule-desk-checksheet li:nth-child(n+3) { background: var(--sky); }
 .note-visual.note-visual-checksheet > small { position: static; align-self: flex-start; color: inherit; }
 .note-visual-checksheet > strong { font: 750 clamp(1.8rem,3vw,2.6rem)/1.4 var(--display); }
 .note-visual-checksheet ul { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; padding: 0; margin: 0; list-style: none; }
