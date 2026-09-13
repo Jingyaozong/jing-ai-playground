@@ -22,6 +22,20 @@ export function NoteVisual({ variant, label }: { variant: string; label: string 
       <p>方法可展示 · 项目独立虚构</p>
     </div>
   );
+  if (variant === 'synthetic-evaluation-flow') return (
+    <div className="note-visual note-visual-evaluation-flow" aria-label={`${label}：标准集、问题集和压力集汇入八维评测记录，再形成证据、复验与报告`}>
+      <small className="mono">SYNTHETIC EVALUATION / 虚构演练</small>
+      <strong>三套样本，<br />一份可复核报告。</strong>
+      <div className="evaluation-flow-lanes" aria-hidden="true">
+        <span>标准集</span><span>问题集</span><span>压力集</span>
+      </div>
+      <div className="evaluation-flow-gate"><b>8D</b><span>逐项记录</span></div>
+      <div className="evaluation-flow-outputs" aria-hidden="true">
+        <span>证据</span><span>复验</span><span>报告</span>
+      </div>
+      <p>流程已设计 · 没有模型输出或评测结果</p>
+    </div>
+  );
   if (variant === 'memory-preflight') return (
     <div className="note-visual note-visual-memory-preflight" aria-label={`${label} 的信件准备单示意，所有动作测试待执行`}>
       <small>写给下一次生成</small><div className="preflight-letter"><b>先备齐，<br />再出发。</b><p>人物与道具参照</p><p>文字与声音位置</p><p>02 · 07 · 11 三镜测试</p></div><span>准备单 · 无视频结果</span>

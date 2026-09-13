@@ -43,6 +43,27 @@
 .note-detail-grid > .note-visual.note-visual-checksheet { width: 100%; min-width: 0; aspect-ratio: auto; }
 .note-card .note-visual:is(.note-visual-delivery, .note-visual-memory-preflight, .note-visual-prompt-comparison, .note-visual-checksheet) { width: 100%; min-width: 0; aspect-ratio: auto; }
 
+.note-visual.note-visual-evaluation-flow { display: grid; grid-template-columns: minmax(0,1fr) auto; align-content: center; gap: 22px 24px; min-height: 410px; width: 100%; min-width: 0; padding: 32px; aspect-ratio: auto; background: var(--blue); color: var(--white); }
+.note-visual.note-visual-evaluation-flow > small { position: static; grid-column: 1 / -1; justify-self: start; color: var(--ink); }
+.note-visual-evaluation-flow > strong { grid-column: 1 / -1; font: 750 clamp(1.8rem,3vw,2.6rem)/1.38 var(--display); letter-spacing: var(--zh-title-tracking); }
+.evaluation-flow-lanes, .evaluation-flow-outputs { display: grid; gap: 8px; }
+.evaluation-flow-lanes span, .evaluation-flow-outputs span { position: relative; display: block; padding: 10px 14px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--paper); color: var(--ink); font-size: 12px; line-height: 1.5; text-align: center; }
+.evaluation-flow-lanes span:nth-child(2) { background: var(--yellow); }
+.evaluation-flow-lanes span:nth-child(3) { background: var(--coral); }
+.evaluation-flow-gate { align-self: center; display: grid; place-items: center; width: 92px; aspect-ratio: 1; border: 2px solid var(--ink); border-radius: 28px; background: var(--mint); color: var(--ink); box-shadow: 6px 6px 0 var(--ink); transform: rotate(3deg); }
+.evaluation-flow-gate b { font: 800 34px/1 var(--display); }
+.evaluation-flow-gate span { font-size: 10px; }
+.evaluation-flow-outputs { grid-column: 1 / -1; grid-template-columns: repeat(3,minmax(0,1fr)); }
+.evaluation-flow-outputs span { background: var(--sky); }
+.note-visual-evaluation-flow > p { grid-column: 1 / -1; margin: 0; font-size: 12px; line-height: 1.7; color: rgba(255,255,255,.88); }
+.note-detail-grid > .note-visual.note-visual-evaluation-flow, .note-card .note-visual.note-visual-evaluation-flow { width: 100%; min-width: 0; aspect-ratio: auto; }
+@media(max-width:760px) {
+  .note-visual.note-visual-evaluation-flow { grid-template-columns: minmax(0,1fr); min-height: 480px; padding: 26px; gap: 18px; }
+  .evaluation-flow-lanes { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .evaluation-flow-lanes span, .evaluation-flow-outputs span { padding-inline: 8px; }
+  .evaluation-flow-gate { width: 82px; justify-self: center; transform: rotate(2deg); }
+}
+
 :root {
   --paper: #fffdf7;
   --white: #ffffff;
