@@ -263,6 +263,11 @@ export const experiments: Experiment[] = [
 
 export const tools: Tool[] = [
   {
+    id: 'tool-021', title: 'Rule Review', label: '规则答疑验收台',
+    description: '导入演练题、记录实际回答与人工结论，选择错误标签，导出可重新导入的复核 CSV。',
+    status: 'Ready', symbol: '✓', href: '/tools/rule-review/',
+  },
+  {
     id: 'tool-003',
     title: 'Review Pace',
     description: '输入团队人数、有效工时、单条耗时与返工率，快速估算评测任务的日产能和交付节奏。',

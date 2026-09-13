@@ -17,6 +17,11 @@ sourceTitle: "荆提供的规则答疑与项目组织方法"
 sourceNote: "规则前置、知识库检索、风险分层和人工升级原则来自荆提供的方法。业务背景、规则、问答和验收情境均由 AI 独立虚构，不使用真实项目或脱敏材料。本文为编辑候选，待荆确认；没有部署答疑系统、调用模型或执行验收，也不包含真实提效数据。"
 relatedNotes: ["dataset-release-gates", "bad-case-review-loop", "synthetic-annotation-delivery"]
 connections:
+  - label: "TOOL"
+    title: "逐题记录复核"
+    description: "在本地验收台载入演练题，填写回答并导出人工复核记录。"
+    href: "/tools/rule-review/"
+    tone: "sky"
   - label: "METHOD"
     title: "回答也要可追溯"
     description: "从字段、质量到版本，沿用四道交付检查。"
@@ -154,6 +159,8 @@ connections:
 其中实际日志与验收结论必须等执行后生成。本页没有提供虚构的通过截图、响应速度或节省成本，也没有可导入 Dify 的配置文件。
 
 ### 下载虚构演练包
+
+也可以直接进入 [规则答疑验收台](/tools/rule-review/)，载入 12 条虚构题，记录实际回答、引用、错误标签与人工结论。工具只在当前浏览器处理，导出 CSV 后可重新导入续填；题目初始均为待复核。
 
 [DOWNLOAD: 下载纸灯规则台演练包](/downloads/rule-knowledge-desk-practice-v1.0.zip)
 
