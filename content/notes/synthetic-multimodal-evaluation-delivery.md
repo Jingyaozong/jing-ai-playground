@@ -17,6 +17,11 @@ sourceTitle: "荆提供的多模态评测、八维视频检查与数据优化方
 sourceNote: "评测集分层、八维检查、Bad Case 五层归因、复验闭环和交付门禁来自荆提供的方法。产品背景、任务、样本结构、字段和交付情境均由 AI 独立虚构，不对应、不复刻也不使用任何真实客户或项目材料。本文为编辑候选，待荆确认；没有调用模型、生成视频、执行评测或得到效果数据。"
 relatedNotes: ["video-evaluation-eight-dimensions", "bad-case-review-loop", "dataset-release-gates"]
 connections:
+  - label: "TOOL"
+    title: "开始逐项记录"
+    description: "在浏览器本地填写八维证据并导出可恢复的 CSV。"
+    href: "/tools/multimodal-evaluation/"
+    tone: "coral"
   - label: "RUBRIC"
     title: "用八维拆开观看"
     description: "从语义遵循到音画安全，逐项留下证据。"
@@ -106,6 +111,8 @@ connections:
 
 单条记录建议至少保留：
 
+需要开始填写时，可打开本站的 [多模态评测记录台](/tools/multimodal-evaluation/)。它只在浏览器当前页面处理文字记录，不上传视频或 CSV，也不会自动生成评测结论。
+
 | 字段 | 记录目的 |
 | --- | --- |
 | 样本与输出 ID | 找回原始任务与文件 |
@@ -194,4 +201,3 @@ connections:
 从一句“帮我系统评一下”，到一份能支持决策的报告，中间需要需求边界、分层评测集、八维记录、校准试评、证据留存、五层归因、数据建议、复验和交付门禁。
 
 这套路径展示的是荆提供的方法如何连接起来，不是虚构一段项目履历。页面仍是编辑候选，待荆确认表达；无需、也不应该补入任何真实客户资料。
-

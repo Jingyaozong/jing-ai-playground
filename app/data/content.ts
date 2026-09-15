@@ -263,6 +263,11 @@ export const experiments: Experiment[] = [
 
 export const tools: Tool[] = [
   {
+    id: 'tool-022', title: 'Multimodal Evaluation Desk', label: '多模态评测记录台',
+    description: '按八个维度记录结果、严重度、时间段与可复核证据，管理人工复核状态，并导出可重新导入的 CSV。',
+    status: 'Ready', symbol: '8D', href: '/tools/multimodal-evaluation/',
+  },
+  {
     id: 'tool-021', title: 'Rule Review', label: '规则答疑验收台',
     description: '导入演练题、记录实际回答与人工结论，选择错误标签，导出可重新导入的复核 CSV。',
     status: 'Ready', symbol: '✓', href: '/tools/rule-review/',

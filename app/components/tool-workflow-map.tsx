@@ -31,7 +31,7 @@ const stages = [
     label: 'REVIEW',
     title: '声音与评审',
     description: '检查相邻镜头的接口，把声音拆成轨道，并估算真实审片产能。',
-    toolIds: ['tool-007', 'tool-006', 'tool-003'],
+    toolIds: ['tool-022', 'tool-007', 'tool-006', 'tool-003'],
     note: '画面通过，不等于作品完成',
   },
   {
