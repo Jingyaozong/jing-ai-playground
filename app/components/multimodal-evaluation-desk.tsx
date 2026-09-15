@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   MAX_EVALUATION_CSV_BYTES, createEmptyEvaluationBatch, createEmptySample,
-  evaluationDimensions, exportEvaluationCsv, importEvaluationCsv, sampleReadinessIssues,
+  evaluationDimensions, exportEvaluationCsv, importEvaluationCsv, sampleReadinessIssues, summarizeEvaluationBatch,
   type DimensionReview, type EvaluationBatch, type EvaluationResult, type EvaluationSample,
   type EvaluationSeverity, type RootCause, type RetestStatus, type SampleReviewState,
 } from '../../lib/multimodal-evaluation';
@@ -54,6 +54,7 @@ export function MultimodalEvaluationDesk() {
   const dimension = sample.dimensions[selectedDimension];
   const definition = evaluationDimensions[selectedDimension];
   const issues = sampleReadinessIssues(sample);
+  const summary = useMemo(() => summarizeEvaluationBatch(batch), [batch]);
   const allDimensions = batch.samples.flatMap((item) => item.dimensions);
   const totals = {
     recorded: allDimensions.filter((item) => item.result !== 'not_reviewed').length,
@@ -211,6 +212,49 @@ export function MultimodalEvaluationDesk() {
       </div>
     </div>
 
+    <section className="evaluation-insights" aria-labelledby="evaluation-insights-title">
+      <header className="evaluation-insights-heading">
+        <div><span className="mono">READ ONLY / 批次观察窗</span><h2 id="evaluation-insights-title">八条轨道，<br />看清哪里卡住。</h2></div>
+        <div><p>来源：当前页面中的本地人工记录。粒度：样本 × 维度。面板随填写或 CSV 导入即时更新。</p><strong>未记录不等于满足；这里不计算模型总分。</strong></div>
+      </header>
+
+      <div className="evaluation-insights-grid">
+        <article className="evaluation-dimension-distribution">
+          <div className="evaluation-panel-heading"><div><span className="mono">8D DISTRIBUTION</span><h3>八维记录分布</h3></div><small>每条轨道共 {summary.sampleCount} 个样本</small></div>
+          <ul className="evaluation-chart-legend" aria-label="八维分布图例">
+            <li className="is-pass">满足</li><li className="is-fail">不满足</li><li className="is-uncertain">无法判断</li><li className="is-not_applicable">不适用</li><li className="is-not_reviewed">待记录</li>
+          </ul>
+          <div className="evaluation-dimension-rails">{summary.dimensions.map((item, index) => {
+            const segments = [
+              { key: 'pass', label: '满足', count: item.pass },
+              { key: 'fail', label: '不满足', count: item.fail },
+              { key: 'uncertain', label: '无法判断', count: item.uncertain },
+              { key: 'not_applicable', label: '不适用', count: item.notApplicable },
+              { key: 'not_reviewed', label: '待记录', count: item.notReviewed },
+            ];
+            const aria = segments.filter(({ count }) => count > 0).map(({ label, count }) => `${label} ${count}`).join('，') || '没有记录';
+            return <div className="evaluation-dimension-rail" key={item.dimensionId}>
+              <div className="evaluation-rail-label"><span>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong>{item.evidenceGaps > 0 && <small>{item.evidenceGaps} 个证据缺口</small>}</div>
+              <div className="evaluation-rail-track" role="img" aria-label={`${item.label}：${aria}`}>{segments.map((segment) => segment.count > 0 && <span className={`is-${segment.key}`} style={{ width: `${segment.count / Math.max(summary.sampleCount, 1) * 100}%` }} key={segment.key}><b>{segment.count}</b></span>)}</div>
+            </div>;
+          })}</div>
+          {summary.recordedDimensionRecords === 0 && <p className="evaluation-chart-empty">当前只有空白记录。轨道里的“待记录”不是评测结果，而是需要补齐的人工观察。</p>}
+        </article>
+
+        <aside className="evaluation-insight-side">
+          <div className="evaluation-gap-card"><span className="mono">EVIDENCE GAP</span><strong>{summary.evidenceGaps}</strong><h3>条异常记录证据不完整</h3><p>不满足或无法判断时，需要同时有严重度、时间段和可复核证据。</p><dl><div><dt>异常记录</dt><dd>{summary.exceptionRecords}</dd></div><div><dt>待记录维度</dt><dd>{summary.totalDimensionRecords - summary.recordedDimensionRecords}</dd></div></dl></div>
+          <DistributionCard title="原因层" hint="按样本统计" counts={summary.rootCauses} labels={rootCauseLabels} />
+          <DistributionCard title="复验状态" hint="按样本统计" counts={summary.retestStatuses} labels={retestLabels} />
+          <DistributionCard title="人工状态" hint="按样本统计" counts={summary.reviewStates} labels={reviewStateLabels} />
+        </aside>
+      </div>
+    </section>
+
     <section className="evaluation-export" aria-labelledby="evaluation-export-title"><div><span className="mono">READABLE COPY / 可读副本</span><h2 id="evaluation-export-title">一份给表格，<br />一份给人读。</h2><p>CSV 保存整批八维字段；下方文字只汇总当前样本。两者都来自你填写的记录，不补写结论。</p><button type="button" onClick={() => void copySummary()}>{copied ? '已复制当前记录 ✓' : '复制当前记录'}</button></div><textarea aria-label="当前样本可读记录" readOnly value={markdown} rows={18} onFocus={(event) => event.currentTarget.select()} /></section>
   </section>;
+}
+
+function DistributionCard<T extends string>({ title, hint, counts, labels }: { title: string; hint: string; counts: Record<T, number>; labels: Record<T, string> }) {
+  const visible = (Object.entries(counts) as [T, number][]).filter(([, count]) => count > 0);
+  return <section className="evaluation-distribution-card"><header><h3>{title}</h3><span>{hint}</span></header><dl>{visible.map(([key, count]) => <div key={key}><dt>{labels[key]}</dt><dd>{count}</dd></div>)}</dl></section>;
 }

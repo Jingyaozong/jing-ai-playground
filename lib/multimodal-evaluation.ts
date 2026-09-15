@@ -50,6 +50,29 @@ export type EvaluationBatch = {
   samples: EvaluationSample[];
 };
 
+export type EvaluationDimensionSummary = {
+  dimensionId: EvaluationDimensionId;
+  label: string;
+  notReviewed: number;
+  pass: number;
+  fail: number;
+  uncertain: number;
+  notApplicable: number;
+  evidenceGaps: number;
+};
+
+export type EvaluationBatchSummary = {
+  sampleCount: number;
+  totalDimensionRecords: number;
+  recordedDimensionRecords: number;
+  exceptionRecords: number;
+  evidenceGaps: number;
+  dimensions: EvaluationDimensionSummary[];
+  rootCauses: Record<RootCause, number>;
+  retestStatuses: Record<RetestStatus, number>;
+  reviewStates: Record<SampleReviewState, number>;
+};
+
 export const evaluationHeaders = [
   'format_marker', 'batch_name', 'rubric_version', 'evaluator', 'tested_at',
   'sample_id', 'output_id', 'task_brief', 'input_notes', 'dimension_id',
@@ -85,6 +108,43 @@ export function sampleReadinessIssues(sample: EvaluationSample): string[] {
   const evidenceGaps = sample.dimensions.filter((dimension) => ['fail', 'uncertain'].includes(dimension.result) && (!dimension.severity || !dimension.timeRange.trim() || !dimension.evidence.trim()));
   if (evidenceGaps.length) issues.push(`${evidenceGaps.length} 个异常维度缺少严重度、时间段或证据`);
   return issues;
+}
+
+function dimensionHasEvidenceGap(dimension: DimensionReview) {
+  return ['fail', 'uncertain'].includes(dimension.result)
+    && (!dimension.severity || !dimension.timeRange.trim() || !dimension.evidence.trim());
+}
+
+export function summarizeEvaluationBatch(batch: EvaluationBatch): EvaluationBatchSummary {
+  const dimensions = evaluationDimensions.map(({ id, label }) => {
+    const records = batch.samples.map((sample) => sample.dimensions.find((dimension) => dimension.dimensionId === id));
+    return {
+      dimensionId: id,
+      label,
+      notReviewed: records.filter((record) => !record || record.result === 'not_reviewed').length,
+      pass: records.filter((record) => record?.result === 'pass').length,
+      fail: records.filter((record) => record?.result === 'fail').length,
+      uncertain: records.filter((record) => record?.result === 'uncertain').length,
+      notApplicable: records.filter((record) => record?.result === 'not_applicable').length,
+      evidenceGaps: records.filter((record) => record && dimensionHasEvidenceGap(record)).length,
+    };
+  });
+  const allDimensions = batch.samples.flatMap((sample) => sample.dimensions);
+  const countSamples = <T extends string>(values: readonly T[], pick: (sample: EvaluationSample) => T) => Object.fromEntries(
+    values.map((value) => [value, batch.samples.filter((sample) => pick(sample) === value).length]),
+  ) as Record<T, number>;
+
+  return {
+    sampleCount: batch.samples.length,
+    totalDimensionRecords: batch.samples.length * evaluationDimensions.length,
+    recordedDimensionRecords: allDimensions.filter((dimension) => dimension.result !== 'not_reviewed').length,
+    exceptionRecords: allDimensions.filter((dimension) => ['fail', 'uncertain'].includes(dimension.result)).length,
+    evidenceGaps: allDimensions.filter(dimensionHasEvidenceGap).length,
+    dimensions,
+    rootCauses: countSamples(rootCauses, (sample) => sample.rootCause),
+    retestStatuses: countSamples(retestStatuses, (sample) => sample.retestStatus),
+    reviewStates: countSamples(sampleReviewStates, (sample) => sample.reviewState),
+  };
 }
 
 export function parseEvaluationCsv(text: string): string[][] {

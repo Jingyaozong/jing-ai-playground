@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   createEmptyEvaluationBatch, evaluationDimensions, evaluationHeaders,
-  exportEvaluationCsv, importEvaluationCsv, parseEvaluationCsv, sampleReadinessIssues,
+  exportEvaluationCsv, importEvaluationCsv, parseEvaluationCsv, sampleReadinessIssues, summarizeEvaluationBatch,
 } from '../lib/multimodal-evaluation.ts';
 
 const encodeRows = (rows) => rows.map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(',')).join('\n');
@@ -57,4 +57,26 @@ test('CSV schema keeps one stable row for each of eight dimensions', () => {
   assert.deepEqual(rows[0], evaluationHeaders);
   assert.deepEqual(rows.slice(1).map((row) => row[9]), evaluationDimensions.map(({ id }) => id));
   assert.throws(() => parseEvaluationCsv('x'.repeat(64_000_001)), /64 MB/);
+});
+
+test('read-only batch summary reconciles dimensions, gaps and sample states without a score', () => {
+  const batch = createEmptyEvaluationBatch();
+  const first = batch.samples[0];
+  first.dimensions[0].result = 'pass';
+  Object.assign(first.dimensions[1], { result: 'fail', severity: 'major', timeRange: '00:02', evidence: '主体边缘破损' });
+  first.dimensions[2].result = 'uncertain';
+  Object.assign(first, { rootCause: 'pending', retestStatus: 'pending', reviewState: 'needs_discussion' });
+
+  const summary = summarizeEvaluationBatch(batch);
+  assert.equal(summary.sampleCount, 1);
+  assert.equal(summary.totalDimensionRecords, 8);
+  assert.equal(summary.recordedDimensionRecords, 3);
+  assert.equal(summary.exceptionRecords, 2);
+  assert.equal(summary.evidenceGaps, 1);
+  assert.deepEqual(summary.dimensions.map(({ pass, fail, uncertain, notReviewed }) => pass + fail + uncertain + notReviewed), Array(8).fill(1));
+  assert.equal(summary.dimensions[2].evidenceGaps, 1);
+  assert.equal(summary.rootCauses.pending, 1);
+  assert.equal(summary.retestStatuses.pending, 1);
+  assert.equal(summary.reviewStates.needs_discussion, 1);
+  assert.equal('score' in summary, false);
 });
