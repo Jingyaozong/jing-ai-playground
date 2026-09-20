@@ -78,5 +78,22 @@ test('read-only batch summary reconciles dimensions, gaps and sample states with
   assert.equal(summary.rootCauses.pending, 1);
   assert.equal(summary.retestStatuses.pending, 1);
   assert.equal(summary.reviewStates.needs_discussion, 1);
+  assert.deepEqual(summary.issues.map(({ sampleIndex, dimensionIndex, result, evidenceGap }) => ({ sampleIndex, dimensionIndex, result, evidenceGap })), [
+    { sampleIndex: 0, dimensionIndex: 1, result: 'fail', evidenceGap: false },
+    { sampleIndex: 0, dimensionIndex: 2, result: 'uncertain', evidenceGap: true },
+  ]);
   assert.equal('score' in summary, false);
+});
+
+test('issue locator uses sample positions even when display IDs are duplicated', () => {
+  const batch = createEmptyEvaluationBatch();
+  const second = structuredClone(batch.samples[0]);
+  batch.samples.push(second);
+  batch.samples[0].dimensions[4].result = 'fail';
+  batch.samples[1].dimensions[4].result = 'uncertain';
+  const issues = summarizeEvaluationBatch(batch).issues;
+  assert.deepEqual(issues.map(({ sampleIndex, dimensionIndex, sampleId }) => ({ sampleIndex, dimensionIndex, sampleId })), [
+    { sampleIndex: 0, dimensionIndex: 4, sampleId: 'LOCAL-001' },
+    { sampleIndex: 1, dimensionIndex: 4, sampleId: 'LOCAL-001' },
+  ]);
 });

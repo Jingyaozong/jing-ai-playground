@@ -50,6 +50,7 @@ export function MultimodalEvaluationDesk() {
   const [message, setMessage] = useState('已放入一条空白本地记录，没有预填模型输出或评测结论。');
   const [copied, setCopied] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
+  const dimensionTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const sample = batch.samples[selectedSample];
   const dimension = sample.dimensions[selectedDimension];
   const definition = evaluationDimensions[selectedDimension];
@@ -152,6 +153,19 @@ export function MultimodalEvaluationDesk() {
     } catch { setCopied(false); setMessage('浏览器没有允许自动复制，可在下方文本框中手动选择。'); }
   }
 
+  function locateIssue(sampleIndex: number, dimensionIndex: number) {
+    const targetSample = batch.samples[sampleIndex];
+    const targetDimension = evaluationDimensions[dimensionIndex];
+    if (!targetSample || !targetDimension) return;
+    setSelectedSample(sampleIndex);
+    setSelectedDimension(dimensionIndex);
+    setRemovePending(false);
+    setMessage(`已定位到 ${targetSample.sampleId || '未命名样本'} 的“${targetDimension.label}”。请按真实素材复核证据。`);
+    const tab = dimensionTabRefs.current[dimensionIndex];
+    tab?.scrollIntoView({ behavior: 'auto', block: 'center' });
+    tab?.focus({ preventScroll: true });
+  }
+
   return <section className="evaluation-desk" aria-label="多模态评测记录台">
     <div className="evaluation-toolbar">
       <div><span className="mono">LOCAL ONLY / 当前浏览器</span><h2>先建一条空白记录。</h2><p>每批最多 30 个样本。CSV 一行对应一个样本的一个维度，可导回本页继续填写。</p></div>
@@ -192,7 +206,7 @@ export function MultimodalEvaluationDesk() {
 
         <div className="evaluation-dimension-tabs" role="tablist" aria-label="八个评测维度">{evaluationDimensions.map((item, index) => {
           const entry = sample.dimensions[index];
-          return <button type="button" role="tab" aria-selected={selectedDimension === index} className={`is-${entry.result}`} key={item.id} onClick={() => setSelectedDimension(index)}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong><small>{resultLabels[entry.result]}</small></button>;
+          return <button type="button" role="tab" aria-selected={selectedDimension === index} className={`is-${entry.result}`} key={item.id} ref={(node) => { dimensionTabRefs.current[index] = node; }} onClick={() => setSelectedDimension(index)}><span>{String(index + 1).padStart(2, '0')}</span><strong>{item.label}</strong><small>{resultLabels[entry.result]}</small></button>;
         })}</div>
 
         <section className={`evaluation-dimension-card is-${dimension.result}`} role="tabpanel" aria-label={`${definition.label}记录`}>
@@ -239,6 +253,10 @@ export function MultimodalEvaluationDesk() {
             </div>;
           })}</div>
           {summary.recordedDimensionRecords === 0 && <p className="evaluation-chart-empty">当前只有空白记录。轨道里的“待记录”不是评测结果，而是需要补齐的人工观察。</p>}
+          <section className="evaluation-issue-locator" aria-labelledby="evaluation-issue-locator-title">
+            <div className="evaluation-issue-heading"><div><span className="mono">FIND THE RECORD / 本地定位</span><h4 id="evaluation-issue-locator-title">异常记录，<br />逐条可达。</h4></div><small>{summary.issues.length} 条</small></div>
+            {summary.issues.length ? <ul>{summary.issues.map((issue) => <li key={`${issue.sampleIndex}-${issue.dimensionIndex}`}><button type="button" onClick={() => locateIssue(issue.sampleIndex, issue.dimensionIndex)} aria-label={`定位到${issue.sampleId || '未命名样本'}的${issue.dimensionLabel}，${resultLabels[issue.result]}${issue.evidenceGap ? '，证据有缺口' : ''}`}><span className={`evaluation-issue-result is-${issue.result}`}>{resultLabels[issue.result]}</span><span className="evaluation-issue-name"><strong>{issue.sampleId || '未命名样本'} · {issue.dimensionLabel}</strong><small>{issue.evidenceGap ? '证据缺口 · 需补全' : issue.timeRange ? `时间段 ${issue.timeRange}` : '证据已记录'}</small></span><span aria-hidden="true">↗</span></button></li>)}</ul> : <p className="evaluation-issue-empty">目前没有标为“不满足”或“无法判断”的维度。开始人工评测后，相关记录会出现在这里。</p>}
+          </section>
         </article>
 
         <aside className="evaluation-insight-side">

@@ -130,6 +130,22 @@
 .evaluation-rail-track > span:last-child { border-right: 0; }
 .evaluation-rail-track b { font: 750 8px var(--mono); }
 .evaluation-chart-empty { margin: 25px 0 0; padding: 14px 16px; border-left: 4px solid var(--yellow); background: color-mix(in srgb,var(--yellow) 30%,var(--paper)); font-size: 9px; line-height: 1.65; }
+.evaluation-issue-locator { margin-top: 30px; padding-top: 23px; border-top: 1.5px solid var(--ink); }
+.evaluation-issue-heading { display: flex; justify-content: space-between; align-items: end; gap: 18px; }
+.evaluation-issue-heading h4 { margin: 8px 0 0; font-family: var(--display); font-size: clamp(1.3rem,2vw,1.8rem); line-height: 1.12; }
+.evaluation-issue-heading > small { flex: 0 0 auto; padding: 7px 10px; border: 1px solid var(--ink); border-radius: 99px; background: var(--yellow); font-size: 8px; font-weight: 750; }
+.evaluation-issue-locator ul { display: grid; gap: 8px; max-height: 336px; margin: 18px 0 0; padding: 0 5px 4px 0; overflow-y: auto; list-style: none; }
+.evaluation-issue-locator li { min-width: 0; }
+.evaluation-issue-locator button { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 14px; align-items: center; width: 100%; min-height: 56px; padding: 10px 14px; border: 1.5px solid var(--ink); border-radius: 13px; background: var(--paper); text-align: left; }
+.evaluation-issue-locator button:hover { background: var(--sky); }
+.evaluation-issue-result { padding: 6px 8px; border: 1px solid var(--ink); border-radius: 7px; font-size: 8px; font-weight: 750; white-space: nowrap; }
+.evaluation-issue-result.is-fail { background: var(--coral); }
+.evaluation-issue-result.is-uncertain { background: var(--yellow); }
+.evaluation-issue-name { display: grid; gap: 4px; min-width: 0; }
+.evaluation-issue-name strong { overflow-wrap: anywhere; font-size: 9px; }
+.evaluation-issue-name small { color: var(--muted); font-size: 8px; }
+.evaluation-issue-locator button > span:last-child { color: var(--blue); font-size: 15px; }
+.evaluation-issue-empty { margin: 17px 0 0; color: var(--muted); font-size: 9px; line-height: 1.7; }
 .evaluation-insight-side { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; min-width: 0; }
 .evaluation-gap-card { grid-column: 1 / -1; padding: 25px; border: 2px solid var(--ink); border-radius: 25px; background: var(--yellow); box-shadow: 6px 6px 0 var(--ink); }
 .evaluation-gap-card > strong { display: block; margin: 17px 0 0; font: 820 clamp(3.5rem,6vw,6rem)/.82 var(--display); letter-spacing: -.06em; }
@@ -207,6 +223,9 @@
   .evaluation-rail-label { grid-template-columns: 25px minmax(0,1fr) auto; }
   .evaluation-rail-label small { grid-column: 3; }
   .evaluation-rail-track { height: 27px; }
+  .evaluation-issue-locator { margin-top: 25px; }
+  .evaluation-issue-locator button { gap: 9px; padding: 10px; }
+  .evaluation-issue-name strong { font-size: 8px; }
   .evaluation-insight-side { grid-template-columns: 1fr; }
   .evaluation-gap-card, .evaluation-distribution-card:last-child { grid-column: auto; }
   .evaluation-export textarea { min-height: 360px; }

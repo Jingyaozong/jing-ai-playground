@@ -61,6 +61,17 @@ export type EvaluationDimensionSummary = {
   evidenceGaps: number;
 };
 
+export type EvaluationIssueTarget = {
+  sampleIndex: number;
+  dimensionIndex: number;
+  sampleId: string;
+  dimensionId: EvaluationDimensionId;
+  dimensionLabel: string;
+  result: 'fail' | 'uncertain';
+  evidenceGap: boolean;
+  timeRange: string;
+};
+
 export type EvaluationBatchSummary = {
   sampleCount: number;
   totalDimensionRecords: number;
@@ -68,6 +79,7 @@ export type EvaluationBatchSummary = {
   exceptionRecords: number;
   evidenceGaps: number;
   dimensions: EvaluationDimensionSummary[];
+  issues: EvaluationIssueTarget[];
   rootCauses: Record<RootCause, number>;
   retestStatuses: Record<RetestStatus, number>;
   reviewStates: Record<SampleReviewState, number>;
@@ -130,6 +142,19 @@ export function summarizeEvaluationBatch(batch: EvaluationBatch): EvaluationBatc
     };
   });
   const allDimensions = batch.samples.flatMap((sample) => sample.dimensions);
+  const issues = batch.samples.flatMap((sample, sampleIndex) => sample.dimensions.flatMap((dimension, dimensionIndex) => {
+    if (dimension.result !== 'fail' && dimension.result !== 'uncertain') return [];
+    return [{
+      sampleIndex,
+      dimensionIndex,
+      sampleId: sample.sampleId,
+      dimensionId: dimension.dimensionId,
+      dimensionLabel: evaluationDimensions.find(({ id }) => id === dimension.dimensionId)?.label ?? dimension.dimensionId,
+      result: dimension.result,
+      evidenceGap: dimensionHasEvidenceGap(dimension),
+      timeRange: dimension.timeRange.trim(),
+    }];
+  }));
   const countSamples = <T extends string>(values: readonly T[], pick: (sample: EvaluationSample) => T) => Object.fromEntries(
     values.map((value) => [value, batch.samples.filter((sample) => pick(sample) === value).length]),
   ) as Record<T, number>;
@@ -138,9 +163,10 @@ export function summarizeEvaluationBatch(batch: EvaluationBatch): EvaluationBatc
     sampleCount: batch.samples.length,
     totalDimensionRecords: batch.samples.length * evaluationDimensions.length,
     recordedDimensionRecords: allDimensions.filter((dimension) => dimension.result !== 'not_reviewed').length,
-    exceptionRecords: allDimensions.filter((dimension) => ['fail', 'uncertain'].includes(dimension.result)).length,
+    exceptionRecords: issues.length,
     evidenceGaps: allDimensions.filter(dimensionHasEvidenceGap).length,
     dimensions,
+    issues,
     rootCauses: countSamples(rootCauses, (sample) => sample.rootCause),
     retestStatuses: countSamples(retestStatuses, (sample) => sample.retestStatus),
     reviewStates: countSamples(sampleReviewStates, (sample) => sample.reviewState),
