@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   createEmptyEvaluationBatch, evaluationDimensions, evaluationHeaders,
-  exportEvaluationCsv, importEvaluationCsv, parseEvaluationCsv, sampleReadinessIssues, summarizeEvaluationBatch,
+  exportEvaluationCsv, filterEvaluationIssues, importEvaluationCsv, parseEvaluationCsv, sampleReadinessIssues, summarizeEvaluationBatch,
 } from '../lib/multimodal-evaluation.ts';
 
 const encodeRows = (rows) => rows.map((row) => row.map((cell) => `"${cell.replaceAll('"', '""')}"`).join(',')).join('\n');
@@ -83,6 +83,25 @@ test('read-only batch summary reconciles dimensions, gaps and sample states with
     { sampleIndex: 0, dimensionIndex: 2, result: 'uncertain', evidenceGap: true },
   ]);
   assert.equal('score' in summary, false);
+});
+
+test('issue filters use dimension gaps and sample-level pending retest without changing records', () => {
+  const batch = createEmptyEvaluationBatch();
+  const first = batch.samples[0];
+  first.retestStatus = 'pending';
+  first.dimensions[0].result = 'fail';
+  Object.assign(first.dimensions[1], { result: 'uncertain', severity: 'minor', timeRange: '00:02', evidence: '主体被遮挡' });
+  const second = structuredClone(first);
+  second.retestStatus = 'passed';
+  second.dimensions[0].result = 'pass';
+  batch.samples.push(second);
+
+  const issues = summarizeEvaluationBatch(batch).issues;
+  assert.equal(filterEvaluationIssues(issues, 'all').length, 3);
+  assert.deepEqual(filterEvaluationIssues(issues, 'evidence_gap').map(({ sampleIndex, dimensionIndex }) => [sampleIndex, dimensionIndex]), [[0, 0]]);
+  assert.deepEqual(filterEvaluationIssues(issues, 'pending_retest').map(({ sampleIndex, dimensionIndex }) => [sampleIndex, dimensionIndex]), [[0, 0], [0, 1]]);
+  assert.equal(issues.length, 3);
+  assert.equal(filterEvaluationIssues(issues, 'pending_retest')[0].retestStatus, 'pending');
 });
 
 test('issue locator uses sample positions even when display IDs are duplicated', () => {

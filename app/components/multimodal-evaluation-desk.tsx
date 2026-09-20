@@ -3,9 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   MAX_EVALUATION_CSV_BYTES, createEmptyEvaluationBatch, createEmptySample,
-  evaluationDimensions, exportEvaluationCsv, importEvaluationCsv, sampleReadinessIssues, summarizeEvaluationBatch,
+  evaluationDimensions, exportEvaluationCsv, filterEvaluationIssues, importEvaluationCsv, sampleReadinessIssues, summarizeEvaluationBatch,
   type DimensionReview, type EvaluationBatch, type EvaluationResult, type EvaluationSample,
-  type EvaluationSeverity, type RootCause, type RetestStatus, type SampleReviewState,
+  type EvaluationIssueFilter, type EvaluationSeverity, type RootCause, type RetestStatus, type SampleReviewState,
 } from '../../lib/multimodal-evaluation';
 
 const resultLabels: Record<EvaluationResult, string> = { not_reviewed: '待记录', pass: '满足', fail: '不满足', uncertain: '无法判断', not_applicable: '不适用' };
@@ -43,6 +43,7 @@ export function MultimodalEvaluationDesk() {
   const [batch, setBatch] = useState<EvaluationBatch>(() => createEmptyEvaluationBatch());
   const [selectedSample, setSelectedSample] = useState(0);
   const [selectedDimension, setSelectedDimension] = useState(0);
+  const [issueFilter, setIssueFilter] = useState<EvaluationIssueFilter>('all');
   const [pendingImport, setPendingImport] = useState<EvaluationBatch | null>(null);
   const [removePending, setRemovePending] = useState(false);
   const [dirty, setDirty] = useState(false);
@@ -56,6 +57,12 @@ export function MultimodalEvaluationDesk() {
   const definition = evaluationDimensions[selectedDimension];
   const issues = sampleReadinessIssues(sample);
   const summary = useMemo(() => summarizeEvaluationBatch(batch), [batch]);
+  const visibleIssues = useMemo(() => filterEvaluationIssues(summary.issues, issueFilter), [summary, issueFilter]);
+  const issueFilterOptions: { id: EvaluationIssueFilter; label: string; count: number }[] = [
+    { id: 'all', label: '全部异常', count: summary.issues.length },
+    { id: 'evidence_gap', label: '证据缺口', count: summary.issues.filter((issue) => issue.evidenceGap).length },
+    { id: 'pending_retest', label: '样本待复验', count: summary.issues.filter((issue) => issue.retestStatus === 'pending').length },
+  ];
   const allDimensions = batch.samples.flatMap((item) => item.dimensions);
   const totals = {
     recorded: allDimensions.filter((item) => item.result !== 'not_reviewed').length,
@@ -255,7 +262,8 @@ export function MultimodalEvaluationDesk() {
           {summary.recordedDimensionRecords === 0 && <p className="evaluation-chart-empty">当前只有空白记录。轨道里的“待记录”不是评测结果，而是需要补齐的人工观察。</p>}
           <section className="evaluation-issue-locator" aria-labelledby="evaluation-issue-locator-title">
             <div className="evaluation-issue-heading"><div><span className="mono">FIND THE RECORD / 本地定位</span><h4 id="evaluation-issue-locator-title">异常记录，<br />逐条可达。</h4></div><small>{summary.issues.length} 条</small></div>
-            {summary.issues.length ? <ul>{summary.issues.map((issue) => <li key={`${issue.sampleIndex}-${issue.dimensionIndex}`}><button type="button" onClick={() => locateIssue(issue.sampleIndex, issue.dimensionIndex)} aria-label={`定位到${issue.sampleId || '未命名样本'}的${issue.dimensionLabel}，${resultLabels[issue.result]}${issue.evidenceGap ? '，证据有缺口' : ''}`}><span className={`evaluation-issue-result is-${issue.result}`}>{resultLabels[issue.result]}</span><span className="evaluation-issue-name"><strong>{issue.sampleId || '未命名样本'} · {issue.dimensionLabel}</strong><small>{issue.evidenceGap ? '证据缺口 · 需补全' : issue.timeRange ? `时间段 ${issue.timeRange}` : '证据已记录'}</small></span><span aria-hidden="true">↗</span></button></li>)}</ul> : <p className="evaluation-issue-empty">目前没有标为“不满足”或“无法判断”的维度。开始人工评测后，相关记录会出现在这里。</p>}
+            {summary.issues.length > 0 && <><div className="evaluation-issue-filters" role="group" aria-label="筛选异常记录">{issueFilterOptions.map(({ id, label, count }) => <button type="button" key={id} aria-pressed={issueFilter === id} onClick={() => setIssueFilter(id)}>{label}<span>{count}</span></button>)}</div><p className="evaluation-filter-note">按异常维度筛选；“样本待复验”取所在样本的人工状态。</p></>}
+            {visibleIssues.length ? <ul>{visibleIssues.map((issue) => <li key={`${issue.sampleIndex}-${issue.dimensionIndex}`}><button type="button" onClick={() => locateIssue(issue.sampleIndex, issue.dimensionIndex)} aria-label={`定位到${issue.sampleId || '未命名样本'}的${issue.dimensionLabel}，${resultLabels[issue.result]}${issue.evidenceGap ? '，证据有缺口' : ''}${issue.retestStatus === 'pending' ? '，所在样本待复验' : ''}`}><span className={`evaluation-issue-result is-${issue.result}`}>{resultLabels[issue.result]}</span><span className="evaluation-issue-name"><strong>{issue.sampleId || '未命名样本'} · {issue.dimensionLabel}</strong><small>{issue.evidenceGap ? '证据缺口 · 需补全' : issue.timeRange ? `时间段 ${issue.timeRange}` : '证据已记录'}{issue.retestStatus === 'pending' && ' · 样本待复验'}</small></span><span aria-hidden="true">↗</span></button></li>)}</ul> : <p className="evaluation-issue-empty" aria-live="polite">{summary.issues.length === 0 ? '目前没有标为“不满足”或“无法判断”的维度。开始人工评测后，相关记录会出现在这里。' : issueFilter === 'evidence_gap' ? '当前没有证据缺口。切回“全部异常”可查看其他记录。' : '当前没有所在样本标为“待复验”的异常记录。切回“全部异常”可查看其他记录。'}</p>}
           </section>
         </article>
 

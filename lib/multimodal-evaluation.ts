@@ -69,8 +69,17 @@ export type EvaluationIssueTarget = {
   dimensionLabel: string;
   result: 'fail' | 'uncertain';
   evidenceGap: boolean;
+  retestStatus: RetestStatus;
   timeRange: string;
 };
+
+export type EvaluationIssueFilter = 'all' | 'evidence_gap' | 'pending_retest';
+
+export function filterEvaluationIssues(issues: EvaluationIssueTarget[], filter: EvaluationIssueFilter): EvaluationIssueTarget[] {
+  if (filter === 'evidence_gap') return issues.filter((issue) => issue.evidenceGap);
+  if (filter === 'pending_retest') return issues.filter((issue) => issue.retestStatus === 'pending');
+  return issues;
+}
 
 export type EvaluationBatchSummary = {
   sampleCount: number;
@@ -152,6 +161,7 @@ export function summarizeEvaluationBatch(batch: EvaluationBatch): EvaluationBatc
       dimensionLabel: evaluationDimensions.find(({ id }) => id === dimension.dimensionId)?.label ?? dimension.dimensionId,
       result: dimension.result,
       evidenceGap: dimensionHasEvidenceGap(dimension),
+      retestStatus: sample.retestStatus,
       timeRange: dimension.timeRange.trim(),
     }];
   }));
