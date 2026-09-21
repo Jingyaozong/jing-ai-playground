@@ -263,6 +263,11 @@ export const experiments: Experiment[] = [
 
 export const tools: Tool[] = [
   {
+    id: 'tool-023', title: 'Agent Trace Review', label: 'Agent 轨迹复核台',
+    description: '本地解析办公 Agent 动作日志，查找工具参数与返回，定位首个偏离并导出验收报告和可恢复的复核包。',
+    status: 'Ready', symbol: '↳', href: '/tools/agent-trace-review/',
+  },
+  {
     id: 'tool-022', title: 'Multimodal Evaluation Desk', label: '多模态评测记录台',
     description: '按八个维度记录结果、严重度、时间段与可复核证据，管理人工复核状态，并导出可重新导入的 CSV。',
     status: 'Ready', symbol: '8D', href: '/tools/multimodal-evaluation/',

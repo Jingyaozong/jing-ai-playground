@@ -5500,3 +5500,20 @@ body { font-size: 15px; }
   .story-still-copy { min-height: 0; padding: 26px 24px 28px; }
   .featured-library > .library-card .library-cover { min-height: 320px; }
 }
+
+/* A visible action trail, shared by the Agent note and its local review tool. */
+.note-visual.agent-trace-visual { display: flex; flex-direction: column; gap: 25px; justify-content: center; width: 100%; min-width: 0; min-height: 390px; padding: 30px; aspect-ratio: auto; background: var(--yellow); color: var(--ink); }
+.note-visual.agent-trace-visual > small { position: static; align-self: flex-start; font-size: 8px; }
+.agent-trace-visual > strong { font: 750 clamp(1.6rem,2.5vw,2.2rem)/1.45 var(--display); }
+.agent-trace-visual ol { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
+.agent-trace-visual li { display: grid; grid-template-columns: 30px minmax(0,1fr) auto; align-items: center; gap: 8px; padding: 12px; border: 1.5px solid var(--ink); border-radius: 12px; background: var(--paper); }
+.agent-trace-visual li > span { font: 700 10px var(--mono); }
+.agent-trace-visual li > b { font-size: 13px; }
+.agent-trace-visual li > em { font-style: normal; font-size: 10px; }
+.agent-trace-visual li.trace-visual-deviation { background: var(--coral); box-shadow: 4px 4px 0 var(--ink); transform: translateX(6px); }
+.agent-trace-visual > p { margin: 0; font-size: 12px; line-height: 1.75; }
+.note-detail-grid > .note-visual.agent-trace-visual, .note-card .note-visual.agent-trace-visual { aspect-ratio: auto; width: 100%; }
+@media(max-width:760px) {
+  .note-visual.agent-trace-visual { padding: 24px; gap: 20px; }
+  .agent-trace-visual > strong { font-size: 1.6rem; }
+}

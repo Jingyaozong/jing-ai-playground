@@ -1,4 +1,7 @@
+import { AgentTraceVisual } from './agent-trace-visual';
+
 export function NoteVisual({ variant, label }: { variant: string; label: string }) {
+  if (variant === 'agent-trajectory') return <AgentTraceVisual />;
   const checksheets: Record<string, { heading: [string, string]; items: string[]; footer: string }> = {
     'rule-desk-checksheet': { heading: ['先查规则，', '再给答案。'], items: ['有据：回答', '缺项：澄清', '冲突：转人工', '高风险：转人工'], footer: '虚构方案 · 未接入模型' },
     'evaluation-checksheet': { heading: ['分开看，', '才评得清。'], items: ['语义遵循', '基础画质', '美学表现', '主体场景', '时序动作', '结构物理', '镜头叙事', '音画安全'], footer: '八维检查 · 非评分结果' },

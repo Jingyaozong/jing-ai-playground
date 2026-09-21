@@ -16,6 +16,11 @@ sourceTitle: "荆提供的 Bad Case 分析与评测后数据优化方法"
 sourceNote: "分类、五层归因、处理闭环和评测集优化原则来自荆的工作方法说明。示例与记录细则由 AI 独立编写，属于编辑候选，待荆确认；没有真实项目样本、人员数据或效果数值。"
 relatedNotes: ["video-evaluation-eight-dimensions", "dataset-release-gates", "synthetic-annotation-delivery"]
 connections:
+  - label: "AGENT"
+    title: "沿调用轨迹定位"
+    description: "区分首个工具报错、任务偏离与最终产物问题。"
+    href: "/notes/office-agent-trajectory-review/"
+    tone: "yellow"
   - label: "METHOD"
     title: "先用八维定位"
     description: "把视频异常落在明确的观察维度上。"

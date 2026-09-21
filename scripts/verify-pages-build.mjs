@@ -31,6 +31,8 @@ const requiredFiles = [
   'tools/shot-list-cleaner/index.html',
   'tools/local-effect-card/index.html',
   'tools/lighting-ledger/index.html',
+  'tools/agent-trace-review/index.html',
+  'notes/office-agent-trajectory-review/index.html',
   'og.png',
 ];
 
