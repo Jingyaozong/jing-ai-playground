@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
+import { tracePractices } from '../../lib/agent-trace-practice';
 import {
   acceptanceLabels, emptyTraceReview, exportTraceBundle, MAX_TRACE_CHARS, parseTraceRecord,
   syntheticAgentTrace, traceCategories, traceReport, traceReviewGaps,
@@ -21,12 +23,18 @@ export function AgentTraceDesk() {
   const [dirty, setDirty] = useState(false);
   const [message, setMessage] = useState('可以先打开虚构演练，熟悉一次完整复核。');
   const fileInput = useRef<HTMLInputElement>(null);
+  const recordNotice = useRef<HTMLParagraphElement>(null);
   const unsaved = dirty || source !== loadedSource;
   const report = useMemo(() => record ? traceReport(record.trace, record.review) : '', [record]);
   const gaps = record ? traceReviewGaps(record.trace, record.review) : [];
   const step = record?.trace.steps[selected];
   const errors = record?.trace.steps.filter((item) => item.status === 'error') ?? [];
   const visibleSteps = record?.trace.steps.map((item, index) => ({ ...item, index })).filter((item) => (!errorsOnly || item.status === 'error') && `${item.id} ${item.tool} ${item.input} ${item.output}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase())) ?? [];
+  const loadedTrace = record?.trace;
+
+  useEffect(() => {
+    if (loadedTrace || pending) recordNotice.current?.focus();
+  }, [loadedTrace, pending]);
 
   useEffect(() => {
     if (!unsaved) return;
@@ -46,9 +54,9 @@ export function AgentTraceDesk() {
       else apply(next, text);
     } catch (error) { setMessage(error instanceof Error ? error.message : '载入失败，当前记录保留。'); }
   }
-  function demo() {
-    const text = JSON.stringify(syntheticAgentTrace, null, 2);
-    if (unsaved && !record) setPending({ record: { trace: syntheticAgentTrace, review: emptyTraceReview(syntheticAgentTrace) }, source: text });
+  function demo(trace: AgentTrace = syntheticAgentTrace) {
+    const text = JSON.stringify(trace, null, 2);
+    if (unsaved && !record) setPending({ record: { trace, review: emptyTraceReview(trace) }, source: text });
     else load(text);
   }
   async function openFile(file?: File) {
@@ -83,14 +91,23 @@ export function AgentTraceDesk() {
   }
 
   return <div className="trace-desk">
+    <section className="trace-practice" aria-labelledby="trace-practice-title" id="practice-pack">
+      <div className="trace-section-head"><div><span className="mono">PRACTICE / 独立虚构</span><h2 id="trace-practice-title">换个任务，练一次。</h2></div><p>三份合成日志，均未执行模型，也不提供真实交付文件。先载入并记录判断，再展开参考；方法编辑候选，待荆确认。</p></div>
+      <div className="trace-practice-grid">{tracePractices.map((practice) => <article key={practice.trace.caseId}>
+        <span className="trace-practice-type">{practice.title}</span><h3>{practice.question}</h3>
+        <p>{practice.trace.task.replace('独立虚构：', '')}</p>
+        <div className="trace-actions"><button type="button" onClick={() => demo(practice.trace)}>载入{practice.title}练习</button><Link href={`/practice/agent-traces/${practice.trace.caseId}.json`} prefetch={false} download>下载{practice.title} JSON</Link></div>
+        <details><summary>{practice.title}参考分析 · 先练再看</summary><p><strong>当前可见的首个偏离：{practice.reference.firstDeviation}。</strong>{practice.reference.evidence}</p><p><strong>证据边界：</strong>{practice.reference.uncertainty}</p><p><strong>下一步：</strong>{practice.reference.retest}</p><p>参考只对应本卡原始合成日志，不会替你填写复核结论。</p></details>
+      </article>)}</div>
+    </section>
     <section className="trace-input-card" aria-labelledby="trace-input-title">
       <div className="trace-section-head"><div><span className="mono">START WITH A TRACE</span><h2 id="trace-input-title">把过程放上桌。</h2></div><p>粘贴单条任务的 JSON 或本工具导出的复核包。最多 100 步；只在当前浏览器处理，关闭前请下载保存。</p></div>
       <label className="trace-field">轨迹 JSON<textarea value={source} maxLength={MAX_TRACE_CHARS} onChange={(event) => setSource(event.target.value)} spellCheck={false} rows={8} placeholder="先载入虚构演练查看格式，或粘贴已整理的结构化轨迹。" /></label>
-      <div className="trace-actions"><button type="button" className="trace-primary" onClick={() => load(source)} disabled={!source.trim() || (!!record && source === loadedSource)}>解析这份记录</button><button type="button" onClick={() => fileInput.current?.click()}>打开 JSON 文件</button><button type="button" onClick={demo}>载入虚构演练</button></div>
+      <div className="trace-actions"><button type="button" className="trace-primary" onClick={() => load(source)} disabled={!source.trim() || (!!record && source === loadedSource)}>解析这份记录</button><button type="button" onClick={() => fileInput.current?.click()}>打开 JSON 文件</button><button type="button" onClick={() => demo()}>载入虚构演练</button></div>
       <input ref={fileInput} type="file" accept=".json,application/json" aria-label="选择本地轨迹 JSON" hidden onChange={(event) => void openFile(event.target.files?.[0])} />
       <details className="trace-format"><summary>输入格式与状态含义</summary><p>这是本站的通用记录格式，需要先把平台日志映射到这些字段。steps 数组按发生顺序排列，id 唯一；input、output 使用文本，只保留可观察参数与返回。</p><pre>{'{\n  "version": 1, "kind": "user_record",\n  "caseId": "CASE-001", "task": "任务要求",\n  "acceptance": ["可核对的验收要求"],\n  "steps": [{"id":"S1", "tool":"read_file",\n    "status":"unknown", "input":"输入参数", "output":"可见返回"}]\n}'}</pre><p>kind 可为 user_record（使用者记录）或 synthetic（独立虚构）。status 可为 ok、error、unknown，均表示日志声明；ok 不等于产物通过验收。复核包同时保存原始字段和人工记录。</p></details>
     </section>
-    <p className="trace-message" role="status" aria-live="polite">{message}</p>
+    <p ref={recordNotice} tabIndex={-1} className="trace-message" role="status" aria-live="polite">{pending ? '新记录已准备好。请确认是否替换当前记录。' : message}</p>
     {pending && <section className="trace-replace" aria-label="替换记录确认"><h3>替换当前工作记录？</h3><p>新记录为 {pending.record.trace.caseId}。需要保留当前复核时，先取消并下载复核包。</p><div className="trace-actions"><button type="button" onClick={() => setPending(null)}>保留当前记录</button><button type="button" onClick={() => apply(pending.record, pending.source)}>确认载入新记录</button></div></section>}
 
     {!record && <div className="trace-empty"><span className="mono">READ → LOCATE → VERIFY</span><h2>先读轨迹，<br />再下判断。</h2><p>演练里，错误参数出现在文件报错之前。试着找到它，再检查“保存成功”是否真的意味着任务完成。</p></div>}

@@ -5,6 +5,20 @@
 .agent-trace-intro > div > p:not(.eyebrow) { max-width: 440px; color: var(--muted); font-size: 15px; line-height: 1.85; }
 .agent-trace-intro a { display: inline-block; margin-top: 18px; border-bottom: 2px solid var(--blue); color: var(--blue); font-size: 13px; font-weight: 750; padding-bottom: 7px; }
 .trace-desk { display: grid; gap: 36px; }
+.trace-practice { padding: 15px 0 30px; }
+.trace-practice-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 22px; align-items: start; }
+.trace-practice-grid > article { padding: 26px; border: 2px solid var(--ink); border-radius: 24px; background: var(--white); }
+.trace-practice-type { display: inline-block; padding: 6px 12px; border-radius: 9px; background: var(--sky); font-size: 12px; font-weight: 700; }
+.trace-practice-grid > article:nth-child(2) .trace-practice-type { background: var(--yellow); }
+.trace-practice-grid > article:nth-child(3) .trace-practice-type { background: var(--mint); }
+.trace-practice h3 { margin: 23px 0 18px; font: 750 1.4rem/1.5 var(--display); text-wrap: balance; }
+.trace-practice p { font-size: 13px; line-height: 1.9; color: var(--muted); }
+.trace-practice details { margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--line); }
+.trace-practice summary { font-size: 12px; line-height: 1.8; color: var(--blue); font-weight: 700; cursor: pointer; }
+.trace-practice summary:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+.trace-practice .trace-actions a { display: inline-flex; align-items: center; min-height: 44px; padding: 12px 17px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--paper); font-size: 12px; font-weight: 750; box-shadow: 3px 3px 0 var(--ink); }
+.trace-practice .trace-actions a:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+@media(max-width:920px) { .trace-practice-grid { grid-template-columns: 1fr; } }
 .trace-desk * { min-width: 0; }
 .trace-desk button, .trace-desk input, .trace-desk textarea, .trace-desk select { font: inherit; }
 .trace-desk button { cursor: pointer; }

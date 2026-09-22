@@ -1,11 +1,35 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { tracePractices } from '../lib/agent-trace-practice.ts';
 import {
   syntheticAgentTrace, parseTraceRecord, emptyTraceReview, traceReviewGaps,
   exportTraceBundle, traceReport, MAX_TRACE_CHARS,
 } from '../lib/agent-trace-review.ts';
 
 const encode = (trace) => JSON.stringify(trace);
+
+test('three independent practice traces import with blank reviews and valid reference steps', () => {
+  assert.equal(tracePractices.length, 3);
+  assert.equal(new Set(tracePractices.map((p) => p.trace.caseId)).size, 3);
+  for (const practice of tracePractices) {
+    const parsed = parseTraceRecord(encode(practice.trace));
+    const downloadable = readFileSync(new URL(`../public/practice/agent-traces/${practice.trace.caseId}.json`, import.meta.url), 'utf8');
+    assert.deepEqual(parseTraceRecord(downloadable), parsed);
+    assert.equal(parsed.trace.kind, 'synthetic');
+    assert.equal(parsed.review.localization, 'pending');
+    assert.ok(parsed.review.checks.every((c) => c.result === 'pending' && c.evidence === ''));
+    assert.ok(parsed.trace.steps.some((s) => s.id === practice.reference.firstDeviation));
+    assert.ok(practice.reference.uncertainty && practice.reference.retest);
+    assert.deepEqual(parseTraceRecord(exportTraceBundle(parsed.trace, parsed.review)), parsed);
+    assert.equal(encode(practice.trace).includes('firstDeviation'), false);
+  }
+});
+
+test('practice set distinguishes explicit errors from earlier or silent deviations', () => {
+  assert.deepEqual(tracePractices.map((p) => p.reference.firstDeviation), ['F2', 'P3', 'D3']);
+  assert.deepEqual(tracePractices.map((p) => p.trace.steps.find((s) => s.status === 'error')?.id), ['F4', 'P4', undefined]);
+});
 
 test('synthetic trace remains explicit and never auto-selects the first error as a cause', () => {
   const { trace, review } = parseTraceRecord(encode(syntheticAgentTrace));
