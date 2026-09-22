@@ -16,7 +16,7 @@ export default function AgentTraceReviewPage() {
     <header className="tool-detail-hero agent-trace-hero"><div className="tool-detail-topline mono"><Link href="/tools/#all-tools">← 返回工具箱</Link><span>JING TOOL / 023</span></div>
       <div className="agent-trace-intro"><div><p className="eyebrow mono">Agent trace review / 轨迹复核台</p><h1><span>找准一步，</span><span>才改得动。</span></h1><p>把输入、调用、返回与产物放在一起。找到任务从哪里开始偏离，留下证据，再决定怎样复验。</p><Link href="/notes/office-agent-trajectory-review/">先读过程评估方法 ↗</Link></div><AgentTraceVisual /></div>
     </header>
-    <div className="tool-detail-shell"><AgentTraceDesk /><aside className="trace-method-link"><span className="mono">KEEP THE LOOP OPEN</span><h2>一条轨迹，<br />回到一套方法。</h2><p>继续阅读评估集设计、失败分类与报告口径，再把单条记录带回问题复盘。</p><nav><Link href="/notes/office-agent-trajectory-review/">办公 Agent 过程评估 ↗</Link><Link href="/notes/bad-case-review-loop/">Bad Case 复验闭环 ↗</Link></nav></aside></div>
+    <div className="tool-detail-shell"><AgentTraceDesk /><aside className="trace-method-link"><span className="mono">KEEP THE LOOP OPEN</span><h2>一条轨迹，<br />回到一套方法。</h2><p>继续阅读评估集设计、失败分类与报告口径，再把单条记录带回问题复盘。验收清单是运行前约定与交付归档的空白模板，方法编辑候选，待荆确认；Markdown 不能作为轨迹 JSON 导入。</p><nav><Link href="/notes/office-agent-trajectory-review/">办公 Agent 过程评估 ↗</Link><Link href="/notes/bad-case-review-loop/">Bad Case 复验闭环 ↗</Link><Link href="/downloads/office-agent-acceptance-v1.0.md" download prefetch={false}>下载验收清单 · Markdown ↓</Link></nav></aside></div>
     <SiteFooter />
   </main>;
 }

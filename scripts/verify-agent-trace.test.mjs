@@ -9,6 +9,14 @@ import {
 
 const encode = (trace) => JSON.stringify(trace);
 
+test('acceptance template remains blank, traceable and explicit about tool boundaries', () => {
+  const template = readFileSync(new URL('../public/downloads/office-agent-acceptance-v1.0.md', import.meta.url), 'utf8');
+  for (const required of ['待荆确认', 'Case ID', 'Run ID', 'AC-01', '无法判断', '不适用', '待最终复核', '不能直接作为轨迹 JSON 导入', '不覆盖原记录']) assert.ok(template.includes(required), required);
+  assert.equal((template.match(/^## [A-E]\./gm) ?? []).length, 5);
+  assert.ok(template.includes('- [ ]'));
+  assert.doesNotMatch(template, /^- \[[xX]\]/m);
+});
+
 test('three independent practice traces import with blank reviews and valid reference steps', () => {
   assert.equal(tracePractices.length, 3);
   assert.equal(new Set(tracePractices.map((p) => p.trace.caseId)).size, 3);
