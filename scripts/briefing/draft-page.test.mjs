@@ -20,3 +20,14 @@ test('draft HTML and foreign links remain inert while known sources are clickabl
   assert.ok(wechat.includes('href="https://mp.weixin.qq.com/s?'));
   assert.ok(!wechat.includes('href="https://mp.weixin.qq.com/s?__biz=OTHER'));
 });
+test('source check card shows metadata-only status and escapes untrusted title', () => {
+  const check = { status: 'source-only', stale: false, checkedAt: '2026-09-23T03:00:00.000Z', article: { title: '<img src=x>', publishedAt: '2026-09-22T02:02:00.000Z', url: 'https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA%3D%3D&mid=123&sn=abc', bodyChars: 600 } };
+  const page = renderDraftPage([], null, check);
+  assert.ok(page.includes('&lt;img src=x&gt;'));
+  assert.ok(!page.includes('<img src=x>'));
+  assert.ok(page.includes('尚未拆解') || page.includes('不是 AI 拆解'));
+  assert.ok(page.includes('打开微信公众号原文'));
+  assert.ok(page.includes('2026年9月23日'));
+  assert.ok(!page.includes('2026-09-23T03:00:00.000Z'));
+  assert.ok(!page.includes('600 字'));
+});

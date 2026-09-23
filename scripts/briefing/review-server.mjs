@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { renderReviewPage } from './review-page.mjs';
 import { draftedIds, draftRecords, readDraft } from './draft-records.mjs';
 import { renderDraftPage } from './draft-page.mjs';
+import { readWechatCheck } from './wechat-check.mjs';
 const directory = resolve(import.meta.dirname, '../../work/briefing');
 try {
   const names = (await readdir(directory)).filter(name => /^candidates-\d{13}\.json$/.test(name)).sort();
@@ -22,7 +23,7 @@ try {
         const text = await readDraft(directory, detail[1]);
         if (text === null) { res.writeHead(404); res.end('Not found'); return; }
         page = renderDraftPage([], {text, name:detail[1]});
-      } else if (req.url === '/drafts/') page = renderDraftPage(await draftRecords(directory));
+      } else if (req.url === '/drafts/') page = renderDraftPage(await draftRecords(directory), null, await readWechatCheck(directory));
       else page = renderReviewPage(snapshot, file, new Date(), await draftedIds(directory));
     }
     catch { res.writeHead(503, {'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'}); res.end('暂时无法安全选稿：候选已过期或本地待审记录异常。请重新采集或核对记录后刷新；未调用模型。'); return; }
