@@ -9,12 +9,12 @@ import { libraryItems } from '../data/library';
 
 export const metadata: Metadata = {
   title: '荆的 AI 收藏夹 — JING AI PLAYGROUND',
-  description: '荆筛选出来值得收藏的 AI 文章、视频、PDF、报告和工具。',
+  description: '编辑整理的 AI 文章、视频、论文与工具候选，附来源和待荆确认的推荐理由。',
 };
 
 const shelves = [
   ['ARTICLES', '文章', '真正值得读完和留着回看的文章。', 'yellow', 'ARTICLE'],
-  ['VIDEOS', '视频', 'B站、YouTube 与公开视频里的好内容。', 'blue', 'VIDEO'],
+  ['VIDEOS', '视频', 'B站与 YouTube 的视频候选；待核对的会单独标明。', 'blue', 'VIDEO'],
   ['PAPERS & PDF', '报告与论文', 'Benchmark、白皮书、论文和官方指南。', 'coral', 'PDF'],
   ['TOOLS', '工具', '不是工具墙，只留下真正可能会用的东西。', 'mint', 'TOOL'],
 ];
@@ -24,9 +24,9 @@ const libraryRoutes = [
     id: 'WATCH',
     title: '先看懂 AI 视频',
     question: '它现在能做什么，边界又在哪里？',
-    description: '先看官方示例和短教程，建立对生成画面、角色一致性与提示结构的直观认识。',
+    description: '先对照官方展示、历史案例和提示指南；宣传示例不能代替自己的逐镜测试。',
     tone: 'yellow',
-    resourceIds: ['runway-gen4-intro-video', 'openai-sora-examples', 'kling-character-consistency-bilibili', 'adobe-structuring-video-prompts'],
+    resourceIds: ['runway-gen4-intro-video', 'openai-sora-examples', 'runway-gen4-prompt-guide'],
   },
   {
     id: 'MAKE',
@@ -58,7 +58,7 @@ export default function LibraryPage() {
       </section>
 
       <Reveal><section className="library-routes section-shell" aria-labelledby="library-routes-title">
-        <aside className="archive-truth-note library-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>资源标题、摘要和原始链接已经核对；推荐理由与 JING&apos;S TAKE 多数仍是编辑初稿，只有荆确认后才会成为正式个人观点。</p></aside>
+        <aside className="archive-truth-note library-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>可读取的一手资料已按原站核对；两条平台视频仍待核对元信息，卡片会单独标明。推荐理由与 JING&apos;S TAKE 仍是编辑初稿，只有荆确认后才会成为正式个人观点。</p></aside>
         <div className="section-title-row compact"><div><p className="eyebrow mono">Choose by purpose / 按用途开始</p><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条入门路线只精选最适合连续阅读的资源；声音、来源记录与开源工具可在下方继续搜索和筛选。</p></div>
         <div className="library-route-grid">
           {libraryRoutes.map((route) => (
@@ -79,11 +79,11 @@ export default function LibraryPage() {
         </div>
       </section></Reveal>
 
-      <Reveal><section className="featured-library section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">This week&apos;s candidate / 本周候选</p><h2>先看一个可能<br />值得花时间的内容。</h2></div><p>来源已经核对，并附有编辑推荐理由；等荆确认判断后，它才会成为正式“荆选”。</p></div><LibraryCard item={featured} /></section></Reveal>
+      <Reveal><section className="featured-library section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Reading candidate / 阅读候选</p><h2>先看一个可能<br />值得花时间的内容。</h2></div><p>来源已经核对，并附有编辑推荐理由；等荆确认判断后，它才会成为正式“荆选”。</p></div><LibraryCard item={featured} /></section></Reveal>
 
       <Reveal><section className="library-shelves section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Five shelves / 收藏分类</p><h2>按内容类型收好，<br />按判断重新找到。</h2></div><p>“荆选”可以跨越所有类型，代表等待荆确认的特别推荐候选。</p></div><div className="library-shelf-grid">{shelves.map(([en, zh, description, color, filter], index) => <a className={`library-shelf shelf-${color}`} href={`?type=${filter}#library-all`} key={en}><span className="mono">0{index + 1}</span><strong>{en}</strong><h3>{zh}</h3><p>{description}</p><i>浏览 ↓</i></a>)}<a className="library-shelf shelf-picks" href="?type=JING%20PICKS#library-all"><span className="mono">05</span><strong>JING PICKS</strong><h3>荆选</h3><p>跨越文章、视频、PDF 和工具的特别推荐候选，等待荆确认。</p><i>只看候选 ↓</i></a></div></section></Reveal>
 
-      <section className="library-all section-shell" id="library-all"><ArchiveFilterHashFocus hash="#library-all" headingId="library-all-title" /><div className="section-title-row compact"><div><p className="eyebrow mono">Saved with a reason</p><h2 id="library-all-title" tabIndex={-1}>这些内容，<br />为什么被留下来。</h2></div><p>资源标题、摘要和原始链接已经核对；“JING&apos;S TAKE”目前是编辑初稿，等你确认后才会转为正式荆选。</p></div><LibraryBrowser items={libraryItems} /></section>
+      <section className="library-all section-shell" id="library-all"><ArchiveFilterHashFocus hash="#library-all" headingId="library-all-title" /><div className="section-title-row compact"><div><p className="eyebrow mono">Saved with a reason</p><h2 id="library-all-title" tabIndex={-1}>这些内容，<br />为什么被留下来。</h2></div><p>可读取的来源已核对，两条平台视频仍标“来源待核对”；JING&apos;S TAKE 是编辑初稿，待荆确认。</p></div><LibraryBrowser items={libraryItems} /></section>
       <SiteFooter />
     </main>
   );

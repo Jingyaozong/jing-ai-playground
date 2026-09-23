@@ -85,6 +85,23 @@ test('library semantic title groups preserve original titles in both card contex
   }
 });
 
+test('library distinguishes pending video links, historical sources and unconfirmed opinions', () => {
+  const html = readFileSync(join(process.cwd(), 'out/library/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  const routeSection = html.slice(html.indexOf('class="library-routes'), html.indexOf('class="featured-library'));
+  const pending = libraryItems.filter((item) => item.sourceStatus === 'metadata-pending');
+  assert.equal(pending.length, 2);
+  assert.ok(routeSection.length > 0, 'Library reading routes are missing');
+  assert.equal(html.split('来源待核对 · 待荆确认').length - 1, pending.length, 'Each pending source needs its own visible status');
+  for (const item of pending) {
+    assert.ok(html.includes(item.title), `${item.id}: pending card is missing`);
+    assert.ok(!routeSection.includes(item.url.replaceAll('&', '&amp;')), `${item.id}: unverified item appears in a curated route`);
+  }
+  assert.ok(html.includes('编辑推荐理由 · 待荆确认'), 'Draft recommendation is presented as Jing’s confirmed choice');
+  assert.ok(html.includes('Sora 产品自 2026 年 4 月 26 日起不再提供'), 'Historical Sora status is missing');
+  assert.ok(html.includes('https://huggingface.co/docs/diffusers/main/using-diffusers/text-img2vid'), 'Current Diffusers guide is missing');
+});
+
 test('homepage featured story and recent library picks match source data', () => {
   const html = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   const featured = stories.find((story) => story.slug === 'she-forgets-yesterday') ?? stories[0];
