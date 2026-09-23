@@ -31,7 +31,7 @@ export function ToolDirectory() {
   return (
     <section className="tool-directory archive-shell" aria-labelledby="tool-directory-title" id="all-tools">
       <div className="tool-archive-heading">
-        <div><p className="eyebrow mono">ALL TOOLS / 完整工具箱</p><h2 id="tool-directory-title">需要哪一件，<br />就拿哪一件。</h2></div>
+        <div><p className="eyebrow mono">ALL TOOLS / 完整工具箱</p><h2 id="tool-directory-title" tabIndex={-1}>需要哪一件，<br />就拿哪一件。</h2></div>
         <p>每个工具都可以独立使用，所有输入只在当前浏览器本地处理。</p>
       </div>
       <div className="tool-directory-filters" role="group" aria-label="按工作用途筛选工具">

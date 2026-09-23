@@ -215,6 +215,20 @@ test('tool work scenes link each real desk to its method note', () => {
   assert.ok(html.includes('href="#work-scenes"'), 'Missing direct work-scene anchor');
 });
 
+test('every tool shelf anchor has a focusable named heading', () => {
+  const html = readFileSync(join(process.cwd(), 'out/tools/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  for (const [hash, headingId] of [
+    ['work-scenes', 'tool-work-scenes-title'],
+    ['tool-workflow-title', 'tool-workflow-title'],
+    ['all-tools', 'tool-directory-title'],
+  ]) {
+    assert.ok(html.includes(`href="#${hash}"`), `Missing shelf entrance: ${hash}`);
+    assert.ok(html.includes(`id="${hash}"`), `Missing shelf target: ${hash}`);
+    assert.match(html, new RegExp(`<h2\\b[^>]*id="${headingId}"[^>]*tabindex="-1"`), `Shelf heading must accept focus: ${headingId}`);
+  }
+});
+
 test('every listed tool has one visible work-use filter', () => {
   const html = readFileSync(join(process.cwd(), 'out/tools/index.html'), 'utf8');
   assert.ok(html.includes('aria-label="按工作用途筛选工具"'));

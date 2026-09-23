@@ -50,7 +50,7 @@ export function ToolWorkflowMap() {
       <div className="tool-workflow-heading">
         <div>
           <p className="eyebrow mono">START HERE / AI VIDEO ROUTE</p>
-          <h2 id="tool-workflow-title">不知道先用哪个？<br /><em>沿着制作路线走。</em></h2>
+          <h2 id="tool-workflow-title" tabIndex={-1}>不知道先用哪个？<br /><em>沿着制作路线走。</em></h2>
         </div>
         <p>这不是要求每个项目使用全部工具。先找到当前所在阶段，只打开眼下能减少一次返工的那一张表。</p>
       </div>

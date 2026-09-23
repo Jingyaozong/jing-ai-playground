@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { tools } from '../data/content';
-import { WorkSceneHashFocus } from './work-scene-hash-focus';
 
 const scenes = [
   {
@@ -48,7 +47,6 @@ const scenes = [
 export function ToolWorkScenes() {
   return (
     <section className="tool-work-scenes archive-shell" id="work-scenes" aria-labelledby="tool-work-scenes-title">
-      <WorkSceneHashFocus />
       <div className="tool-work-scenes-heading">
         <div>
           <p className="eyebrow mono">WORK DESKS / 工作场景</p>
