@@ -250,6 +250,30 @@ test('method notes and companion tools open the matching Prompt template or cate
   assert.ok(readFileSync(join(process.cwd(), 'out/tools/shot-prompt-builder/index.html'), 'utf8').includes('查看 10 条制作模板'), 'Tool page template count is stale');
 });
 
+test('copied video templates preserve editorial status and evidence boundaries', () => {
+  const videoItems = promptItems.filter((item) => item.category === 'AI 视频制作');
+  assert.equal(videoItems.length, 10);
+  for (const item of videoItems) {
+    assert.equal(item.editorial, true, `${item.id}: missing editorial status`);
+    assert.ok(item.prompt.startsWith('【状态】本站编辑候选，待荆确认'), `${item.id}: copied Prompt omits status`);
+    assert.ok(item.usageNote.startsWith('编辑候选 · 待荆确认'), `${item.id}: visible usage note omits status`);
+  }
+  for (const [id, boundary] of [
+    ['video-character-anchor-brief', '未提供参考图时'],
+    ['video-scene-anchor-brief', '没有参考图或场景图时'],
+    ['video-single-shot-motion', '实际观察栏留空'],
+    ['video-first-last-frame-bridge', '没有两张实际端点图时'],
+    ['video-sound-layer-brief', '没有实际音视频时'],
+    ['video-failure-revision', '不强行凑主因或次因'],
+    ['video-cut-continuity-handoff', '资料不足／待实测'],
+    ['video-candidate-review-table', '未提供真实样本时只生成空表'],
+    ['video-causal-motion-gate', '待测试 Prompt，不代表已经生成或通过'],
+    ['poster-to-story-short-ledger', '没有实际海报图时'],
+  ]) {
+    assert.ok(videoItems.find((item) => item.id === id)?.prompt.includes(boundary), `${id}: missing evidence boundary`);
+  }
+});
+
 test('every exported note has top and bottom links to its own category', () => {
   const filenames = readdirSync(join(process.cwd(), 'content/notes')).filter((name) => name.endsWith('.md'));
   assert.ok(filenames.length > 0);
