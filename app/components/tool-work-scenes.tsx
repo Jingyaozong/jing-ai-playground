@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { tools } from '../data/content';
+import { WorkSceneHashFocus } from './work-scene-hash-focus';
 
 const scenes = [
   {
@@ -47,10 +48,11 @@ const scenes = [
 export function ToolWorkScenes() {
   return (
     <section className="tool-work-scenes archive-shell" id="work-scenes" aria-labelledby="tool-work-scenes-title">
+      <WorkSceneHashFocus />
       <div className="tool-work-scenes-heading">
         <div>
           <p className="eyebrow mono">WORK DESKS / 工作场景</p>
-          <h2 id="tool-work-scenes-title">先从手头的事，<br />找到工具。</h2>
+          <h2 id="tool-work-scenes-title" tabIndex={-1}>先从手头的事，<br />找到工具。</h2>
         </div>
         <p>从规则、画面、Agent 动作到交接文件，先选眼前要核对的事，再打开对应的记录台。</p>
       </div>
@@ -59,13 +61,13 @@ export function ToolWorkScenes() {
           const tool = tools.find((item) => item.id === scene.toolId);
           if (!tool?.href) return null;
           return (
-            <article className={`tool-work-scene tool-work-scene-${scene.accent}`} key={scene.toolId}>
+            <article className={`tool-work-scene tool-work-scene-${scene.accent}`} aria-labelledby={`work-scene-${scene.toolId}`} key={scene.toolId}>
               <div className="tool-work-scene-top"><span className="mono">{scene.label}</span><span aria-hidden="true">{scene.mark}</span></div>
-              <h3>{scene.questionLines.map((line) => <span key={line}>{line}</span>)}</h3>
+              <h3 id={`work-scene-${scene.toolId}`}>{scene.questionLines.map((line) => <span key={line}>{line}</span>)}</h3>
               <p className="tool-work-scene-result"><span className="mono">留下什么</span>{scene.result}</p>
               <div className="tool-work-scene-links">
                 <Link className="tool-work-scene-primary" href={tool.href}>打开{tool.label} <span aria-hidden="true">↗</span></Link>
-                <Link className="tool-work-scene-note" href={scene.noteHref}>读《{scene.noteLabel}》 ↗</Link>
+                <Link className="tool-work-scene-note" href={scene.noteHref}>读《{scene.noteLabel}》 <span aria-hidden="true">↗</span></Link>
               </div>
             </article>
           );
