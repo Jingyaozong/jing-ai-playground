@@ -1,5 +1,6 @@
 /* Keep the illustrated shelves; separate source material from editorial opinion. */
 .library-grid { gap: 32px; }
+.library-all .section-title-row h2:focus-visible { outline: 3px solid var(--blue); outline-offset: 8px; border-radius: 4px; }
 .library-copy { padding: 32px; }
 .library-title-part { display: inline-block; white-space: pre; }
 .library-meta { flex-wrap: wrap; gap: 8px 18px; font-size: 10px; line-height: 1.7; }

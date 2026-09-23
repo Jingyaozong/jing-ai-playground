@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { LibraryBrowser } from '../components/library-browser';
+import { ArchiveFilterHashFocus } from '../components/archive-filter-hash-focus';
 import { LibraryCard } from '../components/library-card';
 import { Reveal } from '../components/reveal';
 import { SiteFooter } from '../components/site-footer';
@@ -82,7 +83,7 @@ export default function LibraryPage() {
 
       <Reveal><section className="library-shelves section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Five shelves / 收藏分类</p><h2>按内容类型收好，<br />按判断重新找到。</h2></div><p>“荆选”可以跨越所有类型，代表等待荆确认的特别推荐候选。</p></div><div className="library-shelf-grid">{shelves.map(([en, zh, description, color, filter], index) => <a className={`library-shelf shelf-${color}`} href={`?type=${filter}#library-all`} key={en}><span className="mono">0{index + 1}</span><strong>{en}</strong><h3>{zh}</h3><p>{description}</p><i>浏览 ↓</i></a>)}<a className="library-shelf shelf-picks" href="?type=JING%20PICKS#library-all"><span className="mono">05</span><strong>JING PICKS</strong><h3>荆选</h3><p>跨越文章、视频、PDF 和工具的特别推荐候选，等待荆确认。</p><i>只看候选 ↓</i></a></div></section></Reveal>
 
-      <section className="library-all section-shell" id="library-all"><div className="section-title-row compact"><div><p className="eyebrow mono">Saved with a reason</p><h2>这些内容，<br />为什么被留下来。</h2></div><p>资源标题、摘要和原始链接已经核对；“JING&apos;S TAKE”目前是编辑初稿，等你确认后才会转为正式荆选。</p></div><LibraryBrowser items={libraryItems} /></section>
+      <section className="library-all section-shell" id="library-all"><ArchiveFilterHashFocus hash="#library-all" headingId="library-all-title" /><div className="section-title-row compact"><div><p className="eyebrow mono">Saved with a reason</p><h2 id="library-all-title" tabIndex={-1}>这些内容，<br />为什么被留下来。</h2></div><p>资源标题、摘要和原始链接已经核对；“JING&apos;S TAKE”目前是编辑初稿，等你确认后才会转为正式荆选。</p></div><LibraryBrowser items={libraryItems} /></section>
       <SiteFooter />
     </main>
   );

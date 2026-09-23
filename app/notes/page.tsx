@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { NoteBrowser } from '../components/note-browser';
+import { ArchiveFilterHashFocus } from '../components/archive-filter-hash-focus';
 import { NoteVisual } from '../components/note-visual';
 import { Reveal } from '../components/reveal';
 import { SiteFooter } from '../components/site-footer';
@@ -115,7 +116,8 @@ export default function NotesPage() {
       </section></Reveal>
 
       <section className="latest-notes section-shell" id="all-notes">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近更新</p><h2>最近记下来的<br />一些东西。</h2></div><p>Demo、编辑稿和正式内容都会明确标注；真实制作过程会随着项目推进继续更新。</p></div>
+        <ArchiveFilterHashFocus hash="#all-notes" headingId="all-notes-title" />
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近更新</p><h2 id="all-notes-title" tabIndex={-1}>最近记下来的<br />一些东西。</h2></div><p>Demo、编辑稿和正式内容都会明确标注；真实制作过程会随着项目推进继续更新。</p></div>
         <NoteBrowser notes={notes} />
       </section>
       <SiteFooter />

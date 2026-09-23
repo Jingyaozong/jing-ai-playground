@@ -119,6 +119,14 @@ test('featured note introduction follows the selected note metadata', () => {
 });
 
 for (const group of groups) {
+  test(`${group.path}: filtered entrance lands on a focusable section heading`, () => {
+    const html = readFileSync(join(process.cwd(), 'out', group.path, 'index.html'), 'utf8')
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    const headingId = group.path === 'notes' ? 'all-notes-title' : 'library-all-title';
+    assert.match(html, new RegExp(`<section\\b[^>]*id="${group.hash.slice(1)}"`), 'Filter target is missing');
+    assert.match(html, new RegExp(`<h2\\b[^>]*id="${headingId}"[^>]*tabindex="-1"`), 'Filtered heading must accept keyboard focus');
+  });
+
   test(`${group.path}: missing, empty and invalid filters fall back to all`, () => {
     for (const search of ['', `?${group.key}=`, `?${group.key}=UNKNOWN`, `?${group.key}=%E0%A4%A`]) {
       assert.equal(readUrlFilter(search, group.key, group.values), '全部');
