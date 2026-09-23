@@ -38,6 +38,7 @@ export type ReleaseRecord = {
   ruleVersion: string;
   checks: Record<ReleaseCheckId, ReleaseEntry>;
   synthetic?: boolean;
+  practiceStage?: 'first-check' | 'retest';
 };
 
 export function blankReleaseRecord(): ReleaseRecord {
@@ -55,6 +56,7 @@ export function paperBoatB02Practice(): ReleaseRecord {
     batch: 'B02 · 首检冻结版（模拟）',
     ruleVersion: 'v0.2（模拟）',
     synthetic: true,
+    practiceStage: 'first-check',
     checks: {
       schema: { status: 'verified', evidence: '模拟设定：字段、枚举和唯一 ID 已按 v0.2 对照；没有真实文件。' },
       relations: { status: 'verified', evidence: '模拟设定：对话、证据片段与标签关联表已检查；没有真实附件。' },
@@ -64,6 +66,28 @@ export function paperBoatB02Practice(): ReleaseRecord {
       retest: { status: 'unchecked', evidence: '模拟时点：返修与独立复检尚未执行，不能预填通过。' },
       versions: { status: 'unchecked', evidence: '模拟时点：已有批次与规则版本；生产和验收时间仍待记录。' },
       manifest: { status: 'unchecked', evidence: '模拟时点：交付文件尚未冻结，不伪造数量校验或 SHA-256。' },
+    },
+  };
+}
+
+// Later snapshot of the same fictional batch. The 18 repairs are a full-batch
+// review count, not another random-sample numerator; no final files exist.
+export function paperBoatB02RetestPractice(): ReleaseRecord {
+  return {
+    dataset: '纸舟 · 合成客服意图标注（虚构演练）',
+    batch: 'B02 · 返修后重新冻结（模拟）',
+    ruleVersion: 'v0.2（模拟）',
+    synthetic: true,
+    practiceStage: 'retest',
+    checks: {
+      schema: { status: 'unchecked', evidence: '模拟时点：返修后的冻结文件未提供，需重新校验字段、枚举和唯一 ID。' },
+      relations: { status: 'unchecked', evidence: '模拟时点：变更后的对话、证据与标签关联仍需对最终文件核对。' },
+      quarantine: { status: 'unchecked', evidence: '模拟时点：隔离与争议样本去向仍需对冻结清单逐项核查。' },
+      reconcile: { status: 'unchecked', evidence: '模拟时点：B02 为 500 条；18 条模拟修正包含首检 4 条，需用 ID 对账，不是 18/500 的抽检不合格率。' },
+      review: { status: 'verified', evidence: '仅在虚构情境中：重新冻结后另抽 100 条，普通不合格 1 条、关键错误 0；达到本案例的抽检门槛，不代表全批无误。' },
+      retest: { status: 'unchecked', evidence: '模拟复检发现的 1 条已修正；尚无修正后的独立复验与关闭记录，不能写成全部闭环。' },
+      versions: { status: 'unchecked', evidence: '模拟时点：规则为 v0.2；生产、复验与验收时间仍待记录。' },
+      manifest: { status: 'unchecked', evidence: '模拟时点：最终文件未提供，清单、样本数量与校验值不能预填。' },
     },
   };
 }
@@ -95,6 +119,12 @@ export function releaseReport(record: ReleaseRecord) {
     record.synthetic
       ? '说明：纸舟 B02 是完全虚构的练习。所有“已核实”只是情境设定，没有真实文件、抽检或客户验收；不得作为实际交付记录。'
       : '说明：这是人工填写的自检记录；工具不读取数据文件、不验证证据真伪、不代表客户验收或批准发布。', '',
+    ...(record.practiceStage === 'retest' ? [
+      '首检（旧冻结版）：随机抽检 100 条，普通不合格 4 条、关键错误 0；当时暂缓。',
+      '范围复核与返修：检查 B02 全部 500 条，模拟修正 18 条（包含首检 4 条）；这不是随机抽检错误率。',
+      '复检（新冻结版）：另抽 100 条，普通不合格 1 条、关键错误 0；该 1 条随后修正，关闭复验尚无记录。',
+      '三段的样本范围与时点不同，不合并分母，也不倒填首检结论。', '',
+    ] : []),
     `数据集：${oneLine(record.dataset) || '未填'}`,
     `批次：${oneLine(record.batch) || '未填'}`,
     `规则版本：${oneLine(record.ruleVersion) || '未填'}`, '',

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assessRelease, blankReleaseRecord, isBlankReleaseRecord, paperBoatB02Practice, releaseGates, releaseReport } from '../lib/dataset-release.ts';
+import { assessRelease, blankReleaseRecord, isBlankReleaseRecord, paperBoatB02Practice, paperBoatB02RetestPractice, releaseGates, releaseReport } from '../lib/dataset-release.ts';
 
 test('empty desk never claims readiness', () => {
   const record = blankReleaseRecord();
@@ -48,4 +48,25 @@ test('paper boat B02 practice remains a synthetic hold, not a completed delivery
   assert.match(report, /普通不合格 4，约定最多 2/);
   assert.match(report, /不得作为实际交付记录/);
   assert.doesNotMatch(report, /状态：记录齐备/);
+});
+
+test('B02 retest keeps first check, full-batch repairs and new sample separate', () => {
+  const first = paperBoatB02Practice();
+  const retest = paperBoatB02RetestPractice();
+  const result = assessRelease(retest);
+  const report = releaseReport(retest);
+  assert.equal(first.practiceStage, 'first-check');
+  assert.equal(retest.practiceStage, 'retest');
+  assert.equal(first.checks.review.status, 'needs-work');
+  assert.equal(retest.checks.review.status, 'verified');
+  assert.equal(retest.checks.retest.status, 'unchecked');
+  assert.equal(result.readyForHumanApproval, false);
+  assert.ok(result.pending.some((check) => check.id === 'manifest'));
+  assert.match(report, /首检（旧冻结版）：随机抽检 100 条，普通不合格 4 条/);
+  assert.match(report, /检查 B02 全部 500 条，模拟修正 18 条（包含首检 4 条）/);
+  assert.match(report, /复检（新冻结版）：另抽 100 条，普通不合格 1 条/);
+  assert.match(report, /不合并分母，也不倒填首检结论/);
+  assert.match(report, /不得作为实际交付记录/);
+  assert.doesNotMatch(report, /状态：记录齐备/);
+  assert.doesNotMatch(releaseReport(first), /复检（新冻结版）/);
 });

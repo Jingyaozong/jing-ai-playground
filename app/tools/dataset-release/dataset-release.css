@@ -18,6 +18,22 @@
 .release-practice-copy button { min-height: 44px; padding: 10px 16px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--blue); color: var(--white); font-size: 12px; font-weight: 750; cursor: pointer; box-shadow: 3px 3px 0 var(--ink); }
 .release-practice-copy button:disabled { opacity: .52; cursor: not-allowed; }
 .release-practice-copy > span { display: block; margin-top: 11px; color: var(--muted); font-size: 11px; line-height: 1.65; }
+.release-comparison { display: grid; gap: 24px; scroll-margin-top: 112px; }
+.release-comparison-head { display: grid; grid-template-columns: minmax(0,1fr) minmax(230px,.68fr); gap: 44px; align-items: end; }
+.release-comparison-head h2 { margin: 0; font-family: var(--display); font-size: clamp(2.3rem,3.8vw,4rem); line-height: 1.16; letter-spacing: var(--zh-title-tracking); }
+.release-comparison-head > p { max-width: 390px; margin: 0 0 5px; color: var(--muted); font-size: 13px; line-height: 1.8; }
+.release-comparison-ledger { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+.release-comparison-ledger article { display: flex; flex-direction: column; min-width: 0; min-height: 225px; padding: 23px; border: 2px solid var(--ink); border-radius: 20px; background: var(--coral); box-shadow: 4px 5px 0 var(--ink); }
+.release-comparison-ledger article:nth-child(2) { background: var(--sky); }
+.release-comparison-ledger article:nth-child(3) { background: var(--mint); }
+.release-comparison-ledger article > span { font-size: 10px; font-weight: 700; }
+.release-comparison-ledger strong { margin: 13px 0 7px; font-family: var(--display); font-size: clamp(2.7rem,4vw,4rem); line-height: 1; }
+.release-comparison-ledger strong small { font-size: .46em; }
+.release-comparison-ledger article p { margin: auto 0 0; font-size: 12px; line-height: 1.7; }
+.release-comparison-action { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 19px; }
+.release-comparison-action button { min-height: 44px; padding: 10px 17px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--blue); color: var(--white); font-size: 12px; font-weight: 750; box-shadow: 3px 3px 0 var(--ink); cursor: pointer; }
+.release-comparison-action button:disabled { opacity: .52; cursor: not-allowed; }
+.release-comparison-action span { color: var(--muted); font-size: 11px; line-height: 1.65; }
 .release-synthetic-banner { margin: -35px 0 -39px; padding: 14px 18px; border-left: 6px solid var(--coral); border-radius: 9px; background: var(--yellow); font-size: 12px; line-height: 1.7; }
 .release-identity { display: grid; grid-template-columns: minmax(185px,.55fr) minmax(0,1.45fr); gap: 42px; padding: 32px; border: 2px solid var(--ink); border-radius: 26px; background: var(--sky); box-shadow: 7px 7px 0 var(--ink); }
 .release-identity h2 { margin: 12px 0 10px; font-family: var(--display); font-size: clamp(1.8rem,2.6vw,2.75rem); line-height: 1.19; }
@@ -66,7 +82,7 @@
 .release-method h2 { margin: 13px 0 0; font-family: var(--display); font-size: clamp(2.3rem,4vw,4rem); line-height: 1.15; letter-spacing: var(--zh-title-tracking); }
 .release-method p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.85; }
 .release-method a { grid-column: 2; justify-self: start; color: var(--blue); font-size: 13px; font-weight: 750; text-decoration: underline; text-underline-offset: 5px; }
-@media (max-width: 900px) { .release-identity { grid-template-columns: 1fr; gap: 25px; } .release-intro { gap: 28px; } .release-gates { gap: 20px; } .release-check-inputs { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .release-identity { grid-template-columns: 1fr; gap: 25px; } .release-intro { gap: 28px; } .release-gates { gap: 20px; } .release-check-inputs { grid-template-columns: 1fr; } .release-comparison-head { gap: 25px; } }
 @media (max-width: 680px) {
   .release-hero .tool-detail-title h1 { font-size: clamp(2.4rem,10.5vw,3.1rem); line-height: 1.14; }
   .release-hero .tool-detail-title h1 em { padding-inline: 0; }
@@ -78,6 +94,10 @@
   .release-practice-stamp { width: 124px; min-height: 124px; }
   .release-practice-stamp strong { font-size: 29px; }
   .release-practice-copy h2 { font-size: clamp(2rem,8.5vw,2.8rem); }
+  .release-comparison-head, .release-comparison-ledger { grid-template-columns: 1fr; }
+  .release-comparison-head h2 { font-size: clamp(2.2rem,9vw,2.8rem); }
+  .release-comparison-ledger article { min-height: 160px; }
+  .release-comparison-ledger strong { font-size: 3.3rem; }
   .release-synthetic-banner { margin: -19px 0 -25px; }
   .release-identity { padding: 23px; }
   .release-identity-fields { grid-template-columns: 1fr; gap: 15px; }
