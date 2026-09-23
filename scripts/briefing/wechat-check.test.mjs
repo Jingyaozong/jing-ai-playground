@@ -8,17 +8,20 @@ import { readWechatCheck, saveWechatCheck, validateWechatCheck } from './wechat-
 const now = new Date('2026-09-23T03:00:00.000Z');
 const url = 'https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA==&mid=123&idx=1&sn=abc';
 const article = { title: '虚构测试文章', publishedAt: '2026-09-22T02:02:00.000Z', url, body: '测试正文'.repeat(150) };
+const crossCheck = { status: 'matched', checkedAt: now.toISOString(), index: 'https://aihot.news/items/example' };
 
 test('source-only preview record contains metadata, not article body or model claims', async () => {
   const directory = await mkdtemp(resolve(tmpdir(), 'jing-wechat-check-'));
   try {
-    const saved = await saveWechatCheck(directory, article, now);
+    const saved = await saveWechatCheck(directory, article, now, crossCheck);
     const raw = await readFile(resolve(directory, 'wechat-latest-check.json'), 'utf8');
     assert.equal(saved.status, 'source-only');
+    assert.equal(saved.crossCheck.status, 'matched');
     assert.ok(raw.includes('虚构测试文章'));
     assert.ok(!raw.includes('测试正文'));
     assert.ok(!raw.includes('DEEPSEEK_API_KEY'));
     assert.equal((await readWechatCheck(directory, now)).article.bodyChars, article.body.length);
+    assert.equal((await readWechatCheck(directory, now)).crossCheck.index, crossCheck.index);
     assert.equal((await readWechatCheck(directory, new Date(now.getTime() + 25 * 3600000))).stale, true);
     assert.equal(await readWechatCheck(directory, new Date(now.getTime() + 8 * 86400000)), null);
     await saveWechatCheck(directory, null, now);
@@ -35,4 +38,6 @@ test('rejects wrong accounts, malformed article metadata and expired checks', ()
   assert.throws(() => validateWechatCheck({ ...base, article: { ...base.article, bodyChars: 0 } }, now));
   assert.throws(() => validateWechatCheck(base, new Date(now.getTime() + 8 * 86400000)));
   assert.throws(() => validateWechatCheck({ ...base, article: { ...base.article, publishedAt: '2026-09-01T00:00:00.000Z' } }, now));
+  assert.throws(() => validateWechatCheck({ ...base, crossCheck: { ...crossCheck, index: 'https://example.com/items/evil' } }, now));
+  assert.throws(() => validateWechatCheck({ ...base, crossCheck: { ...crossCheck, status: 'not-found' } }, now));
 });

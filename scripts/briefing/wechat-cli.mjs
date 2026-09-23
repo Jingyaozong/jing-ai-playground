@@ -4,21 +4,28 @@ import { draftedIds } from './draft-records.mjs';
 import { reserveDailyRequest, shanghaiDay } from './run-guard.mjs';
 import { fetchWechatArticles, generateBreakdown, renderWechatDraft } from './wechat-feed.mjs';
 import { saveWechatCheck } from './wechat-check.mjs';
+import { discoverWatch } from './aihot-watch.mjs';
+import { crossCheckWatch } from './wechat-crosscheck.mjs';
 
 const mode = process.argv[2];
 const directory = resolve(import.meta.dirname, '../../work/briefing');
 
 async function main() {
-  if (!['check', 'draft'].includes(mode)) throw new Error('使用 briefing:wechat:check 或 briefing:wechat:draft');
+  if (!['check', 'crosscheck', 'draft'].includes(mode)) throw new Error('使用 briefing:wechat:check、briefing:wechat:crosscheck 或 briefing:wechat:draft');
   if (mode === 'draft' && !process.env.DEEPSEEK_API_KEY?.trim()) throw new Error('缺少 DEEPSEEK_API_KEY；未请求来源或付费 API');
   await mkdir(directory, { recursive: true });
   const seen = new Set(await draftedIds(directory));
   const articles = await fetchWechatArticles();
   const article = articles.find((entry) => !seen.has(entry.id));
-  if (mode === 'check') {
-    await saveWechatCheck(directory, article ?? null);
+  if (mode === 'check' || mode === 'crosscheck') {
+    let crossCheck = null;
+    if (mode === 'crosscheck' && article) {
+      try { crossCheck = crossCheckWatch(article, await discoverWatch()); }
+      catch { crossCheck = { status: 'unavailable', checkedAt: new Date().toISOString(), index: null }; }
+    }
+    await saveWechatCheck(directory, article ?? null, new Date(), crossCheck);
     if (!article) { console.log('近 48 小时没有新的、正文长度合格的卡兹克文章；未调用 DeepSeek。不能据此断言公众号没有更新。本地预检状态已更新。'); return; }
-    console.log(`发现待核对文章：${article.title}\nRSS 时间：${article.publishedAt}\n原文链接：${article.url}\n第三方正文长度：${article.body.length} 字符；仅在内存中检查，未保存正文。\n未调用 DeepSeek，未发布。`);
+    console.log(`发现待核对文章：${article.title}\nRSS 时间：${article.publishedAt}\n原文链接：${article.url}\n第三方正文长度：${article.body.length} 字符；仅在内存中检查，未保存正文。${crossCheck ? `\nAIHOT 同链接核对：${crossCheck.status}` : ''}\n未调用 DeepSeek，未发布。`);
     return;
   }
   if (!article) { console.log('近 48 小时没有新的、正文长度合格的卡兹克文章；未调用 DeepSeek。不能据此断言公众号没有更新。'); return; }

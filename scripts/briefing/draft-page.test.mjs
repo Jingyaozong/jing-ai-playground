@@ -30,4 +30,9 @@ test('source check card shows metadata-only status and escapes untrusted title',
   assert.ok(page.includes('2026年9月23日'));
   assert.ok(!page.includes('2026-09-23T03:00:00.000Z'));
   assert.ok(!page.includes('600 字'));
+  const matched = renderDraftPage([], null, { ...check, crossCheck: { status: 'matched', index: 'https://aihot.news/items/example' } });
+  assert.ok(matched.includes('两处链接吻合，不代表正文已核对'));
+  assert.ok(matched.includes('href="https://aihot.news/items/example"'));
+  const missing = renderDraftPage([], null, { ...check, crossCheck: { status: 'not-found', index: null } });
+  assert.ok(!missing.includes('href="https://aihot.news/items/example"'));
 });
