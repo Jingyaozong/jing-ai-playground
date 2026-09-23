@@ -34,7 +34,7 @@ connections:
   - label: "PROMPT"
     title: "海报反推故事 · 短证据账本"
     description: "复制经过九份文本 Pilot 压缩后的制作模板。"
-    href: "/prompts/#production-templates"
+    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-poster-to-story-short-ledger"
     tone: "yellow"
 ---
 
@@ -236,7 +236,7 @@ E／I／C 适合从单张视觉输入发展故事，但不是所有创作都需�
 
 - [EXP.008：让 AI 先画一张不会发生的海报](/experiments/can-a-fictional-poster-grow-a-story/)
 - [EXP.009：短证据账本，换海报以后还能成立吗？](/experiments/does-the-short-evidence-ledger-travel/)
-- [海报反推故事 · 短证据账本 Prompt](/prompts/#production-templates)
+- [海报反推故事 · 短证据账本 Prompt](/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-poster-to-story-short-ledger)
 - [海报反推故事组装器](/tools/poster-story-builder/)
 - [P02 / B 组原始文本：证据优先](/records/poster-to-story/p02-b-evidence-first.md)
 - [P02 / C 组原始文本：三栏反推](/records/poster-to-story/p02-c-three-column.md)

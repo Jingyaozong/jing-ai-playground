@@ -29,7 +29,7 @@ connections:
   - label: "PROMPT"
     title: "因果动作闸门"
     description: "复制可迁移到其他双阶段镜头的编辑候选模板。"
-    href: "/prompts/#production-templates"
+    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-causal-motion-gate"
     tone: "mint"
   - label: "STORY"
     title: "《退水以前》"
@@ -220,7 +220,7 @@ EXP.010 计划使用三组可见间隔、每组三个候选，共九格。现在
 完成九格以后再写阶段结论
 ```
 
-[水线动作卡生成器](/tools/waterline-motion-card/)负责前三步，而且完全在浏览器本地运行；[因果动作闸门 Prompt](/prompts/#production-templates)把结构迁移到其他双阶段镜头；EXP.010 才负责保存真实候选和观察。
+[水线动作卡生成器](/tools/waterline-motion-card/)负责前三步，而且完全在浏览器本地运行；[因果动作闸门 Prompt](/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-causal-motion-gate)把结构迁移到其他双阶段镜头；EXP.010 才负责保存真实候选和观察。
 
 > [!JING'S NOTE]
 > 待荆确认：对因果动作最重要的可能不是让两个状态都出现，而是让观众有足够时间看见“第一件事已经完成，所以第二件事现在才发生”。

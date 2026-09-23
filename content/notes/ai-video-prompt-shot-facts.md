@@ -24,7 +24,7 @@ connections:
   - label: "PROMPTS"
     title: "AI 视频制作 Prompt 模板"
     description: "查看镜头诊断、首尾帧、动作减法和跨镜连续性的可复制模板。"
-    href: "/prompts/#production-templates"
+    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-collection"
     tone: "sky"
   - label: "TOOL"
     title: "镜头风险预检器"

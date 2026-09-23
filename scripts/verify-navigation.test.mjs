@@ -198,6 +198,27 @@ test('story and experiment Prompt entrances reach their exact reusable templates
   }
 });
 
+test('method notes and companion tools open the matching Prompt template or category', () => {
+  const catalog = readFileSync(join(process.cwd(), 'out/prompts/all/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  for (const [source, promptId] of [
+    ['notes/poster-to-story-evidence-ledger', 'poster-to-story-short-ledger'],
+    ['notes/causal-motion-five-point-ledger', 'video-causal-motion-gate'],
+    ['tools/poster-story-builder', 'poster-to-story-short-ledger'],
+  ]) {
+    assert.ok(promptItems.some((item) => item.id === promptId), `Unknown Prompt template: ${promptId}`);
+    const links = anchors(`${source}/index.html`).map((href) => new URL(href, `http://localhost:3000/${source}/`));
+    assert.ok(links.some((url) => url.pathname === '/prompts/all/' && url.hash === `#prompt-${promptId}` && url.searchParams.get('category') === 'AI 视频制作'), `Missing exact template entrance from ${source}`);
+    assert.match(catalog, new RegExp(`<article\\b[^>]*id="prompt-${promptId}"`), `Missing template anchor: ${promptId}`);
+  }
+  for (const source of ['notes/ai-video-prompt-shot-facts', 'tools/shot-prompt-builder']) {
+    const links = anchors(`${source}/index.html`).map((href) => new URL(href, `http://localhost:3000/${source}/`));
+    assert.ok(links.some((url) => url.pathname === '/prompts/all/' && url.hash === '#prompt-collection' && url.searchParams.get('category') === 'AI 视频制作'), `Missing video category entrance from ${source}`);
+  }
+  assert.equal(promptItems.filter((item) => item.category === 'AI 视频制作').length, 10, 'Production template count changed');
+  assert.ok(readFileSync(join(process.cwd(), 'out/tools/shot-prompt-builder/index.html'), 'utf8').includes('查看 10 条制作模板'), 'Tool page template count is stale');
+});
+
 test('every exported note has top and bottom links to its own category', () => {
   const filenames = readdirSync(join(process.cwd(), 'content/notes')).filter((name) => name.endsWith('.md'));
   assert.ok(filenames.length > 0);
