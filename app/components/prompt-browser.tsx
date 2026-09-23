@@ -1,9 +1,26 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import type { PromptItem } from '../data/prompts';
 import { promptFilters } from '../data/prompts';
+import { readUrlFilter, writeUrlFilter } from '../../lib/filter-url';
+
+function subscribeToCategory(onChange: () => void) {
+  window.addEventListener('popstate', onChange);
+  return () => window.removeEventListener('popstate', onChange);
+}
+
+function readCategory() {
+  return readUrlFilter(window.location.search, 'category', promptFilters);
+}
+
+function selectCategory(category: string) {
+  const url = writeUrlFilter(window.location.href, 'category', category);
+  if (url.href === window.location.href) return;
+  window.history.pushState(null, '', url);
+  window.dispatchEvent(new PopStateEvent('popstate'));
+}
 
 function PromptCard({ item, index }: { item: PromptItem; index: number }) {
   const [copied, setCopied] = useState(false);
@@ -50,8 +67,10 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
 }
 
 export function PromptBrowser({ items, showToolbar = true }: { items: PromptItem[]; showToolbar?: boolean }) {
-  const [active, setActive] = useState('全部');
+  const urlCategory = useSyncExternalStore(subscribeToCategory, readCategory, () => '全部');
+  const active = showToolbar ? urlCategory : '全部';
   const [query, setQuery] = useState('');
+  const searchRef = useRef<HTMLInputElement>(null);
   const visible = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return items.filter((item) => {
@@ -66,14 +85,15 @@ export function PromptBrowser({ items, showToolbar = true }: { items: PromptItem
       {showToolbar && <div className="browser-toolbar">
         <label className="search-field">
           <span className="mono">搜索 / Search</span>
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="输入用途、模型或关键词" />
+          <input ref={searchRef} type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="输入用途、模型或关键词" aria-controls="prompt-browser-results" />
         </label>
         <div className="filter-row" aria-label="Prompt 分类">
-          {promptFilters.map((filter) => <button type="button" className={active === filter ? 'is-active' : ''} onClick={() => setActive(filter)} key={filter}>{filter}</button>)}
+          {promptFilters.map((filter) => <button type="button" aria-pressed={active === filter} className={active === filter ? 'is-active' : ''} onClick={() => selectCategory(filter)} key={filter}>{filter}</button>)}
         </div>
       </div>}
-      <div className="prompt-grid">{visible.map((item, index) => <PromptCard item={item} index={index} key={item.id} />)}</div>
-      {visible.length === 0 && <div className="empty-result"><b>暂时没有匹配的 Prompt。</b><span>换一个关键词，或者查看“全部”。</span></div>}
+      {showToolbar && <p className="prompt-result-count" role="status" aria-live="polite" aria-atomic="true">{active} · 显示 {visible.length} 条 Prompt{query.trim() && ` · 关键词：${query.trim()}`}</p>}
+      <div className="prompt-grid" id={showToolbar ? 'prompt-browser-results' : undefined}>{visible.map((item, index) => <PromptCard item={item} index={index} key={item.id} />)}</div>
+      {visible.length === 0 && <div className="empty-result"><b>暂时没有匹配的 Prompt。</b><span>换一个关键词，或清除搜索与分类筛选。</span><button type="button" onClick={() => { setQuery(''); selectCategory('全部'); searchRef.current?.focus({ preventScroll: true }); }}>清除筛选，查看全部</button></div>}
     </section>
   );
 }

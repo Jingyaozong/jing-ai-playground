@@ -74,7 +74,7 @@ export default function PromptsPage() {
         <div className="section-title-row compact"><div><p className="eyebrow mono">Six drawers / 六个抽屉</p><h2>先选场景，<br />再找 Prompt。</h2></div><p>完整目录里可以继续搜索和筛选，不需要在这一页一次看完。</p></div>
         <div className="prompt-category-map">{categoryCopy.map((category) => {
           const count = promptItems.filter((item) => item.category === category.id).length;
-          return <Link className={`prompt-category-tile prompt-category-${category.color}`} href="/prompts/all/" key={category.id}><span className="mono">{count} 条 Prompt</span><strong>{category.id}</strong><h3>{category.label}</h3><p>{category.description}</p><i>打开完整目录 ↗</i></Link>;
+          return <Link className={`prompt-category-tile prompt-category-${category.color}`} href={`/prompts/all/?category=${encodeURIComponent(category.id)}#prompt-collection`} key={category.id}><span className="mono">{count} 条 Prompt</span><strong>{category.id}</strong><h3>{category.label}</h3><p>{category.description}</p><i>查看此类 Prompt ↗</i></Link>;
         })}</div>
       </section></Reveal>
 

@@ -7,6 +7,7 @@ import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
 import { getAllNotes } from '../lib/notes.ts';
 import { stories, experiments, tools, toolCategories } from '../app/data/content.ts';
 import { libraryItems } from '../app/data/library.ts';
+import { promptFilters, promptItems } from '../app/data/prompts.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
 function anchors(file) {
@@ -162,6 +163,22 @@ test('encoded spaces and plus signs both restore the selected category', () => {
   for (const value of ['AI%20EVAL', 'AI+EVAL']) {
     assert.equal(readUrlFilter(`?category=${value}`, 'category', ['AI EVAL']), 'AI EVAL');
   }
+});
+
+test('Prompt category drawers lead to the matching focusable catalog section', () => {
+  const links = anchors('prompts/index.html').map((href) => new URL(href, 'http://localhost:3000/prompts/'));
+  const html = readFileSync(join(process.cwd(), 'out/prompts/all/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  assert.match(html, /<section\b[^>]*id="prompt-collection"/, 'Prompt catalog target is missing');
+  assert.match(html, /<h2\b[^>]*id="prompt-collection-title"[^>]*tabindex="-1"/, 'Prompt catalog heading must accept keyboard focus');
+  for (const category of promptFilters.filter((filter) => filter !== '全部')) {
+    assert.ok(promptItems.some((item) => item.category === category), `Empty Prompt category: ${category}`);
+    assert.ok(links.some((url) => url.pathname === '/prompts/all/' && url.searchParams.get('category') === category && url.hash === '#prompt-collection'), `Missing category entrance: ${category}`);
+    const selected = writeUrlFilter('http://localhost:3000/prompts/all/?keep=yes#prompt-collection', 'category', category);
+    assert.equal(readUrlFilter(selected.search, 'category', promptFilters), category);
+    assert.equal(writeUrlFilter(selected.href, 'category', '全部').href, 'http://localhost:3000/prompts/all/?keep=yes#prompt-collection');
+  }
+  assert.equal(readUrlFilter('?category=UNKNOWN', 'category', promptFilters), '全部');
 });
 
 test('every exported note has top and bottom links to its own category', () => {
