@@ -5,7 +5,7 @@ import test from 'node:test';
 import matter from 'gray-matter';
 import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
 import { getAllNotes } from '../lib/notes.ts';
-import { stories, experiments } from '../app/data/content.ts';
+import { stories, experiments, tools, toolCategories } from '../app/data/content.ts';
 import { libraryItems } from '../app/data/library.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
@@ -197,4 +197,15 @@ test('tool work scenes link each real desk to its method note', () => {
     assert.ok(section.includes(`/notes/${note}/`), `Missing method note: ${note}`);
   }
   assert.ok(html.includes('href="#work-scenes"'), 'Missing direct work-scene anchor');
+});
+
+test('every listed tool has one visible work-use filter', () => {
+  const html = readFileSync(join(process.cwd(), 'out/tools/index.html'), 'utf8');
+  assert.ok(html.includes('aria-label="按工作用途筛选工具"'));
+  assert.equal(new Set(tools.map((tool) => tool.id)).size, tools.length);
+  assert.equal(toolCategories.reduce((count, category) => count + tools.filter((tool) => tool.category === category).length, 0), tools.length);
+  for (const category of toolCategories) {
+    assert.ok(html.includes(category), `Missing filter: ${category}`);
+    assert.ok(tools.some((tool) => tool.category === category), `Empty filter: ${category}`);
+  }
 });

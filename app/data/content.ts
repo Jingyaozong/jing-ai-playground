@@ -35,8 +35,12 @@ export type Tool = {
   label: string;
   status: string;
   symbol: string;
+  category: ToolCategory;
   href?: string;
 };
+
+export const toolCategories = ['创作与分镜', '镜头与生成', '评测与复核', '交付与发布'] as const;
+export type ToolCategory = (typeof toolCategories)[number];
 
 export const stories: Story[] = [
   {
@@ -265,17 +269,17 @@ export const tools: Tool[] = [
   {
     id: 'tool-023', title: 'Agent Trace Review', label: 'Agent 轨迹复核台',
     description: '本地解析办公 Agent 动作日志，查找工具参数与返回，定位首个偏离并导出验收报告和可恢复的复核包。',
-    status: 'Ready', symbol: '↳', href: '/tools/agent-trace-review/',
+    status: 'Ready', symbol: '↳', category: '评测与复核', href: '/tools/agent-trace-review/',
   },
   {
     id: 'tool-022', title: 'Multimodal Evaluation Desk', label: '多模态评测记录台',
     description: '按八个维度记录结果、严重度、时间段与可复核证据，管理人工复核状态，并导出可重新导入的 CSV。',
-    status: 'Ready', symbol: '8D', href: '/tools/multimodal-evaluation/',
+    status: 'Ready', symbol: '8D', category: '评测与复核', href: '/tools/multimodal-evaluation/',
   },
   {
     id: 'tool-021', title: 'Rule Review', label: '规则答疑验收台',
     description: '导入演练题、记录实际回答与人工结论，选择错误标签，导出可重新导入的复核 CSV。',
-    status: 'Ready', symbol: '✓', href: '/tools/rule-review/',
+    status: 'Ready', symbol: '✓', category: '评测与复核', href: '/tools/rule-review/',
   },
   {
     id: 'tool-003',
@@ -284,6 +288,7 @@ export const tools: Tool[] = [
     label: '评测排期计算器',
     status: 'Ready',
     symbol: '≋',
+    category: '评测与复核',
     href: '/tools/review-pace/',
   },
   {
@@ -293,6 +298,7 @@ export const tools: Tool[] = [
     label: '故事种子生成器',
     status: 'Ready',
     symbol: '↯',
+    category: '创作与分镜',
     href: '/tools/story-seed/',
   },
   {
@@ -302,6 +308,7 @@ export const tools: Tool[] = [
     label: '分镜整理器',
     status: 'Ready',
     symbol: '⌁',
+    category: '创作与分镜',
     href: '/tools/shot-list-cleaner/',
   },
   {
@@ -311,6 +318,7 @@ export const tools: Tool[] = [
     label: '角色锚点卡生成器',
     status: 'Ready',
     symbol: '◎',
+    category: '镜头与生成',
     href: '/tools/character-anchor/',
   },
   {
@@ -320,6 +328,7 @@ export const tools: Tool[] = [
     label: 'AI 视频镜头风险预检器',
     status: 'Ready',
     symbol: '△',
+    category: '镜头与生成',
     href: '/tools/shot-risk-checker/',
   },
   {
@@ -329,6 +338,7 @@ export const tools: Tool[] = [
     label: '声音分层卡生成器',
     status: 'Ready',
     symbol: '≡',
+    category: '镜头与生成',
     href: '/tools/sound-layer-card/',
   },
   {
@@ -338,6 +348,7 @@ export const tools: Tool[] = [
     label: '相邻镜头连续性检查器',
     status: 'Ready',
     symbol: '→',
+    category: '镜头与生成',
     href: '/tools/continuity-checker/',
   },
   {
@@ -347,6 +358,7 @@ export const tools: Tool[] = [
     label: '镜头节奏规划器',
     status: 'Ready',
     symbol: '▥',
+    category: '创作与分镜',
     href: '/tools/shot-rhythm-planner/',
   },
   {
@@ -356,6 +368,7 @@ export const tools: Tool[] = [
     label: '场景锚点卡生成器',
     status: 'Ready',
     symbol: '⌂',
+    category: '镜头与生成',
     href: '/tools/scene-anchor/',
   },
   {
@@ -365,6 +378,7 @@ export const tools: Tool[] = [
     label: '镜头版本记录器',
     status: 'Ready',
     symbol: '▦',
+    category: '镜头与生成',
     href: '/tools/shot-version-recorder/',
   },
   {
@@ -374,6 +388,7 @@ export const tools: Tool[] = [
     label: '生成预算计算器',
     status: 'Ready',
     symbol: '◫',
+    category: '镜头与生成',
     href: '/tools/generation-budget/',
   },
   {
@@ -383,6 +398,7 @@ export const tools: Tool[] = [
     label: '交付清单生成器',
     status: 'Ready',
     symbol: '▣',
+    category: '交付与发布',
     href: '/tools/delivery-pack/',
   },
   {
@@ -392,6 +408,7 @@ export const tools: Tool[] = [
     label: '多平台发布规格规划器',
     status: 'Ready',
     symbol: '▤',
+    category: '交付与发布',
     href: '/tools/release-matrix/',
   },
   {
@@ -401,6 +418,7 @@ export const tools: Tool[] = [
     label: '局部特效约束卡生成器',
     status: 'Ready',
     symbol: '◉',
+    category: '镜头与生成',
     href: '/tools/local-effect-card/',
   },
   {
@@ -410,6 +428,7 @@ export const tools: Tool[] = [
     label: '光线连续性账本',
     status: 'Ready',
     symbol: '☀',
+    category: '镜头与生成',
     href: '/tools/lighting-ledger/',
   },
   {
@@ -419,6 +438,7 @@ export const tools: Tool[] = [
     label: '影子动作拆分卡',
     status: 'Ready',
     symbol: '◐',
+    category: '镜头与生成',
     href: '/tools/shadow-motion-card/',
   },
   {
@@ -428,6 +448,7 @@ export const tools: Tool[] = [
     label: '接触动作拆分卡',
     status: 'Ready',
     symbol: '⊕',
+    category: '镜头与生成',
     href: '/tools/contact-action-card/',
   },
   {
@@ -437,6 +458,7 @@ export const tools: Tool[] = [
     label: 'AI 视频 Prompt 组装器',
     status: 'Ready',
     symbol: '{ }',
+    category: '创作与分镜',
     href: '/tools/shot-prompt-builder/',
   },
   {
@@ -446,6 +468,7 @@ export const tools: Tool[] = [
     label: '海报反推故事组装器',
     status: 'Ready',
     symbol: 'E→C',
+    category: '创作与分镜',
     href: '/tools/poster-story-builder/',
   },
   {
@@ -455,6 +478,7 @@ export const tools: Tool[] = [
     label: '水线动作卡生成器',
     status: 'Ready',
     symbol: '▱→',
+    category: '镜头与生成',
     href: '/tools/waterline-motion-card/',
   },
 ];
