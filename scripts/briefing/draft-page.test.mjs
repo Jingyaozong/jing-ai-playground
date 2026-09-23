@@ -16,4 +16,7 @@ test('draft HTML and foreign links remain inert while known sources are clickabl
   assert.ok(!result.includes('<img'));
   assert.ok(!result.includes('href="https://example.com'));
   assert.ok(result.includes('href="https://www.qbitai.com/2026/09/test.html"'));
+  const wechat=renderDraftText('[原文](<https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA%3D%3D&mid=123&sn=abc>)\n[外号](<https://mp.weixin.qq.com/s?__biz=OTHER&mid=123&sn=abc>)');
+  assert.ok(wechat.includes('href="https://mp.weixin.qq.com/s?'));
+  assert.ok(!wechat.includes('href="https://mp.weixin.qq.com/s?__biz=OTHER'));
 });

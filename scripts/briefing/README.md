@@ -10,6 +10,8 @@
 3. 在本地 `.env.local` 设置 `DEEPSEEK_API_KEY`（不要提交、截图或粘贴到聊天）。
 4. `npm run briefing:draft`：重新读取来源，调用一次 DeepSeek Flash，输出最多五条待审内容。终端打印稿件路径，可用 Markdown 预览打开。
 5. `npm run briefing:watch`：通过卡兹克本人运营的 [AIHOT 只读 API](https://aihot.news/agent) 扫描近 48 小时的公开池，筛选账号名与已核对的公众号 `__biz`，在私有 `work/briefing/` 生成原文链接核对清单。它不需要 DeepSeek 密钥，不调用模型，也不把 AIHOT 摘要转成本站稿件。上游未收录、超过扫描窗口或原文受限时不会假装覆盖；扫描不完整会明确提示。
+6. `npm run briefing:wechat:check`：从 BestBlogs / Wechat2RSS 的卡兹克订阅源读取近 48 小时文章，检查公众号账号、原文链接、时间与正文长度。第三方正文仅在内存中处理；此命令不调用模型、不保存正文，也不证明副本与微信原文一致。
+7. `npm run briefing:wechat:draft`：在上述检查后，使用已配置的 DeepSeek Flash 对一篇新文章的第三方正文副本做私有快速预览和结构拆解。保存到忽略 Git 的 `work/briefing/`，在本地待审稿页面阅读。最多每天一次模型请求，失败也不自动重试；没有任何自动发布、图片抓取或荆的观点生成。
 
 模型接口与 JSON 格式依据：https://api-docs.deepseek.com/api/create-chat-completion/
 2026-09-23 核对官方文档后，模型名使用当前推荐的 `deepseek-flash`；旧 `deepseek-v4-flash` 虽仍被接受，实际已转到 V4.1 Flash。此调整未触发付费请求。
@@ -23,12 +25,14 @@
 - AI前线：[InfoQ 官方账号目录](https://www.infoq.cn/official/account) 确认账号 ID 为 ai-front，但未验证到账号专属订阅入口，待接通。
 - 机器之心：[官网](https://www.jiqizhixin.com/) 本次可访问，首页未发现声明的 RSS；不等于证明其不存在，待接通。
 - 极客公园：[官网](https://www.geekpark.net/) 本次请求返回 403，未继续绕过限制，待接通。
-- 数字生命卡兹克：2026-09-23 验证到本人运营的 [AIHOT](https://aihot.news/about) 提供公开只读 API，可发现带公众号原文链接的条目；这不是微信官方全文接口，已单独提供私有链接发现命令，尚未加入 DeepSeek 草稿白名单。
+- 数字生命卡兹克：2026-09-23 验证到本人运营的 [AIHOT](https://aihot.news/about) 可发现公众号原文链接；另在 [BestBlogs 公开 OPML](https://github.com/ginobefun/BestBlogs/blob/main/opml/bestblogs_wechat2rss_opml_all.opml) 发现该账号的第三方 Wechat2RSS 正文订阅源。`briefing:wechat:check/draft` 只在私有本地使用后者，DeepSeek 只能生成标注“第三方副本、待核对”的编辑候选，不是微信官方全文接口、授权转载或已核实的原文。
 - Founder Park：尚未验证到可直接接入的官方自动订阅入口，待接通。
 
-待接通名单不会被 collect/draft 请求。`briefing:watch` 只发现卡兹克公众号链接，不读取微信正文，也不保证 AIHOT 收录该账号全部文章。AIHOT 条目标题和摘要是聚合方加工信息，不能冒充公众号原文；重要事实要回原文核实。其[公开使用规则](https://aihot.news/terms)区分个人非商业使用与公开镜像、商业再分发，后者需要授权，所以清单仅留在本地私有目录。语鲸的可读摘要同样不等于原文或获授权的自动导出接口；本轮不接入其内部接口。
+待接通名单不会被普通 collect/draft 请求。`briefing:watch` 只发现卡兹克公众号链接，不读取微信正文，也不保证 AIHOT 收录该账号全部文章。AIHOT 条目标题和摘要是聚合方加工信息，不能冒充公众号原文；重要事实要回原文核实。其[公开使用规则](https://aihot.news/terms)区分个人非商业使用与公开镜像、商业再分发，后者需要授权，所以清单仅留在本地私有目录。语鲸的可读摘要同样不等于原文或获授权的自动导出接口；本轮不接入其内部接口。
 
-下一步应验证微信原文可稳定、合规读取或获得作者/服务方授权，再决定能否把正文送入 DeepSeek 做分层拆解。只读到标题摘要时不生成“全文拆解”；尚无图片授权检查、定时运行或自动发布。需要覆盖其他公众号时，应逐一核对来源身份及接入许可，不以 AIHOT 的全部摘要批量再分发代替原创内容。
+第三方 RSS 正文可能缺段、改写或带不可信指令，必须回微信公众号原文核对。即使私人草稿生成成功，也不能把它写成“已读原文”或直接进入公开 Library；公开拆解、图片复用、定时运行和自动发布仍未授权或实现。需要覆盖其他公众号时，应逐一核对来源身份及接入许可，不以第三方副本批量再分发代替原创内容。
+
+2026-09-23 第一次真实 DeepSeek 请求返回了不符合本站严格结构的 JSON，已在保存草稿前停止；没有生成待审文章。每日请求记录已保留，不能为了试错删除记录并当日重试。后续校验会丢弃多余模型字段，只接受经过长度、链接和格式检查的五类正文段落；下次调用后仍需人工审阅。
 
 ## 编辑约束
 
@@ -81,4 +85,4 @@ npm run briefing:draft -- --file candidates-1788859143946.json --pick 1,3 --chec
 `npm run verify:briefing` 使用离线 RSS 和模拟 API 验证，不消耗 API 额度。
 构建完成后运行 `npm run verify:briefing-export`，检查私有草稿、密钥变量名与工作目录没有出现在导出网页中。
 接入密钥后先手动试跑、人工审稿；未来再做私有审稿界面与批准发布流程。
-尚未接入真实密钥、真实模型输出未验收时，不应宣称已具备无人值守新闻发布能力。
+真实模型输出尚未通过验收，不应宣称已具备无人值守新闻发布能力。
