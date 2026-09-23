@@ -182,3 +182,19 @@ test('unpublished contact destinations remain explicit non-links', () => {
   assert.equal((footer.match(/<a\b/g) ?? []).length, 1, 'Unpublished destinations must not become links');
   assert.ok(footer.includes('Back to top'), 'Footer navigation link is missing');
 });
+
+test('tool work scenes link each real desk to its method note', () => {
+  const html = readFileSync(join(process.cwd(), 'out/tools/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  const section = html.match(/<section\b[^>]*class="tool-work-scenes archive-shell"[^>]*>([\s\S]*?)<\/section>/)?.[1];
+  assert.ok(section, 'Missing work-scene entrance');
+  for (const [tool, note] of [
+    ['rule-review', 'synthetic-rule-knowledge-desk'],
+    ['multimodal-evaluation', 'video-evaluation-eight-dimensions'],
+    ['agent-trace-review', 'office-agent-trajectory-review'],
+  ]) {
+    assert.ok(section.includes(`/tools/${tool}/`), `Missing desk: ${tool}`);
+    assert.ok(section.includes(`/notes/${note}/`), `Missing method note: ${note}`);
+  }
+  assert.ok(html.includes('href="#work-scenes"'), 'Missing direct work-scene anchor');
+});
