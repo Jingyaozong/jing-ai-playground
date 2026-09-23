@@ -120,7 +120,7 @@ export async function generate(candidates, key, fetcher = fetch) {
   const response = await fetcher('https://api.deepseek.com/chat/completions', {
     method: 'POST', redirect: 'error', signal: AbortSignal.timeout(60000),
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: 'deepseek-v4-flash', thinking: { type: 'disabled' }, temperature: 0.2, max_tokens: limits.outputTokens, response_format: { type: 'json_object' }, messages: [{ role: 'system', content: editorialPrompt }, { role: 'user', content: JSON.stringify(candidates) }] }),
+    body: JSON.stringify({ model: 'deepseek-flash', thinking: { type: 'disabled' }, temperature: 0.2, max_tokens: limits.outputTokens, response_format: { type: 'json_object' }, messages: [{ role: 'system', content: editorialPrompt }, { role: 'user', content: JSON.stringify(candidates) }] }),
   });
   const result = JSON.parse(await readLimited(response, 100000));
   if (result.choices?.[0]?.finish_reason !== 'stop') throw new Error('模型输出未正常完成，不保存草稿');

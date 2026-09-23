@@ -98,6 +98,7 @@ test('API uses fixed endpoint, bounded JSON output and no tools', async () => {
     assert.equal(url, 'https://api.deepseek.com/chat/completions');
     assert.equal(options.redirect, 'error');
     const body = JSON.parse(options.body);
+    assert.equal(body.model, 'deepseek-flash');
     assert.equal(body.max_tokens, 2500);
     assert.equal(body.response_format.type, 'json_object');
     assert.equal(body.tools, undefined);
