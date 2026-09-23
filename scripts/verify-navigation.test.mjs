@@ -7,7 +7,7 @@ import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
 import { getAllNotes } from '../lib/notes.ts';
 import { stories, experiments, tools, toolCategories } from '../app/data/content.ts';
 import { libraryItems } from '../app/data/library.ts';
-import { promptFilters, promptItems } from '../app/data/prompts.ts';
+import { promptFilters, promptItems, promptSource } from '../app/data/prompts.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
 function anchors(file) {
@@ -179,6 +179,28 @@ test('Prompt category drawers lead to the matching focusable catalog section', (
     assert.equal(writeUrlFilter(selected.href, 'category', '全部').href, 'http://localhost:3000/prompts/all/?keep=yes#prompt-collection');
   }
   assert.equal(readUrlFilter('?category=UNKNOWN', 'category', promptFilters), '全部');
+});
+
+test('source-inspired Prompt cards are short original task cards with visible attribution and honest copy', () => {
+  const adapted = promptItems.filter((item) => item.sourceAdapted);
+  assert.equal(adapted.length, 12, 'The source-inspired set should contain exactly twelve cards');
+  assert.deepEqual(adapted.map((item) => item.id), promptItems.slice(0, 12).map((item) => item.id));
+  const html = readFileSync(join(process.cwd(), 'out/prompts/all/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  for (const item of adapted) {
+    assert.equal(item.sourceHref, promptSource.url, `${item.id}: wrong original article link`);
+    assert.ok(item.prompt.startsWith('【版本说明】'), `${item.id}: copied text omits attribution`);
+    assert.ok(item.prompt.includes(promptSource.url), `${item.id}: copied text omits original article URL`);
+    assert.ok(item.prompt.length < 650, `${item.id}: task card is no longer short`);
+    assert.ok(item.usageNote.includes('本站改写'), `${item.id}: visible note omits rewrite status`);
+    for (const variable of item.variables) assert.ok(item.prompt.includes(`【${variable}】`), `${item.id}: variable label does not match copied text: ${variable}`);
+    const start = html.indexOf(`id="prompt-${item.id}"`);
+    const next = html.indexOf('<article class="prompt-card', start + 1);
+    const card = html.slice(start, next < 0 ? undefined : next);
+    assert.ok(start >= 0, `Missing rendered card: ${item.id}`);
+    assert.ok(card.includes('本站改写 · 非原文'), `${item.id}: missing visible status`);
+    assert.ok(card.includes(`href="${promptSource.url.replaceAll('&', '&amp;')}"`), `${item.id}: missing original article link`);
+  }
 });
 
 test('story and experiment Prompt entrances reach their exact reusable templates', () => {

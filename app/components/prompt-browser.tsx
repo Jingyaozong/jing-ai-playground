@@ -36,7 +36,7 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
     <article className={`prompt-card prompt-card-${index % 4}`} id={`prompt-${item.id}`}>
       <div className="prompt-card-top mono">
         <span>{item.category} / {String(index + 1).padStart(2, '0')}</span>
-        <span>{item.demo ? 'DEMO' : item.editorial ? 'EDITORIAL TEMPLATE' : item.dateAdded.replaceAll('-', ' / ')}</span>
+        <span>{item.demo ? 'DEMO' : item.editorial ? 'EDITORIAL TEMPLATE' : item.sourceAdapted ? '本站改写 · 非原文' : item.dateAdded.replaceAll('-', ' / ')}</span>
       </div>
       <div className="prompt-card-heading">
         <div>
@@ -56,7 +56,9 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
       </div>}
       <blockquote><span className="mono">使用提示 / HOW TO USE</span>{item.usageNote}</blockquote>
       {(item.sourceHref || item.relatedLinks?.length) && <nav className="prompt-related-links" aria-label={`${item.title} 关联入口`}>
-        {item.sourceHref && <Link className="prompt-source-link" href={item.sourceHref}>{item.sourceLabel ?? '查看模板来源 ↗'}</Link>}
+        {item.sourceHref && (item.sourceHref.startsWith('https://')
+          ? <a className="prompt-source-link" href={item.sourceHref} target="_blank" rel="noopener noreferrer">{item.sourceLabel ?? '查看模板来源 ↗'}</a>
+          : <Link className="prompt-source-link" href={item.sourceHref}>{item.sourceLabel ?? '查看模板来源 ↗'}</Link>)}
         {item.relatedLinks?.map((link) => <Link className="prompt-source-link" href={link.href} key={link.href}>{link.label}</Link>)}
       </nav>}
       <div className="prompt-card-bottom">
