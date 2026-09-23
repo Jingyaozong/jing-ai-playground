@@ -15,6 +15,10 @@ test('reads only whitelisted metadata and rejects wrong account identity', () =>
   assert.equal(parseSourceFeed(feed(account), account, now).url, makeUrl(account));
   assert.equal(parseSourceFeed(feed(account, '测试', makeUrl(watchedAccounts[2])), account, now), null);
   assert.throws(() => sourceArticleUrl('https://example.com/s?__biz=x', account));
+  for (const suffix of ['&__biz=OTHER', '&mid=456', '&idx=2', '&sn=def']) {
+    assert.throws(() => sourceArticleUrl(makeUrl(account) + suffix, account));
+    assert.equal(parseSourceFeed(feed(account, '测试', makeUrl(account) + suffix), account, now), null);
+  }
   assert.throws(() => parseSourceFeed(feed(account).replace(account.name, '冒名账号'), account, now));
   assert.throws(() => parseSourceFeed('<!DOCTYPE rss><rss/>', account, now));
 });

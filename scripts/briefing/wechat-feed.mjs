@@ -18,7 +18,8 @@ function field(item, name) {
 
 export function originalUrl(value) {
   const url = new URL(plain(value));
-  if (url.protocol !== 'https:' || url.origin !== 'https://mp.weixin.qq.com' || url.pathname !== '/s' || url.username || url.password || url.searchParams.get('__biz') !== wechatSource.biz || !url.searchParams.get('mid') || !url.searchParams.get('sn')) throw new Error('公众号原文链接不符合账号白名单');
+  const identity = ['__biz', 'mid', 'idx', 'sn'];
+  if (url.protocol !== 'https:' || url.origin !== 'https://mp.weixin.qq.com' || url.pathname !== '/s' || url.username || url.password || identity.some((key) => url.searchParams.getAll(key).length !== 1 || !url.searchParams.get(key)) || url.searchParams.get('__biz') !== wechatSource.biz) throw new Error('公众号原文链接不符合账号白名单');
   url.hash = '';
   return url.href;
 }

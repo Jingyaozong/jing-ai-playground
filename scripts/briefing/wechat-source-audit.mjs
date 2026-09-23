@@ -16,7 +16,8 @@ const field = (xml, name) => xml.match(new RegExp(`<${name}(?:\\s[^>]*)?>([\\s\\
 
 export function sourceArticleUrl(value, account) {
   const url = new URL(plain(value));
-  if (url.protocol !== 'https:' || url.origin !== 'https://mp.weixin.qq.com' || url.pathname !== '/s' || url.username || url.password || url.searchParams.get('__biz') !== account.biz || !url.searchParams.get('mid') || !url.searchParams.get('idx') || !url.searchParams.get('sn')) throw new Error('公众号链接与本源观察标识不符');
+  const identity = ['__biz', 'mid', 'idx', 'sn'];
+  if (url.protocol !== 'https:' || url.origin !== 'https://mp.weixin.qq.com' || url.pathname !== '/s' || url.username || url.password || identity.some((key) => url.searchParams.getAll(key).length !== 1 || !url.searchParams.get(key)) || url.searchParams.get('__biz') !== account.biz) throw new Error('公众号链接与本源观察标识不符');
   url.hash = '';
   return url.href;
 }

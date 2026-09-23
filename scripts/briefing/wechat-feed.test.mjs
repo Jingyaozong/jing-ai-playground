@@ -23,7 +23,7 @@ test('parses only recent exact-account articles and keeps body in memory', async
 });
 
 test('rejects foreign accounts, hosts, stale dates and missing body', () => {
-  for (const url of ['https://mp.weixin.qq.com.evil.example/s?__biz=MzIyMzA5NjEyMA==&mid=123&sn=abc', 'https://mp.weixin.qq.com/s?__biz=OTHER&mid=123&sn=abc', 'http://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA==&mid=123&sn=abc']) {
+  for (const url of ['https://mp.weixin.qq.com.evil.example/s?__biz=MzIyMzA5NjEyMA==&mid=123&sn=abc', 'https://mp.weixin.qq.com/s?__biz=OTHER&mid=123&sn=abc', 'http://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA==&mid=123&sn=abc', link + '&__biz=OTHER', link + '&mid=456', link + '&idx=2', link + '&sn=def', link.replace('&idx=1', '')]) {
     assert.throws(() => originalUrl(url));
     assert.equal(parseWechatFeed(feed(item(url)), now).length, 0);
   }
