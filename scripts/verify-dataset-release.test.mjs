@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assessRelease, blankReleaseRecord, releaseGates, releaseReport } from '../lib/dataset-release.ts';
+import { assessRelease, blankReleaseRecord, isBlankReleaseRecord, paperBoatB02Practice, releaseGates, releaseReport } from '../lib/dataset-release.ts';
 
 test('empty desk never claims readiness', () => {
   const record = blankReleaseRecord();
@@ -33,4 +33,19 @@ test('report keeps user text on one line and does not invent acceptance', () => 
   assert.match(report, /数据集：演练 伪标题/);
   assert.match(report, /不代表客户验收/);
   assert.doesNotMatch(report, /已验收|自动批准/);
+});
+
+test('paper boat B02 practice remains a synthetic hold, not a completed delivery', () => {
+  const record = paperBoatB02Practice();
+  const result = assessRelease(record);
+  const report = releaseReport(record);
+  assert.equal(isBlankReleaseRecord(blankReleaseRecord()), true);
+  assert.equal(isBlankReleaseRecord(record), false);
+  assert.equal(result.readyForHumanApproval, false);
+  assert.deepEqual(result.blocked.map((check) => check.id), ['review']);
+  assert.ok(result.pending.some((check) => check.id === 'retest'));
+  assert.match(report, /完全虚构的练习/);
+  assert.match(report, /普通不合格 4，约定最多 2/);
+  assert.match(report, /不得作为实际交付记录/);
+  assert.doesNotMatch(report, /状态：记录齐备/);
 });

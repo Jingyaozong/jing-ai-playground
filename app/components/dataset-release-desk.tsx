@@ -1,13 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { assessRelease, blankReleaseRecord, releaseGates, releaseReport, type ReleaseCheckId, type ReleaseCheckStatus, type ReleaseRecord } from '../../lib/dataset-release';
+import { assessRelease, blankReleaseRecord, isBlankReleaseRecord, paperBoatB02Practice, releaseGates, releaseReport, type ReleaseCheckId, type ReleaseCheckStatus, type ReleaseRecord } from '../../lib/dataset-release';
 
 export function DatasetReleaseDesk() {
   const [record, setRecord] = useState<ReleaseRecord>(blankReleaseRecord);
   const [copyMessage, setCopyMessage] = useState('');
   const assessment = assessRelease(record);
   const report = releaseReport(record);
+  const canLoadPractice = isBlankReleaseRecord(record);
 
   function updateIdentity(key: 'dataset' | 'batch' | 'ruleVersion', value: string) {
     setRecord((current) => ({ ...current, [key]: value }));
@@ -22,7 +23,7 @@ export function DatasetReleaseDesk() {
   async function copyReport() {
     try {
       await navigator.clipboard.writeText(report);
-      setCopyMessage('已复制当前自检记录；仍需人工核对实际文件。');
+      setCopyMessage(record.synthetic ? '已复制虚构演练记录；不得用于实际交付。' : '已复制当前自检记录；仍需人工核对实际文件。');
     } catch {
       setCopyMessage('复制不可用。可选中下方文本框内容，手动复制。');
     }
@@ -33,6 +34,13 @@ export function DatasetReleaseDesk() {
       <div><p className="eyebrow mono">RELEASE GATES / 本地自检</p><h2 id="release-intro-title">先记下依据，<br /><em>再谈放行。</em></h2></div>
       <p>这是一张空白的人工核对桌。只在当前页面处理输入，不读取或上传数据集，也不替负责人做最终批准。刷新页面会清空填写内容。</p>
     </section>
+
+    <section className="release-practice" aria-labelledby="release-practice-title" id="practice">
+      <div className="release-practice-stamp" aria-hidden="true"><span className="mono">纸舟 / B02</span><strong>暂缓</strong><small>虚构退回单</small></div>
+      <div className="release-practice-copy"><p className="eyebrow mono">WORKED EXAMPLE / 完全虚构</p><h2 id="release-practice-title">单批没过，<br />总平均不能掩盖。</h2><p>沿用“纸舟”合成项目：B02 首检模拟抽 100 条，普通不合格 4 条，超过案例约定的最多 2 条。载入的是失败时点，不是返修后的结果。</p><button type="button" disabled={!canLoadPractice} onClick={() => setRecord(paperBoatB02Practice())}>载入纸舟 B02 演练 ↗</button><span role="status" aria-live="polite">{record.synthetic ? '已载入虚构演练；刷新页面可清空。' : canLoadPractice ? '仅在空白记录时可载入，不覆盖你已填写的内容。' : '已有填写，不能覆盖；刷新页面会清空当前输入。'}</span></div>
+    </section>
+
+    {record.synthetic && <p className="release-synthetic-banner" role="status">正在查看完全虚构的纸舟 B02 演练。所有状态与依据都是情境设定，不代表真实检查或荆的项目成果。</p>}
 
     <section className="release-identity" aria-labelledby="release-identity-title">
       <div><span className="mono">BATCH / 批次身份</span><h2 id="release-identity-title">先写清是哪一批。</h2><p>可使用非敏感代号；不要填写客户机密或个人信息。</p></div>
