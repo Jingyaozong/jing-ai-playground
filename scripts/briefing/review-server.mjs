@@ -5,6 +5,8 @@ import { renderReviewPage } from './review-page.mjs';
 import { draftedIds, draftRecords, readDraft } from './draft-records.mjs';
 import { renderDraftPage } from './draft-page.mjs';
 import { readWechatCheck } from './wechat-check.mjs';
+import { readSourceAudit } from './wechat-source-audit.mjs';
+import { renderSourceAuditPage } from './source-audit-page.mjs';
 const directory = resolve(import.meta.dirname, '../../work/briefing');
 try {
   const names = (await readdir(directory)).filter(name => /^candidates-\d{13}\.json$/.test(name)).sort();
@@ -16,14 +18,15 @@ try {
   const snapshot = JSON.parse(await readFile(path, 'utf8'));
   const server = createServer(async (req, res) => {
     const detail = req.url?.match(/^\/drafts\/(\d{4}-\d{2}-\d{2}-\d+)\/$/);
-    if (req.headers.host !== '127.0.0.1:4318' || req.method !== 'GET' || (req.url !== '/' && req.url !== '/drafts/' && !detail)) { res.writeHead(404); res.end(); return; }
+    if (req.headers.host !== '127.0.0.1:4318' || req.method !== 'GET' || (req.url !== '/' && req.url !== '/drafts/' && req.url !== '/sources/' && !detail)) { res.writeHead(404); res.end(); return; }
     let page;
     try {
       if (detail) {
         const text = await readDraft(directory, detail[1]);
         if (text === null) { res.writeHead(404); res.end('Not found'); return; }
         page = renderDraftPage([], {text, name:detail[1]});
-      } else if (req.url === '/drafts/') page = renderDraftPage(await draftRecords(directory), null, await readWechatCheck(directory));
+      } else if (req.url === '/sources/') page = renderSourceAuditPage(await readSourceAudit(directory));
+      else if (req.url === '/drafts/') page = renderDraftPage(await draftRecords(directory), null, await readWechatCheck(directory));
       else page = renderReviewPage(snapshot, file, new Date(), await draftedIds(directory));
     }
     catch { res.writeHead(503, {'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store'}); res.end('暂时无法安全选稿：候选已过期或本地待审记录异常。请重新采集或核对记录后刷新；未调用模型。'); return; }

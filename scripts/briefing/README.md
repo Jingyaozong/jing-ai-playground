@@ -13,6 +13,7 @@
 6. `npm run briefing:wechat:check`：从 BestBlogs / Wechat2RSS 的卡兹克订阅源读取近 48 小时文章，检查公众号账号、原文链接、时间与正文长度。第三方正文仅在内存中处理；此命令不调用模型、不保存正文，也不证明副本与微信原文一致。它会覆盖写入一份私有元数据预检记录（标题、原文链接、时间、长度，不含正文）；`/drafts/` 显示最近一次预检卡。超过 24 小时会提示重新预检，超过七日则停止展示。
 7. `npm run briefing:wechat:draft`：在上述检查后，使用已配置的 DeepSeek Flash 对一篇新文章的第三方正文副本做私有快速预览和结构拆解。保存到忽略 Git 的 `work/briefing/`，在本地待审稿页面阅读。最多每天一次模型请求，失败也不自动重试；没有任何自动发布、图片抓取或荆的观点生成。
 8. `npm run briefing:wechat:crosscheck`：免费读取同一 RSS 候选与 AIHOT 公开只读索引，比较公众号 `__biz`、`mid`、`idx`、`sn`。本地卡片显示“链接吻合 / 完整扫描未找到 / 扫描不完整 / 索引不可用”；只有吻合时显示 AIHOT 索引链接。它只核对两个来源指向同一原文 URL，不证明第三方正文与微信原文一致，不调用 DeepSeek。
+9. `npm run briefing:wechat:sources`：免费检查数字生命卡兹克、AI前线、机器之心、极客公园四个 BestBlogs / Wechat2RSS 第三方源的名称、近七日最新标题、时间及公众号原文链接标识，在私有 `work/briefing/` 仅保存元数据。`http://127.0.0.1:4318/sources/` 显示本地来源看板。失败的单个来源单独标为不可用，不拿别的文章填补。不读取或保存正文、不下载图片、不调用模型，也不证明第三方源标注的账号名称已获微信官方核验。
 
 模型接口与 JSON 格式依据：https://api-docs.deepseek.com/api/create-chat-completion/
 2026-09-23 核对官方文档后，模型名使用当前推荐的 `deepseek-flash`；旧 `deepseek-v4-flash` 虽仍被接受，实际已转到 V4.1 Flash。此调整未触发付费请求。
@@ -23,9 +24,9 @@
 运行 `npm run briefing:sources` 可离线查看已接通与待接通清单，不调用模型或读取密钥。这不是实时健康检查。
 
 - 量子位：[官网](https://www.qbitai.com/) HTML 声明了 [官方 RSS](https://www.qbitai.com/feed)，本次两者返回 HTTP 200，RSS 2.0 可解析，已加入白名单。只取摘要，不保存全文或配图。官网订阅不保证公众号文章同步或完整性。
-- AI前线：[InfoQ 官方账号目录](https://www.infoq.cn/official/account) 确认账号 ID 为 ai-front，但未验证到账号专属订阅入口，待接通。
-- 机器之心：[官网](https://www.jiqizhixin.com/) 本次可访问，首页未发现声明的 RSS；不等于证明其不存在，待接通。
-- 极客公园：[官网](https://www.geekpark.net/) 本次请求返回 403，未继续绕过限制，待接通。
+- AI前线：[InfoQ 官方文章](https://www.infoq.cn/article/2017/09/all-around-ai) 确认公众号名称；2026-09-23 另发现 BestBlogs 的第三方 Wechat2RSS 订阅源，已进入私有元数据来源看板，未进入普通 collect/draft 或 DeepSeek 草稿。
+- 机器之心：[官网](https://www.jiqizhixin.com/) 本次可访问，首页未发现声明的 RSS；2026-09-23 发现 BestBlogs 第三方 Wechat2RSS 订阅源，仅用于私有元数据核验，未核实微信官方身份或进入模型。
+- 极客公园：[官网介绍](https://about.geekpark.net/) 有公众号入口；此前官网请求返回 403，未绕过。2026-09-23 发现 BestBlogs 第三方 Wechat2RSS 订阅源，仅用于私有元数据核验，未核实微信官方身份或进入模型。
 - 数字生命卡兹克：2026-09-23 验证到本人运营的 [AIHOT](https://aihot.news/about) 可发现公众号原文链接；另在 [BestBlogs 公开 OPML](https://github.com/ginobefun/BestBlogs/blob/main/opml/bestblogs_wechat2rss_opml_all.opml) 发现该账号的第三方 Wechat2RSS 正文订阅源。`briefing:wechat:check/draft` 只在私有本地使用后者，DeepSeek 只能生成标注“第三方副本、待核对”的编辑候选，不是微信官方全文接口、授权转载或已核实的原文。
 - Founder Park：尚未验证到可直接接入的官方自动订阅入口，待接通。
 
@@ -48,6 +49,8 @@
 选稿页的“阅读已有待审稿”进入 `http://127.0.0.1:4318/drafts/`，按批次打开真实待审稿。正文只读展示有限 Markdown（标题、段落、核对符号及白名单原文链接），不加载图片、不执行 HTML、不接受任意文件路径；没有审批、编辑或发布按钮。稿件不存在返回 404，异常记录停止读取。正文大小上限 200 KB。该入口不出现在公开网站，访问页面也不调用模型。
 
 待审稿清单顶部的“公众号来源预检”是独立于稿件的本地元数据卡：看到标题不等于模型拆解成功，点击原文也不等于原文已核实。双源链接吻合只增加可追溯性，不是第二次全文验证。预检文件缺失时不显示，字段损坏时页面停止读取，不会把不可信链接渲染成可点击来源。
+
+来源看板 `/sources/` 是另一份本地预检：最多显示四个指定账号各一条近七日的第三方源标题和链接，记录超过 24 小时会提示刷新，超过七日不再展示。它不会自动定时抓取，也不等于已经把四个公众号接进新闻自动发布。
 
 正文下方可填写最多 3000 字符的审阅备注，自动保存到当前浏览器 localStorage，并可复制备份。以稿件目录名和正文哈希绑定版本；修改原稿后旧备注不会套用。备注不写入稿件文件、不发送模型、不代表审批；不跨设备同步。清空输入框删除当前版本备注，保存失败会提示。浏览器清理数据会丢失备注。多标签页以最后一次输入为准，暂不实时同步；不要填密钥或敏感信息。
 
