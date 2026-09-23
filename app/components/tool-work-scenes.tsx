@@ -8,6 +8,7 @@ const scenes = [
     result: '把题目、实际回答、错误标签和人工裁决放在同一份记录里。',
     toolId: 'tool-021',
     noteHref: '/notes/synthetic-rule-knowledge-desk/',
+    noteLabel: '规则答疑：先查证，再回答',
     accent: 'mint',
     mark: '✓',
   },
@@ -17,6 +18,7 @@ const scenes = [
     result: '按八维框架记录时间段、严重度、证据和复核状态。',
     toolId: 'tool-022',
     noteHref: '/notes/video-evaluation-eight-dimensions/',
+    noteLabel: '视频评测：固定八个维度',
     accent: 'yellow',
     mark: '◫',
   },
@@ -26,8 +28,19 @@ const scenes = [
     result: '沿着动作日志定位偏离，再把验收项与证据写进复核包。',
     toolId: 'tool-023',
     noteHref: '/notes/office-agent-trajectory-review/',
+    noteLabel: '办公 Agent：从结果到过程',
     accent: 'sky',
     mark: '↳',
+  },
+  {
+    label: '数据交付',
+    questionLines: ['抽检过线以后，', '数据就能交接吗？'],
+    result: '把格式、有效性、质量与追溯分开记；未关闭问题留在交付前。',
+    toolId: 'tool-024',
+    noteHref: '/notes/dataset-release-gates/',
+    noteLabel: '数据交付：先过四道关',
+    accent: 'coral',
+    mark: '▥',
   },
 ] as const;
 
@@ -39,7 +52,7 @@ export function ToolWorkScenes() {
           <p className="eyebrow mono">WORK DESKS / 工作场景</p>
           <h2 id="tool-work-scenes-title">先从手头的事，<br />找到工具。</h2>
         </div>
-        <p>有些工作从一条规则、一个画面问题或一段动作日志开始。选中眼前的任务，再打开对应的记录台。</p>
+        <p>从规则、画面、Agent 动作到交接文件，先选眼前要核对的事，再打开对应的记录台。</p>
       </div>
       <div className="tool-work-scenes-grid">
         {scenes.map((scene) => {
@@ -52,7 +65,7 @@ export function ToolWorkScenes() {
               <p className="tool-work-scene-result"><span className="mono">留下什么</span>{scene.result}</p>
               <div className="tool-work-scene-links">
                 <Link className="tool-work-scene-primary" href={tool.href}>打开{tool.label} <span aria-hidden="true">↗</span></Link>
-                <Link className="tool-work-scene-note" href={scene.noteHref}>先看方法笔记 ↗</Link>
+                <Link className="tool-work-scene-note" href={scene.noteHref}>读《{scene.noteLabel}》 ↗</Link>
               </div>
             </article>
           );

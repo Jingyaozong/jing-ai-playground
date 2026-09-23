@@ -192,9 +192,14 @@ test('tool work scenes link each real desk to its method note', () => {
     ['rule-review', 'synthetic-rule-knowledge-desk'],
     ['multimodal-evaluation', 'video-evaluation-eight-dimensions'],
     ['agent-trace-review', 'office-agent-trajectory-review'],
+    ['dataset-release', 'dataset-release-gates'],
   ]) {
     assert.ok(section.includes(`/tools/${tool}/`), `Missing desk: ${tool}`);
     assert.ok(section.includes(`/notes/${note}/`), `Missing method note: ${note}`);
+  }
+  assert.equal((section.match(/class="tool-work-scene tool-work-scene-/g) ?? []).length, 4, 'Work scenes should form four complete tool-and-note pairs');
+  for (const title of ['视频评测：固定八个维度', '办公 Agent：从结果到过程', '数据交付：先过四道关']) {
+    assert.ok(section.includes(title), `Missing named method note: ${title}`);
   }
   assert.ok(html.includes('href="#work-scenes"'), 'Missing direct work-scene anchor');
 });
