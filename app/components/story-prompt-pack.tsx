@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import type { StoryDetail } from '../data/stories';
 
-type PromptPackProps = Pick<StoryDetail, 'promptGuide' | 'prompts' | 'motionTests'>;
+type PromptPackProps = Pick<StoryDetail, 'promptGuide' | 'prompts' | 'motionTests' | 'promptTemplate'>;
 
-export function StoryPromptPack({ promptGuide, prompts, motionTests }: PromptPackProps) {
+export function StoryPromptPack({ promptGuide, prompts, motionTests, promptTemplate }: PromptPackProps) {
   const [copiedShot, setCopiedShot] = useState<string | null>(null);
   const [copyErrorShot, setCopyErrorShot] = useState<string | null>(null);
 
@@ -71,6 +72,7 @@ export function StoryPromptPack({ promptGuide, prompts, motionTests }: PromptPac
               </div>
             </details>)}
           </div>
+          {promptTemplate && <div className="story-prompt-template-link"><p>这组镜头属于虚构故事草案；配套通用模板是编辑候选，待荆确认，也不代表视频已生成。</p><Link className="text-link" href={promptTemplate.href}>{promptTemplate.label}</Link></div>}
         </div>
       </section>
 

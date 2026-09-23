@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import type { PromptItem } from '../data/prompts';
 import { promptFilters } from '../data/prompts';
@@ -17,6 +17,7 @@ function readCategory() {
 
 function selectCategory(category: string) {
   const url = writeUrlFilter(window.location.href, 'category', category);
+  if (url.hash.startsWith('#prompt-') && url.hash !== '#prompt-collection') url.hash = '#prompt-collection';
   if (url.href === window.location.href) return;
   window.history.pushState(null, '', url);
   window.dispatchEvent(new PopStateEvent('popstate'));
@@ -32,7 +33,7 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
   }
 
   return (
-    <article className={`prompt-card prompt-card-${index % 4}`}>
+    <article className={`prompt-card prompt-card-${index % 4}`} id={`prompt-${item.id}`}>
       <div className="prompt-card-top mono">
         <span>{item.category} / {String(index + 1).padStart(2, '0')}</span>
         <span>{item.demo ? 'DEMO' : item.editorial ? 'EDITORIAL TEMPLATE' : item.dateAdded.replaceAll('-', ' / ')}</span>
@@ -40,7 +41,7 @@ function PromptCard({ item, index }: { item: PromptItem; index: number }) {
       <div className="prompt-card-heading">
         <div>
           <p className="mono">{item.model}</p>
-          <h2>{item.title}</h2>
+          <h2 id={`prompt-title-${item.id}`} tabIndex={-1}>{item.title}</h2>
         </div>
         <span className="prompt-brace" aria-hidden="true">{'{ }'}</span>
       </div>
@@ -71,6 +72,7 @@ export function PromptBrowser({ items, showToolbar = true }: { items: PromptItem
   const active = showToolbar ? urlCategory : '全部';
   const [query, setQuery] = useState('');
   const searchRef = useRef<HTMLInputElement>(null);
+  const pendingPromptFocus = useRef(true);
   const visible = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return items.filter((item) => {
@@ -79,6 +81,36 @@ export function PromptBrowser({ items, showToolbar = true }: { items: PromptItem
       return categoryMatch && (!normalized || haystack.includes(normalized));
     });
   }, [active, items, query]);
+
+  useEffect(() => {
+    if (!showToolbar) return;
+
+    const focusPrompt = () => {
+      if (!pendingPromptFocus.current || active !== readCategory()) return;
+      const hash = window.location.hash;
+      if (!hash.startsWith('#prompt-') || hash === '#prompt-collection') return;
+      const item = items.find((candidate) => hash === `#prompt-${candidate.id}`);
+      if (!item || (active !== '全部' && item.category !== active)) return;
+      const heading = document.getElementById(`prompt-title-${item.id}`);
+      if (heading) {
+        heading.focus();
+        pendingPromptFocus.current = false;
+      }
+    };
+
+    const onLocationChange = () => {
+      pendingPromptFocus.current = true;
+      focusPrompt();
+    };
+
+    focusPrompt();
+    window.addEventListener('hashchange', onLocationChange);
+    window.addEventListener('popstate', onLocationChange);
+    return () => {
+      window.removeEventListener('hashchange', onLocationChange);
+      window.removeEventListener('popstate', onLocationChange);
+    };
+  }, [active, items, showToolbar]);
 
   return (
     <section className="content-browser" aria-label="筛选 Prompt">

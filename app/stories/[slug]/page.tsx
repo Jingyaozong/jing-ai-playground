@@ -264,7 +264,7 @@ export default async function StoryDetailPage({ params }: { params: Promise<{ sl
         </div>
       </section>
 
-      <StoryPromptPack promptGuide={story.promptGuide} prompts={story.prompts} motionTests={story.motionTests} />
+      <StoryPromptPack promptGuide={story.promptGuide} prompts={story.prompts} motionTests={story.motionTests} promptTemplate={story.promptTemplate} />
 
       <section className="story-production section-shell">
         <div className="story-section-heading"><div><p className="eyebrow mono">08 / Making of</p><h2>现在做到哪了？</h2></div><p>每个阶段分别记录已完成内容和仍然缺少的材料，方便后续从故事稿直接进入视觉制作。</p></div>

@@ -33,6 +33,7 @@ export type StoryDetail = {
   };
   ending?: { label: string; copy: string; href: string; link: string };
   related?: { href: string; label: string };
+  promptTemplate?: { href: string; label: string };
   soundPlan?: {
     duration: number;
     heading: string;
@@ -792,6 +793,7 @@ export const storyDetails: StoryDetail[] = [
     },
     ending: { label: 'EDITORIAL CANDIDATE', copy: '故事已经有了路线。\n还没有成为荆的作品。', href: '/experiments/does-the-short-evidence-ledger-travel/', link: '回看来源实验 ↗' },
     related: { href: '/notes/poster-to-story-evidence-ledger/', label: '阅读证据账本方法 ↗' },
+    promptTemplate: { href: '/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-causal-motion-gate', label: '打开因果动作闸门模板 ↗' },
     beats: [
       { time: '11:48', title: '清水已经没过脚踝', copy: '顾岚从左侧安全门进入档案馆。水面平静，书架没有倒，所有摊开的纸页却完全干燥。', tone: 'blue' },
       { time: '11:51', title: '水面映出不存在的街道', copy: '她低头时，倒影不是天花板，而是几条正在涨水的街。每次水纹散开，路线都会换一组。', tone: 'yellow' },

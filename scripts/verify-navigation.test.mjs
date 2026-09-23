@@ -181,6 +181,23 @@ test('Prompt category drawers lead to the matching focusable catalog section', (
   assert.equal(readUrlFilter('?category=UNKNOWN', 'category', promptFilters), '全部');
 });
 
+test('story and experiment Prompt entrances reach their exact reusable templates', () => {
+  const html = readFileSync(join(process.cwd(), 'out/prompts/all/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  for (const [source, promptId] of [
+    ['stories/before-the-water-recedes', 'video-causal-motion-gate'],
+    ['experiments/can-a-fictional-poster-grow-a-story', 'poster-to-story-short-ledger'],
+    ['experiments/does-the-short-evidence-ledger-travel', 'poster-to-story-short-ledger'],
+    ['experiments/can-water-recede-after-the-umbrella-opens', 'video-causal-motion-gate'],
+  ]) {
+    assert.ok(promptItems.some((item) => item.id === promptId), `Unknown Prompt template: ${promptId}`);
+    const links = anchors(`${source}/index.html`).map((href) => new URL(href, `http://localhost:3000/${source}/`));
+    assert.ok(links.some((url) => url.pathname === '/prompts/all/' && url.hash === `#prompt-${promptId}` && url.searchParams.get('category') === 'AI 视频制作'), `Missing exact template entrance from ${source}`);
+    assert.match(html, new RegExp(`<article\\b[^>]*id="prompt-${promptId}"`), `Missing template anchor: ${promptId}`);
+    assert.match(html, new RegExp(`<h2\\b[^>]*id="prompt-title-${promptId}"[^>]*tabindex="-1"`), `Template heading must accept focus: ${promptId}`);
+  }
+});
+
 test('every exported note has top and bottom links to its own category', () => {
   const filenames = readdirSync(join(process.cwd(), 'content/notes')).filter((name) => name.endsWith('.md'));
   assert.ok(filenames.length > 0);

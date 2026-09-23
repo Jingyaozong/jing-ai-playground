@@ -638,8 +638,8 @@ export const experimentDetails: ExperimentDetail[] = [
     ],
     currentConclusion: '在本轮九份样本中，A 组综合均值 3.33 / 5：成稿快、海报关联强，但三次边界透明均为 1 / 5；B 组均值 4.67 / 5：主要线索完整，叙事负担较轻，但新增设定仍未细分来源；C 组均值 4.75 / 5：三次边界透明均为 5 / 5，也三次被标记“解释过量”。阶段方向不是直接采用最长的三栏输出，而是尝试把 B 的证据清单与 C 的来源边界压缩成更短模板。结论只适用于三张固定海报、同一会话和页面编辑初审。',
     conclusionBadge: 'PILOT COMPLETE · 9 / 9',
-    relatedHref: '/prompts/',
-    relatedLabel: '查看现有 Prompt 工作台 ↗',
+    relatedHref: '/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-poster-to-story-short-ledger',
+    relatedLabel: '查看后续短证据账本模板 ↗',
     toolHref: '/tools/poster-story-builder/',
     toolLabel: '打开海报反推故事组装器 ↗',
   },
@@ -713,6 +713,9 @@ export const experimentDetails: ExperimentDetail[] = [
     conclusionBadge: 'RETEST COMPLETE · 9 / 9',
     relatedHref: '/notes/poster-to-story-evidence-ledger/',
     relatedLabel: '阅读短证据账本方法 ↗',
+    relatedLinks: [
+      { href: '/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-poster-to-story-short-ledger', label: '打开短证据账本模板 ↗' },
+    ],
     toolHref: '/tools/poster-story-builder/',
     toolLabel: '打开海报反推故事组装器 ↗',
   },
@@ -789,6 +792,7 @@ export const experimentDetails: ExperimentDetail[] = [
     relatedLinks: [
       { href: '/notes/causal-motion-five-point-ledger/', label: '阅读五点账本方法 ↗' },
       { href: '/notes/ai-video-prompt-comparison/', label: '怎样比较两版 Prompt ↗' },
+      { href: '/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-causal-motion-gate', label: '打开待测试因果动作模板 ↗' },
     ],
     toolHref: '/tools/waterline-motion-card/',
     toolLabel: '打开水线动作卡生成器 ↗',

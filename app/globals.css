@@ -1677,6 +1677,9 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .resource-4 { background: var(--coral); }
 .prompt-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 19px; align-items: start; }
 .prompt-card { overflow: hidden; border: 2px solid var(--ink); border-radius: 29px; background: var(--white); box-shadow: 0 0 0 var(--ink); transition: transform .25s ease, box-shadow .25s ease; }
+.prompt-card { scroll-margin-top: 110px; }
+.prompt-card:target { box-shadow: 8px 8px 0 var(--blue); }
+.prompt-card-heading h2:focus { outline: 3px solid var(--blue); outline-offset: 7px; border-radius: 4px; }
 .prompt-card:hover { transform: translateY(-6px); box-shadow: 8px 8px 0 var(--ink); }
 .prompt-card-1 { background: var(--yellow); }
 .prompt-card-2 { background: var(--sky); }
@@ -2699,6 +2702,8 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .story-prompt-locks h3 { margin: auto 0 16px; font-family: var(--display); font-size: clamp(1.8rem,3vw,3rem); line-height: .95; }
 .story-prompt-locks p { margin: 0; font-size: 11px; line-height: 1.7; }
 .story-prompt-list { overflow: hidden; border: 2px solid var(--ink); border-radius: 28px; background: var(--white); box-shadow: 8px 8px 0 var(--blue); }
+.story-prompt-template-link { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 28px; margin-top: 38px; }
+.story-prompt-template-link p { max-width: 620px; margin: 0; color: var(--ink); font-size: 13px; line-height: 1.8; }
 .story-prompt-list details { border-bottom: 1px solid var(--line); }
 .story-prompt-list details:last-child { border-bottom: 0; }
 .story-prompt-list summary { display: grid; grid-template-columns: 80px 1fr auto; gap: 20px; align-items: center; padding: 22px 25px; cursor: pointer; list-style: none; }
