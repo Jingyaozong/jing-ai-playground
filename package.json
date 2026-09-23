@@ -25,11 +25,12 @@
     "verify:rule-review": "node --experimental-strip-types --test scripts/verify-rule-review.test.mjs",
     "verify:multimodal-evaluation": "node --experimental-strip-types --test scripts/verify-multimodal-evaluation.test.mjs",
     "verify:agent-trace": "node --experimental-strip-types --test scripts/verify-agent-trace.test.mjs",
+    "verify:dataset-release": "node --experimental-strip-types --test scripts/verify-dataset-release.test.mjs",
     "verify:pages": "node scripts/verify-pages-build.mjs",
     "verify:pages:repository": "node scripts/verify-repository-pages.mjs",
     "verify:upload-readiness": "node scripts/verify-upload-readiness.mjs",
     "verify:navigation": "node --experimental-strip-types --test scripts/verify-navigation.test.mjs",
-    "verify:release": "npm run lint && npm run typecheck && npm run verify:content && npm run verify:practice-pack && npm run verify:rule-review && npm run verify:multimodal-evaluation && npm run verify:agent-trace && npm run build && npm run verify:pages && npm run verify:navigation && npm run verify:briefing && npm run verify:briefing-export && npm run verify:pages:repository",
+    "verify:release": "npm run lint && npm run typecheck && npm run verify:content && npm run verify:practice-pack && npm run verify:rule-review && npm run verify:multimodal-evaluation && npm run verify:agent-trace && npm run verify:dataset-release && npm run build && npm run verify:pages && npm run verify:navigation && npm run verify:briefing && npm run verify:briefing-export && npm run verify:pages:repository",
     "verify:upload": "npm run verify:release && npm run verify:upload-readiness",
     "typecheck": "tsc --noEmit --incremental false",
     "lint": "eslint . --ignore-pattern out --ignore-pattern .next"

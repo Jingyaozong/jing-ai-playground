@@ -16,6 +16,11 @@ sourceTitle: "荆提供的数据清洗、整理入库、提效与平台能力说
 sourceNote: "四层检查、风险分层、版本追溯和提效原则来自荆的工作方法说明。检查清单及示例字段由 AI 整理扩展，属于编辑候选，待荆确认；不包含业务数据、真实系统截图或交付成果。"
 relatedNotes: ["synthetic-rule-knowledge-desk", "synthetic-annotation-delivery", "bad-case-review-loop"]
 connections:
+  - label: "LOCAL TOOL"
+    title: "把四关写成自检记录"
+    description: "逐项记录人工判断、依据与待办；只整理记录，不替人验收。"
+    href: "/tools/dataset-release/"
+    tone: "mint"
   - label: "SYNTHETIC CASE"
     title: "放回完整项目里"
     description: "用独立虚构的六阶段案例理解交付前后的决策。"
@@ -31,6 +36,8 @@ connections:
 > 方法由荆提供，AI 整理后的清单与解释待荆确认。本页是交付方法说明，没有实际入库行为、生产数据或已验收的客户成果。
 
 “文件能导出”与“数据可交付”不是同一件事。格式正确不代表标签正确；抽检通过也不能代替版本记录。把检查分成四道关，才能知道问题卡在哪里。
+
+如果要在交接前逐项留下判断，可打开 [数据交付四关检查台](/tools/dataset-release/)。它只整理当前浏览器中的人工填写内容，不读取真实数据文件，也不自动批准交付。
 
 ## 第一关：格式
 

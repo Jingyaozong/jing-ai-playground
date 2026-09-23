@@ -32,6 +32,7 @@ const requiredFiles = [
   'tools/local-effect-card/index.html',
   'tools/lighting-ledger/index.html',
   'tools/agent-trace-review/index.html',
+  'tools/dataset-release/index.html',
   'notes/office-agent-trajectory-review/index.html',
   'og.png',
 ];

@@ -267,6 +267,11 @@ export const experiments: Experiment[] = [
 
 export const tools: Tool[] = [
   {
+    id: 'tool-024', title: 'Dataset Release Gates', label: '数据交付四关检查台',
+    description: '按格式、有效性、质量和追溯记录人工判断与依据，汇总待办并复制待复核交接记录；不读取数据文件。',
+    status: 'Ready', symbol: '▥', category: '交付与发布', href: '/tools/dataset-release/',
+  },
+  {
     id: 'tool-023', title: 'Agent Trace Review', label: 'Agent 轨迹复核台',
     description: '本地解析办公 Agent 动作日志，查找工具参数与返回，定位首个偏离并导出验收报告和可恢复的复核包。',
     status: 'Ready', symbol: '↳', category: '评测与复核', href: '/tools/agent-trace-review/',
