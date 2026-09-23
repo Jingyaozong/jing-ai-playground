@@ -84,7 +84,7 @@ export default function Home() {
       <Reveal><section className="tools-preview section-shell">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Little tools</p><h2>顺手做点<br />有用的小东西。</h2></div><p>不是产品中心，只是把重复的小麻烦做成按钮。</p></div>
         <div className="tool-grid">{recentTools.map((tool, index) => <ToolCard tool={tool} index={index} key={tool.id} />)}</div>
-        <Link className="text-link tools-all" href="/tools">See all little tools ↗</Link>
+        <Link className="text-link tools-all" href="/tools/#work-scenes">按工作场景找工具 ↗</Link>
       </section></Reveal>
 
       <Reveal><section className="playing section-shell">

@@ -21,6 +21,14 @@ const groups = [
   { path: 'library', key: 'type', hash: '#library-all', values: ['ARTICLE', 'VIDEO', 'PDF', 'TOOL', 'JING PICKS'] },
 ];
 
+test('homepage tool entrance reaches the work-scene choices', () => {
+  const home = anchors('index.html');
+  const toolsHtml = readFileSync(join(process.cwd(), 'out/tools/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  assert.ok(home.includes('/tools/#work-scenes'), 'Homepage must link directly to work scenes');
+  assert.match(toolsHtml, /<section\b[^>]*id="work-scenes"/, 'Work-scene target is missing');
+});
+
 test('story cards preserve semantic titles, original status and detail links', () => {
   for (const file of ['index.html', 'stories/index.html']) {
     const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
