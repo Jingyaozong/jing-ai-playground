@@ -1707,6 +1707,10 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .prompt-card blockquote { margin: 0 28px 28px; padding: 19px; border: 2px solid var(--ink); border-radius: 17px; background: var(--coral); font-family: var(--display); font-size: 1.12rem; font-weight: 620; line-height: 1.5; }
 .prompt-card blockquote span { display: block; margin-bottom: 9px; color: var(--blue); }
 .prompt-related-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 28px 24px; }
+.tool-method-links { grid-column: 2; display: flex; flex-wrap: wrap; align-items: start; gap: 12px; }
+.tool-method-links a { width: fit-content; padding: 12px 17px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--white); color: var(--ink); font-size: 10px; font-weight: 750; box-shadow: 4px 4px 0 var(--ink); }
+.tool-method-links a:hover, .tool-method-links a:focus-visible { background: var(--yellow); }
+@media (max-width: 760px) { .tool-method-links { grid-column: auto; } }
 .prompt-source-link { display: inline-flex; padding: 9px 12px; border: 1.5px solid var(--ink); border-radius: 99px; background: rgba(255,255,255,.72); color: var(--blue); font-size: 9px; font-weight: 760; transition: transform .2s ease, background-color .2s ease; }
 .prompt-source-link:hover { background: var(--yellow); transform: translateY(-2px); }
 .prompt-card-bottom { display: flex; justify-content: space-between; align-items: end; gap: 18px; padding: 0 28px 28px; }

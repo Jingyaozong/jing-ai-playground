@@ -467,6 +467,10 @@ export const promptItems: PromptItem[] = [
     model: '支持图片输入的多模态模型',
     usageNote: '先用它整理锚点，再把同一段固定特征重复用于相关镜头。参考图看不见的事实不要让模型猜。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
+    relatedLinks: [
+      { href: '/notes/ai-video-character-consistency/', label: '阅读人物一致性方法 ↗' },
+      { href: '/tools/character-anchor/', label: '打开角色锚点卡 ↗' },
+    ],
   },
   {
     id: 'video-scene-anchor-brief',
@@ -498,6 +502,10 @@ export const promptItems: PromptItem[] = [
     model: '通用推理或多模态模型',
     usageNote: '适合三镜以上的同场戏。先让空间成立，再为单镜添加动作，不要每镜重新发明房间。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
+    relatedLinks: [
+      { href: '/notes/ai-video-scene-consistency/', label: '阅读场景一致性方法 ↗' },
+      { href: '/tools/scene-anchor/', label: '打开场景锚点卡 ↗' },
+    ],
   },
   {
     id: 'video-single-shot-motion',
@@ -530,6 +538,10 @@ export const promptItems: PromptItem[] = [
     model: '通用推理模型',
     usageNote: '一镜只保留一个主要动作目标。模型连续失败时，先减动作或停掉运镜，不要继续堆限制词。',
     dateAdded: '2026-08-31', featured: true, demo: false, editorial: true,
+    relatedLinks: [
+      { href: '/notes/ai-video-prompt-shot-facts/', label: '阅读镜头事实方法 ↗' },
+      { href: '/tools/shot-prompt-builder/', label: '打开单镜组装器 ↗' },
+    ],
   },
   {
     id: 'video-first-last-frame-bridge',
@@ -560,6 +572,10 @@ export const promptItems: PromptItem[] = [
     model: '支持图片输入的多模态模型',
     usageNote: '重点不是再次描述两张图，而是说明中间怎样变化。先确认端点没有身份、道具或光线冲突。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
+    relatedLinks: [
+      { href: '/notes/first-last-frame-motion-prompt/', label: '阅读首尾帧方法 ↗' },
+      { href: '/tools/shot-risk-checker/', label: '预检首尾帧风险 ↗' },
+    ],
   },
   {
     id: 'video-sound-layer-brief',
@@ -595,6 +611,10 @@ export const promptItems: PromptItem[] = [
     model: '通用推理模型',
     usageNote: '先锁与画面同步的接触音，再补环境和音乐。无声也是设计选择，不需要把每一秒填满。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
+    relatedLinks: [
+      { href: '/notes/ai-video-sound-workflow/', label: '阅读声音分工方法 ↗' },
+      { href: '/tools/sound-layer-card/', label: '打开声音分层卡 ↗' },
+    ],
   },
   {
     id: 'video-failure-revision',
@@ -627,6 +647,9 @@ export const promptItems: PromptItem[] = [
     model: '支持视频或关键帧输入的多模态模型',
     usageNote: '最好附失败前、中、后三张关键帧。下一轮只改一个主要变量，否则无法知道是哪项修改起作用。',
     dateAdded: '2026-08-31', featured: true, demo: false, editorial: true,
+    relatedLinks: [
+      { href: '/notes/video-failure-cases/', label: '阅读失败排查词典 ↗' },
+    ],
   },
   {
     id: 'video-cut-continuity-handoff',
@@ -657,6 +680,10 @@ export const promptItems: PromptItem[] = [
     model: '支持视频或关键帧输入的多模态模型',
     usageNote: '只比较切点附近，不必重新分析整段视频。先确认跳变是不是创作意图，再决定是否修复。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
+    relatedLinks: [
+      { href: '/notes/ai-video-shot-continuity/', label: '阅读跨镜连续性方法 ↗' },
+      { href: '/tools/continuity-checker/', label: '打开连续性检查器 ↗' },
+    ],
   },
   {
     id: 'video-candidate-review-table',
@@ -691,6 +718,10 @@ export const promptItems: PromptItem[] = [
     model: '支持视频输入的多模态模型',
     usageNote: '候选 ID 和生成设置必须保留。没有真实样本时，只使用它生成空表，不让模型假装完成评测。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
+    relatedLinks: [
+      { href: '/notes/ai-video-generation-version-log/', label: '阅读版本留档方法 ↗' },
+      { href: '/tools/shot-version-recorder/', label: '打开版本记录器 ↗' },
+    ],
   },
   {
     id: 'video-causal-motion-gate',
@@ -792,6 +823,10 @@ C｜主动创作选择
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
     sourceHref: '/experiments/can-a-fictional-poster-grow-a-story/',
     sourceLabel: '查看 9 / 9 实验依据 ↗',
+    relatedLinks: [
+      { href: '/notes/poster-to-story-evidence-ledger/', label: '阅读证据账本方法 ↗' },
+      { href: '/tools/poster-story-builder/', label: '打开故事组装器 ↗' },
+    ],
   },
 ];
 

@@ -26,7 +26,7 @@ export default function SoundLayerCardPage() {
         <section className="sound-method-note">
           <div><span className="mono">LAYER FIRST / 先分层</span><h2>声音不是装饰，<br />它也有镜头任务。</h2></div>
           <p>这张卡只负责把责任写清楚，不会替你生成配音、音效或音乐，也不会承诺任何模型能够一次完成全部声音层。真正进入制作后，仍要用实际录音和时间线逐项对齐。</p>
-          <Link href="/notes/ai-video-sound-workflow/">阅读完整声音工作流 ↗</Link>
+          <nav className="tool-method-links" aria-label="声音分层相关内容"><Link href="/notes/ai-video-sound-workflow/">阅读完整声音工作流 ↗</Link><Link href="/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-sound-layer-brief">复制单镜声音模板 ↗</Link></nav>
         </section>
       </div>
       <SiteFooter />

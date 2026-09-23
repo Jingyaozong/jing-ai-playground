@@ -16,6 +16,11 @@ sourceUrl: "https://help.runwayml.com/hc/en-us/articles/40042718905875-Creating-
 sourceNote: "功能事实来自 Runway、Google Cloud 和 Adobe 的官方文档；分镜前的整理方法是本站面向创作者的编辑转译，不包含模型排名，也不声称任何工具能保证人物百分之百一致。"
 relatedNotes: ["image-prompt-guide", "video-vs-image-prompt", "ai-video-evaluation"]
 connections:
+  - label: "PROMPT"
+    title: "角色锚点制作卡"
+    description: "把固定特征、允许变化和单镜任务整理成可复用提示模板；输出仍需人工核对。"
+    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-character-anchor-brief"
+    tone: "yellow"
   - label: "TOOL"
     title: "角色锚点卡生成器"
     description: "把脸部、头发、配饰、服装和允许变化整理成三种可复制的工作格式。"

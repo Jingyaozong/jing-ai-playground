@@ -26,7 +26,7 @@ export default function ShotRiskCheckerPage() {
         <section className="risk-rule-note">
           <div><span className="mono">OPEN RULES / 透明规则</span><h2>预警来自条件，<br />不是神秘分数。</h2></div>
           <p>所有结论都能在右侧看到触发原因与修改动作。工具不会根据模型名称伪造成功率；正式生成后仍应保存样本，用真实结果校准自己的工作流。</p>
-          <Link href="/notes/first-last-frame-motion-prompt/">阅读首尾帧与运动分工 ↗</Link>
+          <nav className="tool-method-links" aria-label="镜头风险相关内容"><Link href="/notes/first-last-frame-motion-prompt/">阅读首尾帧与运动分工 ↗</Link><Link href="/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-first-last-frame-bridge">复制首尾帧过渡模板 ↗</Link></nav>
         </section>
       </div>
       <SiteFooter />

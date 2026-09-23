@@ -16,6 +16,11 @@ sourceUrl: "https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-
 sourceNote: "产品能力与限制依据 Runway、Google Cloud 和 Adobe 官方文档核对；责任分工、镜头模板与验收表是本站的编辑整理，不代表不同模型共享同一套语法或稳定性。"
 relatedNotes: ["video-vs-image-prompt", "camera-movement-guide", "video-failure-cases"]
 connections:
+  - label: "PROMPT"
+    title: "首尾帧过渡指令"
+    description: "把端点事实、中间路径与不能漂移的状态写进同一份制作模板。"
+    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-first-last-frame-bridge"
+    tone: "sky"
   - label: "TOOL"
     title: "AI 视频镜头风险预检器"
     description: "填写时长、动作、运镜与首尾差异，在生成前找出需要减项或拆镜的位置。"

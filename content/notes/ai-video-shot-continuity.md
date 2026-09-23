@@ -16,6 +16,11 @@ sourceUrl: "https://www.adobe.com/creativecloud/video/hub/ideas/what-is-continui
 sourceNote: "剪辑术语与基础原则依据 Adobe、BFI、Runway 和 Google Cloud 官方资料核对；六线账本、A/B 接口卡和 AI 镜头验收流程是本站的编辑整理，不代表任何模型能够自动保证连续性。"
 relatedNotes: ["first-last-frame-motion-prompt", "ai-video-character-consistency", "ai-video-sound-workflow"]
 connections:
+  - label: "PROMPT"
+    title: "相邻镜头交接检查"
+    description: "先并排填写镜头 A 出口和镜头 B 入口，再判断跳变是否需要修复。"
+    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-cut-continuity-handoff"
+    tone: "mint"
   - label: "TOOL"
     title: "相邻镜头连续性检查器"
     description: "填写镜头 A 出口与镜头 B 入口，沿六条连续线找出需要补锚点或重做的位置。"

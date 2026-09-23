@@ -204,18 +204,49 @@ test('method notes and companion tools open the matching Prompt template or cate
   for (const [source, promptId] of [
     ['notes/poster-to-story-evidence-ledger', 'poster-to-story-short-ledger'],
     ['notes/causal-motion-five-point-ledger', 'video-causal-motion-gate'],
+    ['notes/ai-video-character-consistency', 'video-character-anchor-brief'],
+    ['notes/ai-video-scene-consistency', 'video-scene-anchor-brief'],
+    ['notes/ai-video-prompt-shot-facts', 'video-single-shot-motion'],
+    ['notes/first-last-frame-motion-prompt', 'video-first-last-frame-bridge'],
+    ['notes/ai-video-sound-workflow', 'video-sound-layer-brief'],
+    ['notes/video-failure-cases', 'video-failure-revision'],
+    ['notes/ai-video-shot-continuity', 'video-cut-continuity-handoff'],
+    ['notes/ai-video-generation-version-log', 'video-candidate-review-table'],
     ['tools/poster-story-builder', 'poster-to-story-short-ledger'],
+    ['tools/character-anchor', 'video-character-anchor-brief'],
+    ['tools/scene-anchor', 'video-scene-anchor-brief'],
+    ['tools/shot-prompt-builder', 'video-single-shot-motion'],
+    ['tools/shot-risk-checker', 'video-first-last-frame-bridge'],
+    ['tools/sound-layer-card', 'video-sound-layer-brief'],
+    ['tools/continuity-checker', 'video-cut-continuity-handoff'],
+    ['tools/shot-version-recorder', 'video-candidate-review-table'],
   ]) {
     assert.ok(promptItems.some((item) => item.id === promptId), `Unknown Prompt template: ${promptId}`);
     const links = anchors(`${source}/index.html`).map((href) => new URL(href, `http://localhost:3000/${source}/`));
     assert.ok(links.some((url) => url.pathname === '/prompts/all/' && url.hash === `#prompt-${promptId}` && url.searchParams.get('category') === 'AI 视频制作'), `Missing exact template entrance from ${source}`);
     assert.match(catalog, new RegExp(`<article\\b[^>]*id="prompt-${promptId}"`), `Missing template anchor: ${promptId}`);
   }
-  for (const source of ['notes/ai-video-prompt-shot-facts', 'tools/shot-prompt-builder']) {
+  for (const source of ['tools/shot-prompt-builder']) {
     const links = anchors(`${source}/index.html`).map((href) => new URL(href, `http://localhost:3000/${source}/`));
     assert.ok(links.some((url) => url.pathname === '/prompts/all/' && url.hash === '#prompt-collection' && url.searchParams.get('category') === 'AI 视频制作'), `Missing video category entrance from ${source}`);
   }
   assert.equal(promptItems.filter((item) => item.category === 'AI 视频制作').length, 10, 'Production template count changed');
+  for (const [promptId, destinations] of [
+    ['video-character-anchor-brief', ['/notes/ai-video-character-consistency/', '/tools/character-anchor/']],
+    ['video-scene-anchor-brief', ['/notes/ai-video-scene-consistency/', '/tools/scene-anchor/']],
+    ['video-single-shot-motion', ['/notes/ai-video-prompt-shot-facts/', '/tools/shot-prompt-builder/']],
+    ['video-first-last-frame-bridge', ['/notes/first-last-frame-motion-prompt/', '/tools/shot-risk-checker/']],
+    ['video-sound-layer-brief', ['/notes/ai-video-sound-workflow/', '/tools/sound-layer-card/']],
+    ['video-failure-revision', ['/notes/video-failure-cases/']],
+    ['video-cut-continuity-handoff', ['/notes/ai-video-shot-continuity/', '/tools/continuity-checker/']],
+    ['video-candidate-review-table', ['/notes/ai-video-generation-version-log/', '/tools/shot-version-recorder/']],
+    ['video-causal-motion-gate', ['/notes/causal-motion-five-point-ledger/', '/tools/waterline-motion-card/']],
+    ['poster-to-story-short-ledger', ['/notes/poster-to-story-evidence-ledger/', '/tools/poster-story-builder/']],
+  ]) {
+    const prompt = promptItems.find((item) => item.id === promptId);
+    assert.ok(prompt, `Unknown Prompt template: ${promptId}`);
+    for (const href of destinations) assert.ok(prompt.relatedLinks?.some((link) => link.href === href), `Missing contextual link from ${promptId} to ${href}`);
+  }
   assert.ok(readFileSync(join(process.cwd(), 'out/tools/shot-prompt-builder/index.html'), 'utf8').includes('查看 10 条制作模板'), 'Tool page template count is stale');
 });
 

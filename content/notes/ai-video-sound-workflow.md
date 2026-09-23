@@ -16,6 +16,11 @@ sourceUrl: "https://cloud.google.com/blog/products/ai-machine-learning/ultimate-
 sourceNote: "产品能力、输入要求和限制依据 Google Cloud、Adobe 与 Runway 官方文档核对；三条路线的选择方法、声音分层卡与验收表是本站的编辑整理，不代表所有模型共享同一套功能、语法或稳定性。"
 relatedNotes: ["first-last-frame-motion-prompt", "ninety-second-storyboard", "ai-video-evaluation"]
 connections:
+  - label: "PROMPT"
+    title: "单镜声音分层 Brief"
+    description: "按对白、环境、动作音与音乐拆开填写；没有真实声音时只生成计划。"
+    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-sound-layer-brief"
+    tone: "yellow"
   - label: "TOOL"
     title: "声音分层卡生成器"
     description: "为单个镜头选择声音路线，生成可复制的声音 Brief、轨道卡和验收清单。"

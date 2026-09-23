@@ -16,6 +16,11 @@ sourceUrl: "https://help.runwayml.com/hc/en-us/articles/26871350018835-How-to-cr
 sourceNote: "参考图、环境 Plate、构图标注与颜色比较能力依据 Runway、Adobe 和 Google Cloud 官方资料核对；六层场景账本、场景状态表与四镜最小测试是本站的编辑整理，不代表参考图可以自动锁定空间。"
 relatedNotes: ["ai-video-shot-continuity", "ai-video-character-consistency", "camera-movement-guide"]
 connections:
+  - label: "PROMPT"
+    title: "场景锚点制作卡"
+    description: "逐项填写空间关系、固定物件和可变化状态，再交给单镜任务使用。"
+    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-scene-anchor-brief"
+    tone: "sky"
   - label: "TOOL"
     title: "场景锚点卡生成器"
     description: "把空间结构、固定家具、道具状态、材质、光线和天气整理成场景母版与单镜接口。"

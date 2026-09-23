@@ -16,6 +16,11 @@ sourceUrl: "https://github.com/Vchitect/VBench"
 sourceNote: "失败维度与研究背景依据原始论文和官方项目核对；中文名称、排错顺序和处理建议是本站面向创作者的编辑转译。它们是复测方向，不是未经实验即可确认的因果结论。"
 relatedNotes: ["bad-case-review-loop", "ai-video-evaluation", "video-vs-image-prompt"]
 connections:
+  - label: "PROMPT"
+    title: "失败镜头返修诊断"
+    description: "带着可见证据提出复测假设；没有样本时不填写虚构的失败结论。"
+    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-failure-revision"
+    tone: "coral"
   - label: "METHOD"
     title: "AI 视频到底应该怎么评？"
     description: "先建立验收门槛、分层观察和严重度，再使用这本词典给问题命名。"

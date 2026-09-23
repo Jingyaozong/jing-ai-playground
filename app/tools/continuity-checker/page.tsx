@@ -26,7 +26,7 @@ export default function ContinuityCheckerPage() {
         <section className="continuity-method-note">
           <div><span className="mono">A → B / 检查单位</span><h2>连续性不在一镜里，<br />它发生在两镜之间。</h2></div>
           <p>工具只根据你选择的人物、方向、视线、动作、事实和声音状态进行透明判断。它不会读取或上传视频，也不能代替把真实镜头放进时间线逐帧验收。</p>
-          <Link href="/notes/ai-video-shot-continuity/">阅读完整跨镜连续性方法 ↗</Link>
+          <nav className="tool-method-links" aria-label="跨镜连续性相关内容"><Link href="/notes/ai-video-shot-continuity/">阅读完整跨镜连续性方法 ↗</Link><Link href="/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-cut-continuity-handoff">复制镜头交接模板 ↗</Link></nav>
         </section>
       </div>
       <SiteFooter />
