@@ -7,7 +7,7 @@ export type PromptResource = {
   whyItMatters: string;
   tags: string[];
   url: string;
-  sourceStatus: 'content-checked' | 'metadata-only';
+  sourceStatus: 'content-checked' | 'captions-reviewed';
 };
 
 export const promptResources: PromptResource[] = [
@@ -60,10 +60,10 @@ export const promptResources: PromptResource[] = [
     title: 'AI Prompt Engineering: A Deep Dive',
     source: 'Anthropic / YouTube',
     type: 'VIDEO',
-    description: '据 Anthropic 官方视频简介，团队成员讨论 Prompt 迭代、角色与隐喻、模型推理，以及 Prompt engineering 的未来；视频内容尚未逐段核对。',
-    whyItMatters: '比技巧清单更接近“为什么这样问”，适合想理解 Prompt 方法论的人。',
+    description: '英文字幕中，03:14 谈试错与独立实验，12:45 谈先找出指令歧义，51:12 谈阅读输出并自己测试；已核对这些字幕片段，未核对完整画面。',
+    whyItMatters: '这三处把 Prompt 从技巧清单拉回到“目标是否说清、输出是否经过验证”；适合用来检查自己的迭代方法。',
     tags: ['视频', '方法论', 'Anthropic'],
     url: 'https://www.youtube.com/watch?v=T9aRN5JkmL8',
-    sourceStatus: 'metadata-only',
+    sourceStatus: 'captions-reviewed',
   },
 ];

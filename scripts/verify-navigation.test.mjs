@@ -151,15 +151,16 @@ test('cross-page recommendations remain editorial candidates until Jing confirms
   assert.ok(!prompts.includes('我为什么留下'));
 });
 
-test('prompt resource cards distinguish checked source text from video metadata', () => {
+test('prompt resource cards distinguish checked source text from reviewed video captions', () => {
   const html = readFileSync(join(process.cwd(), 'out/prompts/index.html'), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   assert.equal(promptResources.length, 5);
   assert.equal(promptResources.filter((item) => item.sourceStatus === 'content-checked').length, 4);
-  assert.equal(promptResources.filter((item) => item.sourceStatus === 'metadata-only').length, 1);
+  assert.equal(promptResources.filter((item) => item.sourceStatus === 'captions-reviewed').length, 1);
   assert.ok(html.includes('4 条资源正文已按原站核对'));
-  assert.ok(html.includes('仅元信息已核对'));
-  assert.ok(html.includes('视频内容尚未逐段核对'));
+  assert.ok(html.includes('字幕重点已核对'));
+  assert.ok(html.includes('未核对完整画面'));
+  for (const time of ['03:14', '12:45', '51:12']) assert.ok(html.includes(time));
   for (const item of promptResources) {
     assert.ok(html.includes(item.url.replaceAll('&', '&amp;')), `Original resource link missing: ${item.id}`);
   }
