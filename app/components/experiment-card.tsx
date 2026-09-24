@@ -2,11 +2,17 @@ import Link from 'next/link';
 import type { Experiment } from '../data/content';
 import { ProjectVisual } from './project-visual';
 
-export function ExperimentCard({ experiment, isLatest = false }: { experiment: Experiment; isLatest?: boolean }) {
+const evidenceLabels: Record<Experiment['evidenceKind'], string> = {
+  protocol: '协议待执行 · 无输出',
+  'static-pilot': '静态 Pilot · 无视频结论',
+  'text-pilot': '已有文本样本 · 编辑初审',
+};
+
+export function ExperimentCard({ experiment }: { experiment: Experiment }) {
   return (
     <article className="experiment-card" id={experiment.id}>
       <ProjectVisual variant={experiment.visual} label={experiment.title} />
-      <span className={`project-truth-badge truth-${experiment.stage} mono`}>{experiment.stage === 'documented' ? (isLatest ? '最新研究 · 有详情' : '有详情记录') : '实验设想 · 未执行'}</span>
+      <span className={`project-truth-badge truth-${experiment.stage === 'concept' ? 'concept' : experiment.evidenceKind} mono`}>{experiment.stage === 'documented' ? evidenceLabels[experiment.evidenceKind] : '实验设想 · 未执行'}</span>
       <div className="card-topline mono">
         <span>EXP. {experiment.number}</span>
         <span>{experiment.category}</span>

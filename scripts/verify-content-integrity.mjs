@@ -124,6 +124,17 @@ for (const experiment of experiments) {
   check(detail, `实验 ${experiment.number} 缺少详情：${experiment.slug}`);
   if (!detail) continue;
 
+  if (experiment.evidenceKind === 'protocol') {
+    check(/0\s*\/\s*\d+.*待执行/.test(experiment.status), `实验 ${experiment.number} 的协议角标与归档状态不一致`);
+    check(detail.samples.every((sample) => sample.generated === false && !sample.outputText), `实验 ${experiment.number} 标为待执行，但详情含有已生成样本`);
+  } else if (experiment.evidenceKind === 'text-pilot') {
+    check(/9\s*\/\s*9.*完成/.test(experiment.status), `实验 ${experiment.number} 的文本样本角标与归档状态不一致`);
+    check(detail.samples.length === 9 && detail.samples.every((sample) => Boolean(sample.outputText?.trim()) && Boolean(sample.rawHref)), `实验 ${experiment.number} 标为已有文本样本，但缺少原始文本记录`);
+  } else if (experiment.evidenceKind === 'static-pilot') {
+    check(experiment.status.includes('PILOT 4 格'), `实验 ${experiment.number} 的静态样本角标与归档状态不一致`);
+    check(detail.samples.length === 4 && detail.samples.every((sample) => sample.generated !== false && !sample.outputText), `实验 ${experiment.number} 的四格静态样本状态不一致`);
+  }
+
   for (const field of ['number', 'title', 'category', 'date']) {
     check(experiment[field] === detail[field], `实验 ${experiment.number} 的 ${field} 不一致：归档“${experiment[field]}” / 详情“${detail[field]}”`);
   }

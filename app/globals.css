@@ -364,6 +364,10 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .project-truth-badge { display: inline-flex; width: fit-content; margin-top: 16px; padding: 7px 9px; border: 1.5px solid var(--ink); border-radius: 99px; color: var(--ink); font-weight: 700; }
 .truth-documented { background: var(--mint); }
 .truth-concept { background: var(--yellow); }
+.truth-editorial { background: var(--coral); }
+.truth-protocol { background: var(--yellow); }
+.truth-static-pilot { background: var(--sky); }
+.truth-text-pilot { background: var(--mint); }
 .concept-card-note { display: block; width: fit-content; margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); line-height: 1.55; }
 .dark-section { background: var(--sky); color: var(--ink); border-block: 2px solid var(--ink); }
 .dark-section .text-link { box-shadow: 3px 3px 0 var(--blue); }

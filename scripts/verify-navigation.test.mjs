@@ -48,12 +48,15 @@ test('story cards preserve semantic titles, original status and detail links', (
         assert.ok(card.includes(`<h3>${item.title}</h3>`), `Short title changed: ${item.id}`);
       }
       assert.ok(card.includes(item.status), `Status changed: ${item.id}`);
+      assert.ok(card.includes(`>${item.status}</span>`), `Story status is not visible in its badge: ${item.id}`);
+      assert.ok(!card.includes('有详情记录') && !card.includes('最新故事 · 有详情'), `Generic story badge remains: ${item.id}`);
       assert.ok(card.includes(`/stories/${item.slug}/`), `Missing detail link: ${item.id}`);
     }
   }
 });
 
 test('experiment card title groups preserve titles, status and detail links', () => {
+  const evidenceLabels = { protocol: '协议待执行 · 无输出', 'static-pilot': '静态 Pilot · 无视频结论', 'text-pilot': '已有文本样本 · 编辑初审' };
   for (const file of ['index.html', 'experiments/index.html']) {
     const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
     for (const item of experiments) {
@@ -67,6 +70,8 @@ test('experiment card title groups preserve titles, status and detail links', ()
       assert.ok(card, `Missing experiment card: ${item.id}`);
       for (const part of item.titleParts) assert.ok(card.includes(`<span class="experiment-title-part">${part}</span>`), `Missing title group: ${item.id} / ${part}`);
       assert.ok(card.includes(item.status), `Status changed: ${item.id}`);
+      assert.ok(card.includes(evidenceLabels[item.evidenceKind]), `Evidence badge is missing: ${item.id}`);
+      assert.ok(!card.includes('有详情记录') && !card.includes('最新研究 · 有详情'), `Generic experiment badge remains: ${item.id}`);
       assert.ok(card.includes(`/experiments/${item.slug}/`), `Missing detail link: ${item.id}`);
     }
   }

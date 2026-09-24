@@ -25,6 +25,7 @@ export type Experiment = {
   date: string;
   status: string;
   stage: 'documented' | 'concept';
+  evidenceKind: 'protocol' | 'static-pilot' | 'text-pilot';
   visual: string;
 };
 
@@ -144,6 +145,7 @@ export const experiments: Experiment[] = [
     date: '2026.08.18',
     status: 'PILOT 4 格 · 非模型结论',
     stage: 'documented',
+    evidenceKind: 'static-pilot',
     visual: 'faces',
   },
   {
@@ -157,6 +159,7 @@ export const experiments: Experiment[] = [
     date: '2026.08.29',
     status: '协议完成 · 0 / 12 待执行',
     stage: 'documented',
+    evidenceKind: 'protocol',
     visual: 'reference',
   },
   {
@@ -170,6 +173,7 @@ export const experiments: Experiment[] = [
     date: '2026.08.29',
     status: '协议完成 · 0 / 9 待执行',
     stage: 'documented',
+    evidenceKind: 'protocol',
     visual: 'rainstudy',
   },
   {
@@ -183,6 +187,7 @@ export const experiments: Experiment[] = [
     date: '2026.08.29',
     status: '协议完成 · 0 / 12 待执行',
     stage: 'documented',
+    evidenceKind: 'protocol',
     visual: 'lighting',
   },
   {
@@ -196,6 +201,7 @@ export const experiments: Experiment[] = [
     date: '2026.08.30',
     status: '协议完成 · 0 / 9 待执行',
     stage: 'documented',
+    evidenceKind: 'protocol',
     visual: 'earlyshadow reversed',
   },
   {
@@ -209,6 +215,7 @@ export const experiments: Experiment[] = [
     date: '2026.08.30',
     status: '协议完成 · 0 / 9 待执行',
     stage: 'documented',
+    evidenceKind: 'protocol',
     visual: 'contact',
   },
   {
@@ -222,6 +229,7 @@ export const experiments: Experiment[] = [
     date: '2026.08.31',
     status: '协议完成 · 0 / 9 待执行',
     stage: 'documented',
+    evidenceKind: 'protocol',
     visual: 'storyboard',
   },
   {
@@ -235,6 +243,7 @@ export const experiments: Experiment[] = [
     date: '2026.08.31',
     status: '首轮文本 Pilot · 9 / 9 完成',
     stage: 'documented',
+    evidenceKind: 'text-pilot',
     visual: 'poster',
   },
   {
@@ -248,6 +257,7 @@ export const experiments: Experiment[] = [
     date: '2026.09.01',
     status: '跨题材复测 · 9 / 9 完成',
     stage: 'documented',
+    evidenceKind: 'text-pilot',
     visual: 'posterretest',
   },
   {
@@ -261,6 +271,7 @@ export const experiments: Experiment[] = [
     date: '2026.09.01',
     status: '协议完成 · 0 / 9 待执行',
     stage: 'documented',
+    evidenceKind: 'protocol',
     visual: 'waterline',
   },
 ];
