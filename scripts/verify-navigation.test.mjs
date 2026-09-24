@@ -193,6 +193,8 @@ test('Prompt pre-flight tool and its method note are connected without invented 
   const html = readFileSync(join(process.cwd(), 'out/tools/prompt-preflight/index.html'), 'utf8');
   assert.ok(html.includes('不调用 AI、不上传输入、不自动保存'));
   assert.ok(html.includes('待执行 · 无输出'));
+  assert.ok(html.includes('HUMAN REVIEW / 逐项验收'));
+  assert.ok(html.includes('工具不自动评分'));
 });
 
 test('featured note introduction follows the selected note metadata', () => {

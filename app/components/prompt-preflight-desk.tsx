@@ -1,10 +1,10 @@
 'use client';
 
 import { Fragment, useMemo, useState } from 'react';
-import { diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, parsePromptPreflight, serializePromptPreflight, type PromptPreflightRecord, type PromptDiffSegment } from '../../lib/prompt-preflight';
+import { acceptanceVerdicts, diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, parsePromptPreflight, serializePromptPreflight, type AcceptanceCheck, type AcceptanceVerdict, type PromptPreflightRecord, type PromptDiffSegment } from '../../lib/prompt-preflight';
 
 const storageKey = 'jing-prompt-preflight-v1';
-type Field = keyof PromptPreflightRecord;
+type Field = Exclude<keyof PromptPreflightRecord, 'checks'>;
 
 const groups: Array<{ title: string; eyebrow: string; note: string; fields: Array<{ key: Field; label: string; hint: string; rows?: number }> }> = [
   { title: '先定目标', eyebrow: 'AIM / 要做成什么', note: '先写工作任务，再写什么算完成。', fields: [
@@ -36,9 +36,26 @@ export function PromptPreflightDesk() {
   const diff = useMemo(() => diffVisible && record.originalPrompt && record.revisedPrompt ? diffPromptText(record.originalPrompt, record.revisedPrompt) : null, [diffVisible, record.originalPrompt, record.revisedPrompt]);
 
   function change(key: Field, value: string) {
-    setRecord((current) => ({ ...current, [key]: value }));
+    const resetOriginal = key === 'originalPrompt' || key === 'originalOutput' || key === 'testInput';
+    const resetRevised = key === 'revisedPrompt' || key === 'revisedOutput' || key === 'testInput';
+    setRecord((current) => ({ ...current, [key]: value, checks: resetOriginal || resetRevised ? current.checks.map((check) => ({ ...check, originalVerdict: resetOriginal ? '未评' as const : check.originalVerdict, revisedVerdict: resetRevised ? '未评' as const : check.revisedVerdict })) : current.checks }));
     if (key === 'originalPrompt' || key === 'revisedPrompt') setDiffVisible(false);
-    setFeedback('内容已更改；如需留在这台浏览器，请再次保存。');
+    setFeedback(resetOriginal || resetRevised ? '输入已改变；相关判定重置为未评，原证据文字保留供核对。请再次保存。' : '内容已更改；如需留在这台浏览器，请再次保存。');
+  }
+
+  function addCheck() {
+    setRecord((current) => current.checks.length >= 8 ? current : { ...current, checks: [...current.checks, { id: crypto.randomUUID(), criterion: '', originalVerdict: '未评', originalEvidence: '', revisedVerdict: '未评', revisedEvidence: '' }] });
+    setFeedback('已添加空白验收项；请先写可观察条件，再依据真实输出人工判定。');
+  }
+
+  function updateCheck(id: string, patch: Partial<AcceptanceCheck>) {
+    setRecord((current) => ({ ...current, checks: current.checks.map((check) => check.id === id ? { ...check, ...patch, ...(patch.criterion === undefined ? {} : { originalVerdict: '未评' as const, revisedVerdict: '未评' as const }) } : check) }));
+    setFeedback(patch.criterion === undefined ? '验收记录已更改；如需保留，请再次保存到此浏览器。' : '验收条件已改变；两版旧判定重置为未评，原证据文字保留供核对。');
+  }
+
+  function removeCheck(id: string) {
+    setRecord((current) => ({ ...current, checks: current.checks.filter((check) => check.id !== id) }));
+    setFeedback('已从当前填写移除这条验收项；先前保存的版本不受影响。');
   }
 
   function save() {
@@ -86,6 +103,7 @@ export function PromptPreflightDesk() {
         <div className="prompt-preflight-diff-heading"><div><span className="mono">TEXT CHANGE / 文字对照</span><h2 id="prompt-diff-title">改了哪里，<br />一眼看清。</h2></div><button type="button" disabled={!record.originalPrompt || !record.revisedPrompt} onClick={() => setDiffVisible((visible) => !visible)}>{diffVisible ? '收起文字差异' : '查看文字差异 ↗'}</button></div>
         {!record.originalPrompt || !record.revisedPrompt ? <p>填写原版与新版完整 Prompt 后，再查看文字增删。这里只对照文本，不分析语义。</p> : diff ? <><div className="prompt-preflight-diff-grid"><div><span className="mono">原版 / 删除用珊瑚色标出</span><p>{diff.before.map((segment, part) => <DiffPart segment={segment} key={part} />)}</p></div><div><span className="mono">新版 / 增加用薄荷色标出</span><p>{diff.after.map((segment, part) => <DiffPart segment={segment} key={part} />)}</p></div></div><p>{diff.mode === 'coarse' ? '文本较长：仅区分共同前后文与中间改写范围，中间未逐字对齐。' : '按字符对齐文字增删；相同文字保持原色。'}差异不代表哪版更好，仍需用同一输入测试并人工验收。</p></> : <p>点击“查看文字差异”后显示；编辑任一版本会收起旧对照。</p>}
       </section>}</Fragment>)}
+      <AcceptanceMatrix record={record} issues={review.matrix.issues} onAdd={addCheck} onUpdate={updateCheck} onRemove={removeCheck} />
     </div>
     <aside className="prompt-preflight-ticket">
       <div className="prompt-preflight-ticket-top mono"><span>REVIEW TICKET / 本地检查</span><span>只查缺项</span></div>
@@ -104,4 +122,21 @@ function DiffPart({ segment }: { segment: PromptDiffSegment }) {
   if (segment.kind === 'removed') return <del>{segment.text}</del>;
   if (segment.kind === 'added') return <ins>{segment.text}</ins>;
   return <span>{segment.text}</span>;
+}
+
+function AcceptanceMatrix({ record, issues, onAdd, onUpdate, onRemove }: { record: PromptPreflightRecord; issues: string[]; onAdd: () => void; onUpdate: (id: string, patch: Partial<AcceptanceCheck>) => void; onRemove: (id: string) => void }) {
+  return <section className="prompt-acceptance-matrix" aria-labelledby="prompt-acceptance-title">
+    <div className="prompt-acceptance-heading"><div><span className="mono">HUMAN REVIEW / 逐项验收</span><h2 id="prompt-acceptance-title">同一把尺子，<br />看两版输出。</h2></div><button type="button" onClick={onAdd} disabled={record.checks.length >= 8}>添加验收项 ＋</button></div>
+    <p>每项只写可观察的条件。判定由你选择，工具不自动评分；没有实际输出时只能保持“未评”。最多记录 8 项。</p>
+    {record.checks.length === 0 ? <div className="prompt-acceptance-empty">还没有验收项。先添加一条，再把原版与新版放到同一条件下核对。</div> : <div className="prompt-acceptance-list">{record.checks.map((check, index) => <article className="prompt-acceptance-card" key={check.id}>
+      <div className="prompt-acceptance-card-top"><span className="mono">条件 {String(index + 1).padStart(2, '0')}</span><button type="button" onClick={() => onRemove(check.id)}>移除此项</button></div>
+      <label className="prompt-acceptance-criterion"><span>可观察的验收条件</span><textarea maxLength={180} rows={2} value={check.criterion} onChange={(event) => onUpdate(check.id, { criterion: event.target.value })} placeholder="例如：每条待办都有明确动作；缺失负责人时标为待确认" /></label>
+      <div className="prompt-acceptance-pair">{([['原版', 'originalOutput', 'originalVerdict', 'originalEvidence'], ['新版', 'revisedOutput', 'revisedVerdict', 'revisedEvidence']] as const).map(([label, outputKey, verdictKey, evidenceKey]) => <div key={label}>
+        <strong>{label}输出</strong>
+        <label><span>人工判定</span><select aria-label={`条件 ${index + 1} ${label}人工判定`} disabled={!record[outputKey].trim() || !check.criterion.trim()} value={check[verdictKey]} onChange={(event) => onUpdate(check.id, { [verdictKey]: event.target.value as AcceptanceVerdict })}>{acceptanceVerdicts.map((verdict) => <option key={verdict} value={verdict}>{verdict}</option>)}</select></label>
+        <label><span>对应证据</span><textarea aria-label={`条件 ${index + 1} ${label}对应证据`} maxLength={1000} rows={3} value={check[evidenceKey]} onChange={(event) => onUpdate(check.id, { [evidenceKey]: event.target.value })} placeholder={record[outputKey].trim() ? '写下输出中的可核对依据；无法判断也说明原因' : '先粘贴该版实际输出'} /></label>
+      </div>)}</div>
+    </article>)}</div>}
+    <div className="prompt-acceptance-status"><span className="mono">仍待人工处理</span><ul>{issues.length ? issues.map((issue) => <li key={issue}>{issue}</li>) : <li>记录字段已填写；判定是否正确仍需人工确认。</li>}</ul></div>
+  </section>;
 }

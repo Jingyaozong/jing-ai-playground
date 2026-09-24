@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, parsePromptPreflight, serializePromptPreflight } from '../lib/prompt-preflight.ts';
+import { diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectAcceptanceMatrix, inspectPromptPreflight, parsePromptPreflight, serializePromptPreflight } from '../lib/prompt-preflight.ts';
 
 test('blank card keeps outputs pending and never claims a test result', () => {
   const result = inspectPromptPreflight(emptyPromptPreflight);
@@ -31,6 +31,36 @@ test('local save round-trips only bounded versioned fields', () => {
   const { revisedPrompt, ...legacy } = record;
   void revisedPrompt;
   assert.deepEqual(parsePromptPreflight(JSON.stringify({ version: 1, record: legacy })), record);
+  const { checks, ...previous } = record;
+  void checks;
+  assert.deepEqual(parsePromptPreflight(JSON.stringify({ version: 2, record: previous })), record);
+});
+
+test('manual matrix requires both actual outputs and evidence for each verdict', () => {
+  const check = { id: 'one', criterion: '缺失负责人时标注待确认', originalVerdict: '未评', originalEvidence: '', revisedVerdict: '未评', revisedEvidence: '' };
+  const blank = { ...emptyPromptPreflight, checks: [check] };
+  assert.equal(inspectAcceptanceMatrix(blank).complete, false);
+  assert.match(formatPromptPreflight(blank), /逐项人工验收（无自动评分）/);
+  const noOutputVerdict = { ...blank, checks: [{ ...check, originalVerdict: '通过' }] };
+  assert.ok(inspectAcceptanceMatrix(noOutputVerdict).issues.some((issue) => issue.includes('没有实际输出')));
+  const outputs = { ...blank, originalOutput: 'A 输出', revisedOutput: 'B 输出' };
+  assert.ok(inspectAcceptanceMatrix(outputs).issues.some((issue) => issue.includes('仍待人工判定')));
+  const missingEvidence = { ...outputs, checks: [{ ...check, originalVerdict: '未通过', revisedVerdict: '通过' }] };
+  assert.ok(inspectAcceptanceMatrix(missingEvidence).issues.some((issue) => issue.includes('缺少对应证据')));
+  const filled = { ...outputs, checks: [{ ...check, originalVerdict: '未通过', originalEvidence: 'A 未标注', revisedVerdict: '通过', revisedEvidence: 'B 标注待确认' }] };
+  assert.equal(inspectAcceptanceMatrix(filled).complete, true);
+  assert.equal(inspectPromptPreflight(filled).resultStatus, '已记录输出与逐项证据 · 仍需人工判断');
+  assert.match(formatPromptPreflight(filled), /原版：未通过；证据：A 未标注/);
+});
+
+test('versioned local records reject forged or oversized manual review rows', () => {
+  const check = { id: 'one', criterion: '有动作', originalVerdict: '未评', originalEvidence: '', revisedVerdict: '未评', revisedEvidence: '' };
+  const record = { ...emptyPromptPreflight, checks: [check] };
+  assert.deepEqual(parsePromptPreflight(serializePromptPreflight(record)), record);
+  assert.equal(parsePromptPreflight(serializePromptPreflight({ ...record, checks: [check, check] })), null);
+  assert.equal(parsePromptPreflight(serializePromptPreflight({ ...record, checks: [{ ...check, originalVerdict: '自动通过' }] })), null);
+  assert.equal(parsePromptPreflight(serializePromptPreflight({ ...record, checks: [{ ...check, criterion: 'x'.repeat(181) }] })), null);
+  assert.equal(parsePromptPreflight(serializePromptPreflight({ ...record, checks: Array(9).fill(check) })), null);
 });
 
 test('text diff shows exact Chinese additions and deletions without a quality judgment', () => {

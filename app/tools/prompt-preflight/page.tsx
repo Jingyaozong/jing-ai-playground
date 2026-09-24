@@ -6,7 +6,7 @@ import { SiteHeader } from '../../components/site-header';
 
 export const metadata: Metadata = {
   title: 'Prompt 歧义预检卡 — JING AI PLAYGROUND',
-  description: '用目标、歧义、输出三关整理 Prompt 迭代记录；本地对照两版文字、复制和保存，不调用模型。',
+  description: '用目标、歧义、输出三关整理 Prompt 迭代记录；本地对照文字并逐项人工验收，不调用模型。',
 };
 
 export default function PromptPreflightPage() {

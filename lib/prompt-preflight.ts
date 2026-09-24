@@ -1,3 +1,14 @@
+export const acceptanceVerdicts = ['未评', '通过', '未通过', '无法判断'] as const;
+export type AcceptanceVerdict = (typeof acceptanceVerdicts)[number];
+export type AcceptanceCheck = {
+  id: string;
+  criterion: string;
+  originalVerdict: AcceptanceVerdict;
+  originalEvidence: string;
+  revisedVerdict: AcceptanceVerdict;
+  revisedEvidence: string;
+};
+
 export type PromptPreflightRecord = {
   task: string;
   audience: string;
@@ -12,15 +23,36 @@ export type PromptPreflightRecord = {
   originalOutput: string;
   revisedOutput: string;
   evidence: string;
+  checks: AcceptanceCheck[];
 };
 
 export const emptyPromptPreflight: PromptPreflightRecord = {
   task: '', audience: '', acceptance: '', unknowns: '', originalPrompt: '', revisedPrompt: '', ambiguity: '',
-  humanDecision: '', oneChange: '', testInput: '', originalOutput: '', revisedOutput: '', evidence: '',
+  humanDecision: '', oneChange: '', testInput: '', originalOutput: '', revisedOutput: '', evidence: '', checks: [],
 };
 
 const fieldLimit = 4000;
-const fieldNames = Object.keys(emptyPromptPreflight) as Array<keyof PromptPreflightRecord>;
+const fieldNames = Object.keys(emptyPromptPreflight).filter((key) => key !== 'checks') as Array<Exclude<keyof PromptPreflightRecord, 'checks'>>;
+
+export function inspectAcceptanceMatrix(record: PromptPreflightRecord) {
+  const issues: string[] = [];
+  if (record.checks.length === 0) return { issues: ['尚未添加逐项验收条件。'], complete: false };
+  if (!record.originalOutput.trim() || !record.revisedOutput.trim()) issues.push('两版实际输出尚未齐全；逐项验收仍待执行。');
+  for (const [index, check] of record.checks.entries()) {
+    const label = `验收项 ${index + 1}`;
+    if (!check.criterion.trim()) issues.push(`${label}缺少可观察条件。`);
+    for (const [name, output, verdict, evidence] of [
+      ['原版', record.originalOutput, check.originalVerdict, check.originalEvidence],
+      ['新版', record.revisedOutput, check.revisedVerdict, check.revisedEvidence],
+    ] as const) {
+      if (!output.trim()) {
+        if (verdict !== '未评') issues.push(`${label}的${name}没有实际输出，不能保留判定。`);
+      } else if (verdict === '未评') issues.push(`${label}的${name}仍待人工判定。`);
+      else if (!evidence.trim()) issues.push(`${label}的${name}已判定，但缺少对应证据。`);
+    }
+  }
+  return { issues, complete: issues.length === 0 && Boolean(record.originalOutput.trim() && record.revisedOutput.trim()) };
+}
 
 export function inspectPromptPreflight(record: PromptPreflightRecord) {
   const gaps: string[] = [];
@@ -35,13 +67,14 @@ export function inspectPromptPreflight(record: PromptPreflightRecord) {
   if (!record.testInput.trim()) gaps.push('固定同一测试输入，再比较两个版本。');
 
   const outputCount = Number(Boolean(record.originalOutput.trim())) + Number(Boolean(record.revisedOutput.trim()));
-  const resultStatus = outputCount === 0 ? '待执行 · 无输出' : outputCount === 1 ? '只记录了一版输出 · 不可比较' : !record.evidence.trim() ? '已记录两版输出 · 待填写验收证据' : '已记录输出与证据 · 仍需人工判断';
-  return { gaps, resultStatus, readyToTest: gaps.length === 0 };
+  const matrix = inspectAcceptanceMatrix(record);
+  const resultStatus = outputCount === 0 ? '待执行 · 无输出' : outputCount === 1 ? '只记录了一版输出 · 不可比较' : matrix.complete ? '已记录输出与逐项证据 · 仍需人工判断' : !record.evidence.trim() ? '已记录两版输出 · 待填写验收证据' : '已记录输出与证据 · 仍需人工判断';
+  return { gaps, matrix, resultStatus, readyToTest: gaps.length === 0 };
 }
 
 export function formatPromptPreflight(record: PromptPreflightRecord) {
   const result = inspectPromptPreflight(record);
-  const value = (key: keyof PromptPreflightRecord) => record[key].trim() || '未填写';
+  const value = (key: Exclude<keyof PromptPreflightRecord, 'checks'>) => record[key].trim() || '未填写';
   return [
     '# Prompt 歧义预检卡',
     '状态：本站编辑工具 · 待荆确认；以下内容由使用者填写，不是模型自动结论。',
@@ -66,6 +99,14 @@ export function formatPromptPreflight(record: PromptPreflightRecord) {
     `验收证据：${record.evidence.trim() || '待观察'}`,
     `记录状态：${result.resultStatus}`,
     '',
+    '## 逐项人工验收（无自动评分）',
+    ...(record.checks.length ? record.checks.flatMap((check, index) => [
+      `${index + 1}. 条件：${check.criterion.trim() || '未填写'}`,
+      `   原版：${check.originalVerdict}；证据：${check.originalEvidence.trim() || '未填写'}`,
+      `   新版：${check.revisedVerdict}；证据：${check.revisedEvidence.trim() || '未填写'}`,
+    ]) : ['- 尚未添加验收项。']),
+    ...(result.matrix.issues.length ? ['待复核：', ...result.matrix.issues.map((issue) => `- ${issue}`)] : ['逐项记录已填写；仍需人工确认判定是否正确。']),
+    '',
     '## 拍前待补',
     ...(result.gaps.length ? result.gaps.map((gap) => `- ${gap}`) : ['- 必要字段已填写；尚不代表 Prompt 有效或输出合格。']),
     '',
@@ -74,20 +115,32 @@ export function formatPromptPreflight(record: PromptPreflightRecord) {
 }
 
 export function parsePromptPreflight(value: string): PromptPreflightRecord | null {
-  if (value.length > fieldLimit * fieldNames.length + 1000) return null;
+  if (value.length > fieldLimit * fieldNames.length + 8 * 2400 + 2000) return null;
   try {
     const parsed: unknown = JSON.parse(value);
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return null;
     const source = parsed as Record<string, unknown>;
-    if ((source.version !== 1 && source.version !== 2) || !source.record || typeof source.record !== 'object' || Array.isArray(source.record)) return null;
+    if (![1, 2, 3].includes(source.version as number) || !source.record || typeof source.record !== 'object' || Array.isArray(source.record)) return null;
     const input = source.record as Record<string, unknown>;
     if (!fieldNames.every((key) => source.version === 1 && key === 'revisedPrompt' && input[key] === undefined ? true : typeof input[key] === 'string' && (input[key] as string).length <= fieldLimit)) return null;
-    return Object.fromEntries(fieldNames.map((key) => [key, input[key] ?? ''])) as PromptPreflightRecord;
+    const checks = source.version === 3 ? input.checks : [];
+    if (!Array.isArray(checks) || checks.length > 8 || !checks.every((check) => {
+      if (!check || typeof check !== 'object' || Array.isArray(check)) return false;
+      const row = check as Record<string, unknown>;
+      return typeof row.id === 'string' && row.id.length > 0 && row.id.length <= 80
+        && typeof row.criterion === 'string' && row.criterion.length <= 180
+        && acceptanceVerdicts.includes(row.originalVerdict as AcceptanceVerdict)
+        && acceptanceVerdicts.includes(row.revisedVerdict as AcceptanceVerdict)
+        && typeof row.originalEvidence === 'string' && row.originalEvidence.length <= 1000
+        && typeof row.revisedEvidence === 'string' && row.revisedEvidence.length <= 1000;
+    })) return null;
+    if (new Set(checks.map((check: AcceptanceCheck) => check.id)).size !== checks.length) return null;
+    return { ...Object.fromEntries(fieldNames.map((key) => [key, input[key] ?? ''])), checks: checks.map((check: AcceptanceCheck) => ({ id: check.id, criterion: check.criterion, originalVerdict: check.originalVerdict, originalEvidence: check.originalEvidence, revisedVerdict: check.revisedVerdict, revisedEvidence: check.revisedEvidence })) } as PromptPreflightRecord;
   } catch { return null; }
 }
 
 export function serializePromptPreflight(record: PromptPreflightRecord) {
-  return JSON.stringify({ version: 2, record });
+  return JSON.stringify({ version: 3, record });
 }
 
 export type PromptDiffSegment = { kind: 'same' | 'removed' | 'added'; text: string };
