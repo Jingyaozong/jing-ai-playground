@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment, useMemo, useRef, useState, type ChangeEvent } from 'react';
-import { acceptanceVerdicts, diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, maxPromptPreflightFileBytes, parsePromptPreflight, serializePromptPreflight, type AcceptanceCheck, type AcceptanceVerdict, type PromptPreflightRecord, type PromptDiffSegment } from '../../lib/prompt-preflight';
+import { acceptanceVerdicts, createSyntheticPromptPreflight, diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, maxPromptPreflightFileBytes, parsePromptPreflight, serializePromptPreflight, type AcceptanceCheck, type AcceptanceVerdict, type PromptPreflightRecord, type PromptDiffSegment } from '../../lib/prompt-preflight';
 
 const storageKey = 'jing-prompt-preflight-v1';
 type Field = Exclude<keyof PromptPreflightRecord, 'checks'>;
@@ -33,6 +33,7 @@ export function PromptPreflightDesk() {
   const [feedback, setFeedback] = useState('还没有填写记录；不会自动保存或联网。');
   const [diffVisible, setDiffVisible] = useState(false);
   const [pendingImport, setPendingImport] = useState<{ fileName: string; record: PromptPreflightRecord } | null>(null);
+  const [examplePreview, setExamplePreview] = useState(false);
   const importInput = useRef<HTMLInputElement>(null);
   const review = inspectPromptPreflight(record);
   const diff = useMemo(() => diffVisible && record.originalPrompt && record.revisedPrompt ? diffPromptText(record.originalPrompt, record.revisedPrompt) : null, [diffVisible, record.originalPrompt, record.revisedPrompt]);
@@ -137,7 +138,19 @@ export function PromptPreflightDesk() {
     setFeedback('已导入并替换当前填写；浏览器存档未改变。如需保留，请另行点击“保存到此浏览器”。');
   }
 
-  return <section className="prompt-preflight-desk" aria-label="Prompt 歧义预检工作台">
+  function loadExample() {
+    setRecord(createSyntheticPromptPreflight());
+    setDiffVisible(false);
+    setPendingImport(null);
+    setExamplePreview(false);
+    setFeedback('已载入虚构演练；两版实际输出仍为空，验收项均为未评。浏览器存档未改变。');
+  }
+
+  const example = createSyntheticPromptPreflight();
+  return <><section className="prompt-preflight-practice" aria-labelledby="prompt-practice-title">
+    <div className="prompt-preflight-practice-heading"><span className="mono">FICTIONAL WALKTHROUGH / 虚构演练 · 待执行</span><h2 id="prompt-practice-title">先看怎样补规则，<br />再决定是否试跑。</h2><p>用一段完全虚构的匿名会议记录，演示一轮只改一处的 Prompt 预检。这里没有调用模型，也没有任何已验证结果。</p></div>
+    <div className="prompt-preflight-practice-paper"><div><span className="mono">原版</span><p>{example.originalPrompt}</p></div><div><span className="mono">新增的一条规则</span><p>未在记录中出现的负责人或期限标为“待确认”，不要推测。</p></div><button type="button" onClick={() => setExamplePreview(true)}>查看并载入虚构示例 ↗</button>{examplePreview && <div className="prompt-preflight-practice-confirm" role="group" aria-label="确认载入虚构示例"><p>将用虚构示例替换当前页面填写；此前保存到浏览器的记录不变。示例只有准备内容，没有模型输出或验收结论。</p><div><button type="button" onClick={loadExample}>确认替换当前填写</button><button type="button" onClick={() => setExamplePreview(false)}>取消</button></div></div>}</div>
+  </section><section className="prompt-preflight-desk" aria-label="Prompt 歧义预检工作台">
     <div className="prompt-preflight-form">
       {groups.map((group, index) => <Fragment key={group.eyebrow}><fieldset className="prompt-preflight-group">
         <legend><span className="mono">{group.eyebrow}</span><strong>{group.title}</strong></legend>
@@ -168,7 +181,7 @@ export function PromptPreflightDesk() {
       <p className="prompt-preflight-feedback" role="status" aria-live="polite">{feedback}</p>
       <p className="prompt-preflight-privacy">不调用 AI、不上传输入、不自动保存。缺项提示只看空白字段，不理解 Prompt 内容；效果判断需要真实输出与人工验收。本站编辑工具 · 待荆确认。</p>
     </aside>
-  </section>;
+  </section></>;
 }
 
 function DiffPart({ segment }: { segment: PromptDiffSegment }) {

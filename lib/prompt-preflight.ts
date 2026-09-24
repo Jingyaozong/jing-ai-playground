@@ -31,6 +31,28 @@ export const emptyPromptPreflight: PromptPreflightRecord = {
   humanDecision: '', oneChange: '', testInput: '', originalOutput: '', revisedOutput: '', evidence: '', checks: [],
 };
 
+export function createSyntheticPromptPreflight(): PromptPreflightRecord {
+  const originalPrompt = '请从下面的会议记录提取待办，以条目列出动作、负责人和期限。';
+  return {
+    ...emptyPromptPreflight,
+    task: '虚构演练｜从匿名会议记录整理待办',
+    audience: '演练中的项目协调人；不对应真实团队或客户',
+    acceptance: '逐条列出明确动作；未给出的负责人或期限标为“待确认”，不自行补全。',
+    unknowns: '第二项待办的负责人、期限；会议记录没有提供，不能猜测。',
+    originalPrompt,
+    revisedPrompt: `${originalPrompt}未在记录中出现的负责人或期限标为“待确认”，不要推测。`,
+    ambiguity: '原版要求列出负责人和期限，但虚构输入并未为每项待办提供这些信息；缺项该如何写？',
+    humanDecision: '本演练设定：缺失字段保留未知，统一写“待确认”；这不是模型自行作出的决定。',
+    oneChange: '仅补充负责人或期限缺失时的处理规则，其余要求不变。',
+    testInput: '【虚构会议记录】甲负责整理清单，期限为周五。另需确认宣传图片尺寸；记录没有指定这项工作的负责人和期限。',
+    checks: [
+      { id: 'synthetic-action', criterion: '每条待办都有可辨认的动作。', originalVerdict: '未评', originalEvidence: '', revisedVerdict: '未评', revisedEvidence: '' },
+      { id: 'synthetic-owner', criterion: '第二项待办未给出负责人时，明确标为“待确认”，不虚构人名。', originalVerdict: '未评', originalEvidence: '', revisedVerdict: '未评', revisedEvidence: '' },
+      { id: 'synthetic-deadline', criterion: '第二项待办未给出期限时，明确标为“待确认”，不推测日期。', originalVerdict: '未评', originalEvidence: '', revisedVerdict: '未评', revisedEvidence: '' },
+    ],
+  };
+}
+
 const fieldLimit = 4000;
 export const maxPromptPreflightFileBytes = 512 * 1024;
 const fieldNames = Object.keys(emptyPromptPreflight).filter((key) => key !== 'checks') as Array<Exclude<keyof PromptPreflightRecord, 'checks'>>;

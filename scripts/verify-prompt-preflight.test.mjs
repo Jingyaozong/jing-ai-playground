@@ -1,7 +1,25 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectAcceptanceMatrix, inspectPromptPreflight, maxPromptPreflightFileBytes, parsePromptPreflight, serializePromptPreflight } from '../lib/prompt-preflight.ts';
+import { createSyntheticPromptPreflight, diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectAcceptanceMatrix, inspectPromptPreflight, maxPromptPreflightFileBytes, parsePromptPreflight, serializePromptPreflight } from '../lib/prompt-preflight.ts';
+
+test('fictional walkthrough has one added rule and no invented model result', () => {
+  const record = createSyntheticPromptPreflight();
+  assert.match(record.task, /虚构演练/);
+  assert.match(record.testInput, /虚构会议记录/);
+  assert.ok(record.revisedPrompt.startsWith(record.originalPrompt));
+  assert.match(record.revisedPrompt.slice(record.originalPrompt.length), /待确认/);
+  assert.equal(inspectPromptPreflight(record).readyToTest, true);
+  assert.equal(inspectPromptPreflight(record).resultStatus, '待执行 · 无输出');
+  assert.equal(record.originalOutput, '');
+  assert.equal(record.revisedOutput, '');
+  assert.equal(record.evidence, '');
+  assert.equal(record.checks.length, 3);
+  assert.ok(record.checks.every((check) => check.originalVerdict === '未评' && check.revisedVerdict === '未评' && !check.originalEvidence && !check.revisedEvidence));
+  assert.deepEqual(parsePromptPreflight(serializePromptPreflight(record)), record);
+  record.checks[0].criterion = '已修改';
+  assert.notEqual(createSyntheticPromptPreflight().checks[0].criterion, '已修改');
+});
 
 test('blank card keeps outputs pending and never claims a test result', () => {
   const result = inspectPromptPreflight(emptyPromptPreflight);

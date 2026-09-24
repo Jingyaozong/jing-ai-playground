@@ -192,8 +192,10 @@ test('Prompt pre-flight tool and its method note are connected without invented 
   assert.ok(anchors('tools/index.html').includes('/tools/prompt-preflight/'));
   const html = readFileSync(join(process.cwd(), 'out/tools/prompt-preflight/index.html'), 'utf8');
   assert.ok(html.includes('不调用 AI、不上传输入、不自动保存'));
-  assert.ok(html.includes('待执行 · 无输出'));
-  assert.ok(html.includes('HUMAN REVIEW / 逐项验收'));
+    assert.ok(html.includes('待执行 · 无输出'));
+    assert.ok(html.includes('HUMAN REVIEW / 逐项验收'));
+    assert.ok(html.includes('虚构演练 · 待执行'));
+    assert.ok(html.includes('查看并载入虚构示例'));
   assert.ok(html.includes('工具不自动评分'));
 });
 
