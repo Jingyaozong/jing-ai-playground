@@ -267,6 +267,11 @@ export const experiments: Experiment[] = [
 
 export const tools: Tool[] = [
   {
+    id: 'tool-025', title: 'Prompt Pre-flight', label: 'Prompt 歧义预检卡',
+    description: '按目标、歧义和输出三关记录一轮修改，只提示缺项；可复制工作卡并显式保存到此浏览器。',
+    status: 'Ready', symbol: '?', category: '评测与复核', href: '/tools/prompt-preflight/',
+  },
+  {
     id: 'tool-024', title: 'Dataset Release Gates', label: '数据交付四关检查台',
     description: '按格式、有效性、质量和追溯记录人工判断与依据，汇总待办并复制待复核交接记录；不读取数据文件。',
     status: 'Ready', symbol: '▥', category: '交付与发布', href: '/tools/dataset-release/',

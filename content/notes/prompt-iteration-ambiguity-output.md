@@ -28,9 +28,9 @@ connections:
     href: "/notes/ai-video-prompt-comparison/"
     tone: "yellow"
   - label: "TOOL"
-    title: "打开完整 Prompt 库"
-    description: "选一条真实任务模板，再用这张卡检查目标、歧义与输出。"
-    href: "/prompts/all/"
+    title: "填写 Prompt 歧义预检卡"
+    description: "在浏览器本地填写一轮修改、保存记录并复制带状态的工作卡。"
+    href: "/tools/prompt-preflight/"
     tone: "mint"
 ---
 
@@ -61,7 +61,7 @@ Prompt 写得越来越长，不一定意味着任务越来越清楚。可能只�
 
 ## 可以直接复制的空白卡
 
-这张卡只用于准备下一轮练习，**没有预填模型结果**。
+这张卡只用于准备下一轮练习，**没有预填模型结果**。也可以在[本地预检工具](/tools/prompt-preflight/)中填写、复制，并自行决定是否保存到当前浏览器。
 
 ```text
 任务与使用者：

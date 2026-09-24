@@ -184,6 +184,17 @@ test('caption-derived Prompt note preserves source limits and returns to the res
   assert.match(prompts, /<section\b[^>]*id="prompt-resources"/);
 });
 
+test('Prompt pre-flight tool and its method note are connected without invented results', () => {
+  const noteLinks = anchors('notes/prompt-iteration-ambiguity-output/index.html');
+  const toolLinks = anchors('tools/prompt-preflight/index.html');
+  assert.ok(noteLinks.includes('/tools/prompt-preflight/'));
+  assert.ok(toolLinks.includes('/notes/prompt-iteration-ambiguity-output/'));
+  assert.ok(anchors('tools/index.html').includes('/tools/prompt-preflight/'));
+  const html = readFileSync(join(process.cwd(), 'out/tools/prompt-preflight/index.html'), 'utf8');
+  assert.ok(html.includes('不调用 AI、不上传输入、不自动保存'));
+  assert.ok(html.includes('待执行 · 无输出'));
+});
+
 test('featured note introduction follows the selected note metadata', () => {
   const notes = getAllNotes();
   const featured = notes.find((note) => note.featured) ?? notes[0];
