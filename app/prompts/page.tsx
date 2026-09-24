@@ -79,9 +79,9 @@ export default function PromptsPage() {
       </section></Reveal>
 
       <Reveal><section className="prompt-resources section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">More to learn / 延伸资源</p><h2>别人怎么教，<br />可以学到什么。</h2></div><p>只收录官方或原作者资源。这里保留编辑简介、待荆确认的推荐理由和原始链接，不复制对方全文。</p></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">More to learn / 延伸资源</p><h2>别人怎么教，<br />可以学到什么。</h2></div><p>4 条资源正文已按原站核对；1 条官方视频目前只核对了元信息，未逐段核对内容。推荐理由为编辑候选，待荆确认。</p></div>
         <div className="prompt-resource-grid">{promptResources.map((resource, index) => <article className={`prompt-resource-card resource-${index % 5}`} key={resource.id}>
-          <div className="mono"><span>{resource.type}</span><span>0{index + 1}</span></div>
+          <div className="mono"><span>{resource.type}</span><span>{resource.sourceStatus === 'content-checked' ? '正文已核对' : '仅元信息已核对'}</span></div>
           <p>{resource.source}</p>
           <h3>{resource.title}</h3>
           <p>{resource.description}</p>

@@ -8,6 +8,7 @@ import { getAllNotes } from '../lib/notes.ts';
 import { stories, experiments, tools, toolCategories } from '../app/data/content.ts';
 import { libraryItems } from '../app/data/library.ts';
 import { promptFilters, promptItems, promptSource } from '../app/data/prompts.ts';
+import { promptResources } from '../app/data/prompt-resources.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
 function anchors(file) {
@@ -148,6 +149,20 @@ test('cross-page recommendations remain editorial candidates until Jing confirms
   assert.ok(about.includes(`收藏中 ${pending} 条来源待核对`));
   assert.ok(prompts.includes('编辑推荐理由 · 待荆确认'));
   assert.ok(!prompts.includes('我为什么留下'));
+});
+
+test('prompt resource cards distinguish checked source text from video metadata', () => {
+  const html = readFileSync(join(process.cwd(), 'out/prompts/index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  assert.equal(promptResources.length, 5);
+  assert.equal(promptResources.filter((item) => item.sourceStatus === 'content-checked').length, 4);
+  assert.equal(promptResources.filter((item) => item.sourceStatus === 'metadata-only').length, 1);
+  assert.ok(html.includes('4 条资源正文已按原站核对'));
+  assert.ok(html.includes('仅元信息已核对'));
+  assert.ok(html.includes('视频内容尚未逐段核对'));
+  for (const item of promptResources) {
+    assert.ok(html.includes(item.url.replaceAll('&', '&amp;')), `Original resource link missing: ${item.id}`);
+  }
 });
 
 test('featured note introduction follows the selected note metadata', () => {

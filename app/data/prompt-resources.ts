@@ -7,6 +7,7 @@ export type PromptResource = {
   whyItMatters: string;
   tags: string[];
   url: string;
+  sourceStatus: 'content-checked' | 'metadata-only';
 };
 
 export const promptResources: PromptResource[] = [
@@ -19,6 +20,7 @@ export const promptResources: PromptResource[] = [
     whyItMatters: '内容短、门槛低，最适合用来检查一条 Prompt 的基本质量。',
     tags: ['ChatGPT', '入门', '迭代'],
     url: 'https://help.openai.com/en/articles/10032626-how-do-i-prompt-chatgpt-effectively',
+    sourceStatus: 'content-checked',
   },
   {
     id: 'anthropic-prompt-engineering-overview',
@@ -29,6 +31,7 @@ export const promptResources: PromptResource[] = [
     whyItMatters: '它提醒读者：不是每个问题都应该靠堆 Prompt 解决，先定义什么叫成功更重要。',
     tags: ['Claude', '评估', 'Prompt chaining'],
     url: 'https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview',
+    sourceStatus: 'content-checked',
   },
   {
     id: 'google-prompt-design-strategies',
@@ -39,6 +42,7 @@ export const promptResources: PromptResource[] = [
     whyItMatters: '适合需要处理图片、视频或长上下文时查阅，不只讨论纯文字问答。',
     tags: ['Gemini', '多模态', '结构化'],
     url: 'https://ai.google.dev/gemini-api/docs/prompting-strategies',
+    sourceStatus: 'content-checked',
   },
   {
     id: 'google-prompt-gallery',
@@ -49,15 +53,17 @@ export const promptResources: PromptResource[] = [
     whyItMatters: '当你不知道 Prompt 应该长什么样时，先从真实任务示例反向拆解最有效。',
     tags: ['示例库', '多模态', 'Google AI Studio'],
     url: 'https://ai.google.dev/gemini-api/prompts',
+    sourceStatus: 'content-checked',
   },
   {
     id: 'anthropic-prompting-deep-dive',
     title: 'AI Prompt Engineering: A Deep Dive',
     source: 'Anthropic / YouTube',
     type: 'VIDEO',
-    description: 'Anthropic 团队讨论 Prompt 如何迭代、角色与隐喻、模型推理，以及 Prompt engineering 未来会如何变化。',
+    description: '据 Anthropic 官方视频简介，团队成员讨论 Prompt 迭代、角色与隐喻、模型推理，以及 Prompt engineering 的未来；视频内容尚未逐段核对。',
     whyItMatters: '比技巧清单更接近“为什么这样问”，适合想理解 Prompt 方法论的人。',
     tags: ['视频', '方法论', 'Anthropic'],
     url: 'https://www.youtube.com/watch?v=T9aRN5JkmL8',
+    sourceStatus: 'metadata-only',
   },
 ];
