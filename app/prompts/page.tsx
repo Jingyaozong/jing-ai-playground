@@ -78,8 +78,8 @@ export default function PromptsPage() {
         })}</div>
       </section></Reveal>
 
-      <Reveal><section className="prompt-resources section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">More to learn / 延伸资源</p><h2>别人怎么教，<br />可以学到什么。</h2></div><p>4 条资源正文已按原站核对；1 条官方视频已核对英文字幕重点，未核对完整画面。推荐理由为编辑候选，待荆确认。</p></div>
+      <Reveal><section className="prompt-resources section-shell" id="prompt-resources">
+        <div className="section-title-row compact"><div><p className="eyebrow mono">More to learn / 延伸资源</p><h2>别人怎么教，<br />可以学到什么。</h2></div><p>4 条资源正文已按原站核对；1 条官方视频已核对英文字幕重点，未核对完整画面。推荐理由为编辑候选，待荆确认。<br /><Link className="text-link" href="/notes/prompt-iteration-ambiguity-output/">阅读字幕整理与三关工作卡 ↗</Link></p></div>
         <div className="prompt-resource-grid">{promptResources.map((resource, index) => <article className={`prompt-resource-card resource-${index % 5}`} key={resource.id}>
           <div className="mono"><span>{resource.type}</span><span>{resource.sourceStatus === 'content-checked' ? '正文已核对' : '字幕重点已核对'}</span></div>
           <p>{resource.source}</p>

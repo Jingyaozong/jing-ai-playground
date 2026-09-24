@@ -166,6 +166,24 @@ test('prompt resource cards distinguish checked source text from reviewed video 
   }
 });
 
+test('caption-derived Prompt note preserves source limits and returns to the resource', () => {
+  const slug = 'prompt-iteration-ambiguity-output';
+  const note = getAllNotes().find((item) => item.slug === slug);
+  assert.ok(note, 'Missing caption-derived note');
+  assert.equal(note.editorialStatus, 'draft');
+  assert.equal(note.sourceUrl, 'https://www.youtube.com/watch?v=T9aRN5JkmL8');
+  assert.match(note.sourceNote, /没有逐帧核对完整视频/);
+  const html = readFileSync(join(process.cwd(), 'out', 'notes', slug, 'index.html'), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  for (const time of ['03:14', '12:45', '51:12']) assert.ok(html.includes(time));
+  assert.ok(html.includes('编辑稿 · 待荆确认'));
+  assert.ok(html.includes('无测试结果'));
+  assert.ok(anchors(`notes/${slug}/index.html`).includes('/prompts/#prompt-resources'));
+  assert.ok(anchors('prompts/index.html').includes(`/notes/${slug}/`));
+  const prompts = readFileSync(join(process.cwd(), 'out/prompts/index.html'), 'utf8');
+  assert.match(prompts, /<section\b[^>]*id="prompt-resources"/);
+});
+
 test('featured note introduction follows the selected note metadata', () => {
   const notes = getAllNotes();
   const featured = notes.find((note) => note.featured) ?? notes[0];

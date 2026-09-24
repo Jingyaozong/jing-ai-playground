@@ -51,6 +51,18 @@ export function NoteVisual({ variant, label }: { variant: string; label: string 
       <p>同一任务 · 同一把尺子</p><small>比较方案 · 待执行</small>
     </div>
   );
+  if (variant === 'prompt-iteration') return (
+    <div className="note-visual note-visual-prompt-iteration" aria-label={`${label}：目标、歧义、输出三关编辑工作卡，尚无测试结果`}>
+      <small className="mono">PROMPT / ITERATION CARD</small>
+      <strong>先问清，<br />再动笔。</strong>
+      <ol className="prompt-iteration-steps">
+        <li><span className="mono">01 / AIM</span><b>目标</b><small>写出验收条件</small></li>
+        <li><span className="mono">02 / ASK</span><b>歧义</b><small>找出缺失与冲突</small></li>
+        <li><span className="mono">03 / SEE</span><b>输出</b><small>用证据决定下一轮</small></li>
+      </ol>
+      <p>字幕片段已核对 · 方法待确认 · 无测试结果</p>
+    </div>
+  );
   return (
     <div className={`note-visual note-visual-${variant}`} aria-label={`${label} 的文章封面`}>
       <span className="note-visual-grid" />
