@@ -268,7 +268,7 @@ export const experiments: Experiment[] = [
 export const tools: Tool[] = [
   {
     id: 'tool-025', title: 'Prompt Pre-flight', label: 'Prompt 歧义预检卡',
-    description: '按目标、歧义和输出三关记录一轮修改，只提示缺项；可复制工作卡并显式保存到此浏览器。',
+    description: '按目标、歧义和输出三关记录一轮修改，对照两版文字增删；可复制工作卡并显式保存到此浏览器。',
     status: 'Ready', symbol: '?', category: '评测与复核', href: '/tools/prompt-preflight/',
   },
   {

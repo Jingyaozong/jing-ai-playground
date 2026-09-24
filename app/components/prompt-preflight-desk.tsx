@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, parsePromptPreflight, serializePromptPreflight, type PromptPreflightRecord } from '../../lib/prompt-preflight';
+import { Fragment, useMemo, useState } from 'react';
+import { diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, parsePromptPreflight, serializePromptPreflight, type PromptPreflightRecord, type PromptDiffSegment } from '../../lib/prompt-preflight';
 
 const storageKey = 'jing-prompt-preflight-v1';
 type Field = keyof PromptPreflightRecord;
@@ -15,6 +15,7 @@ const groups: Array<{ title: string; eyebrow: string; note: string; fields: Arra
   ] },
   { title: '找出歧义', eyebrow: 'ASK / 谁来确认', note: '模型可以提疑问，最终仍由人决定。', fields: [
     { key: 'originalPrompt', label: '原 Prompt', hint: '粘贴当前版本，保留原样', rows: 4 },
+    { key: 'revisedPrompt', label: '新版 Prompt', hint: '粘贴本轮修改后的完整版本，供文字对照', rows: 4 },
     { key: 'ambiguity', label: '待确认的歧义', hint: '哪些词含糊、事实缺失或要求互相冲突？', rows: 3 },
     { key: 'humanDecision', label: '人工确认或保留未知', hint: '写下确认过的事实；无法确认就写“保持未知”', rows: 2 },
     { key: 'oneChange', label: '本轮唯一主要改动', hint: '只记录实际打算改的条件，不预写效果', rows: 2 },
@@ -30,10 +31,13 @@ const groups: Array<{ title: string; eyebrow: string; note: string; fields: Arra
 export function PromptPreflightDesk() {
   const [record, setRecord] = useState<PromptPreflightRecord>(emptyPromptPreflight);
   const [feedback, setFeedback] = useState('还没有填写记录；不会自动保存或联网。');
+  const [diffVisible, setDiffVisible] = useState(false);
   const review = inspectPromptPreflight(record);
+  const diff = useMemo(() => diffVisible && record.originalPrompt && record.revisedPrompt ? diffPromptText(record.originalPrompt, record.revisedPrompt) : null, [diffVisible, record.originalPrompt, record.revisedPrompt]);
 
   function change(key: Field, value: string) {
     setRecord((current) => ({ ...current, [key]: value }));
+    if (key === 'originalPrompt' || key === 'revisedPrompt') setDiffVisible(false);
     setFeedback('内容已更改；如需留在这台浏览器，请再次保存。');
   }
 
@@ -51,6 +55,7 @@ export function PromptPreflightDesk() {
       const saved = parsePromptPreflight(raw);
       if (!saved) { setFeedback('保存记录格式不匹配，未覆盖当前内容。'); return; }
       setRecord(saved);
+      setDiffVisible(false);
       setFeedback('已从这台浏览器恢复记录；请确认内容是否仍适用于当前任务。');
     } catch { setFeedback('无法读取浏览器本地记录；当前内容未改变。'); }
   }
@@ -72,12 +77,15 @@ export function PromptPreflightDesk() {
 
   return <section className="prompt-preflight-desk" aria-label="Prompt 歧义预检工作台">
     <div className="prompt-preflight-form">
-      {groups.map((group, index) => <fieldset className="prompt-preflight-group" key={group.eyebrow}>
+      {groups.map((group, index) => <Fragment key={group.eyebrow}><fieldset className="prompt-preflight-group">
         <legend><span className="mono">{group.eyebrow}</span><strong>{group.title}</strong></legend>
         <p>{group.note}</p>
         <div className="prompt-preflight-fields">{group.fields.map((field) => <label key={field.key} htmlFor={`preflight-${field.key}`}><span>{field.label}</span><textarea id={`preflight-${field.key}`} rows={field.rows ?? 2} maxLength={4000} value={record[field.key]} onChange={(event) => change(field.key, event.target.value)} placeholder={field.hint} /></label>)}</div>
         <span className="prompt-preflight-group-count mono">{index + 1} / 3</span>
-      </fieldset>)}
+      </fieldset>{index === 1 && <section className="prompt-preflight-diff" aria-labelledby="prompt-diff-title">
+        <div className="prompt-preflight-diff-heading"><div><span className="mono">TEXT CHANGE / 文字对照</span><h2 id="prompt-diff-title">改了哪里，<br />一眼看清。</h2></div><button type="button" disabled={!record.originalPrompt || !record.revisedPrompt} onClick={() => setDiffVisible((visible) => !visible)}>{diffVisible ? '收起文字差异' : '查看文字差异 ↗'}</button></div>
+        {!record.originalPrompt || !record.revisedPrompt ? <p>填写原版与新版完整 Prompt 后，再查看文字增删。这里只对照文本，不分析语义。</p> : diff ? <><div className="prompt-preflight-diff-grid"><div><span className="mono">原版 / 删除用珊瑚色标出</span><p>{diff.before.map((segment, part) => <DiffPart segment={segment} key={part} />)}</p></div><div><span className="mono">新版 / 增加用薄荷色标出</span><p>{diff.after.map((segment, part) => <DiffPart segment={segment} key={part} />)}</p></div></div><p>{diff.mode === 'coarse' ? '文本较长：仅区分共同前后文与中间改写范围，中间未逐字对齐。' : '按字符对齐文字增删；相同文字保持原色。'}差异不代表哪版更好，仍需用同一输入测试并人工验收。</p></> : <p>点击“查看文字差异”后显示；编辑任一版本会收起旧对照。</p>}
+      </section>}</Fragment>)}
     </div>
     <aside className="prompt-preflight-ticket">
       <div className="prompt-preflight-ticket-top mono"><span>REVIEW TICKET / 本地检查</span><span>只查缺项</span></div>
@@ -85,9 +93,15 @@ export function PromptPreflightDesk() {
       <p className="prompt-preflight-result">{review.readyToTest ? '必要字段已填写 · 可以开始真实测试' : `还有 ${review.gaps.length} 处待补充`}</p>
       <ul>{review.gaps.length ? review.gaps.map((gap) => <li key={gap}>{gap}</li>) : <li>这里只确认字段已填写，不判断 Prompt 是否有效。</li>}</ul>
       <div className="prompt-preflight-output-status"><span className="mono">OUTPUT STATUS</span><strong>{review.resultStatus}</strong></div>
-      <div className="prompt-preflight-actions"><button type="button" onClick={copy}>复制工作卡 ↗</button><button type="button" onClick={save}>保存到此浏览器</button><button type="button" onClick={restore}>恢复上次保存</button><button type="button" onClick={() => { setRecord(emptyPromptPreflight); setFeedback('当前填写已清空；此前保存的记录仍在，可用“恢复上次保存”取回。'); }}>清空当前填写</button><button type="button" onClick={removeSaved}>删除此浏览器存档</button></div>
+      <div className="prompt-preflight-actions"><button type="button" onClick={copy}>复制工作卡 ↗</button><button type="button" onClick={save}>保存到此浏览器</button><button type="button" onClick={restore}>恢复上次保存</button><button type="button" onClick={() => { setRecord(emptyPromptPreflight); setDiffVisible(false); setFeedback('当前填写已清空；此前保存的记录仍在，可用“恢复上次保存”取回。'); }}>清空当前填写</button><button type="button" onClick={removeSaved}>删除此浏览器存档</button></div>
       <p className="prompt-preflight-feedback" role="status" aria-live="polite">{feedback}</p>
       <p className="prompt-preflight-privacy">不调用 AI、不上传输入、不自动保存。缺项提示只看空白字段，不理解 Prompt 内容；效果判断需要真实输出与人工验收。本站编辑工具 · 待荆确认。</p>
     </aside>
   </section>;
+}
+
+function DiffPart({ segment }: { segment: PromptDiffSegment }) {
+  if (segment.kind === 'removed') return <del>{segment.text}</del>;
+  if (segment.kind === 'added') return <ins>{segment.text}</ins>;
+  return <span>{segment.text}</span>;
 }
