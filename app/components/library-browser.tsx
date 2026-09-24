@@ -6,7 +6,7 @@ import { readUrlFilter, writeUrlFilter } from '../../lib/filter-url';
 import { libraryFilters } from '../data/library';
 import { LibraryCard } from './library-card';
 
-const filterLabels: Record<string, string> = { 全部: '全部', VIDEO: '视频', ARTICLE: '文章', PDF: '报告与论文', TOOL: '工具', 'JING PICKS': '荆选候选' };
+const filterLabels: Record<string, string> = { 全部: '全部', VIDEO: '视频', ARTICLE: '文章', PDF: '报告与论文', TOOL: '工具', 'JING PICKS': '精选候选' };
 
 function subscribeToFilter(onChange: () => void) {
   window.addEventListener('popstate', onChange);

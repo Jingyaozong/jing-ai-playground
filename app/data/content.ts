@@ -520,8 +520,8 @@ export const currentlyPlaying = [
   {
     icon: '🔖',
     title: '值得留下的来源',
-    detail: '原始链接已经核对；推荐理由与个人观点仍等待荆确认。',
-    status: '来源已核对',
+    detail: '可读取来源已核对；两条平台视频元信息待核对。推荐理由与观点仍等待荆确认。',
+    status: '来源分级标注',
     href: '/library/',
   },
 ];

@@ -93,7 +93,7 @@ export default function Home() {
       </section></Reveal>
 
       <Reveal><section className="home-picks section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">JING PICKS / 编辑初选</p><h2>最近留下的，<br />四个来源已核对候选。</h2></div><div className="home-notes-intro"><p>资源和原始链接已经核对；推荐理由与 JING&apos;S TAKE 仍是等待荆确认的编辑初稿。</p><Link className="text-link" href="/library/">打开收藏夹 ↗</Link></div></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Picks to review / 待确认推荐</p><h2>先收好来源，<br />再讨论值不值得留。</h2></div><div className="home-notes-intro"><p>这组来源已核对；推荐理由与观点仍是编辑候选，待荆确认。</p><Link className="text-link" href="/library/">打开收藏夹 ↗</Link></div></div>
         <div className="home-picks-grid">{jingPicks.map((item) => <LibraryCard item={item} compact key={item.id} />)}</div>
       </section></Reveal>
 

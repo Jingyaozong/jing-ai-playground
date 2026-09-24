@@ -16,7 +16,7 @@ export function LibraryCard({ item, compact = false }: { item: LibraryItem; comp
         {!compact && <>
           <p className="library-summary">{item.description}</p>
           <div className="saved-reason"><span className="mono">{item.takeStatus === 'draft' ? '编辑推荐理由 · 待荆确认' : '为什么收藏'}</span><p>{item.whyISavedIt}</p></div>
-          <blockquote><span className="mono">JING&apos;S TAKE {item.takeStatus === 'draft' && '· 待荆确认'}</span><p>{item.jingTake}</p></blockquote>
+          <blockquote><span className="mono">{item.takeStatus === 'draft' ? '编辑观点候选 · 待荆确认' : "JING'S TAKE"}</span><p>{item.jingTake}</p></blockquote>
         </>}
         <div className="library-bottom">
           <div className="note-tags">{item.tags.slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}</div>

@@ -121,6 +121,35 @@ test('homepage featured story and recent library picks match source data', () =>
   }
 });
 
+test('cross-page recommendations remain editorial candidates until Jing confirms them', () => {
+  const readPage = (path) => readFileSync(join(process.cwd(), 'out', path), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<!--\s*-->/g, '');
+  const home = readPage('index.html');
+  const library = readPage('library/index.html');
+  const about = readPage('about/index.html');
+  const prompts = readPage('prompts/index.html');
+  const pending = libraryItems.filter((item) => item.sourceStatus === 'metadata-pending').length;
+  assert.ok(home.includes('Picks to review / 待确认推荐'));
+  assert.ok(home.includes('推荐理由与观点仍是编辑候选，待荆确认'));
+  assert.ok(home.includes('来源分级标注'));
+  assert.ok(library.includes('编辑初选<br/>待荆确认'));
+  assert.ok(library.includes('PICKS TO REVIEW'));
+  assert.ok(library.includes('编辑观点候选 · 待荆确认'));
+  const draftCards = [...library.matchAll(/<article class="library-card[^"]*"[^>]*>[\s\S]*?<\/article>/g)]
+    .map(([card]) => card)
+    .filter((card) => card.includes('编辑初选 · 待荆确认') || card.includes('来源待核对 · 待荆确认'));
+  assert.ok(draftCards.length >= libraryItems.filter((item) => item.takeStatus === 'draft').length);
+  for (const card of draftCards) {
+    assert.ok(card.includes('编辑观点候选 · 待荆确认'), 'Draft card lacks its editorial opinion label');
+    assert.ok(!card.includes('JING&#x27;S TAKE'), 'Draft card claims a confirmed personal take');
+  }
+  assert.ok(about.includes(`${libraryItems.length - pending} 条来源已核对 · ${pending} 条待核对`));
+  assert.ok(about.includes(`收藏中 ${pending} 条来源待核对`));
+  assert.ok(prompts.includes('编辑推荐理由 · 待荆确认'));
+  assert.ok(!prompts.includes('我为什么留下'));
+});
+
 test('featured note introduction follows the selected note metadata', () => {
   const notes = getAllNotes();
   const featured = notes.find((note) => note.featured) ?? notes[0];

@@ -26,7 +26,7 @@ export const promptResources: PromptResource[] = [
     source: 'Anthropic / Claude Docs',
     type: 'GUIDE',
     description: '把 Prompt 优化放在“先定义成功标准、再测试”的框架里，并连接到示例、结构化和 Prompt chaining 等专题。',
-    whyItMatters: '它提醒我：不是每个问题都应该靠堆 Prompt 解决，先定义什么叫成功更重要。',
+    whyItMatters: '它提醒读者：不是每个问题都应该靠堆 Prompt 解决，先定义什么叫成功更重要。',
     tags: ['Claude', '评估', 'Prompt chaining'],
     url: 'https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/overview',
   },
