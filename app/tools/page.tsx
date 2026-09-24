@@ -11,7 +11,7 @@ import { tools } from '../data/content';
 export const metadata: Metadata = { title: 'Little Tools — JING AI PLAYGROUND', description: '为创作、评测与日常小麻烦做的轻量工具。' };
 
 export default function ToolsPage() {
-  return <main className="tools-index-page"><ToolHashFocus /><SiteHeader active="Tools" /><PageIntro eyebrow="Shelf C / Little Tools" count={`${tools.length} tiny helpers`} title="Little Tools" description="不是一套宏大的产品矩阵。只是把创作和工作里那些重复的小麻烦，做成顺手的小按钮。" />
+  return <main className="tools-index-page"><ToolHashFocus /><SiteHeader active="Tools" /><PageIntro eyebrow="Shelf C / Little Tools" count={`${tools.length} tiny helpers`} title="Little Tools" description="把创作和工作里重复的小麻烦，做成在浏览器本地使用的小工具。输入不会上传；生成的计划与记录仍需人工核对。" />
     <nav className="tool-entry-links archive-shell" aria-label="工具箱浏览方式"><a href="#work-scenes">按工作场景进入 ↓</a><a href="#tool-workflow-title">按制作阶段浏览 ↓</a><a href="#all-tools">按名称找工具 ↓</a></nav>
     <ToolWorkScenes />
     <ToolWorkflowMap />

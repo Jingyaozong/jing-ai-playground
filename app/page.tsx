@@ -77,7 +77,7 @@ export default function Home() {
       </div></section></Reveal>
 
       <Reveal><section className="home-notes section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近的笔记</p><h2>做过的留下来，<br />想明白的也留下来。</h2></div><div className="home-notes-intro"><p>AI 技巧、评测方法和真实制作过程。不是传统博客，是正在生长的个人知识库。</p><Link className="text-link" href="/notes/">查看全部笔记 ↗</Link></div></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近的笔记</p><h2>做过的留下来，<br />想明白的也留下来。</h2></div><div className="home-notes-intro"><p>AI 技巧、评测方法与创作过程笔记。资料、编辑稿和虚构演练会分别标注，不把计划写成成果。</p><Link className="text-link" href="/notes/">查看全部笔记 ↗</Link></div></div>
         <div className="home-notes-grid">{latestNotes.map((note, index) => <NoteCard note={note} size={index === 0 ? 'large' : index === 1 ? 'tall' : index === 2 ? 'small' : 'wide'} key={note.slug} />)}</div>
       </section></Reveal>
 
@@ -88,7 +88,7 @@ export default function Home() {
       </section></Reveal>
 
       <Reveal><section className="playing section-shell">
-        <div className="playing-title"><p className="eyebrow mono">Currently playing with</p><h2>最近在折腾</h2><span className="hand-note">点击进入真实记录 ↘</span></div>
+        <div className="playing-title"><p className="eyebrow mono">Currently playing with</p><h2>最近在折腾</h2><span className="hand-note">点击查看当前状态 ↘</span></div>
         <div className="playing-list">{currentlyPlaying.map((item, index) => <Link className="playing-row" href={item.href} key={item.title}><span className="mono">0{index + 1}</span><b aria-hidden="true">{item.icon}</b><div className="playing-row-title"><h3>{item.title}</h3><small className="mono">{item.status}</small></div><p>{item.detail}</p><i aria-hidden="true">↗</i></Link>)}</div>
       </section></Reveal>
 

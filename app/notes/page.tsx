@@ -59,6 +59,8 @@ export default function NotesPage() {
   const featuredBreak = featured.titleBreakAfter ? featured.title.indexOf(featured.titleBreakAfter) + featured.titleBreakAfter.length : 0;
   const featuredStatus = featured.demo
     ? 'Demo 内容，用于展示文章版式，不代表正式发布内容。'
+    : featured.synthetic
+      ? featured.editorialStatus === 'draft' ? '虚构项目演练 · 编辑稿，待荆确认；不对应真实客户或项目成果。' : '虚构项目演练；不对应真实客户或项目成果。'
     : featured.editorialStatus === 'draft'
       ? '编辑稿 · 待荆确认。框架与判断尚未作为正式个人观点发布。'
       : featured.editorialStatus === 'source-backed'
@@ -110,14 +112,14 @@ export default function NotesPage() {
 
       <Reveal><section className="prompt-entry section-shell">
         <Link href="/prompts/" className="prompt-entry-card">
-          <div><span className="mono">New shelf / Prompt 工作台</span><h2>好用的 Prompt，<br />不应该只剩一句咒语。</h2><p>我会把外部素材重新梳理成可复用结构，标出变量、适用场景和实际使用时的判断。</p><i>打开 Prompt 板块 ↗</i></div>
+          <div><span className="mono">New shelf / Prompt 工作台</span><h2>好用的 Prompt，<br />不应该只剩一句咒语。</h2><p>把来源材料梳理成可复用结构，标出变量、适用场景和待验证的使用判断；编辑候选会明确标记。</p><i>打开 Prompt 板块 ↗</i></div>
           <span className="prompt-entry-brace" aria-hidden="true">{'{ }'}</span>
         </Link>
       </section></Reveal>
 
       <section className="latest-notes section-shell" id="all-notes">
         <ArchiveFilterHashFocus hash="#all-notes" headingId="all-notes-title" />
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近更新</p><h2 id="all-notes-title" tabIndex={-1}>最近记下来的<br />一些东西。</h2></div><p>Demo、编辑稿和正式内容都会明确标注；真实制作过程会随着项目推进继续更新。</p></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近更新</p><h2 id="all-notes-title" tabIndex={-1}>最近记下来的<br />一些东西。</h2></div><p>资料文章、编辑稿和虚构演练各自标注状态；没有执行过的测试不会写成结果。</p></div>
         <NoteBrowser notes={notes} />
       </section>
       <SiteFooter />

@@ -122,6 +122,25 @@ test('homepage featured story and recent library picks match source data', () =>
   }
 });
 
+test('entry pages keep fictional, pending and local-only work visibly distinct', () => {
+  const readPage = (path) => readFileSync(join(process.cwd(), 'out', path), 'utf8')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  const home = readPage('index.html');
+  const notes = readPage('notes/index.html');
+  const toolIndex = readPage('tools/index.html');
+  assert.ok(home.includes('点击查看当前状态'));
+  assert.ok(home.includes('不把计划写成成果'));
+  assert.ok(notes.includes('没有执行过的测试不会写成结果'));
+  assert.ok(toolIndex.includes('输入不会上传；生成的计划与记录仍需人工核对'));
+  for (const note of getAllNotes().filter((item) => item.synthetic && item.editorialStatus === 'draft')) {
+    const card = [...notes.matchAll(/<article class="note-card[^\"]*"[^>]*>[\s\S]*?<\/article>/g)]
+      .map(([markup]) => markup)
+      .find((markup) => markup.includes(`/notes/${note.slug}/`));
+    assert.ok(card, `Fictional note card missing: ${note.slug}`);
+    assert.ok(card.includes('虚构演练 · 待荆确认'), `Fictional draft lacks both status labels: ${note.slug}`);
+  }
+});
+
 test('cross-page recommendations remain editorial candidates until Jing confirms them', () => {
   const readPage = (path) => readFileSync(join(process.cwd(), 'out', path), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
