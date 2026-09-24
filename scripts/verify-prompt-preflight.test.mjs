@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectAcceptanceMatrix, inspectPromptPreflight, parsePromptPreflight, serializePromptPreflight } from '../lib/prompt-preflight.ts';
+import { diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectAcceptanceMatrix, inspectPromptPreflight, maxPromptPreflightFileBytes, parsePromptPreflight, serializePromptPreflight } from '../lib/prompt-preflight.ts';
 
 test('blank card keeps outputs pending and never claims a test result', () => {
   const result = inspectPromptPreflight(emptyPromptPreflight);
@@ -34,6 +35,28 @@ test('local save round-trips only bounded versioned fields', () => {
   const { checks, ...previous } = record;
   void checks;
   assert.deepEqual(parsePromptPreflight(JSON.stringify({ version: 2, record: previous })), record);
+});
+
+test('portable JSON backup keeps the current schema and accepts older browser saves', () => {
+  const record = { ...emptyPromptPreflight, task: '虚构演练\n只用于测试', originalPrompt: '含有换行\n与引号"', checks: [{ id: 'test-one', criterion: '缺项标记', originalVerdict: '未评', originalEvidence: '', revisedVerdict: '未评', revisedEvidence: '' }] };
+  const backup = serializePromptPreflight(record);
+  assert.deepEqual(JSON.parse(backup).format, 'jing-prompt-preflight');
+  assert.deepEqual(parsePromptPreflight(JSON.stringify(JSON.parse(backup), null, 2)), record);
+  assert.deepEqual(parsePromptPreflight(JSON.stringify({ version: 3, record })), record);
+  assert.equal(parsePromptPreflight(JSON.stringify({ format: 'different-tool', version: 3, record })), null);
+  assert.equal(parsePromptPreflight(JSON.stringify({ format: 'jing-prompt-preflight', version: 4, record })), null);
+  assert.equal(parsePromptPreflight(' '.repeat(maxPromptPreflightFileBytes + 1)), null);
+  const escaped = { ...emptyPromptPreflight, originalPrompt: '\n'.repeat(4000) };
+  assert.deepEqual(parsePromptPreflight(JSON.stringify(JSON.parse(serializePromptPreflight(escaped)), null, 2)), escaped);
+});
+
+test('synthetic import fixture remains valid and has no fabricated output', () => {
+  const fixture = readFileSync(new URL('./fixtures/prompt-preflight-import-v3.json', import.meta.url), 'utf8');
+  const record = parsePromptPreflight(fixture);
+  assert.ok(record);
+  assert.match(record.task, /虚构演练/);
+  assert.equal(inspectPromptPreflight(record).resultStatus, '待执行 · 无输出');
+  assert.equal(record.checks[0].originalVerdict, '未评');
 });
 
 test('manual matrix requires both actual outputs and evidence for each verdict', () => {

@@ -1,0 +1,29 @@
+{
+  "format": "jing-prompt-preflight",
+  "version": 3,
+  "record": {
+    "task": "虚构演练：整理匿名会议待办",
+    "audience": "演练参与者",
+    "acceptance": "缺失负责人时标为待确认",
+    "unknowns": "不得猜测负责人或期限",
+    "originalPrompt": "整理会议待办",
+    "revisedPrompt": "整理匿名会议待办；缺失信息标为待确认",
+    "ambiguity": "负责人未给出",
+    "humanDecision": "保持未知",
+    "oneChange": "增加缺失信息标记",
+    "testInput": "虚构的匿名会议记录",
+    "originalOutput": "",
+    "revisedOutput": "",
+    "evidence": "",
+    "checks": [
+      {
+        "id": "synthetic-check-one",
+        "criterion": "缺失负责人时标为待确认",
+        "originalVerdict": "未评",
+        "originalEvidence": "",
+        "revisedVerdict": "未评",
+        "revisedEvidence": ""
+      }
+    ]
+  }
+}

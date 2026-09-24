@@ -1,7 +1,7 @@
 'use client';
 
-import { Fragment, useMemo, useState } from 'react';
-import { acceptanceVerdicts, diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, parsePromptPreflight, serializePromptPreflight, type AcceptanceCheck, type AcceptanceVerdict, type PromptPreflightRecord, type PromptDiffSegment } from '../../lib/prompt-preflight';
+import { Fragment, useMemo, useRef, useState, type ChangeEvent } from 'react';
+import { acceptanceVerdicts, diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, maxPromptPreflightFileBytes, parsePromptPreflight, serializePromptPreflight, type AcceptanceCheck, type AcceptanceVerdict, type PromptPreflightRecord, type PromptDiffSegment } from '../../lib/prompt-preflight';
 
 const storageKey = 'jing-prompt-preflight-v1';
 type Field = Exclude<keyof PromptPreflightRecord, 'checks'>;
@@ -32,6 +32,8 @@ export function PromptPreflightDesk() {
   const [record, setRecord] = useState<PromptPreflightRecord>(emptyPromptPreflight);
   const [feedback, setFeedback] = useState('还没有填写记录；不会自动保存或联网。');
   const [diffVisible, setDiffVisible] = useState(false);
+  const [pendingImport, setPendingImport] = useState<{ fileName: string; record: PromptPreflightRecord } | null>(null);
+  const importInput = useRef<HTMLInputElement>(null);
   const review = inspectPromptPreflight(record);
   const diff = useMemo(() => diffVisible && record.originalPrompt && record.revisedPrompt ? diffPromptText(record.originalPrompt, record.revisedPrompt) : null, [diffVisible, record.originalPrompt, record.revisedPrompt]);
 
@@ -92,6 +94,49 @@ export function PromptPreflightDesk() {
     } catch { setFeedback('复制未成功。请检查浏览器剪贴板权限。'); }
   }
 
+  function exportJson() {
+    const json = JSON.stringify(JSON.parse(serializePromptPreflight(record)), null, 2);
+    const url = URL.createObjectURL(new Blob([json], { type: 'application/json;charset=utf-8' }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `jing-prompt-preflight-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    setFeedback('JSON 备份已下载到本机；文件未加密，请妥善保管。');
+  }
+
+  async function chooseImport(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    event.target.value = '';
+    setPendingImport(null);
+    if (!file) return;
+    if (file.size > maxPromptPreflightFileBytes) {
+      setFeedback('文件超过 512 KB，未导入；请选择本工具导出的 JSON 备份。');
+      return;
+    }
+    try {
+      const imported = parsePromptPreflight(await file.text());
+      if (!imported) {
+        setFeedback('文件不是有效的预检卡 JSON，或版本不受支持；当前填写未改变。');
+        return;
+      }
+      setPendingImport({ fileName: file.name, record: imported });
+      setFeedback('文件已在浏览器本地校验。确认前不会替换当前填写。');
+    } catch {
+      setFeedback('无法读取这个文件；当前填写未改变。');
+    }
+  }
+
+  function confirmImport() {
+    if (!pendingImport) return;
+    setRecord(pendingImport.record);
+    setDiffVisible(false);
+    setPendingImport(null);
+    setFeedback('已导入并替换当前填写；浏览器存档未改变。如需保留，请另行点击“保存到此浏览器”。');
+  }
+
   return <section className="prompt-preflight-desk" aria-label="Prompt 歧义预检工作台">
     <div className="prompt-preflight-form">
       {groups.map((group, index) => <Fragment key={group.eyebrow}><fieldset className="prompt-preflight-group">
@@ -112,6 +157,14 @@ export function PromptPreflightDesk() {
       <ul>{review.gaps.length ? review.gaps.map((gap) => <li key={gap}>{gap}</li>) : <li>这里只确认字段已填写，不判断 Prompt 是否有效。</li>}</ul>
       <div className="prompt-preflight-output-status"><span className="mono">OUTPUT STATUS</span><strong>{review.resultStatus}</strong></div>
       <div className="prompt-preflight-actions"><button type="button" onClick={copy}>复制工作卡 ↗</button><button type="button" onClick={save}>保存到此浏览器</button><button type="button" onClick={restore}>恢复上次保存</button><button type="button" onClick={() => { setRecord(emptyPromptPreflight); setDiffVisible(false); setFeedback('当前填写已清空；此前保存的记录仍在，可用“恢复上次保存”取回。'); }}>清空当前填写</button><button type="button" onClick={removeSaved}>删除此浏览器存档</button></div>
+      <section className="prompt-preflight-backup" aria-label="本地 JSON 备份与导入">
+        <span className="mono">PORTABLE COPY / 本地备份</span>
+        <p>换浏览器也能继续填写。导出的是当前页面内容，不要求先保存；导入只在你确认后替换当前填写。</p>
+        <div className="prompt-preflight-backup-actions"><button type="button" onClick={exportJson}>下载 JSON 备份 ↓</button><button type="button" onClick={() => importInput.current?.click()}>选择 JSON 导入 ↗</button></div>
+        <input ref={importInput} className="prompt-preflight-file-input" type="file" accept=".json,application/json" aria-label="选择预检卡 JSON 文件" onChange={chooseImport} />
+        {pendingImport && <div className="prompt-preflight-import-preview"><strong>准备导入：{pendingImport.fileName}</strong><p>任务：{pendingImport.record.task.trim() || '未填写'}<br />人工验收项：{pendingImport.record.checks.length} 条。确认后会替换当前填写，但不会修改浏览器存档。</p><div><button type="button" onClick={confirmImport}>确认导入并替换</button><button type="button" onClick={() => { setPendingImport(null); setFeedback('已取消导入；当前填写未改变。'); }}>取消导入</button></div></div>}
+        <small>仅在浏览器本地读写；JSON 文件未加密，请勿保存或分享含敏感资料的备份。</small>
+      </section>
       <p className="prompt-preflight-feedback" role="status" aria-live="polite">{feedback}</p>
       <p className="prompt-preflight-privacy">不调用 AI、不上传输入、不自动保存。缺项提示只看空白字段，不理解 Prompt 内容；效果判断需要真实输出与人工验收。本站编辑工具 · 待荆确认。</p>
     </aside>

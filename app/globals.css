@@ -5599,6 +5599,20 @@ body { font-size: 15px; }
 .prompt-preflight-actions button:first-child { background: var(--blue); color: var(--white); }
 .prompt-preflight-actions button:last-child { grid-column: 1 / -1; background: var(--paper); }
 .prompt-preflight-actions button:focus-visible, .prompt-preflight-actions button:hover { outline: 2px solid var(--blue); outline-offset: 2px; }
+.prompt-preflight-backup { margin-top: 28px; padding: 24px 0 0; border-top: 1px solid var(--ink); }
+.prompt-preflight-backup > span { color: var(--blue); font-size: 9px; }
+.prompt-preflight-backup > p { margin: 11px 0 18px; color: var(--ink); font-size: 11px; line-height: 1.75; }
+.prompt-preflight-backup-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.prompt-preflight-backup button { min-height: 45px; padding: 9px 10px; border: 1.5px solid var(--ink); border-radius: 12px; background: var(--white); color: var(--ink); font: 750 11px/1.4 var(--body); cursor: pointer; }
+.prompt-preflight-backup-actions button:first-child { background: var(--yellow); }
+.prompt-preflight-backup button:focus-visible, .prompt-preflight-backup button:hover { outline: 2px solid var(--blue); outline-offset: 2px; }
+.prompt-preflight-file-input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; }
+.prompt-preflight-import-preview { margin-top: 17px; padding: 16px; border: 1.5px solid var(--ink); border-radius: 15px; background: var(--white); overflow-wrap: anywhere; }
+.prompt-preflight-import-preview strong { display: block; font-size: 12px; line-height: 1.5; }
+.prompt-preflight-import-preview p { margin: 9px 0 14px; color: var(--muted); font-size: 11px; line-height: 1.7; }
+.prompt-preflight-import-preview > div { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; }
+.prompt-preflight-import-preview button:first-child { background: var(--mint); }
+.prompt-preflight-backup small { display: block; margin-top: 14px; color: var(--muted); font-size: 10px; line-height: 1.7; }
 .prompt-preflight-feedback { min-height: 36px; margin: 20px 0 0; color: var(--ink); font-size: 11px; line-height: 1.65; }
 .prompt-preflight-privacy { margin: 16px 0 0; padding-top: 17px; border-top: 1px solid var(--ink); color: var(--muted); font-size: 10px; line-height: 1.7; }
 .prompt-preflight-method { display: grid; grid-template-columns: .8fr 1.2fr; gap: 80px; margin-top: 120px; padding-top: 55px; border-top: 2px solid var(--ink); }

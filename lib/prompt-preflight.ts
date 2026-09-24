@@ -32,6 +32,7 @@ export const emptyPromptPreflight: PromptPreflightRecord = {
 };
 
 const fieldLimit = 4000;
+export const maxPromptPreflightFileBytes = 512 * 1024;
 const fieldNames = Object.keys(emptyPromptPreflight).filter((key) => key !== 'checks') as Array<Exclude<keyof PromptPreflightRecord, 'checks'>>;
 
 export function inspectAcceptanceMatrix(record: PromptPreflightRecord) {
@@ -115,11 +116,12 @@ export function formatPromptPreflight(record: PromptPreflightRecord) {
 }
 
 export function parsePromptPreflight(value: string): PromptPreflightRecord | null {
-  if (value.length > fieldLimit * fieldNames.length + 8 * 2400 + 2000) return null;
+  if (value.length > maxPromptPreflightFileBytes) return null;
   try {
     const parsed: unknown = JSON.parse(value);
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return null;
     const source = parsed as Record<string, unknown>;
+    if (source.format !== undefined && source.format !== 'jing-prompt-preflight') return null;
     if (![1, 2, 3].includes(source.version as number) || !source.record || typeof source.record !== 'object' || Array.isArray(source.record)) return null;
     const input = source.record as Record<string, unknown>;
     if (!fieldNames.every((key) => source.version === 1 && key === 'revisedPrompt' && input[key] === undefined ? true : typeof input[key] === 'string' && (input[key] as string).length <= fieldLimit)) return null;
@@ -140,7 +142,7 @@ export function parsePromptPreflight(value: string): PromptPreflightRecord | nul
 }
 
 export function serializePromptPreflight(record: PromptPreflightRecord) {
-  return JSON.stringify({ version: 3, record });
+  return JSON.stringify({ format: 'jing-prompt-preflight', version: 3, record });
 }
 
 export type PromptDiffSegment = { kind: 'same' | 'removed' | 'added'; text: string };
