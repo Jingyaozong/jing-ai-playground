@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -71,7 +72,8 @@ function buildMarkdown(records: RainRecord[]) {
   const rows = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${record.model || '—'} | ${record.seed || '—'} | ${record.asset || '—'} | ${record.scores.tracking ?? '—'} | ${record.scores.boundary ?? '—'} | ${record.scores.continuity ?? '—'} | ${record.scores.action ?? '—'} | ${record.failures.join('、') || '—'} | ${(record.note || '—').replaceAll('|', '\\|').replaceAll('\n', ' ')} |`);
   return [
     '# 局部雨区能否稳定跟随人物？｜9 格实验记录', '',
-    '> A 纯文字、B 明确空间约束、C 角色锚点或首帧参考。空白项不进入平均分；本表只描述这轮真实输出。', '',
+    localExportNotice, '', localExportEvidenceSummary(records), '',
+    '> A 纯文字、B 明确空间约束、C 角色锚点或首帧参考。空白项不进入平均分；状态与评分均为本机手填记录。', '',
     '## 分组平均', '', ...groupSummary,
     '## 样本明细', '',
     '| 编号 | 固定镜头任务 | 状态 | 模型 / 版本 | Seed | 结果文件 | 跟随 | 边界 | 人物 | 动作 | 失败标签 | 观察备注 |',

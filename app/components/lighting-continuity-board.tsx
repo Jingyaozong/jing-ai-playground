@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -71,7 +72,8 @@ function buildMarkdown(records: LightingRecord[]) {
   const rows = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${record.model || '—'} | ${record.seed || '—'} | ${record.asset || '—'} | ${record.scores.direction ?? '—'} | ${record.scores.response ?? '—'} | ${record.scores.exposure ?? '—'} | ${record.scores.temperature ?? '—'} | ${record.failures.join('、') || '—'} | ${(record.note || '—').replaceAll('|', '\\|').replaceAll('\n', ' ')} |`);
   return [
     '# 同一盏灯换机位后还能保持方向吗？｜12 格实验记录', '',
-    '> A 氛围词、B 世界坐标账本、C 账本加首帧。空白项不进入平均分；本表只描述这轮真实输出，不代表模型排名。', '',
+    localExportNotice, '', localExportEvidenceSummary(records), '',
+    '> A 氛围词、B 世界坐标账本、C 账本加首帧。空白项不进入平均分；本机记录不代表模型排名。', '',
     '## 固定世界坐标', '',
     '- 北侧窗户：偏冷高位主光',
     '- 桌面低位灯：偏暖局部光',

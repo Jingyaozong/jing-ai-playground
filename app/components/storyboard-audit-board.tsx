@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -78,6 +79,7 @@ function buildMarkdown(records: StoryboardRecord[]) {
   const rows = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${cleanCell(record.model || '—')} | ${cleanCell(record.asset || '—')} | ${record.shotCount || '—'} | ${record.duration || '—'} | ${record.scores.coverage ?? '—'} | ${record.scores.causality ?? '—'} | ${record.scores.shootability ?? '—'} | ${record.scores.timing ?? '—'} | ${cleanCell(record.failures.join('、') || '—')} | ${cleanCell(record.note || '—')} |`);
   return [
     '# 自动分镜机，第一次走神｜9 格审计记录', '',
+    localExportNotice, '', localExportEvidenceSummary(records), '',
     '> A 直接拆镜、B 固定字段、C 先提拍点再拆镜。空白输出不进入平均分；人工基准只用于检查遗漏，不代表唯一正确答案。', '',
     '## 分组平均', '', ...groupSummary,
     '## 输出明细', '',
@@ -216,7 +218,7 @@ export function StoryboardAuditBoard() {
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>人工基准和模型输出分开保存，空白不算结果。</strong><p>复制 Markdown 时保留九格编号、镜头数、总秒数、四项评分、错误标签与审计备注。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制自动分镜审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>人工基准与模型输出，分开保存。</strong><p>复制 Markdown 时保留九格编号、镜头数、总秒数、四项评分、错误标签与审计备注；空白不算结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制自动分镜审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

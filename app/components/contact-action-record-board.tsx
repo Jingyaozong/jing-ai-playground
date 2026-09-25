@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -68,7 +69,8 @@ function buildMarkdown(records: ContactRecord[]) {
   const rows = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${record.model || '—'} | ${record.seed || '—'} | ${record.asset || '—'} | ${record.scores.contactTiming ?? '—'} | ${record.scores.handIntegrity ?? '—'} | ${record.scores.objectIntegrity ?? '—'} | ${record.scores.supportLogic ?? '—'} | ${record.failures.join('、') || '—'} | ${(record.note || '—').replaceAll('|', '\\|').replaceAll('\n', ' ')} |`);
   return [
     '# 一只手能否稳定拿起同一个杯子？｜9 格实验记录', '',
-    '> A 普通动作句、B 五状态顺序、C 五状态加端点证据。空白项不进入平均分；本表只描述真实输出，不代表模型排名。', '',
+    localExportNotice, '', localExportEvidenceSummary(records), '',
+    '> A 普通动作句、B 五状态顺序、C 五状态加端点证据。空白项不进入平均分；本机记录不代表模型排名。', '',
     '## 分组平均', '', ...groupSummary,
     '## 样本明细', '',
     '| 编号 | 固定任务 | 状态 | 模型 / 版本 | Seed | 结果文件 | 接触时点 | 手部完整 | 道具保持 | 承重逻辑 | 失败标签 | 五阶段备注 |',

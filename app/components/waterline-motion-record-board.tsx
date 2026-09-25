@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -139,6 +140,7 @@ function buildMarkdown(records: WaterlineRecord[]) {
   ]);
   return [
     '# 撑伞以后，水面能沿一个方向连续退去吗？｜9 格实验记录', '',
+    localExportNotice, '', localExportEvidenceSummary(records), '',
     '> A 一句动作描述、B 因果状态链、C 状态链加空间端点。空白项不进入平均分；静态概念帧不算视频结果。', '',
     '## 分组平均', '', ...groupSummary,
     '## 样本明细', '',

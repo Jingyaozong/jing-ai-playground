@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -65,6 +66,7 @@ function buildMarkdown(records: ReferenceRecord[]) {
   const table = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${record.model || '—'} | ${record.asset || '—'} | ${record.scores.identity ?? '—'} | ${record.scores.angle ?? '—'} | ${record.scores.motion ?? '—'} | ${record.scores.trace ?? '—'} | ${record.flags.join('、') || '—'} | ${(record.note || '—').replaceAll('|', '\\|').replaceAll('\n', ' ')} |`);
   return [
     '# 参考图到底锁住了什么？｜12 格实验记录', '',
+    localExportNotice, '', localExportEvidenceSummary(records), '',
     '> A 无参考、B 单张正面参考、C 三张多角度参考。空白项不进入平均分；本表只记录这次实验，不代表模型排名。', '',
     '## 分组平均', '', ...groupSummary,
     '## 样本明细', '',

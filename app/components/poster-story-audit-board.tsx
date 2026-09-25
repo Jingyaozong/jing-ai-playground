@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 import { posterStoryPilotRecords, type PosterStoryPilotRecord } from '../data/poster-story-pilot';
 import { posterStoryRetestRecords } from '../data/poster-story-retest';
@@ -126,6 +127,7 @@ function buildMarkdown(records: PosterStoryRecord[], config: BoardConfig) {
   const rows = records.map((record) => `| ${record.id} | ${record.poster} | ${statusLabels[record.status]} | ${cleanCell(record.model || '—')} | ${cleanCell(record.asset || '—')} | ${cleanCell(record.outputTitle || '—')} | ${record.wordCount || '—'} | ${record.scores.evidence ?? '—'} | ${record.scores.boundary ?? '—'} | ${record.scores.coherence ?? '—'} | ${record.scores.relevance ?? '—'} | ${cleanCell(record.failures.join('、') || '—')} | ${cleanCell(record.note || '—')} |`);
   return [
     `# ${config.exportTitle}`, '',
+    localExportNotice, '', localExportEvidenceSummary(records), '',
     `> ${config.exportNote}`, '',
     '## 分组平均', '', ...groupSummary,
     '## 输出明细', '',
