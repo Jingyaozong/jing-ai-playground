@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../app/data/experiment-export-boundary.ts';
+import { localExportNotice, localExportEvidenceSummary, markdownTableRow, needsOriginalEvidence } from '../app/data/experiment-export-boundary.ts';
 
 test('local export distinguishes a marked state from source evidence', () => {
   const rows = [
@@ -41,4 +41,22 @@ test('Markdown cells keep pipes, backslashes and multiline text inside one row',
   });
   assert.equal(separators.length, 6);
   assert.equal(markdownTableRow(['备注\n第二行', '制表\t符']), '| 备注 ↵ 第二行 | 制表 符 |');
+});
+
+test('completed local review without an original file prompts for evidence', () => {
+  assert.equal(needsOriginalEvidence('reviewed', ''), true);
+  assert.equal(needsOriginalEvidence('reviewed', '   '), true);
+  assert.equal(needsOriginalEvidence('reviewed', 'A01.mp4'), false);
+  assert.equal(needsOriginalEvidence('generated', ''), false);
+  assert.equal(needsOriginalEvidence('untested', ''), false);
+
+  const boards = [
+    'experiment-record-board', 'reference-comparison-board', 'rain-follow-record-board',
+    'lighting-continuity-board', 'shadow-offset-record-board', 'contact-action-record-board',
+    'storyboard-audit-board', 'poster-story-audit-board', 'waterline-motion-record-board',
+  ];
+  for (const board of boards) {
+    const source = readFileSync(new URL(`../app/components/${board}.tsx`, import.meta.url), 'utf8');
+    assert.match(source, /<RecordEvidenceReminder status=\{active\.status\} asset=\{active\.asset\} \/>/);
+  }
 });

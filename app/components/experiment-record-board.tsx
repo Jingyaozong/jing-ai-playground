@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
@@ -220,6 +221,7 @@ export function ExperimentRecordBoard() {
             <label><span>模型 / 版本</span><input value={active.model} onChange={(event) => updateActive({ model: event.target.value })} placeholder="例：模型名 + 版本" /></label>
             <label><span>结果文件 / 链接</span><input value={active.asset} onChange={(event) => updateActive({ asset: event.target.value })} placeholder="例：A-01.mp4" /></label>
           </div>
+          <RecordEvidenceReminder status={active.status} asset={active.asset} />
           <fieldset className="experiment-score-fields"><legend className="mono">人工评分 · 1 差 / 5 稳定</legend>{scoreLabels.map(({ key, label, hint }) => <div className="experiment-score-row" key={key}><div><strong>{label}</strong><small>{hint}</small></div><div><button type="button" className={active.scores[key] === null ? 'is-active' : ''} onClick={() => updateScore(key, null)} aria-label={`${label}未评分`}>—</button>{[1, 2, 3, 4, 5].map((score) => <button type="button" className={active.scores[key] === score ? 'is-active' : ''} onClick={() => updateScore(key, score)} aria-label={`${label}${score}分`} key={score}>{score}</button>)}</div></div>)}</fieldset>
           <fieldset className="experiment-failure-fields"><legend className="mono">失败标签 · 可多选</legend><div>{failureOptions.map((label) => <button type="button" className={active.failures.includes(label) ? 'is-active' : ''} onClick={() => toggleFailure(label)} aria-pressed={active.failures.includes(label)} key={label}>{label}</button>)}</div></fieldset>
           <label className="experiment-record-note"><span>观察备注</span><textarea value={active.note} onChange={(event) => updateActive({ note: event.target.value })} placeholder="只写看见的现象：在哪一帧、哪个部位、发生了什么变化。" /></label>

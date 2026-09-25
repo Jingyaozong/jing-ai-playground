@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 import { posterStoryPilotRecords, type PosterStoryPilotRecord } from '../data/poster-story-pilot';
@@ -256,6 +257,7 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
         <form className="experiment-record-editor" onSubmit={(event) => event.preventDefault()}>
           <header><div><span className="mono">GROUP {active.group} · STORY</span><strong>{active.id}</strong></div><label><span className="mono">当前状态</span><select value={active.status} onChange={(event) => updateActive({ status: event.target.value as RecordStatus })}><option value="untested">待执行</option><option value="generated">已有故事</option><option value="reviewed">已审计</option></select></label></header>
           <div className="reference-active-task"><span className="mono">FIXED POSTER</span><strong>{active.poster}</strong></div>
+          <RecordEvidenceReminder status={active.status} asset={active.asset} />
           <div className="experiment-record-meta"><label><span>模型 / 版本 / 入口</span><input value={active.model} onChange={(event) => updateActive({ model: event.target.value })} placeholder="执行当天填写真实版本" /></label><label><span>原始输出文件 / 链接</span><input value={active.asset} onChange={(event) => updateActive({ asset: event.target.value })} placeholder={`例：${active.id}.md`} /></label><label><span>输出故事标题</span><input value={active.outputTitle} onChange={(event) => updateActive({ outputTitle: event.target.value })} placeholder="按原始输出填写" /></label><label><span>梗概字数</span><input value={active.wordCount} onChange={(event) => updateActive({ wordCount: event.target.value })} inputMode="numeric" placeholder="只填实际字数" /></label></div>
           <fieldset className="experiment-score-fields"><legend className="mono">人工审计 · 1 差 / 5 清楚</legend>{scoreLabels.map(({ key, label, hint }) => <div className="experiment-score-row" key={key}><div><strong>{label}</strong><small>{hint}</small></div><div><button type="button" className={active.scores[key] === null ? 'is-active' : ''} onClick={() => updateScore(key, null)} aria-label={`${label}未评分`}>—</button>{[1, 2, 3, 4, 5].map((score) => <button type="button" className={active.scores[key] === score ? 'is-active' : ''} onClick={() => updateScore(key, score)} aria-label={`${label}${score}分`} key={score}>{score}</button>)}</div></div>)}</fieldset>
           <fieldset className="experiment-failure-fields"><legend className="mono">错误标签 · 可多选</legend><div>{failureOptions.map((label) => <button type="button" className={active.failures.includes(label) ? 'is-active' : ''} onClick={() => toggleFailure(label)} aria-pressed={active.failures.includes(label)} key={label}>{label}</button>)}</div></fieldset>

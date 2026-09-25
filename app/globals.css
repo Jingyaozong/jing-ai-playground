@@ -2320,6 +2320,9 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .experiment-record-editor textarea { min-height: 135px; padding: 13px; border-radius: 14px; resize: vertical; }
 .experiment-record-editor select:focus, .experiment-record-editor input:focus, .experiment-record-editor textarea:focus { box-shadow: 0 0 0 3px var(--blue); }
 .experiment-record-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 22px 22px 0; }
+.experiment-evidence-reminder { display: grid; gap: 5px; margin: 18px 22px 0; padding: 15px 18px; border: 1.5px solid var(--ink); border-radius: 16px; background: var(--sky); }
+.experiment-evidence-reminder strong { font-size: 13px; }
+.experiment-evidence-reminder p { margin: 0; font-size: 11px; line-height: 1.65; }
 .experiment-record-meta label, .experiment-record-note { display: grid; gap: 8px; font-size: 10px; font-weight: 750; }
 .experiment-score-fields, .experiment-failure-fields { margin: 22px; padding: 20px 0 0; border: 0; border-top: 1px solid var(--ink); }
 .experiment-score-fields legend, .experiment-failure-fields legend { padding: 0 10px 0 0; color: var(--blue); }
