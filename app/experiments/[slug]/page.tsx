@@ -143,10 +143,11 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
 
       <section className="experiment-samples section-shell">
         <div className="experiment-section-heading">
-          <div><p className="eyebrow mono">02 / Sample wall</p><EditorialHeading lines={editorialLines(experiment.sampleTitle ?? '不是展示最好看，\n而是留下变化。')} /></div>
+          <div><p className="eyebrow mono">{evidenceKind === 'protocol' ? '02 / Planned cells · 待执行' : evidenceKind === 'static-pilot' ? '02 / Static pilot · 静态图' : '02 / Text outputs · 故事文本'}</p><EditorialHeading lines={editorialLines(experiment.sampleTitle ?? '不是展示最好看，\n而是留下变化。')} /></div>
           <p>{experiment.sampleDescription ?? '首轮先放入四格静态样本。正式实验会继续扩展到四十镜，并同时保留最稳定与最容易漂移的结果。'}</p>
         </div>
-        <article className="experiment-reference-card">
+        <article className={`experiment-reference-card${evidenceKind === 'protocol' ? ' is-protocol' : ''}`}>
+          {evidenceKind === 'protocol' && <span className="experiment-reference-kind mono">{reference.kind === 'reference-pack' ? '参考图待制作 · 非实验结果' : reference.kind === 'character' ? 'AI 角色锚点 · 非实验结果' : '协议示意图 · 非实验结果'}</span>}
           {reference.kind === 'character'
             ? <div className="experiment-reference-image" aria-label={reference.imageAlt ?? '实验角色锚点图'} style={{ backgroundImage: `url("${referenceImage.src}")` }} />
             : reference.kind === 'light-map'
@@ -167,10 +168,10 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         <div className="experiment-sample-grid">
           {experiment.samples.map((sample, index) => (
             <article className="experiment-sample-card" key={sample.shot}>
-              <div className={`experiment-sample-visual tone-${sample.tone} ${sample.outputText ? 'has-text-output' : sample.generated === false ? 'is-planned-frame' : 'has-generated-frame'}`} aria-label={sample.generated === false ? `${sample.title}待执行样本位` : sample.outputText ? `${sample.title} AI 生成故事文本` : `${sample.title} AI 生成静态图，非视频`} style={sample.generated === false || sample.outputText ? undefined : { backgroundImage: `url("${experimentPilotSamples.src}")`, backgroundPosition: sample.framePosition }}>
+              <div className={`experiment-sample-visual tone-${sample.tone} ${sample.outputText ? 'has-text-output' : sample.generated === false ? 'is-planned-frame' : 'has-generated-frame'}`} aria-label={sample.generated === false ? `${sample.title}，${sample.status}` : sample.outputText ? `${sample.title} AI 生成故事文本` : `${sample.title} AI 生成静态图，非视频`} style={sample.generated === false || sample.outputText ? undefined : { backgroundImage: `url("${experimentPilotSamples.src}")`, backgroundPosition: sample.framePosition }}>
                 <span className="sample-crosshair" />
                 {sample.outputText && <p>{sample.outputText}</p>}
-                <b className="mono">{sample.generated === false ? '待执行 · 无样本' : sample.outputText ? '真实文本 · 编辑初审' : 'AI 静态图 · 非视频'}</b>
+                <b className="mono">{sample.generated === false ? sample.status : sample.outputText ? '真实文本 · 编辑初审' : 'AI 静态图 · 非视频'}</b>
                 <i className="mono">{String(index + 1).padStart(2, '0')} / {String(experiment.samples.length).padStart(2, '0')}</i>
               </div>
               <div className="experiment-sample-copy">

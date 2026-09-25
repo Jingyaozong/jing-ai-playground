@@ -2226,6 +2226,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .tone-mint { background: var(--mint); color: var(--ink); }
 .experiment-samples { padding-block: 130px; }
 .experiment-reference-card { display: grid; grid-template-columns: minmax(250px,.72fr) minmax(0,1.28fr); min-height: 470px; margin-bottom: 26px; overflow: hidden; border: 2px solid var(--ink); border-radius: 30px; background: var(--white); box-shadow: 7px 7px 0 var(--blue); }
+.experiment-reference-card .experiment-reference-kind { grid-column: 1 / -1; padding: 13px 22px; border-bottom: 2px solid var(--ink); background: var(--sky); color: var(--ink); font-size: .72rem; font-weight: 750; line-height: 1.45; }
 .experiment-reference-image { min-height: 470px; border-right: 2px solid var(--ink); background-position: center 30%; background-size: cover; }
 .experiment-reference-card > div:last-child { display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(28px,5vw,62px); }
 .experiment-reference-card span { color: var(--blue); font-weight: 700; }

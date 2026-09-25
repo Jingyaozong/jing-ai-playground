@@ -6,6 +6,7 @@ import matter from 'gray-matter';
 import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
 import { getAllNotes } from '../lib/notes.ts';
 import { stories, experiments, experimentEvidenceLabels, tools, toolCategories } from '../app/data/content.ts';
+import { experimentDetails } from '../app/data/experiments.ts';
 import { libraryItems } from '../app/data/library.ts';
 import { promptFilters, promptItems, promptSource } from '../app/data/prompts.ts';
 import { promptResources } from '../app/data/prompt-resources.ts';
@@ -78,6 +79,12 @@ test('experiment card title groups preserve titles, status and detail links', ()
 
 test('experiment detail first screens match archive evidence and distinguish planned from completed units', () => {
   for (const item of experiments) {
+    const detail = experimentDetails.find((experiment) => experiment.slug === item.slug);
+    assert.ok(detail, `Missing experiment detail: ${item.number}`);
+    if (detail.titleLines) {
+      assert.equal(detail.titleLines.join(''), detail.title, `Detail title groups changed text: ${item.number}`);
+      assert.ok(detail.titleLines.every((line) => line.trim().length > 1), `Detail title has an orphan group: ${item.number}`);
+    }
     const html = readFileSync(join(process.cwd(), 'out', `experiments/${item.slug}/index.html`), 'utf8')
       .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
     const hero = html.match(/<header class="experiment-detail-hero">([\s\S]*?)<\/header>/)?.[1];
@@ -88,6 +95,22 @@ test('experiment detail first screens match archive evidence and distinguish pla
       ? '40 PLANNED · 4 STATIC · NO VIDEO'
       : item.evidenceKind === 'text-pilot' ? 'TEXT OUTPUTS · NO VIDEO' : 'PLANNED CELLS · 0 GENERATED';
     if (item.number !== '010') assert.ok(hero.includes(expectedBoard), `Unit count lacks evidence type: ${item.number}`);
+  }
+});
+
+test('pending experiment references and empty visual cells cannot read as generated results', () => {
+  for (const item of experiments.filter((experiment) => experiment.evidenceKind === 'protocol')) {
+    const detail = experimentDetails.find((experiment) => experiment.slug === item.slug);
+    assert.ok(detail, `Missing protocol detail: ${item.number}`);
+    const html = readFileSync(join(process.cwd(), 'out', `experiments/${item.slug}/index.html`), 'utf8')
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    const expectedReference = detail.reference?.kind === 'reference-pack'
+      ? '参考图待制作 · 非实验结果'
+      : detail.reference?.kind === 'character' ? 'AI 角色锚点 · 非实验结果' : '协议示意图 · 非实验结果';
+    assert.ok(html.includes(`class="experiment-reference-kind mono">${expectedReference}</span>`), `Reference lacks visible evidence boundary: ${item.number}`);
+    assert.ok(html.includes('02 / Planned cells · 待执行'), `Sample section reads as completed: ${item.number}`);
+    const visualStatus = [...html.matchAll(/<div class="experiment-sample-visual[^>]*>[\s\S]*?<b class="mono">([^<]+)<\/b>/g)].map((match) => match[1]);
+    assert.deepEqual(visualStatus, detail.samples.map((sample) => sample.status), `Empty cell visual status differs from record: ${item.number}`);
   }
 });
 
