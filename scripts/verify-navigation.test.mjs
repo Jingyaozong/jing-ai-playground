@@ -5,7 +5,7 @@ import test from 'node:test';
 import matter from 'gray-matter';
 import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
 import { getAllNotes } from '../lib/notes.ts';
-import { stories, experiments, tools, toolCategories } from '../app/data/content.ts';
+import { stories, experiments, experimentEvidenceLabels, tools, toolCategories } from '../app/data/content.ts';
 import { libraryItems } from '../app/data/library.ts';
 import { promptFilters, promptItems, promptSource } from '../app/data/prompts.ts';
 import { promptResources } from '../app/data/prompt-resources.ts';
@@ -56,7 +56,6 @@ test('story cards preserve semantic titles, original status and detail links', (
 });
 
 test('experiment card title groups preserve titles, status and detail links', () => {
-  const evidenceLabels = { protocol: '协议待执行 · 无输出', 'static-pilot': '静态 Pilot · 无视频结论', 'text-pilot': '已有文本样本 · 编辑初审' };
   for (const file of ['index.html', 'experiments/index.html']) {
     const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
     for (const item of experiments) {
@@ -70,10 +69,25 @@ test('experiment card title groups preserve titles, status and detail links', ()
       assert.ok(card, `Missing experiment card: ${item.id}`);
       for (const part of item.titleParts) assert.ok(card.includes(`<span class="experiment-title-part">${part}</span>`), `Missing title group: ${item.id} / ${part}`);
       assert.ok(card.includes(item.status), `Status changed: ${item.id}`);
-      assert.ok(card.includes(evidenceLabels[item.evidenceKind]), `Evidence badge is missing: ${item.id}`);
+      assert.ok(card.includes(experimentEvidenceLabels[item.evidenceKind]), `Evidence badge is missing: ${item.id}`);
       assert.ok(!card.includes('有详情记录') && !card.includes('最新研究 · 有详情'), `Generic experiment badge remains: ${item.id}`);
       assert.ok(card.includes(`/experiments/${item.slug}/`), `Missing detail link: ${item.id}`);
     }
+  }
+});
+
+test('experiment detail first screens match archive evidence and distinguish planned from completed units', () => {
+  for (const item of experiments) {
+    const html = readFileSync(join(process.cwd(), 'out', `experiments/${item.slug}/index.html`), 'utf8')
+      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    const hero = html.match(/<header class="experiment-detail-hero">([\s\S]*?)<\/header>/)?.[1];
+    assert.ok(hero, `Missing detail hero: ${item.number}`);
+    assert.ok(hero.includes(experimentEvidenceLabels[item.evidenceKind]), `Archive/detail evidence differs: ${item.number}`);
+    assert.ok(hero.includes('class="experiment-evidence-note"'), `Missing plain-language evidence boundary: ${item.number}`);
+    const expectedBoard = item.evidenceKind === 'static-pilot'
+      ? '40 PLANNED · 4 STATIC · NO VIDEO'
+      : item.evidenceKind === 'text-pilot' ? 'TEXT OUTPUTS · NO VIDEO' : 'PLANNED CELLS · 0 GENERATED';
+    if (item.number !== '010') assert.ok(hero.includes(expectedBoard), `Unit count lacks evidence type: ${item.number}`);
   }
 });
 

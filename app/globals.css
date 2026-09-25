@@ -2183,12 +2183,15 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .experiment-detail-labels { display: flex; flex-wrap: wrap; gap: 9px; }
 .experiment-detail-labels span, .experiment-detail-labels b { padding: 8px 11px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--white); }
 .experiment-detail-labels b { background: var(--coral); color: var(--ink); }
+.experiment-detail-title > .project-truth-badge { margin-top: 18px; }
+.experiment-detail-title > p.experiment-evidence-note { max-width: 660px; margin: -30px 0 38px; color: var(--ink); font-size: .94rem; font-weight: 650; line-height: 1.75; }
 .experiment-detail-title h1 { max-width: 920px; margin: 52px 0 24px; font-family: var(--display); font-size: clamp(4.5rem,8vw,8.7rem); font-weight: 720; line-height: .86; letter-spacing: -.065em; }
 .experiment-detail-title > p { max-width: 700px; margin: 0 0 56px; color: var(--muted); font-size: clamp(1rem,1.5vw,1.25rem); font-weight: 550; line-height: 1.75; }
 .experiment-title-footer { display: flex; justify-content: space-between; gap: 24px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); }
 .forty-board { min-height: 590px; display: flex; flex-direction: column; padding: 24px; overflow: hidden; border: 2px solid var(--ink); border-radius: 34px; background: var(--yellow); box-shadow: 10px 10px 0 var(--ink); transform: rotate(1deg); }
 .forty-board-top { display: flex; justify-content: space-between; }
 .forty-board > strong { margin: 26px 0 22px; font-family: var(--display); font-size: clamp(8rem,14vw,13rem); font-weight: 820; line-height: .7; letter-spacing: -.1em; }
+.forty-board-evidence { max-width: 100%; font-size: .7rem; font-weight: 750; line-height: 1.45; }
 .forty-cells { display: grid; grid-template-columns: repeat(8,1fr); gap: 4px; margin-top: auto; }
 .forty-cells i { aspect-ratio: 1; display: grid; place-items: center; border: 1px solid var(--ink); border-radius: 4px; background: rgba(255,255,255,.48); font-family: var(--mono); font-size: 7px; font-style: normal; }
 .forty-cells i:nth-child(10n+1), .forty-cells i:nth-child(10n+2) { background: var(--blue); color: var(--white); }

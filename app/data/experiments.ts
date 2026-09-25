@@ -73,6 +73,7 @@ export const experimentDetails: ExperimentDetail[] = [
     slug: 'forty-shots-one-character',
     number: '001',
     title: '同一个她，四十个镜头',
+    titleLines: ['同一个她，', '四十个镜头'],
     englishTitle: 'One Character, Forty Shots',
     category: 'Character Study',
     date: '2026.08.18',

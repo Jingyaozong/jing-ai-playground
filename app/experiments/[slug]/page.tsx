@@ -22,6 +22,7 @@ import { StoryboardAuditBoard } from '../../components/storyboard-audit-board';
 import { PosterStoryAuditBoard } from '../../components/poster-story-audit-board';
 import { WaterlineMotionRecordBoard } from '../../components/waterline-motion-record-board';
 import { WaterlineCover } from '../../components/waterline-cover';
+import { experimentEvidenceLabels, experiments } from '../../data/content';
 import { experimentDetails, getExperimentBySlug } from '../../data/experiments';
 
 export const dynamicParams = false;
@@ -44,6 +45,9 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
   const { slug } = await params;
   const experiment = getExperimentBySlug(slug);
   if (!experiment) notFound();
+  const archiveExperiment = experiments.find((item) => item.slug === slug);
+  if (!archiveExperiment) notFound();
+  const evidenceKind = archiveExperiment.evidenceKind;
   const testCount = experiment.testCount ?? 40;
   const testUnit = experiment.testUnit ?? 'TEST SHOTS';
   const reference = experiment.reference ?? {
@@ -74,8 +78,14 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
               <span>{experiment.date.replaceAll('.', ' / ')}</span>
               {experiment.demo && <b>{experiment.pilotLabel ?? 'PILOT · 4 / 40'}</b>}
             </div>
+            <span className={`project-truth-badge truth-${evidenceKind} mono`}>{experimentEvidenceLabels[evidenceKind]}</span>
             <h1>{experiment.titleLines ? experiment.titleLines.map((line) => <span key={line}>{line}</span>) : experiment.title}</h1>
             <p>{experiment.summary}</p>
+            <p className="experiment-evidence-note">{evidenceKind === 'static-pilot'
+              ? '现有四格静态生成图；40 镜是后续测试计划。没有视频样本，也没有正式模型结论。'
+              : evidenceKind === 'text-pilot'
+                ? '现有九份故事文本输出与页面编辑初审；海报是视觉输入，不是视频结果。评分尚待荆或第二位评审者确认。'
+                : `当前只有测试协议；${testCount} 个位置均待执行。没有生成输出或模型结论。`}</p>
             <div className="experiment-title-footer mono">
               <span>{experiment.englishTitle}</span>
               <span>{experiment.status}</span>
@@ -85,6 +95,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
           {experiment.recordBoard === 'waterline-motion' ? <WaterlineCover /> : <div className="forty-board" aria-label={`${testCount} 个测试单元编号板`}>
             <div className="forty-board-top mono"><span>{testUnit}</span><span>01—{String(testCount).padStart(2, '0')}</span></div>
             <strong>{testCount}</strong>
+            <span className="forty-board-evidence mono">{evidenceKind === 'static-pilot' ? '40 PLANNED · 4 STATIC · NO VIDEO' : evidenceKind === 'text-pilot' ? 'TEXT OUTPUTS · NO VIDEO' : 'PLANNED CELLS · 0 GENERATED'}</span>
             <div className="forty-cells" aria-hidden="true">
               {Array.from({ length: testCount }, (_, index) => <i key={index}>{String(index + 1).padStart(2, '0')}</i>)}
             </div>
@@ -156,10 +167,10 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         <div className="experiment-sample-grid">
           {experiment.samples.map((sample, index) => (
             <article className="experiment-sample-card" key={sample.shot}>
-              <div className={`experiment-sample-visual tone-${sample.tone} ${sample.outputText ? 'has-text-output' : sample.generated === false ? 'is-planned-frame' : 'has-generated-frame'}`} aria-label={sample.generated === false ? `${sample.title}待执行样本位` : `${sample.title} AI 生成首轮样本`} style={sample.generated === false || sample.outputText ? undefined : { backgroundImage: `url("${experimentPilotSamples.src}")`, backgroundPosition: sample.framePosition }}>
+              <div className={`experiment-sample-visual tone-${sample.tone} ${sample.outputText ? 'has-text-output' : sample.generated === false ? 'is-planned-frame' : 'has-generated-frame'}`} aria-label={sample.generated === false ? `${sample.title}待执行样本位` : sample.outputText ? `${sample.title} AI 生成故事文本` : `${sample.title} AI 生成静态图，非视频`} style={sample.generated === false || sample.outputText ? undefined : { backgroundImage: `url("${experimentPilotSamples.src}")`, backgroundPosition: sample.framePosition }}>
                 <span className="sample-crosshair" />
                 {sample.outputText && <p>{sample.outputText}</p>}
-                <b className="mono">{sample.generated === false ? '待执行 · 无样本' : sample.outputText ? '真实文本 · 编辑初审' : 'AI 首轮样本'}</b>
+                <b className="mono">{sample.generated === false ? '待执行 · 无样本' : sample.outputText ? '真实文本 · 编辑初审' : 'AI 静态图 · 非视频'}</b>
                 <i className="mono">{String(index + 1).padStart(2, '0')} / {String(experiment.samples.length).padStart(2, '0')}</i>
               </div>
               <div className="experiment-sample-copy">

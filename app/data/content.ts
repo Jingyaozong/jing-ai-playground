@@ -29,6 +29,12 @@ export type Experiment = {
   visual: string;
 };
 
+export const experimentEvidenceLabels: Record<Experiment['evidenceKind'], string> = {
+  protocol: '协议待执行 · 无输出',
+  'static-pilot': '静态 Pilot · 无视频结论',
+  'text-pilot': '已有文本样本 · 编辑初审',
+};
+
 export type Tool = {
   id: string;
   title: string;
