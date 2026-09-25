@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
+import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -63,10 +63,6 @@ function average(record: StoryboardRecord) {
   return scores.length ? scores.reduce((sum, score) => sum + score, 0) / scores.length : null;
 }
 
-function cleanCell(value: string) {
-  return value.replaceAll('|', '\\|').replaceAll('\n', ' ');
-}
-
 function buildMarkdown(records: StoryboardRecord[]) {
   const groupSummary = groups.flatMap((group) => {
     const rows = records.filter((record) => record.group === group.code);
@@ -76,7 +72,7 @@ function buildMarkdown(records: StoryboardRecord[]) {
       return `- ${label}：${result} / 5（${values.length} 个有效评分）`;
     }), ''];
   });
-  const rows = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${cleanCell(record.model || '—')} | ${cleanCell(record.asset || '—')} | ${record.shotCount || '—'} | ${record.duration || '—'} | ${record.scores.coverage ?? '—'} | ${record.scores.causality ?? '—'} | ${record.scores.shootability ?? '—'} | ${record.scores.timing ?? '—'} | ${cleanCell(record.failures.join('、') || '—')} | ${cleanCell(record.note || '—')} |`);
+  const rows = records.map((record) => markdownTableRow([record.id, record.task, statusLabels[record.status], record.model, record.asset, record.shotCount, record.duration, record.scores.coverage, record.scores.causality, record.scores.shootability, record.scores.timing, record.failures.join('、'), record.note]));
   return [
     '# 自动分镜机，第一次走神｜9 格审计记录', '',
     localExportNotice, '', localExportEvidenceSummary(records), '',

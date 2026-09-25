@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
+import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 import { posterStoryPilotRecords, type PosterStoryPilotRecord } from '../data/poster-story-pilot';
 import { posterStoryRetestRecords } from '../data/poster-story-retest';
@@ -111,10 +111,6 @@ function average(record: PosterStoryRecord) {
   return scores.length ? scores.reduce((sum, score) => sum + score, 0) / scores.length : null;
 }
 
-function cleanCell(value: string) {
-  return value.replaceAll('|', '\\|').replaceAll('\n', ' ');
-}
-
 function buildMarkdown(records: PosterStoryRecord[], config: BoardConfig) {
   const groupSummary = config.groups.flatMap((group) => {
     const rows = records.filter((record) => record.group === group.code);
@@ -124,7 +120,7 @@ function buildMarkdown(records: PosterStoryRecord[], config: BoardConfig) {
       return `- ${label}：${result} / 5（${values.length} 个有效评分）`;
     }), ''];
   });
-  const rows = records.map((record) => `| ${record.id} | ${record.poster} | ${statusLabels[record.status]} | ${cleanCell(record.model || '—')} | ${cleanCell(record.asset || '—')} | ${cleanCell(record.outputTitle || '—')} | ${record.wordCount || '—'} | ${record.scores.evidence ?? '—'} | ${record.scores.boundary ?? '—'} | ${record.scores.coherence ?? '—'} | ${record.scores.relevance ?? '—'} | ${cleanCell(record.failures.join('、') || '—')} | ${cleanCell(record.note || '—')} |`);
+  const rows = records.map((record) => markdownTableRow([record.id, record.poster, statusLabels[record.status], record.model, record.asset, record.outputTitle, record.wordCount, record.scores.evidence, record.scores.boundary, record.scores.coherence, record.scores.relevance, record.failures.join('、'), record.note]));
   return [
     `# ${config.exportTitle}`, '',
     localExportNotice, '', localExportEvidenceSummary(records), '',

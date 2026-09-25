@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
+import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -63,7 +63,7 @@ function buildMarkdown(records: ReferenceRecord[]) {
       return `- ${label}：${values.length ? (values.reduce((sum, value) => sum + value, 0) / values.length).toFixed(2) : '—'} / 5（${values.length} 个有效评分）`;
     }), ''];
   });
-  const table = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${record.model || '—'} | ${record.asset || '—'} | ${record.scores.identity ?? '—'} | ${record.scores.angle ?? '—'} | ${record.scores.motion ?? '—'} | ${record.scores.trace ?? '—'} | ${record.flags.join('、') || '—'} | ${(record.note || '—').replaceAll('|', '\\|').replaceAll('\n', ' ')} |`);
+  const table = records.map((record) => markdownTableRow([record.id, record.task, statusLabels[record.status], record.model, record.asset, record.scores.identity, record.scores.angle, record.scores.motion, record.scores.trace, record.flags.join('、'), record.note]));
   return [
     '# 参考图到底锁住了什么？｜12 格实验记录', '',
     localExportNotice, '', localExportEvidenceSummary(records), '',

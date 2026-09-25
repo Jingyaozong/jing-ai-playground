@@ -5,3 +5,11 @@ export function localExportEvidenceSummary(records: Array<{ id: string | number;
   const missing = marked.filter((record) => !record.asset.trim());
   return `> 本机标记为已有输出：${marked.length} 条；其中未填写原始素材：${missing.length} 条${missing.length ? `（${missing.map((record) => record.id).join('、')}）` : ''}。填写路径也不等于素材已核验。`;
 }
+
+export function markdownTableRow(cells: readonly (string | number | null | undefined)[]): string {
+  return `| ${cells.map((value) => String(value === '' || value == null ? '—' : value)
+    .replaceAll('\\', '\\\\')
+    .replaceAll('|', '\\|')
+    .replace(/\r\n?|\n/g, ' ↵ ')
+    .replaceAll('\t', ' ')).join(' | ')} |`;
+}

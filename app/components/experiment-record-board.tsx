@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
+import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -66,8 +66,7 @@ function buildMarkdown(records: TestRecord[]) {
   }).join('\n');
   const header = '| 镜号 | 组别 | 状态 | 模型 / 版本 | 素材 | 身份 | 动作 | 物理 | 镜头 | 失败标签 | 观察备注 |\n| ---: | :---: | --- | --- | --- | ---: | ---: | ---: | ---: | --- | --- |';
   const rows = records.map((record) => {
-    const cell = (value: string) => value.replaceAll('|', '\\|').replaceAll('\n', ' ');
-    return `| ${String(record.id).padStart(2, '0')} | ${record.group} | ${statusLabels[record.status]} | ${cell(record.model || '—')} | ${cell(record.asset || '—')} | ${record.scores.identity ?? '—'} | ${record.scores.motion ?? '—'} | ${record.scores.physics ?? '—'} | ${record.scores.camera ?? '—'} | ${cell(record.failures.join('、') || '—')} | ${cell(record.note || '—')} |`;
+    return markdownTableRow([String(record.id).padStart(2, '0'), record.group, statusLabels[record.status], record.model, record.asset, record.scores.identity, record.scores.motion, record.scores.physics, record.scores.camera, record.failures.join('、'), record.note]);
   }).join('\n');
   return `# 同一个她，四十个镜头｜实验记录\n\n${localExportNotice}\n\n${localExportEvidenceSummary(records)}\n\n> 本表只包含手动填写的观察，不代表模型排名。空白样本保持为“待测试”。\n\n## 进度\n\n- 四项已填评分：${complete.length} / 40\n- 本机标记为已生成：${records.filter((record) => record.status !== 'untested').length} / 40\n\n## 平均分\n\n${averages}\n\n## 样本明细\n\n${header}\n${rows}`;
 }

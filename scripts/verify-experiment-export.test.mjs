@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { localExportNotice, localExportEvidenceSummary } from '../app/data/experiment-export-boundary.ts';
+import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../app/data/experiment-export-boundary.ts';
 
 test('local export distinguishes a marked state from source evidence', () => {
   const rows = [
@@ -26,5 +26,19 @@ test('every experiment record export carries the local-only boundary', () => {
     const source = readFileSync(new URL(`../app/components/${board}.tsx`, import.meta.url), 'utf8');
     assert.match(source, /localExportNotice/);
     assert.match(source, /localExportEvidenceSummary\(records\)/);
+    assert.match(source, /markdownTableRow\(\[/);
   }
+});
+
+test('Markdown cells keep pipes, backslashes and multiline text inside one row', () => {
+  const row = markdownTableRow(['A01', '左|右\r\n下一行', 'path\\|v2', null, 0]);
+  assert.equal(row, String.raw`| A01 | 左\|右 ↵ 下一行 | path\\\|v2 | — | 0 |`);
+  assert.equal(row.split('\n').length, 1);
+
+  const separators = [...row.matchAll(/\|/g)].filter((match) => {
+    const prefix = row.slice(0, match.index);
+    return (prefix.match(/\\+$/)?.[0].length ?? 0) % 2 === 0;
+  });
+  assert.equal(separators.length, 6);
+  assert.equal(markdownTableRow(['备注\n第二行', '制表\t符']), '| 备注 ↵ 第二行 | 制表 符 |');
 });

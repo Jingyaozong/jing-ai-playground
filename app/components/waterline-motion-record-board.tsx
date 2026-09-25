@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
+import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -128,14 +128,13 @@ function buildMarkdown(records: WaterlineRecord[]) {
       return `- ${label}：${values.length ? (values.reduce((sum, value) => sum + value, 0) / values.length).toFixed(2) : '—'} / 5（${values.length} 个有效评分）`;
     }), ''];
   });
-  const clean = (value: string) => (value || '—').replaceAll('|', '\\|').replaceAll('\n', ' ');
-  const rows = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${clean(record.model)} | ${clean(record.seed)} | ${clean(record.asset)} | ${clean(record.lockFrame)} | ${clean(record.waterStartFrame)} | ${record.scores.umbrellaIntegrity ?? '—'} | ${record.scores.causalOrder ?? '—'} | ${record.scores.waterDirection ?? '—'} | ${record.scores.worldContinuity ?? '—'} | ${record.failures.join('、') || '—'} | ${clean(record.note)} |`);
+  const rows = records.map((record) => markdownTableRow([record.id, record.task, statusLabels[record.status], record.model, record.seed, record.asset, record.lockFrame, record.waterStartFrame, record.scores.umbrellaIntegrity, record.scores.causalOrder, record.scores.waterDirection, record.scores.worldContinuity, record.failures.join('、'), record.note]));
   const checkpointSections = records.flatMap((record) => [
     `### ${record.id} · ${record.task} · ${statusLabels[record.status]}`,
     '',
     '| 时间点 | 真实帧号 | 红伞状态 | 水线位置 / 世界状态 |',
     '| --- | --- | --- | --- |',
-    ...record.checkpoints.map((checkpoint) => `| ${checkpoint.point} | ${clean(checkpoint.frame)} | ${clean(checkpoint.umbrella)} | ${clean(checkpoint.waterline)} |`),
+    ...record.checkpoints.map((checkpoint) => markdownTableRow([checkpoint.point, checkpoint.frame, checkpoint.umbrella, checkpoint.waterline])),
     '',
   ]);
   return [

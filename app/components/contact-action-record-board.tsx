@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { localExportNotice, localExportEvidenceSummary } from '../data/experiment-export-boundary';
+import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -66,7 +66,7 @@ function buildMarkdown(records: ContactRecord[]) {
       return `- ${label}：${values.length ? (values.reduce((sum, value) => sum + value, 0) / values.length).toFixed(2) : '—'} / 5（${values.length} 个有效评分）`;
     }), ''];
   });
-  const rows = records.map((record) => `| ${record.id} | ${record.task} | ${statusLabels[record.status]} | ${record.model || '—'} | ${record.seed || '—'} | ${record.asset || '—'} | ${record.scores.contactTiming ?? '—'} | ${record.scores.handIntegrity ?? '—'} | ${record.scores.objectIntegrity ?? '—'} | ${record.scores.supportLogic ?? '—'} | ${record.failures.join('、') || '—'} | ${(record.note || '—').replaceAll('|', '\\|').replaceAll('\n', ' ')} |`);
+  const rows = records.map((record) => markdownTableRow([record.id, record.task, statusLabels[record.status], record.model, record.seed, record.asset, record.scores.contactTiming, record.scores.handIntegrity, record.scores.objectIntegrity, record.scores.supportLogic, record.failures.join('、'), record.note]));
   return [
     '# 一只手能否稳定拿起同一个杯子？｜9 格实验记录', '',
     localExportNotice, '', localExportEvidenceSummary(records), '',
