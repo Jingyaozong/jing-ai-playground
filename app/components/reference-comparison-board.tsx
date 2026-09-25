@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type Group = 'A' | 'B' | 'C';
@@ -164,11 +165,12 @@ export function ReferenceComparisonBoard() {
 
       <div className="experiment-record-summary">
         <article><span className="mono">COMPLETE</span><strong>{completed}<i>/12</i></strong><p>四项评分完整</p></article>
-        <article><span className="mono">GENERATED</span><strong>{generated}<i>/12</i></strong><p>已有真实输出</p></article>
+        <article><span className="mono">GENERATED</span><strong>{generated}<i>/12</i></strong><p>本机标记为已有输出</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
+      <LocalRecordBoundary loaded={loaded} markedCount={generated} />
       <div className="experiment-record-workspace">
         <div className="experiment-contact-sheet">
           <div className="experiment-record-filters"><div aria-label="按参考条件筛选">{(['ALL', 'A', 'B', 'C'] as const).map((group) => <button type="button" className={groupFilter === group ? 'is-active' : ''} onClick={() => setGroupFilter(group)} key={group}>{group === 'ALL' ? '全部组' : `${group} 组`}</button>)}</div><span className="mono">A 无参考 · B 单张 · C 三张</span></div>

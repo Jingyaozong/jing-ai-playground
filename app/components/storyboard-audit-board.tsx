@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type Group = 'A' | 'B' | 'C';
@@ -185,11 +186,12 @@ export function StoryboardAuditBoard() {
 
       <div className="experiment-record-summary">
         <article><span className="mono">AUDITED</span><strong>{completed}<i>/9</i></strong><p>四项评分完整</p></article>
-        <article><span className="mono">OUTPUTS</span><strong>{generated}<i>/9</i></strong><p>已有真实输出</p></article>
+        <article><span className="mono">OUTPUTS</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了错误标签</p></article>
       </div>
 
+      <LocalRecordBoundary loaded={loaded} markedCount={generated} />
       <div className="experiment-record-workspace">
         <div className="experiment-contact-sheet">
           <div className="storyboard-audit-map" aria-label="原故事经过三种拆镜流程后与人工拍点基准比较"><span className="mono">STORY → METHOD → SHOTS → AUDIT</span><div><b>原故事</b><i>→</i><b>拆镜流程</b><i>→</i><b>输出表</b><i>→</i><b>拍点基准</b></div><small>不按“像不像电影”评分，只核对已写进故事的事实有没有丢。</small></div>

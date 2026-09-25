@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type Group = 'A' | 'B' | 'C';
@@ -251,11 +252,12 @@ export function WaterlineMotionRecordBoard() {
 
       <div className="experiment-record-summary">
         <article><span className="mono">REVIEWED</span><strong>{completed}<i>/9</i></strong><p>已验收且评分完整</p></article>
-        <article><span className="mono">VIDEO</span><strong>{generated}<i>/9</i></strong><p>已登记视频</p></article>
+        <article><span className="mono">VIDEO</span><strong>{generated}<i>/9</i></strong><p>本机标记为有视频</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
+      <LocalRecordBoundary loaded={loaded} markedCount={generated} />
       <div className="experiment-record-workspace">
         <div className="experiment-contact-sheet">
           <div className="waterline-desk-guide"><span className="eyebrow mono">SAMPLE INDEX</span><h3>选一个样本</h3><p>先撑伞，再退水，最后组合。<br />每格单独保存观察记录。</p></div>

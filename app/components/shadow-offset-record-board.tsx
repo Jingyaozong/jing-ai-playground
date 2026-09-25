@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type Group = 'A' | 'B' | 'C';
@@ -178,11 +179,12 @@ export function ShadowOffsetRecordBoard() {
 
       <div className="experiment-record-summary">
         <article><span className="mono">COMPLETE</span><strong>{completed}<i>/9</i></strong><p>四项评分完整</p></article>
-        <article><span className="mono">GENERATED</span><strong>{generated}<i>/9</i></strong><p>已有真实输出</p></article>
+        <article><span className="mono">GENERATED</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
+      <LocalRecordBoundary loaded={loaded} markedCount={generated} />
       <div className="experiment-record-workspace">
         <div className="experiment-contact-sheet">
           <div className="shadow-offset-diagram" aria-label="实体人物停在原点，影子沿虚线提前五分钟移动的示意图"><span className="mono">BODY LOCKED / SHADOW +05:00</span><div className="shadow-diagram-body"><i /><b /></div><div className="shadow-diagram-cast"><i /><b /></div><em /><strong className="mono">ONE LIGHT · TWO TIMINGS</strong></div>

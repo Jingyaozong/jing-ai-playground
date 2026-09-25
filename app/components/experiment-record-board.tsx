@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type ScoreKey = 'identity' | 'motion' | 'physics' | 'camera';
@@ -190,11 +191,12 @@ export function ExperimentRecordBoard() {
 
       <div className="experiment-record-summary" aria-label="实验记录汇总">
         <article><span className="mono">COMPLETE</span><strong>{completed}<i>/40</i></strong><p>四项评分完整</p></article>
-        <article><span className="mono">GENERATED</span><strong>{generated}<i>/40</i></strong><p>已有生成结果</p></article>
+        <article><span className="mono">GENERATED</span><strong>{generated}<i>/40</i></strong><p>本机标记为已有输出</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overallAverage}<i>/5</i></strong><p>{overallScores.length ? `${overallScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
+      <LocalRecordBoundary loaded={loaded} markedCount={generated} />
       <div className="experiment-record-workspace">
         <div className="experiment-contact-sheet">
           <div className="experiment-record-filters">

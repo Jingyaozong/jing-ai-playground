@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { LocalRecordBoundary } from './local-record-boundary';
 import { posterStoryPilotRecords, type PosterStoryPilotRecord } from '../data/poster-story-pilot';
 import { posterStoryRetestRecords } from '../data/poster-story-retest';
 
@@ -234,11 +235,12 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
 
       <div className="experiment-record-summary">
         <article><span className="mono">AUDITED</span><strong>{completed}<i>/9</i></strong><p>四项评分完整</p></article>
-        <article><span className="mono">STORIES</span><strong>{generated}<i>/9</i></strong><p>已有真实输出</p></article>
+        <article><span className="mono">STORIES</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了错误标签</p></article>
       </div>
 
+      <LocalRecordBoundary loaded={loaded} markedCount={generated} />
       <div className="experiment-record-workspace">
         <div className="experiment-contact-sheet">
           <div className="poster-story-map" aria-label="从海报可见证据到推测和主动创作选择的三段关系"><span className="mono">{config.mapLabel}</span><div><b>可见证据<small>能从图上指出</small></b><i>→</i><b>合理推测<small>可能成立，但未被证明</small></b><i>→</i><b>创作选择<small>作者主动添加</small></b></div><strong>{config.mapFoot}</strong></div>

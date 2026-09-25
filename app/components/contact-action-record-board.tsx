@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type Group = 'A' | 'B' | 'C';
@@ -175,11 +176,12 @@ export function ContactActionRecordBoard() {
 
       <div className="experiment-record-summary">
         <article><span className="mono">COMPLETE</span><strong>{completed}<i>/9</i></strong><p>四项评分完整</p></article>
-        <article><span className="mono">GENERATED</span><strong>{generated}<i>/9</i></strong><p>已有真实输出</p></article>
+        <article><span className="mono">GENERATED</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
+      <LocalRecordBoundary loaded={loaded} markedCount={generated} />
       <div className="experiment-record-workspace">
         <div className="experiment-contact-sheet">
           <div className="contact-action-diagram" aria-label="手先靠近杯柄，接触建立后承重点才从桌面转移到手"><span className="mono">CONTACT → GRIP → SUPPORT</span><div className="contact-diagram-hand"><i /><i /><i /><b /></div><div className="contact-diagram-cup"><i /><b /></div><em>＋</em><strong className="mono">TABLE → HAND</strong></div>
