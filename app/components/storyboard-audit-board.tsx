@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
-import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
+import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -56,7 +56,7 @@ function emptyRecords(): StoryboardRecord[] {
 }
 
 function isComplete(record: StoryboardRecord) {
-  return scoreLabels.every(({ key }) => record.scores[key] !== null);
+  return countsAsCompletedRecord(record.status, record.asset, scoreLabels.map(({ key }) => record.scores[key]));
 }
 
 function average(record: StoryboardRecord) {
@@ -184,7 +184,7 @@ export function StoryboardAuditBoard() {
       </div>
 
       <div className="experiment-record-summary">
-        <article><span className="mono">AUDITED</span><strong>{completed}<i>/9</i></strong><p>四项评分完整</p></article>
+        <article><span className="mono">AUDITED</span><strong>{completed}<i>/9</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
         <article><span className="mono">OUTPUTS</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了错误标签</p></article>

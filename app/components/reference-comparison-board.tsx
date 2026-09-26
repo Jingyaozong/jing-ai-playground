@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
-import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
+import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -48,7 +48,7 @@ function emptyRecords(): ReferenceRecord[] {
 }
 
 function isComplete(record: ReferenceRecord) {
-  return scoreLabels.every(({ key }) => record.scores[key] !== null);
+  return countsAsCompletedRecord(record.status, record.asset, scoreLabels.map(({ key }) => record.scores[key]));
 }
 
 function average(record: ReferenceRecord) {
@@ -167,7 +167,7 @@ export function ReferenceComparisonBoard() {
       </div>
 
       <div className="experiment-record-summary">
-        <article><span className="mono">COMPLETE</span><strong>{completed}<i>/12</i></strong><p>四项评分完整</p></article>
+        <article><span className="mono">COMPLETE</span><strong>{completed}<i>/12</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
         <article><span className="mono">GENERATED</span><strong>{generated}<i>/12</i></strong><p>本机标记为已有输出</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>

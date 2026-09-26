@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
-import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
+import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -50,7 +50,7 @@ function emptyRecords(): TestRecord[] {
 }
 
 function isComplete(record: TestRecord) {
-  return scoreLabels.every(({ key }) => record.scores[key] !== null);
+  return countsAsCompletedRecord(record.status, record.asset, scoreLabels.map(({ key }) => record.scores[key]));
 }
 
 function recordAverage(record: TestRecord) {
@@ -69,7 +69,7 @@ function buildMarkdown(records: TestRecord[]) {
   const rows = records.map((record) => {
     return markdownTableRow([String(record.id).padStart(2, '0'), record.group, statusLabels[record.status], record.model, record.asset, record.scores.identity, record.scores.motion, record.scores.physics, record.scores.camera, record.failures.join('、'), record.note]);
   }).join('\n');
-  return `# 同一个她，四十个镜头｜实验记录\n\n${localExportNotice}\n\n${localExportEvidenceSummary(records)}\n\n> 本表只包含手动填写的观察，不代表模型排名。空白样本保持为“待测试”。\n\n## 进度\n\n- 四项已填评分：${complete.length} / 40\n- 本机标记为已生成：${records.filter((record) => record.status !== 'untested').length} / 40\n\n## 平均分\n\n${averages}\n\n## 样本明细\n\n${header}\n${rows}`;
+  return `# 同一个她，四十个镜头｜实验记录\n\n${localExportNotice}\n\n${localExportEvidenceSummary(records)}\n\n> 本表只包含手动填写的观察，不代表模型排名。空白样本保持为“待测试”。\n\n## 进度\n\n- 已标复核且四项评分、素材栏齐全：${complete.length} / 40（素材未自动核验）\n- 本机标记为已生成：${records.filter((record) => record.status !== 'untested').length} / 40\n\n## 平均分\n\n${averages}\n\n## 样本明细\n\n${header}\n${rows}`;
 }
 
 async function copyText(value: string) {
@@ -191,7 +191,7 @@ export function ExperimentRecordBoard() {
       </div>
 
       <div className="experiment-record-summary" aria-label="实验记录汇总">
-        <article><span className="mono">COMPLETE</span><strong>{completed}<i>/40</i></strong><p>四项评分完整</p></article>
+        <article><span className="mono">COMPLETE</span><strong>{completed}<i>/40</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
         <article><span className="mono">GENERATED</span><strong>{generated}<i>/40</i></strong><p>本机标记为已有输出</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overallAverage}<i>/5</i></strong><p>{overallScores.length ? `${overallScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>

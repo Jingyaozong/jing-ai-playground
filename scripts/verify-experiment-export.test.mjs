@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
-import { localExportNotice, localExportEvidenceSummary, markdownTableRow, needsOriginalEvidence } from '../app/data/experiment-export-boundary.ts';
+import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow, needsOriginalEvidence } from '../app/data/experiment-export-boundary.ts';
 
 test('local export distinguishes a marked state from source evidence', () => {
   const rows = [
@@ -58,5 +58,27 @@ test('completed local review without an original file prompts for evidence', () 
   for (const board of boards) {
     const source = readFileSync(new URL(`../app/components/${board}.tsx`, import.meta.url), 'utf8');
     assert.match(source, /<RecordEvidenceReminder status=\{active\.status\} asset=\{active\.asset\} \/>/);
+  }
+});
+
+test('completion counts only locally reviewed rows with a source field and all four scores', () => {
+  const fullScores = [3, 4, 2, 5];
+  assert.equal(countsAsCompletedRecord('reviewed', ' A01.mp4 ', fullScores), true);
+  assert.equal(countsAsCompletedRecord('reviewed', ' ', fullScores), false);
+  assert.equal(countsAsCompletedRecord('generated', 'A01.mp4', fullScores), false);
+  assert.equal(countsAsCompletedRecord('untested', 'A01.mp4', fullScores), false);
+  assert.equal(countsAsCompletedRecord('reviewed', 'A01.mp4', [3, null, 2, 5]), false);
+  assert.equal(countsAsCompletedRecord('reviewed', 'A01.mp4', []), false);
+  assert.equal(countsAsCompletedRecord('reviewed', 'A01.mp4', [3, 4, Number.NaN, 5]), false);
+
+  const boards = [
+    'experiment-record-board', 'reference-comparison-board', 'rain-follow-record-board',
+    'lighting-continuity-board', 'shadow-offset-record-board', 'contact-action-record-board',
+    'storyboard-audit-board', 'poster-story-audit-board', 'waterline-motion-record-board',
+  ];
+  for (const board of boards) {
+    const source = readFileSync(new URL(`../app/components/${board}.tsx`, import.meta.url), 'utf8');
+    assert.match(source, /return countsAsCompletedRecord\(record\.status, record\.asset, scoreLabels\.map/);
+    assert.match(source, /已复核 · 评分与素材栏齐全/);
   }
 });

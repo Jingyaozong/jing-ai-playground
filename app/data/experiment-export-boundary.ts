@@ -4,6 +4,11 @@ export function needsOriginalEvidence(status: string, asset: string): boolean {
   return status === 'reviewed' && !asset.trim();
 }
 
+export function countsAsCompletedRecord(status: string, asset: string, scores: readonly (number | null)[]): boolean {
+  return status === 'reviewed' && Boolean(asset.trim()) && scores.length > 0
+    && scores.every((score) => typeof score === 'number' && Number.isFinite(score));
+}
+
 export function localExportEvidenceSummary(records: Array<{ id: string | number; status: string; asset: string }>): string {
   const marked = records.filter((record) => record.status !== 'untested');
   const missing = marked.filter((record) => !record.asset.trim());

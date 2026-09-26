@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
-import { localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
+import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -112,7 +112,7 @@ function normalizeRecords(value: unknown): WaterlineRecord[] {
 }
 
 function isComplete(record: WaterlineRecord) {
-  return record.status === 'reviewed' && scoreLabels.every(({ key }) => record.scores[key] !== null);
+  return countsAsCompletedRecord(record.status, record.asset, scoreLabels.map(({ key }) => record.scores[key]));
 }
 
 function average(record: WaterlineRecord) {
@@ -253,7 +253,7 @@ export function WaterlineMotionRecordBoard() {
       </div>
 
       <div className="experiment-record-summary">
-        <article><span className="mono">REVIEWED</span><strong>{completed}<i>/9</i></strong><p>已验收且评分完整</p></article>
+        <article><span className="mono">REVIEWED</span><strong>{completed}<i>/9</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
         <article><span className="mono">VIDEO</span><strong>{generated}<i>/9</i></strong><p>本机标记为有视频</p></article>
         <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
         <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
