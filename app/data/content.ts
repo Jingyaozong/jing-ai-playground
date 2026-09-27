@@ -311,7 +311,7 @@ export const tools: Tool[] = [
   {
     id: 'tool-003',
     title: 'Review Pace',
-    description: '把常规与高风险样本分开估时，再为额外返工留出缓冲，计算本地评测排期。',
+    description: '分开估算常规与高风险样本、返工缓冲，并对照目标条数与可用工作日。',
     label: '评测排期计算器',
     status: 'Ready',
     symbol: '≋',

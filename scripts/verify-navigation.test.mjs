@@ -10,7 +10,7 @@ import { experimentDetails } from '../app/data/experiments.ts';
 import { libraryItems } from '../app/data/library.ts';
 import { promptFilters, promptItems, promptSource } from '../app/data/prompts.ts';
 import { promptResources } from '../app/data/prompt-resources.ts';
-import { calculateReviewPace, formatReviewPaceSummary } from '../app/data/review-pace.ts';
+import { calculateReviewPace, calculateReviewPaceTarget, formatReviewPaceSummary } from '../app/data/review-pace.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
 function anchors(file) {
@@ -563,6 +563,33 @@ test('review pace keeps high-risk time and extra rework time separate', () => {
   assert.match(formatReviewPaceSummary(inputs, result), /未执行试标、质检或交付验收/);
   assert.throws(() => calculateReviewPace({ ...inputs, highRiskShare: 101 }), RangeError);
   assert.throws(() => calculateReviewPace({ ...inputs, regularMinutes: 0 }), RangeError);
+});
+
+test('review pace compares an optional target with usable workdays, without claiming delivery', () => {
+  const inputs = {
+    reviewers: 3, workDays: 5, hoursPerDay: 6,
+    regularMinutes: 8, highRiskShare: 25, highRiskMinutes: 20, reworkRate: 10,
+  };
+  const result = calculateReviewPace(inputs);
+  const within = calculateReviewPaceTarget(inputs, result, 400);
+  assert.equal(within.withinEstimate, true);
+  assert.equal(within.gap, 41);
+  assert.equal(within.requiredDays, 5);
+  assert.equal(within.extraDays, 0);
+  const boundary = calculateReviewPaceTarget(inputs, result, 441);
+  assert.equal(boundary.withinEstimate, true);
+  assert.equal(boundary.gap, 0);
+  const short = calculateReviewPaceTarget(inputs, result, 442);
+  assert.equal(short.withinEstimate, false);
+  assert.equal(short.gap, -1);
+  assert.equal(short.requiredDays, 6);
+  assert.equal(short.extraDays, 1);
+  assert.doesNotMatch(formatReviewPaceSummary(inputs, result), /目标对照/);
+  assert.match(formatReviewPaceSummary(inputs, result, short), /估算缺口 1 条/);
+  assert.match(formatReviewPaceSummary(inputs, result, within), /不代表交付承诺/);
+  assert.throws(() => calculateReviewPaceTarget(inputs, result, 0), RangeError);
+  assert.throws(() => calculateReviewPaceTarget(inputs, result, 1.5), RangeError);
+  assert.throws(() => calculateReviewPaceTarget(inputs, result, 1_000_001), RangeError);
 });
 
 test('risk routing note and calculator link to each other', () => {

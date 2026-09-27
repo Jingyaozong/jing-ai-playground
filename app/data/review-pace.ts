@@ -18,6 +18,14 @@ export type ReviewPaceResult = {
   reservedHours: number;
 };
 
+export type ReviewPaceTargetResult = {
+  targetItems: number;
+  gap: number;
+  requiredDays: number;
+  extraDays: number;
+  withinEstimate: boolean;
+};
+
 export function calculateReviewPace(input: ReviewPaceInputs): ReviewPaceResult {
   const { reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate } = input;
   if (![reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate].every(Number.isFinite)
@@ -45,8 +53,23 @@ export function calculateReviewPace(input: ReviewPaceInputs): ReviewPaceResult {
   };
 }
 
-export function formatReviewPaceSummary(input: ReviewPaceInputs, result: ReviewPaceResult): string {
-  return [
+export function calculateReviewPaceTarget(input: ReviewPaceInputs, result: ReviewPaceResult, targetItems: number): ReviewPaceTargetResult {
+  if (!Number.isSafeInteger(targetItems) || targetItems < 1 || targetItems > 1_000_000) {
+    throw new RangeError('目标条数必须是 1 到 100 万之间的整数');
+  }
+  const usableMinutesPerDay = input.reviewers * input.hoursPerDay * 60 * (1 - input.reworkRate / 100);
+  const requiredDays = Math.ceil(targetItems * result.weightedMinutes / usableMinutesPerDay);
+  return {
+    targetItems,
+    gap: result.total - targetItems,
+    requiredDays,
+    extraDays: Math.max(0, requiredDays - input.workDays),
+    withinEstimate: targetItems <= result.total,
+  };
+}
+
+export function formatReviewPaceSummary(input: ReviewPaceInputs, result: ReviewPaceResult, target?: ReviewPaceTargetResult): string {
+  const lines = [
     '评测排期估算 · 待试标校准',
     `团队：${input.reviewers} 人；周期：${input.workDays} 个工作日；有效工时：${input.hoursPerDay} 小时/人/天`,
     `常规样本：约 ${100 - input.highRiskShare}%，${input.regularMinutes} 分钟/条`,
@@ -56,6 +79,13 @@ export function formatReviewPaceSummary(input: ReviewPaceInputs, result: ReviewP
     `预计日处理量：${result.daily} 条；周期处理量：${result.total} 条（余量跨日累计）`,
     `周期结构估算：常规约 ${result.regularItems} 条，高风险约 ${result.highRiskItems} 条`,
     `预留返修时间：${result.reservedHours.toFixed(1)} 团队小时`,
-    '人数按共享团队池估算，未拆新人和骨干排班。仅用于计划讨论；未执行试标、质检或交付验收。',
-  ].join('\n');
+  ];
+  if (target) {
+    lines.push(`目标对照：${target.targetItems} 条；${input.workDays} 个可用工作日；估算需 ${target.requiredDays} 个工作日`);
+    lines.push(target.withinEstimate
+      ? `目标落在估算量内，剩余容量约 ${target.gap} 条；不代表交付承诺`
+      : `估算缺口 ${-target.gap} 条，按当前条件约需再增加 ${target.extraDays} 个工作日`);
+  }
+  lines.push('人数按共享团队池估算，未拆新人和骨干排班。仅用于计划讨论；未执行试标、质检或交付验收。');
+  return lines.join('\n');
 }
