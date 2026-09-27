@@ -70,11 +70,12 @@ export function ReviewPaceCalculator() {
   const [targetItems, setTargetItems] = useState<number | null>(null);
   const [targetDraft, setTargetDraft] = useState('');
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const [exampleRevision, setExampleRevision] = useState(0);
 
   const inputs = { reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate };
   const result = calculateReviewPace(inputs);
   const targetResult = targetItems === null ? null : calculateReviewPaceTarget(inputs, result, targetItems);
-  const summary = formatReviewPaceSummary(inputs, result, targetResult ?? undefined);
+  const summary = (exampleRevision ? '虚构演练参数起步 · 可经过手动修改 · 非真实试标记录\n' : '') + formatReviewPaceSummary(inputs, result, targetResult ?? undefined);
   const targetDraftNumber = Number(targetDraft);
   const targetDraftInvalid = targetDraft !== '' && (!Number.isSafeInteger(targetDraftNumber) || targetDraftNumber < 1 || targetDraftNumber > 1000000);
 
@@ -89,9 +90,38 @@ export function ReviewPaceCalculator() {
     }
   }
 
+  function loadExample() {
+    setReviewers(4);
+    setWorkDays(5);
+    setHoursPerDay(6);
+    setRegularMinutes(6);
+    setHighRiskShare(20);
+    setHighRiskMinutes(18);
+    setReworkRate(15);
+    setTargetItems(800);
+    setTargetDraft('800');
+    setCopyState('idle');
+    setExampleRevision((revision) => revision + 1);
+  }
+
   return (
+    <>
+    <section className="pace-example" aria-labelledby="pace-example-title">
+      <div>
+        <p className="eyebrow mono">虚构演练 · 编辑候选</p>
+        <h2 id="pace-example-title">试标数字，<br />怎样变成排期？</h2>
+        <p>假设一批 200 条样本中，160 条常规样本平均耗时 6 分钟，40 条高风险样本平均耗时 18 分钟，后者包含复核与裁决。以下数字仅供练习，并非真实项目记录。</p>
+        <button type="button" className="pace-copy-button" onClick={loadExample}>填入演练参数（替换当前输入） ↗</button>
+        <small role="status">{exampleRevision > 0 ? '已填入虚构参数，可继续修改；复制摘要会保留演练来源。' : '加载后可调整任意条件，观察估算结果变化。'}</small>
+      </div>
+      <div className="pace-example-ledger">
+        <article><h3>先把复杂样本算进去</h3><p>高风险占比 40 ÷ 200 = 20%；加权耗时为 6 × 80% + 18 × 20% = <strong>8.4 分钟/条</strong>。这需要试标样本能代表待处理批次的结构。</p></article>
+        <article><h3>再换成团队可用时间</h3><p>假设 4 人，每天净评测 6 小时，剩余 5 个工作日；额外预留 15% 返工缓冲。120 团队小时中，102 小时用于计划内处理，18 小时留给额外返工。</p></article>
+        <article><h3>最后讨论目标缺口</h3><p>102 × 60 ÷ 8.4，向下取整约 <strong>728 条</strong>。若目标为 800 条，估算缺口 72 条，按相同条件约需 6 个工作日。可讨论调整期限或范围；加人之前还需确认培训与复核资源。</p></article>
+      </div>
+    </section>
     <section className="pace-workbench" aria-label="评测排期计算器">
-      <div className="pace-form-panel">
+      <div className="pace-form-panel" key={exampleRevision}>
         <div className="pace-panel-heading">
           <span className="mono">01 / 填写工作条件</span>
           <p>起始数字只是演示。按试标结果填写净工时与两类样本耗时，别把会议和等待素材算进去。清空输入框后可直接重填。</p>
@@ -145,6 +175,7 @@ export function ReviewPaceCalculator() {
 
       <aside className="pace-result-card" aria-live="polite">
         <div className="pace-result-topline mono"><span>02 / 计算结果</span><span>Live estimate</span></div>
+        {exampleRevision > 0 && <p className="pace-example-origin">虚构演练参数起步 · 可经过手动修改</p>}
         <div className={`pace-big-number${result.daily >= 1000 ? ' is-compact' : ''}`}>
           <strong id="pace-title">{result.daily}</strong>
           <span>条 / 天</span>
@@ -180,5 +211,6 @@ export function ReviewPaceCalculator() {
         <small className="pace-disclaimer">这是计划估算，不代替试标、质检或交付验收。实际比例与耗时变化后，请重新填写。</small>
       </aside>
     </section>
+    </>
   );
 }
