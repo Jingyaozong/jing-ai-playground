@@ -5,6 +5,7 @@ import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
+import { restoreStoryboardDraft } from '../data/storyboard-record-draft';
 import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -115,24 +116,30 @@ export function StoryboardAuditBoard() {
   const [groupFilter, setGroupFilter] = useState<'ALL' | Group>('ALL');
   const [loaded, setLoaded] = useState(false);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const [recoverySource, setRecoverySource] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
       try {
         const saved = window.localStorage.getItem(storageKey);
         if (saved) {
-          const parsed = JSON.parse(saved) as StoryboardRecord[];
-          if (Array.isArray(parsed) && parsed.length === 9) setRecords(parsed);
+          try {
+            const restored = restoreStoryboardDraft(JSON.parse(saved), emptyRecords());
+            if (restored) setRecords(restored);
+            else setRecoverySource(saved);
+          } catch {
+            setRecoverySource(saved);
+          }
         }
       } catch {
-        // A damaged local draft should not block the empty audit sheet.
+        // Storage access may be unavailable; the save status reports a write failure.
       }
       setLoaded(true);
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
 
-  const saveStatus = useLocalRecordSave(storageKey, records, loaded);
+  const saveStatus = useLocalRecordSave(storageKey, records, loaded && recoverySource === null);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const completed = records.filter(isComplete).length;
@@ -164,8 +171,11 @@ export function StoryboardAuditBoard() {
   }
 
   function resetRecords() {
-    if (!window.confirm('清空当前浏览器中的 9 格分镜审计记录？此操作无法撤销。')) return;
+    if (!window.confirm(recoverySource
+      ? '原始记录格式异常。请先复制原始备份；清空后会用空白表覆盖本机旧记录。确定继续？'
+      : '清空当前浏览器中的 9 格分镜审计记录？此操作无法撤销。')) return;
     setRecords(emptyRecords());
+    setRecoverySource(null);
     setActiveId('A01');
     setCopyState('idle');
   }
@@ -174,7 +184,7 @@ export function StoryboardAuditBoard() {
     <section className="experiment-record-board storyboard-audit-record-board" id="record-desk" aria-label="九格自动分镜审计记录台">
       <div className="experiment-record-top">
         <div><p className="eyebrow mono">04 / Audit desk</p><h2>九份输出先留空，<br />只对真实文本打分。</h2></div>
-        <div className="experiment-record-intro"><p>每格对应一种拆镜流程和一篇固定故事。输出、镜头数、秒数、评分与备注只保存在当前浏览器，不上传故事或生成文本。</p><LocalRecordSaveStatus loaded={loaded} {...saveStatus} /></div>
+        <div className="experiment-record-intro"><p>每格对应一种拆镜流程和一篇固定故事。输出、镜头数、秒数、评分与备注只保存在当前浏览器，不上传故事或生成文本。</p><LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">
@@ -210,7 +220,7 @@ export function StoryboardAuditBoard() {
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>人工基准与模型输出，分开保存。</strong><p>复制 Markdown 时保留九格编号、镜头数、总秒数、四项评分、错误标签与审计备注；空白不算结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制自动分镜审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>人工基准与模型输出，分开保存。</strong><p>复制 Markdown 时保留九格编号、镜头数、总秒数、四项评分、错误标签与审计备注；空白不算结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{recoverySource !== null && <aside className="storyboard-record-recovery" role="alert"><strong>本机草稿格式异常，已暂停自动保存。</strong><p>当前空白表不是原始记录。先展开并复制下面的原始备份，留底后再清空本地记录。</p><details><summary>查看并复制原始备份</summary><textarea readOnly value={recoverySource} aria-label="本机原始记录备份" onFocus={(event) => event.currentTarget.select()} /></details></aside>}{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制自动分镜审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

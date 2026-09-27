@@ -4,6 +4,7 @@ import { test } from 'node:test';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow, needsOriginalEvidence } from '../app/data/experiment-export-boundary.ts';
 import { updateRecordScore } from '../app/data/experiment-record-state.ts';
 import { writeLocalRecordSnapshot } from '../app/data/local-record-save.ts';
+import { restoreStoryboardDraft } from '../app/data/storyboard-record-draft.ts';
 
 test('local export distinguishes a marked state from source evidence', () => {
   const rows = [
@@ -124,4 +125,38 @@ test('local save reports successful writes and quota or permission failures', ()
   assert.equal(writeLocalRecordSnapshot({ setItem: (key, value) => writes.push([key, value]) }, 'A', '[1]'), true);
   assert.deepEqual(writes, [['A', '[1]']]);
   assert.equal(writeLocalRecordSnapshot({ setItem: () => { throw new Error('quota exceeded'); } }, 'A', '[2]'), false);
+});
+
+test('storyboard drafts restore valid edits and reject broken rows before the board can use them', () => {
+  const defaults = ['A01', 'A02'].map((id) => ({
+    id, group: 'A', task: id === 'A01' ? '忘记昨天' : '第七码头',
+    status: 'untested', model: '', asset: '', shotCount: '', duration: '',
+    scores: { coverage: null, causality: null, shootability: null, timing: null },
+    failures: [], note: '',
+  }));
+  const saved = structuredClone(defaults);
+  saved[0].status = 'reviewed';
+  saved[0].asset = 'A01.md';
+  saved[0].scores.coverage = 4;
+  saved[0].note = '实测备注';
+
+  const restored = restoreStoryboardDraft(saved, defaults);
+  assert.equal(restored[0].note, '实测备注');
+  assert.equal(restored[0].asset, 'A01.md');
+  assert.equal(defaults[0].asset, '');
+  assert.equal(restored[1].status, 'untested');
+  assert.deepEqual(restoreStoryboardDraft([...saved].reverse(), defaults), restored);
+
+  const corrupt = (change) => {
+    const candidate = structuredClone(saved);
+    change(candidate);
+    assert.equal(restoreStoryboardDraft(candidate, defaults), null);
+  };
+  corrupt((rows) => { rows[0] = null; });
+  corrupt((rows) => { rows[1].id = 'A01'; });
+  corrupt((rows) => { rows[0].scores = null; });
+  corrupt((rows) => { rows[0].scores.coverage = 9; });
+  corrupt((rows) => { rows[0].failures = '误标'; });
+  corrupt((rows) => { rows[0].status = 'reviewed-by-machine'; });
+  assert.equal(restoreStoryboardDraft(saved.slice(0, 1), defaults), null);
 });

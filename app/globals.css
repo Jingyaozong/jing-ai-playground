@@ -2346,6 +2346,12 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .experiment-export-actions button { min-width: 210px; padding: 12px 15px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--yellow); color: var(--ink); font: 750 10px var(--body); box-shadow: 4px 4px 0 var(--ink); cursor: pointer; }
 .experiment-export-actions .experiment-reset-button { background: var(--white); box-shadow: none; }
 .experiment-record-export > textarea { grid-column: 1/-1; width: 100%; min-height: 250px; padding: 16px; border: 2px solid var(--ink); border-radius: 15px; outline: 0; background: var(--white); font: 500 10px/1.65 var(--mono); resize: vertical; }
+.storyboard-record-recovery { grid-column: 1/-1; min-width: 0; padding: 18px; border: 1.5px solid var(--ink); border-radius: 18px; background: var(--white); }
+.storyboard-record-recovery strong { font-size: 14px; }
+.storyboard-record-recovery p { margin: 9px 0 14px; font-size: 12px; line-height: 1.65; }
+.storyboard-record-recovery summary { width: fit-content; cursor: pointer; color: var(--blue); font-size: 12px; font-weight: 700; }
+.storyboard-record-recovery summary:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+.storyboard-record-recovery textarea { width: 100%; min-height: 180px; margin-top: 12px; padding: 12px; border: 1px solid var(--ink); border-radius: 12px; font: 500 10px/1.6 var(--mono); resize: vertical; }
 .experiment-record-filters button:focus-visible, .record-cell:focus-visible, .experiment-score-row button:focus-visible, .experiment-failure-fields button:focus-visible, .experiment-export-actions button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
 .experiment-next { padding-block: 130px; }
 .experiment-next-title { display: grid; grid-template-columns: 130px 90px 1fr; align-items: end; gap: 15px; padding-bottom: 28px; border-bottom: 2px solid var(--ink); }

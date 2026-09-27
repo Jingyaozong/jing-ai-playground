@@ -27,10 +27,10 @@ export function useLocalRecordSave(key: string, records: unknown, loaded: boolea
   };
 }
 
-export function LocalRecordSaveStatus({ loaded, saved, failed, savedLabel = '已保存到当前浏览器' }: { loaded: boolean; saved: boolean; failed: boolean; savedLabel?: string }) {
+export function LocalRecordSaveStatus({ loaded, saved, failed, blocked = false, savedLabel = '已保存到当前浏览器' }: { loaded: boolean; saved: boolean; failed: boolean; blocked?: boolean; savedLabel?: string }) {
   return (
-    <span className={failed ? 'is-unsaved' : undefined} role="status" aria-live="polite">
-      {!loaded ? '正在读取本地记录…' : failed ? '本机保存失败 · 请复制下方 Markdown 留底' : saved ? savedLabel : '正在保存本地记录…'}
+    <span className={failed || blocked ? 'is-unsaved' : undefined} role="status" aria-live="polite">
+      {!loaded ? '正在读取本地记录…' : blocked ? '本机记录异常 · 原数据未覆盖' : failed ? '本机保存失败 · 请复制下方 Markdown 留底' : saved ? savedLabel : '正在保存本地记录…'}
     </span>
   );
 }
