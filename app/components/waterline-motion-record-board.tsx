@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
+import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type Group = 'A' | 'B' | 'C';
@@ -215,11 +216,7 @@ export function WaterlineMotionRecordBoard() {
 
   function updateScore(key: ScoreKey, value: number | null) {
     if (active.status === 'untested') return;
-    setRecords((current) => current.map((record) => {
-      if (record.id !== activeId) return record;
-      const scores = { ...record.scores, [key]: value };
-      return { ...record, scores };
-    }));
+    setRecords((current) => updateRecordScore(current, activeId, key, value));
     setCopyState('idle');
   }
 

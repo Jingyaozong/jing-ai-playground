@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
+import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type ScoreKey = 'identity' | 'motion' | 'physics' | 'camera';
@@ -145,12 +146,7 @@ export function ExperimentRecordBoard() {
   }
 
   function updateScore(key: ScoreKey, value: number | null) {
-    setRecords((current) => current.map((record) => {
-      if (record.id !== activeId) return record;
-      const scores = { ...record.scores, [key]: value };
-      const hasAllScores = Object.values(scores).every((score) => score !== null);
-      return { ...record, scores, status: hasAllScores ? 'reviewed' : record.status === 'untested' && value !== null ? 'generated' : record.status };
-    }));
+    setRecords((current) => updateRecordScore(current, activeId, key, value));
     setCopyState('idle');
   }
 

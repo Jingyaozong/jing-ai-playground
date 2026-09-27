@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
+import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
 type Group = 'A' | 'B' | 'C';
@@ -150,12 +151,7 @@ export function LightingContinuityBoard() {
   }
 
   function updateScore(key: ScoreKey, value: number | null) {
-    setRecords((current) => current.map((record) => {
-      if (record.id !== activeId) return record;
-      const scores = { ...record.scores, [key]: value };
-      const complete = Object.values(scores).every((score) => score !== null);
-      return { ...record, scores, status: complete ? 'reviewed' : value !== null && record.status === 'untested' ? 'generated' : record.status };
-    }));
+    setRecords((current) => updateRecordScore(current, activeId, key, value));
     setCopyState('idle');
   }
 
