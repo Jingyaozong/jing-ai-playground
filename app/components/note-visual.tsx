@@ -7,6 +7,7 @@ export function NoteVisual({ variant, label }: { variant: string; label: string 
     'evaluation-checksheet': { heading: ['分开看，', '才评得清。'], items: ['语义遵循', '基础画质', '美学表现', '主体场景', '时序动作', '结构物理', '镜头叙事', '音画安全'], footer: '八维检查 · 非评分结果' },
     'review-checksheet': { heading: ['记下问题，', '回到复验。'], items: ['记录证据', '确认原因', '修改规则', '同步团队', '重新验证'], footer: '问题闭环 · 非项目成果' },
     'delivery-checksheet': { heading: ['能打开，', '还不够。'], items: ['格式校验', '有效性检查', '质量复核', '版本追溯'], footer: '交付关口 · 非验收记录' },
+    'trial-pace-ledger': { heading: ['先量耗时，', '再谈期限。'], items: ['样本结构', '净工时', '返修缓冲', '目标缺口'], footer: '虚构数字演练 · 非真实产能' },
   };
   const checksheet = checksheets[variant];
   if (checksheet) return (
