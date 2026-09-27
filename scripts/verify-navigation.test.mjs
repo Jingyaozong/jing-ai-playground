@@ -11,6 +11,7 @@ import { libraryItems } from '../app/data/library.ts';
 import { promptFilters, promptItems, promptSource } from '../app/data/prompts.ts';
 import { promptResources } from '../app/data/prompt-resources.ts';
 import { calculateReviewPace, calculateReviewPaceTarget, formatReviewPaceSummary } from '../app/data/review-pace.ts';
+import { summarizeTrialTimeLog, trialTimeLogHeaders } from '../app/data/review-pace-import.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
 function anchors(file) {
@@ -627,6 +628,37 @@ test('review pace does not promise a high-risk item that exceeds available minut
   const target = calculateReviewPaceTarget(inputs, result, 5);
   assert.equal(target.withinEstimate, false);
   assert.equal(target.requiredDays, 2);
+});
+
+test('local timing import summarizes reviewed rows without counting extra rework or pauses', () => {
+  const makeRow = (id, tier, work, review, status = 'reviewed', note = '') => [
+    id, 'batch-1', 'v1', tier, '', work, review, '7', '3', '', 'reviewer', status, note,
+  ].join(',');
+  const csv = [trialTimeLogHeaders.join(','), makeRow('a', 'regular', '5', '0', 'reviewed', '"needs, checking"'),
+    makeRow('b', 'regular', '7', '2'), makeRow('c', 'high-risk', '10', '8')].join('\r\n');
+  assert.deepEqual(summarizeTrialTimeLog(`\uFEFF${csv}`), {
+    total: 3, regularCount: 2, highRiskCount: 1,
+    regularMinutes: 7, highRiskMinutes: 18, highRiskShare: 33.3,
+  });
+  const twoHundred = [trialTimeLogHeaders.join(','),
+    ...Array.from({ length: 200 }, (_, index) => makeRow(String(index), index < 160 ? 'regular' : 'high-risk', index < 160 ? '6' : '18', '0'))].join('\n');
+  assert.equal(summarizeTrialTimeLog(twoHundred).highRiskShare, 20);
+  assert.throws(() => summarizeTrialTimeLog(trialTimeLogHeaders.join(',')), /尚无记录/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('a,batch-1', 'b,batch-1')), /重复/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('reviewed', 'pending')), /reviewed/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('5,0,7', '5,,7')), /planned_review_minutes/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('regular', 'unknown')), /risk_tier/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('"needs, checking"', '"unfinished')), /未闭合/);
+  assert.throws(() => summarizeTrialTimeLog([trialTimeLogHeaders.join(','), makeRow('a', 'regular', '5', '0')].join('\n')), /同时有常规和高风险/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('5,0,7', '0.1,0,7')), /work_minutes/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('5,0,7', '0x10,0,7')), /work_minutes/);
+  const tooMany = [trialTimeLogHeaders.join(','),
+    ...Array.from({ length: 501 }, (_, index) => makeRow(String(index), index % 2 ? 'regular' : 'high-risk', '5', '0'))].join('\n');
+  assert.throws(() => summarizeTrialTimeLog(tooMany), /最多读取 500/);
+  const page = readFileSync(join(process.cwd(), 'out/tools/review-pace/index.html'), 'utf8');
+  assert.match(page, /把试标耗时/);
+  assert.match(page, /选择 CSV 文件/);
+  assert.match(page, /不上传、不保存原始行/);
 });
 
 test('risk routing note and calculator link to each other', () => {
