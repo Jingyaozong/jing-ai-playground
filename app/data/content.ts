@@ -311,7 +311,7 @@ export const tools: Tool[] = [
   {
     id: 'tool-003',
     title: 'Review Pace',
-    description: '输入团队人数、有效工时、单条耗时与返工率，快速估算评测任务的日产能和交付节奏。',
+    description: '把常规与高风险样本分开估时，再为额外返工留出缓冲，计算本地评测排期。',
     label: '评测排期计算器',
     status: 'Ready',
     symbol: '≋',

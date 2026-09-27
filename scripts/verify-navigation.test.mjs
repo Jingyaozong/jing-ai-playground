@@ -10,6 +10,7 @@ import { experimentDetails } from '../app/data/experiments.ts';
 import { libraryItems } from '../app/data/library.ts';
 import { promptFilters, promptItems, promptSource } from '../app/data/prompts.ts';
 import { promptResources } from '../app/data/prompt-resources.ts';
+import { calculateReviewPace, formatReviewPaceSummary } from '../app/data/review-pace.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
 function anchors(file) {
@@ -534,4 +535,39 @@ test('every listed tool has one visible work-use filter', () => {
     assert.ok(html.includes(category), `Missing filter: ${category}`);
     assert.ok(tools.some((tool) => tool.category === category), `Empty filter: ${category}`);
   }
+});
+
+test('review pace keeps high-risk time and extra rework time separate', () => {
+  const inputs = {
+    reviewers: 3, workDays: 5, hoursPerDay: 6,
+    regularMinutes: 8, highRiskShare: 25, highRiskMinutes: 20, reworkRate: 10,
+  };
+  const result = calculateReviewPace(inputs);
+  assert.equal(result.weightedMinutes, 11);
+  assert.equal(result.daily, 88);
+  assert.equal(result.total, 441);
+  assert.equal(result.regularItems, 331);
+  assert.equal(result.highRiskItems, 110);
+  assert.equal(result.reservedHours, 9);
+  assert.ok(result.total >= result.daily * inputs.workDays);
+
+  const onlyRegular = calculateReviewPace({ ...inputs, highRiskShare: 0 });
+  const onlyHighRisk = calculateReviewPace({ ...inputs, highRiskShare: 100 });
+  assert.ok(onlyRegular.daily > result.daily && result.daily > onlyHighRisk.daily);
+  assert.equal(onlyRegular.highRiskItems, 0);
+  assert.equal(onlyHighRisk.regularItems, 0);
+  const acrossDays = calculateReviewPace({ ...inputs, reviewers: 1, hoursPerDay: 0.5, workDays: 10, regularMinutes: 60, highRiskShare: 0, reworkRate: 0 });
+  assert.equal(acrossDays.daily, 0);
+  assert.equal(acrossDays.total, 5);
+  assert.match(formatReviewPaceSummary(inputs, result), /待试标校准/);
+  assert.match(formatReviewPaceSummary(inputs, result), /未执行试标、质检或交付验收/);
+  assert.throws(() => calculateReviewPace({ ...inputs, highRiskShare: 101 }), RangeError);
+  assert.throws(() => calculateReviewPace({ ...inputs, regularMinutes: 0 }), RangeError);
+});
+
+test('risk routing note and calculator link to each other', () => {
+  const noteLinks = anchors('notes/dataset-release-gates/index.html');
+  const toolLinks = anchors('tools/review-pace/index.html');
+  assert.ok(noteLinks.includes('/tools/review-pace/'));
+  assert.ok(toolLinks.includes('/notes/dataset-release-gates/'));
 });
