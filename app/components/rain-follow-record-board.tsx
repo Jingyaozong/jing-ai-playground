@@ -5,6 +5,8 @@ import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
+import { LocalRecordRecovery } from './local-record-recovery';
+import { restoreExperimentRecordDraft } from '../data/experiment-record-draft';
 import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -112,14 +114,20 @@ export function RainFollowRecordBoard() {
   const [groupFilter, setGroupFilter] = useState<'ALL' | Group>('ALL');
   const [loaded, setLoaded] = useState(false);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const [recoverySource, setRecoverySource] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
       try {
         const saved = window.localStorage.getItem(storageKey);
         if (saved) {
-          const parsed = JSON.parse(saved) as RainRecord[];
-          if (Array.isArray(parsed) && parsed.length === 9) setRecords(parsed);
+          try {
+            const restored = restoreExperimentRecordDraft(JSON.parse(saved), emptyRecords());
+            if (restored) setRecords(restored);
+            else setRecoverySource(saved);
+          } catch {
+            setRecoverySource(saved);
+          }
         }
       } catch {
         // A damaged local draft should not block the worksheet.
@@ -129,7 +137,7 @@ export function RainFollowRecordBoard() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  const saveStatus = useLocalRecordSave(storageKey, records, loaded);
+  const saveStatus = useLocalRecordSave(storageKey, records, loaded && recoverySource === null);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const generated = records.filter((record) => record.status !== 'untested').length;
@@ -161,8 +169,11 @@ export function RainFollowRecordBoard() {
   }
 
   function resetRecords() {
-    if (!window.confirm('清空当前浏览器中的 9 格局部雨实验记录？此操作无法撤销。')) return;
+    if (!window.confirm(recoverySource
+      ? '原始记录格式异常。请先复制原始备份；清空后会用当前初始记录覆盖本机旧记录。确定继续？'
+      : '清空当前浏览器中的 9 格局部雨实验记录？此操作无法撤销。')) return;
     setRecords(emptyRecords());
+    setRecoverySource(null);
     setActiveId('A01');
     setCopyState('idle');
   }
@@ -171,7 +182,7 @@ export function RainFollowRecordBoard() {
     <section className="experiment-record-board rain-record-board" id="record-desk" aria-label="九格局部雨跟随实验记录台">
       <div className="experiment-record-top">
         <div><p className="eyebrow mono">04 / Record desk</p><h2>九格先空着，<br />只记雨怎么失控。</h2></div>
-        <div className="experiment-record-intro"><p>每格对应一种提示条件和一个固定镜头任务。评分、文件名与备注只保存在当前浏览器，不上传任何素材。</p><LocalRecordSaveStatus loaded={loaded} {...saveStatus} /></div>
+        <div className="experiment-record-intro"><p>每格对应一种提示条件和一个固定镜头任务。评分、文件名与备注只保存在当前浏览器，不上传任何素材。</p><LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">
@@ -209,7 +220,7 @@ export function RainFollowRecordBoard() {
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>先分组，再比较；空白不算结果。</strong><p>复制完整 Markdown 时，未执行样本保留为“—”；分组平均只使用实际填写的分数。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制局部雨实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>先分组，再比较；空白不算结果。</strong><p>复制完整 Markdown 时，未执行样本保留为“—”；分组平均只使用实际填写的分数。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制局部雨实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

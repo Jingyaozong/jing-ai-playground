@@ -5,6 +5,8 @@ import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
+import { LocalRecordRecovery } from './local-record-recovery';
+import { restoreExperimentRecordDraft } from '../data/experiment-record-draft';
 import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -107,14 +109,20 @@ export function ExperimentRecordBoard() {
   const [statusFilter, setStatusFilter] = useState<'all' | RecordStatus>('all');
   const [loaded, setLoaded] = useState(false);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const [recoverySource, setRecoverySource] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
       try {
         const saved = window.localStorage.getItem(storageKey);
         if (saved) {
-          const parsed = JSON.parse(saved) as TestRecord[];
-          if (Array.isArray(parsed) && parsed.length === 40) setRecords(parsed);
+          try {
+            const restored = restoreExperimentRecordDraft(JSON.parse(saved), emptyRecords());
+            if (restored) setRecords(restored);
+            else setRecoverySource(saved);
+          } catch {
+            setRecoverySource(saved);
+          }
         }
       } catch {
         // A broken local draft should never block the empty worksheet.
@@ -124,7 +132,7 @@ export function ExperimentRecordBoard() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  const saveStatus = useLocalRecordSave(storageKey, records, loaded);
+  const saveStatus = useLocalRecordSave(storageKey, records, loaded && recoverySource === null);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const completed = records.filter(isComplete).length;
@@ -159,8 +167,11 @@ export function ExperimentRecordBoard() {
   }
 
   function resetRecords() {
-    if (!window.confirm('清空当前浏览器中的 40 镜实验记录？此操作无法撤销。')) return;
+    if (!window.confirm(recoverySource
+      ? '原始记录格式异常。请先复制原始备份；清空后会用当前初始记录覆盖本机旧记录。确定继续？'
+      : '清空当前浏览器中的 40 镜实验记录？此操作无法撤销。')) return;
     setRecords(emptyRecords());
+    setRecoverySource(null);
     setActiveId(1);
     setCopyState('idle');
   }
@@ -176,7 +187,7 @@ export function ExperimentRecordBoard() {
         </div>
         <div className="experiment-record-intro">
           <p>每一格对应一条正式测试。只记录实际生成的素材和人工观察；未填写的样本不会进入平均分。</p>
-          <LocalRecordSaveStatus loaded={loaded} {...saveStatus} />
+          <LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} />
         </div>
       </div>
 
@@ -221,6 +232,7 @@ export function ExperimentRecordBoard() {
       <div className="experiment-record-export">
         <div><span className="mono">LOCAL EXPORT</span><strong>记录属于你，也留在你这里。</strong><p>复制的是 40 镜完整 Markdown 表；没有填写的字段保留为“—”，不会被包装成实验结论。</p></div>
         <div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>
+        <LocalRecordRecovery source={recoverySource} />
         {copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制实验记录" onFocus={(event) => event.currentTarget.select()} />}
       </div>
     </section>

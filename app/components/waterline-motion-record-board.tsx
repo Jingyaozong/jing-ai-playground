@@ -5,6 +5,8 @@ import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
+import { LocalRecordRecovery } from './local-record-recovery';
+import { restoreExperimentRecordDraft } from '../data/experiment-record-draft';
 import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -78,41 +80,6 @@ function emptyRecords(): WaterlineRecord[] {
   })));
 }
 
-function normalizeRecords(value: unknown): WaterlineRecord[] {
-  const defaults = emptyRecords();
-  if (!Array.isArray(value)) return defaults;
-  return defaults.map((fallback) => {
-    const saved = value.find((item) => item && typeof item === 'object' && 'id' in item && item.id === fallback.id) as Partial<WaterlineRecord> | undefined;
-    if (!saved) return fallback;
-    const checkpoints = checkpointPoints.map((point) => {
-      const checkpoint = Array.isArray(saved.checkpoints) ? saved.checkpoints.find((item) => item?.point === point) : undefined;
-      return {
-        point,
-        frame: typeof checkpoint?.frame === 'string' ? checkpoint.frame : '',
-        umbrella: typeof checkpoint?.umbrella === 'string' ? checkpoint.umbrella : '',
-        waterline: typeof checkpoint?.waterline === 'string' ? checkpoint.waterline : '',
-      };
-    });
-    const scores = Object.fromEntries(scoreLabels.map(({ key }) => {
-      const score = saved.scores?.[key];
-      return [key, typeof score === 'number' && score >= 1 && score <= 5 ? score : null];
-    })) as Record<ScoreKey, number | null>;
-    return {
-      ...fallback,
-      status: saved.status === 'generated' || saved.status === 'reviewed' ? saved.status : 'untested',
-      model: typeof saved.model === 'string' ? saved.model : '',
-      seed: typeof saved.seed === 'string' ? saved.seed : '',
-      asset: typeof saved.asset === 'string' ? saved.asset : '',
-      lockFrame: typeof saved.lockFrame === 'string' ? saved.lockFrame : '',
-      waterStartFrame: typeof saved.waterStartFrame === 'string' ? saved.waterStartFrame : '',
-      checkpoints,
-      scores,
-      failures: Array.isArray(saved.failures) ? saved.failures.filter((item): item is string => typeof item === 'string') : [],
-      note: typeof saved.note === 'string' ? saved.note : '',
-    };
-  });
-}
-
 function isComplete(record: WaterlineRecord) {
   return countsAsCompletedRecord(record.status, record.asset, scoreLabels.map(({ key }) => record.scores[key]));
 }
@@ -181,13 +148,20 @@ export function WaterlineMotionRecordBoard() {
   const [groupFilter, setGroupFilter] = useState<'ALL' | Group>('ALL');
   const [loaded, setLoaded] = useState(false);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const [recoverySource, setRecoverySource] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
       try {
         const saved = window.localStorage.getItem(storageKey);
         if (saved) {
-          setRecords(normalizeRecords(JSON.parse(saved)));
+          try {
+            const restored = restoreExperimentRecordDraft(JSON.parse(saved), emptyRecords());
+            if (restored) setRecords(restored);
+            else setRecoverySource(saved);
+          } catch {
+            setRecoverySource(saved);
+          }
         }
       } catch {
         // A damaged local draft should not block the worksheet.
@@ -197,7 +171,7 @@ export function WaterlineMotionRecordBoard() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  const saveStatus = useLocalRecordSave(storageKey, records, loaded);
+  const saveStatus = useLocalRecordSave(storageKey, records, loaded && recoverySource === null);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const generated = records.filter((record) => record.status !== 'untested').length;
@@ -234,8 +208,11 @@ export function WaterlineMotionRecordBoard() {
   }
 
   function resetRecords() {
-    if (!window.confirm('清空当前浏览器中的 9 格撑伞退水实验记录？此操作无法撤销。')) return;
+    if (!window.confirm(recoverySource
+      ? '原始记录格式异常。请先复制原始备份；清空后会用当前初始记录覆盖本机旧记录。确定继续？'
+      : '清空当前浏览器中的 9 格撑伞退水实验记录？此操作无法撤销。')) return;
     setRecords(emptyRecords());
+    setRecoverySource(null);
     setActiveId('A01');
     setCopyState('idle');
   }
@@ -244,7 +221,7 @@ export function WaterlineMotionRecordBoard() {
     <section className="experiment-record-board waterline-motion-record-board" id="record-desk" aria-label="九格撑伞退水实验记录台">
       <div className="experiment-record-top">
         <div><p className="eyebrow mono">04 / Record desk</p><h2><span>从一帧开始，</span><span>把观察留下来。</span></h2></div>
-        <div className="experiment-record-intro"><p>每格对应一种提示结构和一个固定动作任务。评分、帧号与备注只保存在当前浏览器，不上传视频、人物或故事素材。</p><LocalRecordSaveStatus loaded={loaded} {...saveStatus} /></div>
+        <div className="experiment-record-intro"><p>每格对应一种提示结构和一个固定动作任务。评分、帧号与备注只保存在当前浏览器，不上传视频、人物或故事素材。</p><LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">
@@ -281,7 +258,7 @@ export function WaterlineMotionRecordBoard() {
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>伞锁定帧与水首动帧分开记录。</strong><p>复制 Markdown 时保留九格编号、五点真实帧号、四项评分和失败标签；空白格仍标为“待执行 · 无视频”，不会被包装成实验结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制撑伞退水实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>伞锁定帧与水首动帧分开记录。</strong><p>复制 Markdown 时保留九格编号、五点真实帧号、四项评分和失败标签；空白格仍标为“待执行 · 无视频”，不会被包装成实验结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制撑伞退水实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

@@ -5,6 +5,8 @@ import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
+import { LocalRecordRecovery } from './local-record-recovery';
+import { restoreExperimentRecordDraft } from '../data/experiment-record-draft';
 import { updateRecordScore } from '../data/experiment-record-state';
 import { posterStoryPilotRecords, type PosterStoryPilotRecord } from '../data/poster-story-pilot';
 import { posterStoryRetestRecords } from '../data/poster-story-retest';
@@ -164,14 +166,20 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
   const [groupFilter, setGroupFilter] = useState<'ALL' | Group>('ALL');
   const [loaded, setLoaded] = useState(false);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'manual'>('idle');
+  const [recoverySource, setRecoverySource] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
       try {
         const saved = window.localStorage.getItem(config.storageKey);
         if (saved) {
-          const parsed = JSON.parse(saved) as PosterStoryRecord[];
-          if (Array.isArray(parsed) && parsed.length === 9) setRecords(parsed);
+          try {
+            const restored = restoreExperimentRecordDraft(JSON.parse(saved), initialRecords(config));
+            if (restored) setRecords(restored);
+            else setRecoverySource(saved);
+          } catch {
+            setRecoverySource(saved);
+          }
         }
       } catch {
         // A damaged local draft should not block the published pilot records.
@@ -179,9 +187,9 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
       setLoaded(true);
     }, 0);
     return () => window.clearTimeout(timer);
-  }, [config.storageKey]);
+  }, [config]);
 
-  const saveStatus = useLocalRecordSave(config.storageKey, records, loaded);
+  const saveStatus = useLocalRecordSave(config.storageKey, records, loaded && recoverySource === null);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const completed = records.filter(isComplete).length;
@@ -213,8 +221,11 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
   }
 
   function resetRecords() {
-    if (!window.confirm(config.resetConfirm)) return;
+    if (!window.confirm(recoverySource
+      ? '原始记录格式异常。请先复制原始备份；恢复后会用公开记录覆盖本机旧记录。确定继续？'
+      : config.resetConfirm)) return;
     setRecords(initialRecords(config));
+    setRecoverySource(null);
     setActiveId('A01');
     setCopyState('idle');
   }
@@ -223,7 +234,7 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
     <section className="experiment-record-board poster-story-audit-board" id="record-desk" aria-label="九格海报反推故事审计台">
       <div className="experiment-record-top">
         <div><p className="eyebrow mono">04 / Audit desk</p><h2>{config.heading.split('\n').map((line, index, lines) => <span key={line}>{line}{index < lines.length - 1 && <br />}</span>)}</h2></div>
-        <div className="experiment-record-intro"><p>{config.intro}</p><LocalRecordSaveStatus loaded={loaded} {...saveStatus} savedLabel={`${config.localLabel} · 已保存`} /></div>
+        <div className="experiment-record-intro"><p>{config.intro}</p><LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} savedLabel={`${config.localLabel} · 已保存`} /></div>
       </div>
 
       <div className="experiment-record-summary">
@@ -259,7 +270,7 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>输入海报、推理边界和故事结果分开保存。</strong><p>复制 Markdown 时保留九格编号、输出标题、字数、四项评分、错误标签与证据备注。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>恢复公开记录</button></div>{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制海报故事审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>输入海报、推理边界和故事结果分开保存。</strong><p>复制 Markdown 时保留九格编号、输出标题、字数、四项评分、错误标签与证据备注。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>恢复公开记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制海报故事审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

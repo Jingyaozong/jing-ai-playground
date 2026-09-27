@@ -5,6 +5,7 @@ import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
 import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
+import { LocalRecordRecovery } from './local-record-recovery';
 import { restoreStoryboardDraft } from '../data/storyboard-record-draft';
 import { updateRecordScore } from '../data/experiment-record-state';
 
@@ -220,7 +221,7 @@ export function StoryboardAuditBoard() {
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>人工基准与模型输出，分开保存。</strong><p>复制 Markdown 时保留九格编号、镜头数、总秒数、四项评分、错误标签与审计备注；空白不算结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>{recoverySource !== null && <aside className="storyboard-record-recovery" role="alert"><strong>本机草稿格式异常，已暂停自动保存。</strong><p>当前空白表不是原始记录。先展开并复制下面的原始备份，留底后再清空本地记录。</p><details><summary>查看并复制原始备份</summary><textarea readOnly value={recoverySource} aria-label="本机原始记录备份" onFocus={(event) => event.currentTarget.select()} /></details></aside>}{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制自动分镜审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>人工基准与模型输出，分开保存。</strong><p>复制 Markdown 时保留九格编号、镜头数、总秒数、四项评分、错误标签与审计备注；空白不算结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制自动分镜审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

@@ -5,6 +5,7 @@ import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary,
 import { updateRecordScore } from '../app/data/experiment-record-state.ts';
 import { writeLocalRecordSnapshot } from '../app/data/local-record-save.ts';
 import { restoreStoryboardDraft } from '../app/data/storyboard-record-draft.ts';
+import { restoreExperimentRecordDraft } from '../app/data/experiment-record-draft.ts';
 
 test('local export distinguishes a marked state from source evidence', () => {
   const rows = [
@@ -159,4 +160,85 @@ test('storyboard drafts restore valid edits and reject broken rows before the bo
   corrupt((rows) => { rows[0].failures = '误标'; });
   corrupt((rows) => { rows[0].status = 'reviewed-by-machine'; });
   assert.equal(restoreStoryboardDraft(saved.slice(0, 1), defaults), null);
+});
+
+test('shared record restoration keeps valid edits for numeric IDs and seeded poster rows', () => {
+  const defaults = [1, 2].map((id) => ({
+    id, group: 'A', status: 'untested', model: '', asset: '',
+    scores: { identity: null, motion: null, physics: null, camera: null },
+    failures: [], note: '',
+  }));
+  const saved = structuredClone(defaults);
+  saved[0].status = 'reviewed';
+  saved[0].scores.motion = 4;
+  saved[0].asset = '01.mp4';
+  saved[0].note = '人工观察';
+  assert.deepEqual(restoreExperimentRecordDraft([...saved].reverse(), defaults), saved);
+  assert.equal(defaults[0].asset, '');
+
+  const pilot = [{
+    id: 'A01', group: 'A', poster: '海报 A', status: 'reviewed', model: '已公开试验',
+    asset: 'A01.md', outputTitle: '已公开标题', wordCount: '216',
+    scores: { evidence: 5, boundary: 5, coherence: 4, relevance: 5 },
+    failures: [], note: '已公开复核',
+  }];
+  assert.deepEqual(restoreExperimentRecordDraft(structuredClone(pilot), pilot), pilot);
+});
+
+test('shared record restoration rejects malformed rows without merging them into defaults', () => {
+  const defaults = ['A01', 'A02'].map((id) => ({
+    id, group: 'A', task: `任务 ${id}`, status: 'untested', model: '', seed: '', asset: '',
+    scores: { identity: null, motion: null, physics: null, camera: null },
+    failures: [], flags: [], note: '',
+  }));
+  const corrupt = (change) => {
+    const rows = structuredClone(defaults);
+    change(rows);
+    assert.equal(restoreExperimentRecordDraft(rows, defaults), null);
+  };
+  corrupt((rows) => { rows[0] = null; });
+  corrupt((rows) => { rows[1].id = 'A01'; });
+  corrupt((rows) => { rows[0].task = '另一项任务'; });
+  corrupt((rows) => { rows[0].scores.identity = 6; });
+  corrupt((rows) => { rows[0].scores.extra = 4; });
+  corrupt((rows) => { rows[0].flags = ['漂移', null]; });
+  corrupt((rows) => { rows[0].status = 'reviewed-by-machine'; });
+  corrupt((rows) => { rows[0].futureField = '必须保留原始草稿'; });
+  assert.equal(restoreExperimentRecordDraft(defaults.slice(0, 1), defaults), null);
+});
+
+test('waterline draft requires each checkpoint and its frame observations', () => {
+  const defaults = [{
+    id: 'A01', group: 'A', task: '撑伞退水', status: 'untested',
+    model: '', seed: '', asset: '', lockFrame: '', waterStartFrame: '',
+    checkpoints: ['开始', '触发', '结束'].map((point) => ({ point, frame: '', umbrella: '', waterline: '' })),
+    scores: { umbrellaIntegrity: null, causalOrder: null, waterDirection: null, worldContinuity: null },
+    failures: [], note: '',
+  }];
+  const saved = structuredClone(defaults);
+  saved[0].checkpoints[1].frame = '00:02';
+  saved[0].checkpoints[1].waterline = '向左退';
+  assert.deepEqual(restoreExperimentRecordDraft(saved, defaults), saved);
+  const incomplete = structuredClone(saved);
+  delete incomplete[0].checkpoints[1].waterline;
+  assert.equal(restoreExperimentRecordDraft(incomplete, defaults), null);
+  const reordered = structuredClone(saved);
+  reordered[0].checkpoints.reverse();
+  assert.equal(restoreExperimentRecordDraft(reordered, defaults), null);
+});
+
+test('every experiment board pauses writes and exposes the original malformed draft', () => {
+  const boards = [
+    'experiment-record-board', 'reference-comparison-board', 'rain-follow-record-board',
+    'lighting-continuity-board', 'shadow-offset-record-board', 'contact-action-record-board',
+    'poster-story-audit-board', 'waterline-motion-record-board',
+  ];
+  for (const board of boards) {
+    const source = readFileSync(new URL(`../app/components/${board}.tsx`, import.meta.url), 'utf8');
+    assert.match(source, /restoreExperimentRecordDraft\(JSON\.parse\(saved\),/);
+    assert.match(source, /else setRecoverySource\(saved\)/);
+    assert.match(source, /loaded && recoverySource === null/);
+    assert.match(source, /blocked=\{recoverySource !== null\}/);
+    assert.match(source, /<LocalRecordRecovery source=\{recoverySource\} \/>/);
+  }
 });
