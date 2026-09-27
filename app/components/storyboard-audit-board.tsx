@@ -6,7 +6,7 @@ import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary,
 import { LocalRecordBoundary } from './local-record-boundary';
 import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
 import { LocalRecordRecovery } from './local-record-recovery';
-import { restoreStoryboardDraft } from '../data/storyboard-record-draft';
+import { restoreExperimentRecordDraft } from '../data/experiment-record-draft';
 import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -125,7 +125,7 @@ export function StoryboardAuditBoard() {
         const saved = window.localStorage.getItem(storageKey);
         if (saved) {
           try {
-            const restored = restoreStoryboardDraft(JSON.parse(saved), emptyRecords());
+            const restored = restoreExperimentRecordDraft(JSON.parse(saved), emptyRecords());
             if (restored) setRecords(restored);
             else setRecoverySource(saved);
           } catch {

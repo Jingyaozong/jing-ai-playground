@@ -17,9 +17,10 @@ function restoreField(saved: unknown, fallback: unknown, key: string): unknown {
   }
   if (key === 'scores') {
     if (!isObject(saved) || !isObject(fallback)) return undefined;
-    if (Object.keys(saved).some((scoreKey) => !(scoreKey in fallback))) return undefined;
+    if (Object.keys(saved).some((scoreKey) => !Object.hasOwn(fallback, scoreKey))) return undefined;
     const scores: Record<string, number | null> = {};
     for (const scoreKey of Object.keys(fallback)) {
+      if (!Object.hasOwn(saved, scoreKey)) return undefined;
       const score = saved[scoreKey];
       if (score !== null && (!Number.isInteger(score) || (score as number) < 1 || (score as number) > 5)) return undefined;
       scores[scoreKey] = score as number | null;
@@ -35,8 +36,8 @@ function restoreField(saved: unknown, fallback: unknown, key: string): unknown {
         const original = fallback[index];
         const candidate = saved[index];
         if (!isObject(original) || !isObject(candidate) || candidate.point !== original.point
-          || Object.keys(candidate).some((field) => !(field in original))
-          || !['frame', 'umbrella', 'waterline'].every((field) => typeof candidate[field] === 'string')) return undefined;
+          || Object.keys(candidate).some((field) => !Object.hasOwn(original, field))
+          || !['frame', 'umbrella', 'waterline'].every((field) => Object.hasOwn(candidate, field) && typeof candidate[field] === 'string')) return undefined;
         checkpoints.push({ point: original.point, frame: candidate.frame, umbrella: candidate.umbrella, waterline: candidate.waterline });
       }
       return checkpoints;
@@ -59,11 +60,12 @@ export function restoreExperimentRecordDraft<T extends DraftRecord>(value: unkno
   for (const fallback of defaults) {
     const saved = savedById.get(fallback.id);
     if (!saved || saved.group !== fallback.group
-      || Object.keys(saved).some((key) => !(key in fallback))
+      || Object.keys(saved).some((key) => !Object.hasOwn(fallback, key))
       || ('task' in fallback && saved.task !== fallback.task)
       || ('poster' in fallback && saved.poster !== fallback.poster)) return null;
     const row: PlainObject = { ...fallback };
     for (const [key, original] of Object.entries(fallback)) {
+      if (!Object.hasOwn(saved, key)) return null;
       if (key === 'id' || key === 'group' || key === 'task' || key === 'poster') continue;
       const field = restoreField(saved[key], original, key);
       if (field === undefined) return null;

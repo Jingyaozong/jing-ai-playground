@@ -4,7 +4,6 @@ import { test } from 'node:test';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow, needsOriginalEvidence } from '../app/data/experiment-export-boundary.ts';
 import { updateRecordScore } from '../app/data/experiment-record-state.ts';
 import { writeLocalRecordSnapshot } from '../app/data/local-record-save.ts';
-import { restoreStoryboardDraft } from '../app/data/storyboard-record-draft.ts';
 import { restoreExperimentRecordDraft } from '../app/data/experiment-record-draft.ts';
 import { createLocalRecordBackup, localRecordBackupFilename } from '../app/data/local-record-backup.ts';
 
@@ -142,25 +141,28 @@ test('storyboard drafts restore valid edits and reject broken rows before the bo
   saved[0].scores.coverage = 4;
   saved[0].note = '实测备注';
 
-  const restored = restoreStoryboardDraft(saved, defaults);
+  const restored = restoreExperimentRecordDraft(saved, defaults);
   assert.equal(restored[0].note, '实测备注');
   assert.equal(restored[0].asset, 'A01.md');
   assert.equal(defaults[0].asset, '');
   assert.equal(restored[1].status, 'untested');
-  assert.deepEqual(restoreStoryboardDraft([...saved].reverse(), defaults), restored);
+  assert.deepEqual(restoreExperimentRecordDraft([...saved].reverse(), defaults), restored);
 
   const corrupt = (change) => {
     const candidate = structuredClone(saved);
     change(candidate);
-    assert.equal(restoreStoryboardDraft(candidate, defaults), null);
+    assert.equal(restoreExperimentRecordDraft(candidate, defaults), null);
   };
   corrupt((rows) => { rows[0] = null; });
   corrupt((rows) => { rows[1].id = 'A01'; });
   corrupt((rows) => { rows[0].scores = null; });
   corrupt((rows) => { rows[0].scores.coverage = 9; });
+  corrupt((rows) => { rows[0].scores.toString = 4; });
   corrupt((rows) => { rows[0].failures = '误标'; });
   corrupt((rows) => { rows[0].status = 'reviewed-by-machine'; });
-  assert.equal(restoreStoryboardDraft(saved.slice(0, 1), defaults), null);
+  corrupt((rows) => { rows[0].futureField = '新增字段不能静默丢失'; });
+  corrupt((rows) => { rows[0].toString = '原型同名字段不能静默丢失'; });
+  assert.equal(restoreExperimentRecordDraft(saved.slice(0, 1), defaults), null);
 });
 
 test('shared record restoration keeps valid edits for numeric IDs and seeded poster rows', () => {
@@ -202,9 +204,11 @@ test('shared record restoration rejects malformed rows without merging them into
   corrupt((rows) => { rows[0].task = '另一项任务'; });
   corrupt((rows) => { rows[0].scores.identity = 6; });
   corrupt((rows) => { rows[0].scores.extra = 4; });
+  corrupt((rows) => { rows[0].scores.toString = 4; });
   corrupt((rows) => { rows[0].flags = ['漂移', null]; });
   corrupt((rows) => { rows[0].status = 'reviewed-by-machine'; });
   corrupt((rows) => { rows[0].futureField = '必须保留原始草稿'; });
+  corrupt((rows) => { rows[0].toString = '必须保留原始草稿'; });
   assert.equal(restoreExperimentRecordDraft(defaults.slice(0, 1), defaults), null);
 });
 
@@ -226,6 +230,9 @@ test('waterline draft requires each checkpoint and its frame observations', () =
   const reordered = structuredClone(saved);
   reordered[0].checkpoints.reverse();
   assert.equal(restoreExperimentRecordDraft(reordered, defaults), null);
+  const extra = structuredClone(saved);
+  extra[0].checkpoints[1].toString = '新增逐帧字段不能静默丢失';
+  assert.equal(restoreExperimentRecordDraft(extra, defaults), null);
 });
 
 test('every experiment board pauses writes and exposes the original malformed draft', () => {
