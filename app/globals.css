@@ -2349,6 +2349,9 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .experiment-record-recovery { grid-column: 1/-1; min-width: 0; padding: 18px; border: 1.5px solid var(--ink); border-radius: 18px; background: var(--white); }
 .experiment-record-recovery strong { font-size: 14px; }
 .experiment-record-recovery p { margin: 9px 0 14px; font-size: 12px; line-height: 1.65; }
+.experiment-record-recovery button { display: block; max-width: 100%; min-height: 42px; margin-bottom: 16px; padding: 9px 16px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--yellow); color: var(--ink); font: 750 12px var(--body); box-shadow: 3px 3px 0 var(--ink); cursor: pointer; }
+.experiment-record-recovery button:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
+.experiment-record-recovery .experiment-record-recovery-error { color: var(--coral); font-weight: 700; }
 .experiment-record-recovery summary { width: fit-content; cursor: pointer; color: var(--blue); font-size: 12px; font-weight: 700; }
 .experiment-record-recovery summary:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
 .experiment-record-recovery textarea { width: 100%; min-height: 180px; margin-top: 12px; padding: 12px; border: 1px solid var(--ink); border-radius: 12px; font: 500 10px/1.6 var(--mono); resize: vertical; }

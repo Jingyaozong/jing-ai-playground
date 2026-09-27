@@ -6,6 +6,7 @@ import { updateRecordScore } from '../app/data/experiment-record-state.ts';
 import { writeLocalRecordSnapshot } from '../app/data/local-record-save.ts';
 import { restoreStoryboardDraft } from '../app/data/storyboard-record-draft.ts';
 import { restoreExperimentRecordDraft } from '../app/data/experiment-record-draft.ts';
+import { createLocalRecordBackup, localRecordBackupFilename } from '../app/data/local-record-backup.ts';
 
 test('local export distinguishes a marked state from source evidence', () => {
   const rows = [
@@ -241,4 +242,18 @@ test('every experiment board pauses writes and exposes the original malformed dr
     assert.match(source, /blocked=\{recoverySource !== null\}/);
     assert.match(source, /<LocalRecordRecovery source=\{recoverySource\} \/>/);
   }
+});
+
+test('downloadable recovery backup retains malformed source text exactly', async () => {
+  const original = '{"note":"水线偏移｜未完成"}\n{invalid-json';
+  const backup = createLocalRecordBackup(original);
+  assert.equal(backup.type, 'text/plain;charset=utf-8');
+  assert.equal(await backup.text(), original);
+  assert.match(localRecordBackupFilename, /\.txt$/);
+
+  const component = readFileSync(new URL('../app/components/local-record-recovery.tsx', import.meta.url), 'utf8');
+  assert.match(component, /URL\.createObjectURL\(createLocalRecordBackup\(backupSource\)\)/);
+  assert.match(component, /link\.download = localRecordBackupFilename/);
+  assert.match(component, /URL\.revokeObjectURL\(backupUrl\)/);
+  assert.match(component, /<textarea readOnly value=\{source\}/);
 });
