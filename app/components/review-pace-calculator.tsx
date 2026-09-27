@@ -180,7 +180,7 @@ export function ReviewPaceCalculator() {
           <strong id="pace-title">{result.daily}</strong>
           <span>条 / 天</span>
         </div>
-        <p className="pace-result-caption">按两类耗时加权后的日处理量估算；不等于已通过质检或已交付数量。</p>
+        <p className="pace-result-caption">按两类样本的预计条数与耗时估算日处理量；不等于已通过质检或已交付数量。</p>
         {result.daily === 0 && result.total > 0 && <p className="pace-zero-note">单日平均不足一条；周期估算允许跨日接续，请确认任务能否这样安排。</p>}
 
         <dl className="pace-metrics">
@@ -205,7 +205,7 @@ export function ReviewPaceCalculator() {
             </>
           ) : <p>填写目标条数后，这里会显示估算缺口和所需工作日。</p>}
         </div>
-        <p className="pace-formula">加权耗时 {result.weightedMinutes.toFixed(1)} 分钟/条。高风险耗时已含计划内复核；缓冲另留给未预见的返修。人数按共享团队池估算，未拆新人和骨干排班。</p>
+        <p className="pace-formula">加权耗时约 {result.weightedMinutes.toFixed(1)} 分钟/条；容量按整数条数及高风险条数复算。高风险耗时已含计划内复核，缓冲另留给未预见的返修。人数按共享团队池估算，未拆新人和骨干排班。</p>
         <button className="pace-copy-button" type="button" onClick={copySummary}>{copyState === 'copied' ? '已复制排期摘要 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制排期摘要 ↗'}</button>
         {copyState === 'manual' && <textarea className="pace-copy-fallback" readOnly value={summary} aria-label="手动复制排期摘要" onFocus={(event) => event.currentTarget.select()} />}
         <small className="pace-disclaimer">这是计划估算，不代替试标、质检或交付验收。实际比例与耗时变化后，请重新填写。</small>

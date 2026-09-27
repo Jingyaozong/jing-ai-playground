@@ -601,7 +601,7 @@ test('review pace field scenarios preserve risk time and expose a one-day target
   };
   const result = calculateReviewPace(inputs);
   assert.equal(result.weightedMinutes, 8.4);
-  assert.equal(result.daily, 145);
+  assert.equal(result.daily, 146);
   assert.equal(result.total, 728);
   assert.equal(result.reservedHours, 18);
   assert.equal(calculateReviewPaceTarget(inputs, result, 700).withinEstimate, true);
@@ -614,6 +614,19 @@ test('review pace field scenarios preserve risk time and expose a one-day target
   const slowResult = calculateReviewPace(slowInputs);
   assert.equal(slowResult.total, 4);
   assert.equal(calculateReviewPaceTarget(slowInputs, slowResult, 5).requiredDays, 2);
+});
+
+test('review pace does not promise a high-risk item that exceeds available minutes', () => {
+  const inputs = {
+    reviewers: 1, workDays: 1, hoursPerDay: 1,
+    regularMinutes: 1, highRiskShare: 10, highRiskMinutes: 100, reworkRate: 0,
+  };
+  const result = calculateReviewPace(inputs);
+  assert.equal(result.total, 4);
+  assert.equal(result.highRiskItems, 0);
+  const target = calculateReviewPaceTarget(inputs, result, 5);
+  assert.equal(target.withinEstimate, false);
+  assert.equal(target.requiredDays, 2);
 });
 
 test('risk routing note and calculator link to each other', () => {

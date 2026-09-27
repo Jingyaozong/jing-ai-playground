@@ -26,6 +26,22 @@ export type ReviewPaceTargetResult = {
   withinEstimate: boolean;
 };
 
+function plannedMinutes(items: number, highRiskFraction: number, regularMinutes: number, highRiskMinutes: number): number {
+  const highRiskItems = Math.round(items * highRiskFraction);
+  return (items - highRiskItems) * regularMinutes + highRiskItems * highRiskMinutes;
+}
+
+function capacityForMinutes(minutes: number, highRiskFraction: number, regularMinutes: number, highRiskMinutes: number): number {
+  let lower = 0;
+  let upper = Math.floor(minutes / Math.min(regularMinutes, highRiskMinutes)) + 1;
+  while (lower + 1 < upper) {
+    const middle = Math.floor((lower + upper) / 2);
+    if (plannedMinutes(middle, highRiskFraction, regularMinutes, highRiskMinutes) <= minutes) lower = middle;
+    else upper = middle;
+  }
+  return lower;
+}
+
 export function calculateReviewPace(input: ReviewPaceInputs): ReviewPaceResult {
   const { reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate } = input;
   if (![reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate].every(Number.isFinite)
@@ -39,14 +55,14 @@ export function calculateReviewPace(input: ReviewPaceInputs): ReviewPaceResult {
   const weightedMinutes = regularMinutes * (1 - highRiskFraction) + highRiskMinutes * highRiskFraction;
   const teamMinutesPerDay = reviewers * hoursPerDay * 60;
   const usableMinutesPerDay = teamMinutesPerDay * (1 - reworkRate / 100);
-  const daily = Math.floor(usableMinutesPerDay / weightedMinutes);
-  const total = Math.floor(usableMinutesPerDay * workDays / weightedMinutes);
+  const daily = capacityForMinutes(usableMinutesPerDay, highRiskFraction, regularMinutes, highRiskMinutes);
+  const total = capacityForMinutes(usableMinutesPerDay * workDays, highRiskFraction, regularMinutes, highRiskMinutes);
   const highRiskItems = Math.round(total * highRiskFraction);
 
   return {
     daily,
     total,
-    perPerson: Math.floor(usableMinutesPerDay / reviewers / weightedMinutes),
+    perPerson: capacityForMinutes(usableMinutesPerDay / reviewers, highRiskFraction, regularMinutes, highRiskMinutes),
     regularItems: total - highRiskItems,
     highRiskItems,
     weightedMinutes,
@@ -59,7 +75,7 @@ export function calculateReviewPaceTarget(input: ReviewPaceInputs, result: Revie
     throw new RangeError('目标条数必须是 1 到 100 万之间的整数');
   }
   const usableMinutesPerDay = input.reviewers * input.hoursPerDay * 60 * (1 - input.reworkRate / 100);
-  const requiredDays = Math.ceil(targetItems * result.weightedMinutes / usableMinutesPerDay);
+  const requiredDays = Math.ceil(plannedMinutes(targetItems, input.highRiskShare / 100, input.regularMinutes, input.highRiskMinutes) / usableMinutesPerDay);
   return {
     targetItems,
     gap: result.total - targetItems,
