@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
+import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
 import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -123,14 +124,7 @@ export function ExperimentRecordBoard() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (!loaded) return;
-    try {
-      window.localStorage.setItem(storageKey, JSON.stringify(records));
-    } catch {
-      // The worksheet remains usable even when local storage is unavailable.
-    }
-  }, [loaded, records]);
+  const saveStatus = useLocalRecordSave(storageKey, records, loaded);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const completed = records.filter(isComplete).length;
@@ -182,7 +176,7 @@ export function ExperimentRecordBoard() {
         </div>
         <div className="experiment-record-intro">
           <p>每一格对应一条正式测试。只记录实际生成的素材和人工观察；未填写的样本不会进入平均分。</p>
-          <span className="mono">{loaded ? '已保存到当前浏览器' : '正在读取本地记录…'}</span>
+          <LocalRecordSaveStatus loaded={loaded} {...saveStatus} />
         </div>
       </div>
 

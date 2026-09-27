@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
+import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
 import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -196,10 +197,7 @@ export function WaterlineMotionRecordBoard() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (!loaded) return;
-    try { window.localStorage.setItem(storageKey, JSON.stringify(records)); } catch { /* Keep working without storage. */ }
-  }, [loaded, records]);
+  const saveStatus = useLocalRecordSave(storageKey, records, loaded);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const generated = records.filter((record) => record.status !== 'untested').length;
@@ -246,7 +244,7 @@ export function WaterlineMotionRecordBoard() {
     <section className="experiment-record-board waterline-motion-record-board" id="record-desk" aria-label="九格撑伞退水实验记录台">
       <div className="experiment-record-top">
         <div><p className="eyebrow mono">04 / Record desk</p><h2><span>从一帧开始，</span><span>把观察留下来。</span></h2></div>
-        <div className="experiment-record-intro"><p>每格对应一种提示结构和一个固定动作任务。评分、帧号与备注只保存在当前浏览器，不上传视频、人物或故事素材。</p><span className="mono">{loaded ? '已保存到当前浏览器' : '正在读取本地记录…'}</span></div>
+        <div className="experiment-record-intro"><p>每格对应一种提示结构和一个固定动作任务。评分、帧号与备注只保存在当前浏览器，不上传视频、人物或故事素材。</p><LocalRecordSaveStatus loaded={loaded} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">

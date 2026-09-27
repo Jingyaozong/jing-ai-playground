@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
+import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
 import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -131,10 +132,7 @@ export function StoryboardAuditBoard() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (!loaded) return;
-    try { window.localStorage.setItem(storageKey, JSON.stringify(records)); } catch { /* Keep the board usable without storage. */ }
-  }, [loaded, records]);
+  const saveStatus = useLocalRecordSave(storageKey, records, loaded);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const completed = records.filter(isComplete).length;
@@ -176,7 +174,7 @@ export function StoryboardAuditBoard() {
     <section className="experiment-record-board storyboard-audit-record-board" id="record-desk" aria-label="九格自动分镜审计记录台">
       <div className="experiment-record-top">
         <div><p className="eyebrow mono">04 / Audit desk</p><h2>九份输出先留空，<br />只对真实文本打分。</h2></div>
-        <div className="experiment-record-intro"><p>每格对应一种拆镜流程和一篇固定故事。输出、镜头数、秒数、评分与备注只保存在当前浏览器，不上传故事或生成文本。</p><span className="mono">{loaded ? '已保存到当前浏览器' : '正在读取本地记录…'}</span></div>
+        <div className="experiment-record-intro"><p>每格对应一种拆镜流程和一篇固定故事。输出、镜头数、秒数、评分与备注只保存在当前浏览器，不上传故事或生成文本。</p><LocalRecordSaveStatus loaded={loaded} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">

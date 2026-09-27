@@ -2273,6 +2273,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .experiment-record-top h2 { margin: 0; font-family: var(--display); font-size: clamp(3.5rem,6.4vw,6.6rem); font-weight: 680; line-height: .92; letter-spacing: -.055em; }
 .experiment-record-intro p { margin: 0 0 22px; color: var(--muted); font-size: 14px; line-height: 1.8; }
 .experiment-record-intro span { display: inline-flex; padding: 8px 11px; border: 1px solid var(--ink); border-radius: 99px; background: var(--mint); color: var(--blue); }
+.experiment-record-intro span.is-unsaved { background: var(--coral); color: var(--ink); }
 .experiment-record-summary { display: grid; grid-template-columns: repeat(4,1fr); margin: 68px 0 26px; overflow: hidden; border: 2px solid var(--ink); border-radius: 28px; box-shadow: 8px 8px 0 var(--ink); }
 .experiment-record-summary article { min-height: 210px; display: flex; flex-direction: column; padding: 22px; border-right: 1px solid var(--ink); background: var(--white); }
 .experiment-record-summary article:nth-child(2) { background: var(--yellow); }

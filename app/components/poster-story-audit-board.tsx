@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
+import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
 import { updateRecordScore } from '../data/experiment-record-state';
 import { posterStoryPilotRecords, type PosterStoryPilotRecord } from '../data/poster-story-pilot';
 import { posterStoryRetestRecords } from '../data/poster-story-retest';
@@ -180,10 +181,7 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
     return () => window.clearTimeout(timer);
   }, [config.storageKey]);
 
-  useEffect(() => {
-    if (!loaded) return;
-    try { window.localStorage.setItem(config.storageKey, JSON.stringify(records)); } catch { /* Keep the board usable without storage. */ }
-  }, [config.storageKey, loaded, records]);
+  const saveStatus = useLocalRecordSave(config.storageKey, records, loaded);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const completed = records.filter(isComplete).length;
@@ -225,7 +223,7 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
     <section className="experiment-record-board poster-story-audit-board" id="record-desk" aria-label="九格海报反推故事审计台">
       <div className="experiment-record-top">
         <div><p className="eyebrow mono">04 / Audit desk</p><h2>{config.heading.split('\n').map((line, index, lines) => <span key={line}>{line}{index < lines.length - 1 && <br />}</span>)}</h2></div>
-        <div className="experiment-record-intro"><p>{config.intro}</p><span className="mono">{loaded ? config.localLabel : '正在读取本地记录…'}</span></div>
+        <div className="experiment-record-intro"><p>{config.intro}</p><LocalRecordSaveStatus loaded={loaded} {...saveStatus} savedLabel={`${config.localLabel} · 已保存`} /></div>
       </div>
 
       <div className="experiment-record-summary">

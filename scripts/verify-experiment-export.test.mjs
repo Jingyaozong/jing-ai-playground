@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs';
 import { test } from 'node:test';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow, needsOriginalEvidence } from '../app/data/experiment-export-boundary.ts';
 import { updateRecordScore } from '../app/data/experiment-record-state.ts';
+import { writeLocalRecordSnapshot } from '../app/data/local-record-save.ts';
 
 test('local export distinguishes a marked state from source evidence', () => {
   const rows = [
@@ -116,4 +117,11 @@ test('numeric cell IDs remain distinct from string IDs when scoring', () => {
   assert.equal(updated[0].scores.identity, 5);
   assert.equal(updated[0].status, 'untested');
   assert.equal(updated[1], records[1]);
+});
+
+test('local save reports successful writes and quota or permission failures', () => {
+  const writes = [];
+  assert.equal(writeLocalRecordSnapshot({ setItem: (key, value) => writes.push([key, value]) }, 'A', '[1]'), true);
+  assert.deepEqual(writes, [['A', '[1]']]);
+  assert.equal(writeLocalRecordSnapshot({ setItem: () => { throw new Error('quota exceeded'); } }, 'A', '[2]'), false);
 });

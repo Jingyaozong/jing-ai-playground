@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { RecordEvidenceReminder } from './record-evidence-reminder';
 import { countsAsCompletedRecord, localExportNotice, localExportEvidenceSummary, markdownTableRow } from '../data/experiment-export-boundary';
 import { LocalRecordBoundary } from './local-record-boundary';
+import { LocalRecordSaveStatus, useLocalRecordSave } from './local-record-save-status';
 import { updateRecordScore } from '../data/experiment-record-state';
 
 type RecordStatus = 'untested' | 'generated' | 'reviewed';
@@ -122,10 +123,7 @@ export function ReferenceComparisonBoard() {
     return () => window.clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (!loaded) return;
-    try { window.localStorage.setItem(storageKey, JSON.stringify(records)); } catch { /* Keep the worksheet usable without storage. */ }
-  }, [loaded, records]);
+  const saveStatus = useLocalRecordSave(storageKey, records, loaded);
 
   const active = records.find((record) => record.id === activeId) ?? records[0];
   const generated = records.filter((record) => record.status !== 'untested').length;
@@ -159,7 +157,7 @@ export function ReferenceComparisonBoard() {
     <section className="experiment-record-board reference-record-board" id="record-desk" aria-label="十二格参考图对照实验记录台">
       <div className="experiment-record-top">
         <div><p className="eyebrow mono">04 / Record desk</p><h2>十二格先空着，<br />只接收真实结果。</h2></div>
-        <div className="experiment-record-intro"><p>每格对应一组参考条件和一个固定镜头任务。评分与备注保存在当前浏览器，不上传任何素材。</p><span className="mono">{loaded ? '已保存到当前浏览器' : '正在读取本地记录…'}</span></div>
+        <div className="experiment-record-intro"><p>每格对应一组参考条件和一个固定镜头任务。评分与备注保存在当前浏览器，不上传任何素材。</p><LocalRecordSaveStatus loaded={loaded} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">
