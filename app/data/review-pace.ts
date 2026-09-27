@@ -29,6 +29,7 @@ export type ReviewPaceTargetResult = {
 export function calculateReviewPace(input: ReviewPaceInputs): ReviewPaceResult {
   const { reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate } = input;
   if (![reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate].every(Number.isFinite)
+    || !Number.isSafeInteger(reviewers) || !Number.isSafeInteger(workDays)
     || reviewers <= 0 || workDays <= 0 || hoursPerDay <= 0 || regularMinutes <= 0 || highRiskMinutes <= 0
     || highRiskShare < 0 || highRiskShare > 100 || reworkRate < 0 || reworkRate >= 100) {
     throw new RangeError('排期输入必须为有效的正数与百分比');

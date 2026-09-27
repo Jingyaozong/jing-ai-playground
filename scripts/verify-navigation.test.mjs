@@ -563,6 +563,8 @@ test('review pace keeps high-risk time and extra rework time separate', () => {
   assert.match(formatReviewPaceSummary(inputs, result), /未执行试标、质检或交付验收/);
   assert.throws(() => calculateReviewPace({ ...inputs, highRiskShare: 101 }), RangeError);
   assert.throws(() => calculateReviewPace({ ...inputs, regularMinutes: 0 }), RangeError);
+  assert.throws(() => calculateReviewPace({ ...inputs, reviewers: 2.5 }), RangeError);
+  assert.throws(() => calculateReviewPace({ ...inputs, workDays: 4.5 }), RangeError);
 });
 
 test('review pace compares an optional target with usable workdays, without claiming delivery', () => {
@@ -590,6 +592,28 @@ test('review pace compares an optional target with usable workdays, without clai
   assert.throws(() => calculateReviewPaceTarget(inputs, result, 0), RangeError);
   assert.throws(() => calculateReviewPaceTarget(inputs, result, 1.5), RangeError);
   assert.throws(() => calculateReviewPaceTarget(inputs, result, 1_000_001), RangeError);
+});
+
+test('review pace field scenarios preserve risk time and expose a one-day target shortfall', () => {
+  const inputs = {
+    reviewers: 4, workDays: 5, hoursPerDay: 6,
+    regularMinutes: 6, highRiskShare: 20, highRiskMinutes: 18, reworkRate: 15,
+  };
+  const result = calculateReviewPace(inputs);
+  assert.equal(result.weightedMinutes, 8.4);
+  assert.equal(result.daily, 145);
+  assert.equal(result.total, 728);
+  assert.equal(result.reservedHours, 18);
+  assert.equal(calculateReviewPaceTarget(inputs, result, 700).withinEstimate, true);
+  const over = calculateReviewPaceTarget(inputs, result, 800);
+  assert.equal(over.gap, -72);
+  assert.equal(over.requiredDays, 6);
+  assert.equal(over.extraDays, 1);
+
+  const slowInputs = { ...inputs, reviewers: 1, workDays: 1, hoursPerDay: 1, regularMinutes: 10, highRiskShare: 50, highRiskMinutes: 20, reworkRate: 0 };
+  const slowResult = calculateReviewPace(slowInputs);
+  assert.equal(slowResult.total, 4);
+  assert.equal(calculateReviewPaceTarget(slowInputs, slowResult, 5).requiredDays, 2);
 });
 
 test('risk routing note and calculator link to each other', () => {

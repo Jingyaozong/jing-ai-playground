@@ -11,25 +11,47 @@ type FieldProps = {
   min: number;
   max: number;
   step?: number;
+  wholeNumber?: boolean;
   onChange: (value: number) => void;
 };
 
-function NumberField({ label, note, suffix, value, min, max, step = 1, onChange }: FieldProps) {
+function NumberField({ label, note, suffix, value, min, max, step = 1, wholeNumber = false, onChange }: FieldProps) {
+  const [draft, setDraft] = useState(String(value));
+  const parsedDraft = Number(draft);
+  const draftInvalid = draft.trim() === '' || !Number.isFinite(parsedDraft) || parsedDraft < min || parsedDraft > max
+    || (wholeNumber && !Number.isInteger(parsedDraft));
+
+  function finishEditing() {
+    const parsed = Number(draft);
+    if (draft.trim() === '' || !Number.isFinite(parsed)) {
+      setDraft(String(value));
+      return;
+    }
+    const next = Math.min(max, Math.max(min, wholeNumber ? Math.round(parsed) : parsed));
+    onChange(next);
+    setDraft(String(next));
+  }
+
   return (
     <label className="pace-field">
-      <span className="pace-field-copy"><strong>{label}</strong><small>{note}</small></span>
+      <span className="pace-field-copy"><strong>{label}</strong><small>{note}</small>{draftInvalid && <small className="pace-field-warning">输入未完成，结果仍按上次有效值估算。</small>}</span>
       <span className="pace-input-wrap">
         <input
           inputMode="decimal"
+          aria-invalid={draftInvalid}
           max={max}
           min={min}
           step={step}
           type="number"
-          value={value}
+          value={draft}
           onChange={(event) => {
-            const next = Number(event.target.value);
-            if (Number.isFinite(next)) onChange(Math.min(max, Math.max(min, next)));
+            const raw = event.target.value;
+            setDraft(raw);
+            const next = Number(raw);
+            if (raw.trim() !== '' && Number.isFinite(next) && next >= min && next <= max
+              && (!wholeNumber || Number.isInteger(next))) onChange(next);
           }}
+          onBlur={finishEditing}
         />
         <span>{suffix}</span>
       </span>
@@ -46,12 +68,15 @@ export function ReviewPaceCalculator() {
   const [highRiskMinutes, setHighRiskMinutes] = useState(20);
   const [reworkRate, setReworkRate] = useState(10);
   const [targetItems, setTargetItems] = useState<number | null>(null);
+  const [targetDraft, setTargetDraft] = useState('');
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'manual'>('idle');
 
   const inputs = { reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate };
   const result = calculateReviewPace(inputs);
   const targetResult = targetItems === null ? null : calculateReviewPaceTarget(inputs, result, targetItems);
   const summary = formatReviewPaceSummary(inputs, result, targetResult ?? undefined);
+  const targetDraftNumber = Number(targetDraft);
+  const targetDraftInvalid = targetDraft !== '' && (!Number.isSafeInteger(targetDraftNumber) || targetDraftNumber < 1 || targetDraftNumber > 1000000);
 
   async function copySummary() {
     try {
@@ -69,31 +94,42 @@ export function ReviewPaceCalculator() {
       <div className="pace-form-panel">
         <div className="pace-panel-heading">
           <span className="mono">01 / 填写工作条件</span>
-          <p>起始数字只是演示。按试标结果填写净工时与两类样本耗时，别把会议和等待素材算进去。</p>
+          <p>起始数字只是演示。按试标结果填写净工时与两类样本耗时，别把会议和等待素材算进去。清空输入框后可直接重填。</p>
         </div>
 
         <div className="pace-fields">
-          <NumberField label="评测人数" note="实际执行评测的人" suffix="人" value={reviewers} min={1} max={100} onChange={setReviewers} />
-          <NumberField label="剩余可用工作日" note="扣除假期后，距目标交接可投入的天数" suffix="天" value={workDays} min={1} max={365} onChange={setWorkDays} />
+          <NumberField label="评测人数" note="实际执行评测的人" suffix="人" value={reviewers} min={1} max={100} wholeNumber onChange={setReviewers} />
+          <NumberField label="剩余可用工作日" note="扣除假期后，距目标交接可投入的天数" suffix="天" value={workDays} min={1} max={365} wholeNumber onChange={setWorkDays} />
           <NumberField label="每天有效工时" note="扣除沟通和休息后的净工时" suffix="小时" value={hoursPerDay} min={0.5} max={16} step={0.5} onChange={setHoursPerDay} />
           <NumberField label="常规单条耗时" note="规则明确时，含查看、判断和记录" suffix="分钟" value={regularMinutes} min={0.5} max={480} step={0.5} onChange={setRegularMinutes} />
         </div>
         <label className="pace-field pace-target-field">
-          <span className="pace-field-copy"><strong>目标处理条数 <small>可选</small></strong><small>填写后对照可用工作日；留空则只看产能</small></span>
+          <span className="pace-field-copy"><strong>目标处理条数 <small>可选</small></strong><small>填写后对照可用工作日；留空则只看产能</small>{targetDraftInvalid && <small className="pace-field-warning">请输入 1–100 万之间的整数。</small>}</span>
           <span className="pace-input-wrap">
             <input
               aria-label="目标处理条数，可选"
+              aria-invalid={targetDraftInvalid}
               inputMode="numeric"
               max={1000000}
               min={1}
               placeholder="未填写"
               step={1}
               type="number"
-              value={targetItems ?? ''}
+              value={targetDraft}
               onChange={(event) => {
-                if (event.target.value === '') { setTargetItems(null); return; }
-                const next = Number(event.target.value);
-                if (Number.isSafeInteger(next)) setTargetItems(Math.min(1000000, Math.max(1, next)));
+                const raw = event.target.value;
+                setTargetDraft(raw);
+                if (raw === '') { setTargetItems(null); return; }
+                const next = Number(raw);
+                setTargetItems(Number.isSafeInteger(next) && next >= 1 && next <= 1000000 ? next : null);
+              }}
+              onBlur={() => {
+                if (targetDraft === '') return;
+                const next = Number(targetDraft);
+                if (!Number.isFinite(next)) { setTargetDraft(targetItems === null ? '' : String(targetItems)); return; }
+                const normalized = Math.min(1000000, Math.max(1, Math.round(next)));
+                setTargetItems(normalized);
+                setTargetDraft(String(normalized));
               }}
             />
             <span>条</span>
