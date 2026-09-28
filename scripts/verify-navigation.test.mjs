@@ -10,7 +10,7 @@ import { experimentDetails } from '../app/data/experiments.ts';
 import { libraryItems } from '../app/data/library.ts';
 import { promptFilters, promptItems, promptSource } from '../app/data/prompts.ts';
 import { promptResources } from '../app/data/prompt-resources.ts';
-import { calculateReviewPace, calculateReviewPaceTarget, formatReviewPaceSummary } from '../app/data/review-pace.ts';
+import { calculateReviewPace, calculateReviewPaceTarget, compareReviewPaceMix, formatReviewPaceSummary } from '../app/data/review-pace.ts';
 import { summarizeTrialTimeLog, trialTimeLogHeaders } from '../app/data/review-pace-import.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
@@ -659,6 +659,25 @@ test('local timing import summarizes reviewed rows without counting extra rework
   assert.match(page, /把试标耗时/);
   assert.match(page, /选择 CSV 文件/);
   assert.match(page, /不上传、不保存原始行/);
+});
+
+test('review pace mix comparison changes only the risk share and keeps target evidence separate', () => {
+  const input = { reviewers: 4, workDays: 5, hoursPerDay: 6, regularMinutes: 6, highRiskShare: 20, highRiskMinutes: 18, reworkRate: 15 };
+  const compared = compareReviewPaceMix(input, 20, 35, 800);
+  assert.equal(compared.trial.total, 728);
+  assert.ok(compared.batch.total < compared.trial.total);
+  assert.equal(compared.capacityDifference, compared.batch.total - compared.trial.total);
+  assert.equal(compared.trialTarget?.gap, -72);
+  assert.equal(compared.batchTarget?.gap, compared.batch.total - 800);
+  assert.equal(input.highRiskShare, 20, 'Comparison must not mutate the main estimate');
+  const equal = compareReviewPaceMix(input, 20, 20);
+  assert.equal(equal.capacityDifference, 0);
+  assert.equal(equal.batchTarget, null);
+  assert.throws(() => compareReviewPaceMix(input, 20, 101), RangeError);
+  const page = readFileSync(join(process.cwd(), 'out/tools/review-pace/index.html'), 'utf8');
+  assert.match(page, /试标比例/);
+  assert.match(page, /正式批次/);
+  assert.match(page, /没有记录时，不生成虚构的批次对照/);
 });
 
 test('risk routing note and calculator link to each other', () => {

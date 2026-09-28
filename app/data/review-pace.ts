@@ -26,6 +26,14 @@ export type ReviewPaceTargetResult = {
   withinEstimate: boolean;
 };
 
+export type ReviewPaceMixComparison = {
+  trial: ReviewPaceResult;
+  batch: ReviewPaceResult;
+  capacityDifference: number;
+  trialTarget: ReviewPaceTargetResult | null;
+  batchTarget: ReviewPaceTargetResult | null;
+};
+
 function plannedMinutes(items: number, highRiskFraction: number, regularMinutes: number, highRiskMinutes: number): number {
   const highRiskItems = Math.round(items * highRiskFraction);
   return (items - highRiskItems) * regularMinutes + highRiskItems * highRiskMinutes;
@@ -82,6 +90,25 @@ export function calculateReviewPaceTarget(input: ReviewPaceInputs, result: Revie
     requiredDays,
     extraDays: Math.max(0, requiredDays - input.workDays),
     withinEstimate: targetItems <= result.total,
+  };
+}
+
+export function compareReviewPaceMix(
+  input: ReviewPaceInputs,
+  trialHighRiskShare: number,
+  batchHighRiskShare: number,
+  targetItems: number | null = null,
+): ReviewPaceMixComparison {
+  const trialInput = { ...input, highRiskShare: trialHighRiskShare };
+  const batchInput = { ...input, highRiskShare: batchHighRiskShare };
+  const trial = calculateReviewPace(trialInput);
+  const batch = calculateReviewPace(batchInput);
+  return {
+    trial,
+    batch,
+    capacityDifference: batch.total - trial.total,
+    trialTarget: targetItems === null ? null : calculateReviewPaceTarget(trialInput, trial, targetItems),
+    batchTarget: targetItems === null ? null : calculateReviewPaceTarget(batchInput, batch, targetItems),
   };
 }
 

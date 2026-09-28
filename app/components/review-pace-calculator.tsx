@@ -1,7 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { useRef, useState } from 'react';
-import { calculateReviewPace, calculateReviewPaceTarget, formatReviewPaceSummary } from '../data/review-pace';
+import { calculateReviewPace, calculateReviewPaceTarget, compareReviewPaceMix, formatReviewPaceSummary } from '../data/review-pace';
 import { summarizeTrialTimeLog, type TrialTimeSummary } from '../data/review-pace-import';
 
 type FieldProps = {
@@ -76,16 +77,23 @@ export function ReviewPaceCalculator() {
   const [pendingImport, setPendingImport] = useState<TrialTimeSummary | null>(null);
   const [importError, setImportError] = useState('');
   const [importing, setImporting] = useState(false);
+  const [trialReference, setTrialReference] = useState<{ count: number; highRiskShare: number } | null>(null);
+  const [batchShareDraft, setBatchShareDraft] = useState('');
+  const [batchAppliedShare, setBatchAppliedShare] = useState<number | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const inputs = { reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate };
   const result = calculateReviewPace(inputs);
   const targetResult = targetItems === null ? null : calculateReviewPaceTarget(inputs, result, targetItems);
   const sourceLine = source === 'example' ? '虚构演练参数起步 · 可经过手动修改 · 非真实试标记录\n'
-    : source === 'import' ? '本地 CSV 汇总参数起步 · 可经过手动修改 · 仅核对耗时，未验证质量或批次代表性\n' : '';
+    : source === 'import' ? `本地 CSV 汇总参数起步 · 可经过手动修改 · 仅核对耗时，未验证质量或批次代表性${batchAppliedShare !== null ? '；正式批次占比为手工输入的待核对假设' : ''}\n` : '';
   const summary = sourceLine + formatReviewPaceSummary(inputs, result, targetResult ?? undefined);
   const targetDraftNumber = Number(targetDraft);
   const targetDraftInvalid = targetDraft !== '' && (!Number.isSafeInteger(targetDraftNumber) || targetDraftNumber < 1 || targetDraftNumber > 1000000);
+  const batchShare = batchShareDraft.trim() === '' ? null : Number(batchShareDraft);
+  const batchShareInvalid = batchShare !== null && (!Number.isFinite(batchShare) || batchShare < 0 || batchShare > 100);
+  const mixComparison = trialReference && batchShare !== null && !batchShareInvalid
+    ? compareReviewPaceMix(inputs, trialReference.highRiskShare, batchShare, targetItems) : null;
 
   async function copySummary() {
     try {
@@ -110,6 +118,9 @@ export function ReviewPaceCalculator() {
     setTargetDraft('800');
     setCopyState('idle');
     setSource('example');
+    setTrialReference(null);
+    setBatchShareDraft('');
+    setBatchAppliedShare(null);
     setPendingImport(null);
     setImportError('');
     setFormRevision((revision) => revision + 1);
@@ -138,8 +149,19 @@ export function ReviewPaceCalculator() {
     setRegularMinutes(pendingImport.regularMinutes);
     setHighRiskMinutes(pendingImport.highRiskMinutes);
     setHighRiskShare(pendingImport.highRiskShare);
+    setTrialReference({ count: pendingImport.total, highRiskShare: pendingImport.highRiskShare });
+    setBatchShareDraft('');
+    setBatchAppliedShare(null);
     setSource('import');
     setPendingImport(null);
+    setCopyState('idle');
+    setFormRevision((revision) => revision + 1);
+  }
+
+  function applyBatchShare() {
+    if (batchShare === null || batchShareInvalid) return;
+    setHighRiskShare(batchShare);
+    setBatchAppliedShare(batchShare);
     setCopyState('idle');
     setFormRevision((revision) => revision + 1);
   }
@@ -165,7 +187,7 @@ export function ReviewPaceCalculator() {
         <span className="mono">LOCAL CSV / 本地汇总</span>
         <h2 id="pace-import-title">把试标耗时，<br />带进排期。</h2>
         <p>选择按模板填写的 CSV，先看两类样本的数量、占比和平均分钟数，再决定是否填入。仅在当前浏览器汇总；不上传、不保存原始行。</p>
-        <a href="/downloads/trial-review-time-log-v1.csv" download>下载空白模板 ↓</a>
+        <Link href="/downloads/trial-review-time-log-v1.csv" download>下载空白模板 ↓</Link>
       </div>
       <div className="pace-import-action">
         <input
@@ -239,7 +261,7 @@ export function ReviewPaceCalculator() {
         </label>
         <div className="pace-risk-group">
           <div className="pace-risk-heading"><strong>把高风险时间单独留出来。</strong><p>争议、复杂关系与逐条复核，不用常规样本的速度外推。</p></div>
-          <NumberField label="高风险与争议占比" note="按试标或已知样本结构估计" suffix="%" value={highRiskShare} min={0} max={100} step={0.1} onChange={setHighRiskShare} />
+          <NumberField label="高风险与争议占比" note="按试标或已知样本结构估计" suffix="%" value={highRiskShare} min={0} max={100} step={0.1} onChange={(value) => { setHighRiskShare(value); setBatchAppliedShare(null); }} />
           <NumberField label="高风险单条耗时" note="包含计划内的独立复核与裁决" suffix="分钟" value={highRiskMinutes} min={0.5} max={480} step={0.1} onChange={setHighRiskMinutes} />
           <NumberField label="额外返工缓冲" note="只留给新发现的问题，避免重复计算" suffix="%" value={reworkRate} min={0} max={90} onChange={setReworkRate} />
         </div>
@@ -247,7 +269,7 @@ export function ReviewPaceCalculator() {
 
       <aside className="pace-result-card" aria-live="polite">
         <div className="pace-result-topline mono"><span>02 / 计算结果</span><span>Live estimate</span></div>
-        {source && <p className="pace-example-origin">{source === 'example' ? '虚构演练参数起步 · 可经过手动修改' : '本地 CSV 汇总起步 · 可经过手动修改；质量及代表性未验证'}</p>}
+        {source && <p className="pace-example-origin">{source === 'example' ? '虚构演练参数起步 · 可经过手动修改' : batchAppliedShare !== null ? '本地 CSV 耗时起步 · 批次占比为人工假设；质量及代表性未验证' : '本地 CSV 汇总起步 · 可经过手动修改；质量及代表性未验证'}</p>}
         <div className={`pace-big-number${result.daily >= 1000 ? ' is-compact' : ''}`}>
           <strong id="pace-title">{result.daily}</strong>
           <span>条 / 天</span>
@@ -282,6 +304,36 @@ export function ReviewPaceCalculator() {
         {copyState === 'manual' && <textarea className="pace-copy-fallback" readOnly value={summary} aria-label="手动复制排期摘要" onFocus={(event) => event.currentTarget.select()} />}
         <small className="pace-disclaimer">这是计划估算，不代替试标、质检或交付验收。实际比例与耗时变化后，请重新填写。</small>
       </aside>
+    </section>
+    <section className="pace-mix" aria-labelledby="pace-mix-title">
+      <div className="pace-mix-intro">
+        <span className="mono">样本结构 / Mix check</span>
+        <h2 id="pace-mix-title">试标比例，<br />未必是整批比例。</h2>
+        <p>只换高风险样本占比，其余人数、净工时、两类耗时和返工缓冲保持相同。看见差额后，再核对正式批次的抽样依据。</p>
+      </div>
+      <div className="pace-mix-body">
+        {trialReference ? (
+          <>
+            <label className="pace-mix-input-label" htmlFor="pace-batch-share">正式批次预计高风险占比 <small>人工假设 · 待核对</small></label>
+            <div className="pace-mix-input-row">
+              <div className="pace-input-wrap"><input id="pace-batch-share" type="number" inputMode="decimal" min={0} max={100} step={0.1} placeholder="例如 35" value={batchShareDraft} aria-invalid={batchShareInvalid} onChange={(event) => { setBatchShareDraft(event.target.value); setBatchAppliedShare(null); }} /><span>%</span></div>
+              <span>试标 {trialReference.count} 条中，高风险占 {trialReference.highRiskShare}%。</span>
+            </div>
+            {batchShareInvalid && <p className="pace-mix-warning" role="alert">请输入 0–100 之间的占比。</p>}
+            {mixComparison ? (
+              <>
+                <div className="pace-mix-ledger" aria-live="polite">
+                  <div><span>试标结构 · {trialReference.highRiskShare}%</span><strong>{mixComparison.trial.total} <small>条 / 周期</small></strong>{mixComparison.trialTarget && <p>对照目标：{mixComparison.trialTarget.gap >= 0 ? `余量 ${mixComparison.trialTarget.gap}` : `缺口 ${-mixComparison.trialTarget.gap}`} 条</p>}</div>
+                  <div><span>批次假设 · {batchShare}%</span><strong>{mixComparison.batch.total} <small>条 / 周期</small></strong>{mixComparison.batchTarget && <p>对照目标：{mixComparison.batchTarget.gap >= 0 ? `余量 ${mixComparison.batchTarget.gap}` : `缺口 ${-mixComparison.batchTarget.gap}`} 条</p>}</div>
+                </div>
+                <p className="pace-mix-difference">按这组假设，批次结构的周期容量比试标结构{mixComparison.capacityDifference === 0 ? '相同。' : mixComparison.capacityDifference > 0 ? `多 ${mixComparison.capacityDifference} 条。` : `少 ${-mixComparison.capacityDifference} 条。`}</p>
+                <button type="button" className="pace-mix-apply" onClick={applyBatchShare} disabled={batchAppliedShare === batchShare}>{batchAppliedShare === batchShare ? '已用于上方排期 ✓' : '用批次占比更新上方排期 ↗'}</button>
+              </>
+            ) : <p className="pace-mix-empty">填写批次预计占比后，才会出现两种结构的容量对照；未知时请保持空白。</p>}
+            <small className="pace-mix-caveat">这不是正式批次的真实分布或交付承诺。两组都只估处理容量，不代表质检通过量。</small>
+          </>
+        ) : <p className="pace-mix-empty">先在上方<a href="#pace-import-title">导入已核对的试标耗时 CSV ↗</a>，这里才会保留试标占比。没有记录时，不生成虚构的批次对照。</p>}
+      </div>
     </section>
     </>
   );

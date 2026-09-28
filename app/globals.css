@@ -570,6 +570,35 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .pace-copy-fallback { width: 100%; min-height: 180px; margin-top: 18px; padding: 14px; resize: vertical; border: 1.5px solid var(--white); border-radius: 14px; outline: 0; background: var(--white); color: var(--ink); font: 500 11px/1.65 var(--mono); }
 .pace-copy-fallback:focus-visible { outline: 3px solid var(--coral); outline-offset: 3px; }
 .pace-disclaimer { display: block; margin-top: 22px; color: rgba(255,255,255,.65); font-size: 9px; line-height: 1.6; }
+.pace-mix { display: grid; grid-template-columns: minmax(0,.75fr) minmax(0,1.25fr); gap: clamp(28px,5vw,80px); align-items: start; margin-top: 76px; padding: clamp(26px,4vw,48px); border: 2px solid var(--ink); border-radius: 30px; background: var(--paper); }
+.pace-mix-intro > span { color: var(--blue); font-size: 10px; }
+.pace-mix h2 { max-width: 10em; margin: 17px 0 20px; font: 700 clamp(1.9rem,3vw,3rem)/1.32 var(--display); text-wrap: balance; }
+.pace-mix-intro p { max-width: 28em; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.pace-mix-body { min-width: 0; padding: clamp(20px,3vw,32px); border: 1.5px solid var(--ink); border-radius: 22px; background: var(--white); }
+.pace-mix-input-label { display: block; margin-bottom: 13px; font: 700 1.2rem/1.4 var(--display); }
+.pace-mix-input-label small { display: inline-block; margin-left: 9px; color: var(--blue); font: 700 10px var(--body); }
+.pace-mix-input-row { display: flex; align-items: center; gap: 18px; }
+.pace-mix-input-row .pace-input-wrap { width: 150px; flex: none; }
+.pace-mix-input-row > span { color: var(--muted); font-size: 11px; line-height: 1.6; }
+.pace-mix .pace-input-wrap input::placeholder { color: var(--muted); font-size: 1rem; font-weight: 500; }
+.pace-mix-ledger { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin-top: 24px; }
+.pace-mix-ledger > div { min-width: 0; padding: 19px; border: 1.5px solid var(--ink); border-radius: 16px; background: var(--sky); }
+.pace-mix-ledger > div:last-child { background: var(--mint); }
+.pace-mix-ledger span { display: block; font-size: 11px; font-weight: 700; }
+.pace-mix-ledger strong { display: block; margin-top: 15px; font: 760 clamp(1.8rem,3vw,2.8rem)/1 var(--display); }
+.pace-mix-ledger strong small { font: 600 10px var(--body); }
+.pace-mix-ledger p { margin: 13px 0 0; font-size: 11px; }
+.pace-mix-difference { margin: 18px 0 0; font-size: 12px; line-height: 1.7; font-weight: 700; }
+.pace-mix-apply { margin-top: 20px; padding: 13px 20px; border: 2px solid var(--ink); border-radius: 99px; background: var(--yellow); color: var(--ink); font: 750 11px var(--body); cursor: pointer; box-shadow: 3px 3px 0 var(--ink); }
+.pace-mix-apply:hover:not(:disabled) { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--ink); }
+.pace-mix-apply:focus-visible, .pace-mix-empty a:focus-visible { outline: 3px solid var(--coral); outline-offset: 4px; }
+.pace-mix-apply:disabled { opacity: .65; cursor: default; }
+.pace-mix-empty { margin: 0; padding: 24px; border: 1.5px dashed var(--blue); border-radius: 16px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+.pace-mix-empty a { color: var(--blue); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.pace-mix-warning { margin: 11px 0 0; color: #9d2f28; font-size: 11px; font-weight: 700; }
+.pace-mix-caveat { display: block; margin-top: 20px; color: var(--muted); font-size: 10px; line-height: 1.7; }
+@media (max-width: 900px) { .pace-mix { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .pace-mix { margin-top: 54px; padding: 24px; } .pace-mix-body { padding: 18px; } .pace-mix-input-row { align-items: flex-start; flex-direction: column; gap: 10px; } .pace-mix-ledger { grid-template-columns: 1fr; } }
 .pace-method { display: grid; grid-template-columns: .35fr 1fr .72fr; gap: 5vw; align-items: start; margin-top: 92px; padding-top: 34px; border-top: 2px solid var(--ink); }
 .pace-method > span { color: var(--blue); }
 .pace-method h2 { margin: 0 0 18px; font-family: var(--display); font-size: clamp(2.4rem,4vw,4rem); font-weight: 680; line-height: .95; }
