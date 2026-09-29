@@ -2,7 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import matter from 'gray-matter';
 
 const [
-  { stories, experiments, tools },
+  { stories, experiments, tools, toolCategories },
   { storyDetails },
   { experimentDetails },
   { libraryItems },
@@ -31,6 +31,7 @@ const noteSlugs = new Set(notes.map((note) => note.slug));
 const validNoteCategories = new Set(noteCategories.map((category) => category.id));
 const validEditorialStatuses = new Set(['draft', 'source-backed', 'published']);
 const validLibraryTypes = new Set(['VIDEO', 'ARTICLE', 'PDF', 'TOOL']);
+const validToolCategories = new Set(toolCategories);
 const promptsPageSource = readFileSync(new URL('../app/prompts/page.tsx', import.meta.url), 'utf8');
 
 function check(condition, message) {
@@ -86,6 +87,19 @@ function checkInternalHref(href, label) {
 
 check(stories.length === storyDetails.length, `故事归档 ${stories.length} 条，详情 ${storyDetails.length} 条`);
 check(experiments.length === experimentDetails.length, `实验归档 ${experiments.length} 条，详情 ${experimentDetails.length} 条`);
+checkUnique(tools, 'id', '工具 ID');
+checkUnique(tools, 'href', '工具路径');
+
+for (const tool of tools) {
+  check(Boolean(tool.title.trim() && tool.description.trim() && tool.label.trim()), `工具 ${tool.id} 缺少标题、说明或标签`);
+  check(validToolCategories.has(tool.category), `工具 ${tool.id} 使用未知分类：${tool.category}`);
+  check(tool.status === 'Ready', `工具 ${tool.id} 已进入工具目录，但状态不是 Ready：${tool.status}`);
+  check(/^\/tools\/[a-z0-9-]+\/$/.test(tool.href ?? ''), `工具 ${tool.id} 缺少有效的工具页路径：${tool.href ?? '未填写'}`);
+  if (tool.href) {
+    const pagePath = new URL(`../app${tool.href}page.tsx`, import.meta.url);
+    check(existsSync(pagePath), `工具 ${tool.id} 标为 Ready，但工具页不存在：${tool.href}`);
+  }
+}
 
 for (const [items, label] of [[stories, '故事'], [experiments, '实验']]) {
   checkUnique(items, 'slug', `${label} slug`);
@@ -176,6 +190,15 @@ for (const note of notes) {
 
   if (note.sourceUrl) {
     check(isSecureExternalUrl(note.sourceUrl), `笔记 ${note.slug} 的来源链接不是有效 HTTPS 地址：${note.sourceUrl}`);
+  }
+
+  if (note.editorialStatus === 'source-backed' && !note.sourceUrl) {
+    const hasInternalTextEvidence = note.connections.some((connection) =>
+      experiments.some((experiment) =>
+        experiment.evidenceKind === 'text-pilot' && connection.href === `/experiments/${experiment.slug}/`,
+      ),
+    );
+    check(hasInternalTextEvidence, `资料笔记 ${note.slug} 没有外部来源，也没有连接到已有原始文本样本的实验`);
   }
 
   if (note.editorialStatus === 'draft') {
@@ -293,4 +316,4 @@ if (failures.length > 0) {
   throw new Error(`内容一致性检查失败：\n${failures.map((failure) => `- ${failure}`).join('\n')}`);
 }
 
-console.log(`内容一致性检查通过：${stories.length} 个故事、${experiments.length} 个实验、${notes.length} 篇笔记、${libraryItems.length} 条收藏、${promptItems.length} 张 Prompt；编号、详情、状态、来源与内部链接一致。`);
+console.log(`内容一致性检查通过：${stories.length} 个故事、${experiments.length} 个实验、${tools.length} 个可用工具、${notes.length} 篇笔记、${libraryItems.length} 条收藏、${promptItems.length} 张 Prompt；编号、详情、状态、来源与内部链接一致。`);
