@@ -6,6 +6,7 @@ const [
   { storyDetails },
   { experimentDetails },
   { libraryItems },
+  { promptItems, promptFilters },
   { noteCategories },
   { getAllNotes },
 ] = await Promise.all([
@@ -13,6 +14,7 @@ const [
   import('../app/data/stories.ts'),
   import('../app/data/experiments.ts'),
   import('../app/data/library.ts'),
+  import('../app/data/prompts.ts'),
   import('../app/data/note-config.ts'),
   import('../lib/notes.ts'),
 ]);
@@ -230,8 +232,60 @@ check(libraryItems.filter((item) => item.sourceStatus === 'metadata-pending').le
 
 check(!promptsPageSource.includes('来自真实项目'), 'Prompt 页面不得把本站故事草案标成“来自真实项目”');
 
+checkUnique(promptItems, 'id', 'Prompt ID');
+for (const item of promptItems) {
+  const label = `Prompt ${item.id}`;
+  check(promptFilters.includes(item.category), `${label} 使用未知分类：${item.category}`);
+  check(Boolean(item.title.trim() && item.description.trim() && item.prompt.trim() && item.usageNote.trim()), `${label} 缺少标题、摘要、正文或使用提示`);
+  check(isValidDate(item.dateAdded), `${label} 的日期无效：${item.dateAdded}`);
+  check(item.demo === false, `${label} 仍被标记为演示数据`);
+  check(Boolean(item.editorial) !== Boolean(item.sourceAdapted), `${label} 必须明确区分编辑候选与来源改写`);
+
+  if (item.sourceAdapted) {
+    check(isSecureExternalUrl(item.sourceHref), `${label} 缺少有效的原作者 HTTPS 链接`);
+    check(/改写|非原文/.test(item.usageNote), `${label} 的使用提示没有说明改写边界`);
+    check(/原作者/.test(item.sourceLabel ?? ''), `${label} 的原文入口标签不明确`);
+  }
+
+  if (item.editorial) {
+    check(/^【状态】/.test(item.prompt), `${label} 正文开头缺少内容状态`);
+    check(/编辑候选.*待荆确认/.test(item.usageNote), `${label} 的使用提示缺少待确认状态`);
+    check(Boolean(item.relatedLinks?.length), `${label} 缺少方法或工具关联入口`);
+  }
+
+  const links = [
+    ...(item.sourceHref ? [{ href: item.sourceHref, label: item.sourceLabel ?? '' }] : []),
+    ...(item.relatedLinks ?? []),
+  ];
+  check(new Set(links.map((link) => link.href)).size === links.length, `${label} 存在重复关联入口`);
+  for (const relatedLink of item.relatedLinks ?? []) {
+    check(relatedLink.href.startsWith('/'), `${label} 的站内关联入口不是内部路径：${relatedLink.href}`);
+  }
+  for (const link of links) {
+    check(Boolean(link.label.trim()), `${label} 存在无标题的关联入口`);
+    check(link.href.startsWith('/') || isSecureExternalUrl(link.href), `${label} 的关联入口不是内部路径或 HTTPS 地址：${link.href}`);
+    checkInternalHref(link.href, `${label} 的关联入口“${link.label}”`);
+
+    if (link.href.startsWith('/tools/') && /打开|预检/.test(link.label)) {
+      const tool = tools.find((candidate) => candidate.href === link.href);
+      check(tool?.status === 'Ready', `${label} 将尚未可用的工具标为可打开：${link.href}`);
+    }
+
+    if (link.href.startsWith('/experiments/')) {
+      const experiment = experiments.find((candidate) => `/experiments/${candidate.slug}/` === link.href);
+      const statedNumber = link.label.match(/EXP\.(\d{3})/)?.[1];
+      const statedSamples = link.label.match(/\d+\s*\/\s*\d+/)?.[0].replaceAll(' ', '');
+      if (statedNumber) check(experiment?.number === statedNumber, `${label} 的实验编号与入口不一致：${link.label}`);
+      if (statedSamples) {
+        check(experiment?.status.replaceAll(' ', '').includes(statedSamples), `${label} 的实验样本数与入口不一致：${link.label}`);
+        check(experiment?.evidenceKind === 'text-pilot', `${label} 把非文本 Pilot 标为已有实验依据：${link.label}`);
+      }
+    }
+  }
+}
+
 if (failures.length > 0) {
   throw new Error(`内容一致性检查失败：\n${failures.map((failure) => `- ${failure}`).join('\n')}`);
 }
 
-console.log(`内容一致性检查通过：${stories.length} 个故事、${experiments.length} 个实验、${notes.length} 篇笔记、${libraryItems.length} 条收藏；编号、详情、状态、来源与内部链接一致。`);
+console.log(`内容一致性检查通过：${stories.length} 个故事、${experiments.length} 个实验、${notes.length} 篇笔记、${libraryItems.length} 条收藏、${promptItems.length} 张 Prompt；编号、详情、状态、来源与内部链接一致。`);
