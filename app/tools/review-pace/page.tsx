@@ -35,7 +35,7 @@ export default function ReviewPacePage() {
             <p>导入试标 CSV 后，可另填一个由人估计的正式批次高风险占比。下方对照只改变占比，保持其余排期条件一致；批次占比的来源与代表性仍需人工核对。需要时再明确将这个假设用于上方排期。</p>
             <p>试标数字从哪里来、怎样区分净工时与质量结果，可读 <Link href="/notes/trial-to-review-pace/">试标之后，排期怎么算？ ↗</Link>。</p>
             <p>需要先记下逐条耗时，可<Link href="/downloads/trial-review-time-log-v1.csv" download>下载空白 CSV 模板 ↓</Link>。模板不含项目数据；完成人工核对后，可在上方本地导入、预览汇总，再确认填入。不同批次或规则版本须分开汇总，原始记录不会上传。</p>
-            <p>风险怎样分层、随机抽检与定向复核为什么分账，可读 <Link href="/notes/dataset-release-gates/">数据交付四关与分流依据 ↗</Link>。</p>
+            <p>风险怎样分层、随机抽检与定向复核为什么分账，可读 <Link href="/notes/dataset-release-gates/">数据交付四关与分流依据 ↗</Link>。排期讨论完，还可到<Link href="/tools/dataset-release/">四关检查台留下交付前的人工核对记录 ↗</Link>；处理容量不等于通过验收。</p>
           </div>
           <div className="pace-method-note"><strong>编辑候选 · 待荆确认</strong><p>先试跑一小批，再用实际耗时修正比例、单条时间与返工缓冲。不要把八小时工作日当成八小时净评测时间，也不要把处理量写成验收通过量。</p></div>
         </section>

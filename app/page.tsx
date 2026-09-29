@@ -84,6 +84,14 @@ export default function Home() {
       <Reveal><section className="tools-preview section-shell">
         <div className="section-title-row compact"><div><p className="eyebrow mono">Little tools</p><h2>顺手做点<br />有用的小东西。</h2></div><p>不是产品中心，只是把重复的小麻烦做成按钮。</p></div>
         <div className="tool-grid">{recentTools.map((tool, index) => <ToolCard tool={tool} index={index} key={tool.id} />)}</div>
+        <nav className="home-work-route" id="home-work-route" aria-label="从试标到交付的工作路径">
+          <div className="home-work-route-intro"><span className="mono">一条工作路径 / EDITING DRAFT</span><p>先把试标口径说清，再谈容量与交付。方法内容为编辑候选，待荆确认。</p></div>
+          <ol>
+            <li><Link href="/notes/trial-to-review-pace/"><small>方法笔记</small><strong><span>先试标，</span><span>再谈排期。</span></strong><i>阅读 ↗</i></Link></li>
+            <li><Link href="/tools/review-pace/"><small>浏览器本地工具</small><strong><span>把耗时，</span><span>换成容量。</span></strong><i>打开 ↗</i></Link></li>
+            <li><Link href="/tools/dataset-release/"><small>人工交付自检</small><strong><span>交付前，</span><span>再过四关。</span></strong><i>核对 ↗</i></Link></li>
+          </ol>
+        </nav>
         <Link className="text-link tools-all" href="/tools/#work-scenes">按工作场景找工具 ↗</Link>
       </section></Reveal>
 

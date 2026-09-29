@@ -34,6 +34,23 @@ test('homepage tool entrance reaches the work-scene choices', () => {
   assert.match(toolsHtml, /<section\b[^>]*id="work-scenes"/, 'Work-scene target is missing');
 });
 
+test('homepage work route reaches trial method, local estimate and delivery gate without invented results', () => {
+  const home = anchors('index.html');
+  const note = anchors('notes/trial-to-review-pace/index.html');
+  const pace = anchors('tools/review-pace/index.html');
+  const html = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  for (const href of ['/notes/trial-to-review-pace/', '/tools/review-pace/', '/tools/dataset-release/']) {
+    assert.ok(home.includes(href), `Homepage work route missing ${href}`);
+  }
+  assert.ok(note.includes('/tools/review-pace/'));
+  assert.ok(pace.includes('/tools/dataset-release/'));
+  assert.match(html, /aria-label="从试标到交付的工作路径"/);
+  assert.match(html, /id="home-work-route"/);
+  assert.match(html, /方法内容为编辑候选，待荆确认/);
+  assert.match(html, /浏览器本地工具/);
+  assert.match(html, /人工交付自检/);
+});
+
 test('story cards preserve semantic titles, original status and detail links', () => {
   for (const file of ['index.html', 'stories/index.html']) {
     const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
