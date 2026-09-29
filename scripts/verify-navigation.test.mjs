@@ -368,6 +368,16 @@ test('Prompt category drawers lead to the matching focusable catalog section', (
   assert.equal(readUrlFilter('?category=UNKNOWN', 'category', promptFilters), '全部');
 });
 
+test('Prompt card deep links keep the heading focused without displacing the target card', () => {
+  const component = readFileSync(join(process.cwd(), 'app', 'components', 'prompt-browser.tsx'), 'utf8');
+  const css = readFileSync(join(process.cwd(), 'app', 'globals.css'), 'utf8');
+  assert.match(component, /heading\.focus\(\{\s*preventScroll:\s*true\s*\}\)/);
+  assert.match(component, /scrollIntoView\(\{\s*block:\s*'start',\s*behavior:\s*'instant'\s*\}\)/);
+  assert.match(component, /requestAnimationFrame\(focusPrompt\)/, 'History restoration needs to finish before card focus is applied');
+  assert.match(component, /if \(leavingCard\) document\.getElementById\('prompt-collection'\)\?\.scrollIntoView/, 'Changing category from an exact card must return to the filter controls');
+  assert.match(css, /html:has\(\.prompt-collection\)\s*\{\s*scroll-behavior:\s*auto\s*;/, 'Native smooth scrolling must not race with category hydration on a card hash');
+});
+
 test('source-inspired Prompt cards are short original task cards with visible attribution and honest copy', () => {
   const adapted = promptItems.filter((item) => item.sourceAdapted);
   assert.equal(adapted.length, 12, 'The source-inspired set should contain exactly twelve cards');

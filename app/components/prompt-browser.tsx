@@ -17,10 +17,12 @@ function readCategory() {
 
 function selectCategory(category: string) {
   const url = writeUrlFilter(window.location.href, 'category', category);
-  if (url.hash.startsWith('#prompt-') && url.hash !== '#prompt-collection') url.hash = '#prompt-collection';
+  const leavingCard = url.hash.startsWith('#prompt-') && url.hash !== '#prompt-collection';
+  if (leavingCard) url.hash = '#prompt-collection';
   if (url.href === window.location.href) return;
   window.history.pushState(null, '', url);
   window.dispatchEvent(new PopStateEvent('popstate'));
+  if (leavingCard) document.getElementById('prompt-collection')?.scrollIntoView({ block: 'start', behavior: 'instant' });
 }
 
 function PromptCard({ item, index }: { item: PromptItem; index: number }) {
@@ -86,6 +88,7 @@ export function PromptBrowser({ items, showToolbar = true }: { items: PromptItem
 
   useEffect(() => {
     if (!showToolbar) return;
+    let focusFrame = 0;
 
     const focusPrompt = () => {
       if (!pendingPromptFocus.current || active !== readCategory()) return;
@@ -95,20 +98,25 @@ export function PromptBrowser({ items, showToolbar = true }: { items: PromptItem
       if (!item || (active !== '全部' && item.category !== active)) return;
       const heading = document.getElementById(`prompt-title-${item.id}`);
       if (heading) {
-        heading.focus();
+        heading.focus({ preventScroll: true });
+        document.getElementById(`prompt-${item.id}`)?.scrollIntoView({ block: 'start', behavior: 'instant' });
         pendingPromptFocus.current = false;
       }
     };
 
     const onLocationChange = () => {
       pendingPromptFocus.current = true;
-      focusPrompt();
+      window.cancelAnimationFrame(focusFrame);
+      focusFrame = window.requestAnimationFrame(() => {
+        focusFrame = window.requestAnimationFrame(focusPrompt);
+      });
     };
 
-    focusPrompt();
+    onLocationChange();
     window.addEventListener('hashchange', onLocationChange);
     window.addEventListener('popstate', onLocationChange);
     return () => {
+      window.cancelAnimationFrame(focusFrame);
       window.removeEventListener('hashchange', onLocationChange);
       window.removeEventListener('popstate', onLocationChange);
     };
