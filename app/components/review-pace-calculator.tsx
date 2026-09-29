@@ -75,6 +75,7 @@ export function ReviewPaceCalculator() {
   const [formRevision, setFormRevision] = useState(0);
   const [source, setSource] = useState<'example' | 'import' | null>(null);
   const [pendingImport, setPendingImport] = useState<TrialTimeSummary | null>(null);
+  const [appliedTimingReview, setAppliedTimingReview] = useState<TrialTimeSummary['timingReview'] | null>(null);
   const [importError, setImportError] = useState('');
   const [importing, setImporting] = useState(false);
   const [trialReference, setTrialReference] = useState<{ count: number; highRiskShare: number } | null>(null);
@@ -87,7 +88,14 @@ export function ReviewPaceCalculator() {
   const targetResult = targetItems === null ? null : calculateReviewPaceTarget(inputs, result, targetItems);
   const sourceLine = source === 'example' ? '虚构演练参数起步 · 可经过手动修改 · 非真实试标记录\n'
     : source === 'import' ? `本地 CSV 汇总参数起步 · 可经过手动修改 · 仅核对耗时，未验证质量或批次代表性${batchAppliedShare !== null ? '；正式批次占比为手工输入的待核对假设' : ''}\n` : '';
-  const summary = sourceLine + formatReviewPaceSummary(inputs, result, targetResult ?? undefined);
+  const timingReviewLine = source === 'import' && appliedTimingReview
+    ? appliedTimingReview.eligible
+      ? appliedTimingReview.flaggedLines.length > 0
+        ? `导入时有 ${appliedTimingReview.flaggedLines.length} 条极端耗时待复核（CSV 第 ${appliedTimingReview.flaggedLines.slice(0, 6).join('、')} 行${appliedTimingReview.flaggedLines.length > 6 ? '等' : ''}）；估算未自动剔除\n`
+        : '导入时启发式复查线未命中；不代表异常已排除\n'
+      : '导入时两类样本不足各 5 条，未运行同组极端耗时提示\n'
+    : '';
+  const summary = sourceLine + timingReviewLine + formatReviewPaceSummary(inputs, result, targetResult ?? undefined);
   const targetDraftNumber = Number(targetDraft);
   const targetDraftInvalid = targetDraft !== '' && (!Number.isSafeInteger(targetDraftNumber) || targetDraftNumber < 1 || targetDraftNumber > 1000000);
   const batchShare = batchShareDraft.trim() === '' ? null : Number(batchShareDraft);
@@ -118,6 +126,7 @@ export function ReviewPaceCalculator() {
     setTargetDraft('800');
     setCopyState('idle');
     setSource('example');
+    setAppliedTimingReview(null);
     setTrialReference(null);
     setBatchShareDraft('');
     setBatchAppliedShare(null);
@@ -149,6 +158,7 @@ export function ReviewPaceCalculator() {
     setRegularMinutes(pendingImport.regularMinutes);
     setHighRiskMinutes(pendingImport.highRiskMinutes);
     setHighRiskShare(pendingImport.highRiskShare);
+    setAppliedTimingReview(pendingImport.timingReview);
     setTrialReference({ count: pendingImport.total, highRiskShare: pendingImport.highRiskShare });
     setBatchShareDraft('');
     setBatchAppliedShare(null);
@@ -186,7 +196,7 @@ export function ReviewPaceCalculator() {
       <div className="pace-import-intro">
         <span className="mono">LOCAL CSV / 本地汇总</span>
         <h2 id="pace-import-title">把试标耗时，<br />带进排期。</h2>
-        <p>选择按模板填写的 CSV，先看两类样本的数量、占比和平均分钟数，再决定是否填入。仅在当前浏览器汇总；不上传、不保存原始行。</p>
+        <p>选择按模板填写的 CSV，先预览两类样本的数量、占比与平均耗时，再决定是否填入。仅在当前浏览器汇总，不上传、不保存原始行；极端耗时只提示复查。</p>
         <Link href="/downloads/trial-review-time-log-v1.csv" download>下载空白模板 ↓</Link>
       </div>
       <div className="pace-import-action">
@@ -208,8 +218,15 @@ export function ReviewPaceCalculator() {
           <div className="pace-import-preview" aria-live="polite">
             <strong>预览 · {pendingImport.total} 条已核对耗时记录</strong>
             <p>常规 {pendingImport.regularCount} 条，平均 {pendingImport.regularMinutes} 分钟；高风险 {pendingImport.highRiskCount} 条，平均 {pendingImport.highRiskMinutes} 分钟，占 {pendingImport.highRiskShare}%。均值四舍五入至一位小数。</p>
+            {pendingImport.timingReview.eligible ? pendingImport.timingReview.flaggedLines.length > 0 ? (
+              <div className="pace-import-review">
+                <strong>有 {pendingImport.timingReview.flaggedLines.length} 条耗时值得回看</strong>
+                <p>CSV 第 {pendingImport.timingReview.flaggedLines.slice(0, 6).join('、')} 行{pendingImport.timingReview.flaggedLines.length > 6 ? '等' : ''}。计划内单条耗时超过同组中位数 3 倍且超过 30 分钟；均值仍包含这些记录。</p>
+              </div>
+            ) : <small>按启发式复查线未命中极端耗时；这不代表所有记录都已排除异常。</small>
+              : <small>两类样本各至少 5 条后才启用同组极端耗时提示；当前请逐条人工核对。</small>}
             <button type="button" onClick={applyImport}>确认填入这 3 项 ↗</button>
-            <small>CSV 中的批次与规则版本一致，但未核实填写内容。仅替换两类耗时与占比；人数、工时、目标和返工缓冲保持原值。</small>
+            <small>批次与规则版本一致，但未核实填写内容。仅替换两类耗时与占比；不上传、不保存原始行，人数、工时、目标和返工缓冲保持原值。</small>
           </div>
         ) : <p className="pace-import-help">需同一批次、同一规则版本、两类样本都有记录，且每行标记 <code>reviewed</code>。混合版本会被拒绝；样本是否代表正式批次仍需人工判断。</p>}
       </div>
@@ -270,6 +287,7 @@ export function ReviewPaceCalculator() {
       <aside className="pace-result-card" aria-live="polite">
         <div className="pace-result-topline mono"><span>02 / 计算结果</span><span>Live estimate</span></div>
         {source && <p className="pace-example-origin">{source === 'example' ? '虚构演练参数起步 · 可经过手动修改' : batchAppliedShare !== null ? '本地 CSV 耗时起步 · 批次占比为人工假设；质量及代表性未验证' : '本地 CSV 汇总起步 · 可经过手动修改；质量及代表性未验证'}</p>}
+        {source === 'import' && appliedTimingReview && (appliedTimingReview.flaggedLines.length > 0 || !appliedTimingReview.eligible) && <p className="pace-result-review">{appliedTimingReview.eligible ? `导入时有 ${appliedTimingReview.flaggedLines.length} 条极端耗时待复核；估算仍包含这些记录。` : '导入时样本量不足，未运行同组极端耗时提示。'}</p>}
         <div className={`pace-big-number${result.daily >= 1000 ? ' is-compact' : ''}`}>
           <strong id="pace-title">{result.daily}</strong>
           <span>条 / 天</span>

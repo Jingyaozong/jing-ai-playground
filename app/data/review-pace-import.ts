@@ -11,10 +11,21 @@ export type TrialTimeSummary = {
   regularMinutes: number;
   highRiskMinutes: number;
   highRiskShare: number;
+  timingReview: {
+    eligible: boolean;
+    flaggedLines: number[];
+  };
 };
 
 const maxRows = 500;
 const maxCharacters = 1_000_000;
+const minimumGroupSizeForTimingReview = 5;
+
+function median(values: number[]): number {
+  const sorted = [...values].sort((left, right) => left - right);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
+}
 
 function parseRows(input: string): string[][] {
   if (input.length > maxCharacters) throw new Error('文件过大；最多读取约 1 MB 的 CSV。');
@@ -82,6 +93,8 @@ export function summarizeTrialTimeLog(input: string): TrialTimeSummary {
   let highRiskCount = 0;
   let regularTotal = 0;
   let highRiskTotal = 0;
+  const regularTimes: Array<{ line: number; minutes: number }> = [];
+  const highRiskTimes: Array<{ line: number; minutes: number }> = [];
 
   for (let index = 1; index < rows.length; index += 1) {
     const line = index + 1;
@@ -104,12 +117,19 @@ export function summarizeTrialTimeLog(input: string): TrialTimeSummary {
     const minutes = requiredMinutes(row[5], line, 'work_minutes', false)
       + requiredMinutes(row[6], line, 'planned_review_minutes', true);
     if (minutes > 480) throw new Error(`第 ${line} 行计划内处理与复核合计超过 480 分钟，请先核对异常值。`);
-    if (tier === 'regular') { regularCount += 1; regularTotal += minutes; }
-    else { highRiskCount += 1; highRiskTotal += minutes; }
+    if (tier === 'regular') { regularCount += 1; regularTotal += minutes; regularTimes.push({ line, minutes }); }
+    else { highRiskCount += 1; highRiskTotal += minutes; highRiskTimes.push({ line, minutes }); }
   }
   if (!regularCount || !highRiskCount) throw new Error('需要同时有常规和高风险记录，才能填入两类平均耗时；另一类请先手动估算。');
   const total = regularCount + highRiskCount;
   const oneDecimal = (value: number) => Math.round(value * 10) / 10;
+  const timingReviewEligible = regularCount >= minimumGroupSizeForTimingReview && highRiskCount >= minimumGroupSizeForTimingReview;
+  const flaggedLines = timingReviewEligible
+    ? [regularTimes, highRiskTimes].flatMap((group) => {
+      const groupMedian = median(group.map((sample) => sample.minutes));
+      return group.filter((sample) => sample.minutes > 30 && sample.minutes > groupMedian * 3).map((sample) => sample.line);
+    }).sort((left, right) => left - right)
+    : [];
   return {
     total,
     regularCount,
@@ -117,5 +137,6 @@ export function summarizeTrialTimeLog(input: string): TrialTimeSummary {
     regularMinutes: oneDecimal(regularTotal / regularCount),
     highRiskMinutes: oneDecimal(highRiskTotal / highRiskCount),
     highRiskShare: oneDecimal(highRiskCount / total * 100),
+    timingReview: { eligible: timingReviewEligible, flaggedLines },
   };
 }

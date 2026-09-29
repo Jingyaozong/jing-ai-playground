@@ -639,10 +639,18 @@ test('local timing import summarizes reviewed rows without counting extra rework
   assert.deepEqual(summarizeTrialTimeLog(`\uFEFF${csv}`), {
     total: 3, regularCount: 2, highRiskCount: 1,
     regularMinutes: 7, highRiskMinutes: 18, highRiskShare: 33.3,
+    timingReview: { eligible: false, flaggedLines: [] },
   });
   const twoHundred = [trialTimeLogHeaders.join(','),
     ...Array.from({ length: 200 }, (_, index) => makeRow(String(index), index < 160 ? 'regular' : 'high-risk', index < 160 ? '6' : '18', '0'))].join('\n');
   assert.equal(summarizeTrialTimeLog(twoHundred).highRiskShare, 20);
+  assert.deepEqual(summarizeTrialTimeLog(twoHundred).timingReview, { eligible: true, flaggedLines: [] });
+  const extreme = [trialTimeLogHeaders.join(','),
+    ...Array.from({ length: 5 }, (_, index) => makeRow(`r${index}`, 'regular', '6', index === 4 ? '84' : '0')),
+    ...Array.from({ length: 5 }, (_, index) => makeRow(`h${index}`, 'high-risk', '18', '0'))].join('\n');
+  const extremeSummary = summarizeTrialTimeLog(extreme);
+  assert.deepEqual(extremeSummary.timingReview, { eligible: true, flaggedLines: [6] });
+  assert.equal(extremeSummary.regularMinutes, 22.8, 'Flagged time must remain in the mean');
   assert.throws(() => summarizeTrialTimeLog(trialTimeLogHeaders.join(',')), /尚无记录/);
   assert.throws(() => summarizeTrialTimeLog(csv.replace('a,batch-1', 'b,batch-1')), /重复/);
   assert.throws(() => summarizeTrialTimeLog(csv.replace('reviewed', 'pending')), /reviewed/);
