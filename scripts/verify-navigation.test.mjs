@@ -652,6 +652,11 @@ test('local timing import summarizes reviewed rows without counting extra rework
   assert.throws(() => summarizeTrialTimeLog([trialTimeLogHeaders.join(','), makeRow('a', 'regular', '5', '0')].join('\n')), /同时有常规和高风险/);
   assert.throws(() => summarizeTrialTimeLog(csv.replace('5,0,7', '0.1,0,7')), /work_minutes/);
   assert.throws(() => summarizeTrialTimeLog(csv.replace('5,0,7', '0x10,0,7')), /work_minutes/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('a,batch-1,v1', 'a,,v1')), /第 2 行 batch_id 为空/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('a,batch-1,v1', 'a,batch-1,')), /第 2 行 rule_version 为空/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('b,batch-1,v1', 'b,batch-2,v1')), /第 3 行 batch_id 与前面记录不同/);
+  assert.throws(() => summarizeTrialTimeLog(csv.replace('b,batch-1,v1', 'b,batch-1,v2')), /第 3 行 rule_version 与前面记录不同/);
+  assert.equal(summarizeTrialTimeLog(csv.replace('b,batch-1,v1', 'b, batch-1 , v1 ')).total, 3);
   const tooMany = [trialTimeLogHeaders.join(','),
     ...Array.from({ length: 501 }, (_, index) => makeRow(String(index), index % 2 ? 'regular' : 'high-risk', '5', '0'))].join('\n');
   assert.throws(() => summarizeTrialTimeLog(tooMany), /最多读取 500/);
@@ -659,6 +664,7 @@ test('local timing import summarizes reviewed rows without counting extra rework
   assert.match(page, /把试标耗时/);
   assert.match(page, /选择 CSV 文件/);
   assert.match(page, /不上传、不保存原始行/);
+  assert.match(page, /不同批次或规则版本须分开汇总/);
 });
 
 test('review pace mix comparison changes only the risk share and keeps target evidence separate', () => {

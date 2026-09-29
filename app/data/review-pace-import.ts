@@ -76,6 +76,8 @@ export function summarizeTrialTimeLog(input: string): TrialTimeSummary {
   if (rows.length === 1) throw new Error('模板尚无记录；请填入已核对的逐条耗时后再导入。');
 
   const ids = new Set<string>();
+  let batchId: string | null = null;
+  let ruleVersion: string | null = null;
   let regularCount = 0;
   let highRiskCount = 0;
   let regularTotal = 0;
@@ -88,6 +90,14 @@ export function summarizeTrialTimeLog(input: string): TrialTimeSummary {
     const id = row[0].trim();
     if (!id || ids.has(id)) throw new Error(`第 ${line} 行 sample_id 为空或重复。`);
     ids.add(id);
+    const currentBatchId = row[1].trim();
+    const currentRuleVersion = row[2].trim();
+    if (!currentBatchId) throw new Error(`第 ${line} 行 batch_id 为空；请先确认记录所属批次。`);
+    if (!currentRuleVersion) throw new Error(`第 ${line} 行 rule_version 为空；请先确认使用的规则版本。`);
+    if (batchId !== null && currentBatchId !== batchId) throw new Error(`第 ${line} 行 batch_id 与前面记录不同；请按批次分别汇总。`);
+    if (ruleVersion !== null && currentRuleVersion !== ruleVersion) throw new Error(`第 ${line} 行 rule_version 与前面记录不同；请按规则版本分别汇总。`);
+    batchId = currentBatchId;
+    ruleVersion = currentRuleVersion;
     const tier = row[3].trim();
     if (tier !== 'regular' && tier !== 'high-risk') throw new Error(`第 ${line} 行 risk_tier 只能填 regular 或 high-risk。`);
     if (row[11].trim() !== 'reviewed') throw new Error(`第 ${line} 行尚未标记 reviewed；请先人工核对耗时记录。`);

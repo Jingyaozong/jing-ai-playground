@@ -209,9 +209,9 @@ export function ReviewPaceCalculator() {
             <strong>预览 · {pendingImport.total} 条已核对耗时记录</strong>
             <p>常规 {pendingImport.regularCount} 条，平均 {pendingImport.regularMinutes} 分钟；高风险 {pendingImport.highRiskCount} 条，平均 {pendingImport.highRiskMinutes} 分钟，占 {pendingImport.highRiskShare}%。均值四舍五入至一位小数。</p>
             <button type="button" onClick={applyImport}>确认填入这 3 项 ↗</button>
-            <small>仅替换常规耗时、高风险耗时与占比。人数、工作日、净工时、目标及额外返工缓冲保持原值。</small>
+            <small>CSV 中的批次与规则版本一致，但未核实填写内容。仅替换两类耗时与占比；人数、工时、目标和返工缓冲保持原值。</small>
           </div>
-        ) : <p className="pace-import-help">需同时有两类记录，且每行标记 <code>reviewed</code>；空白分钟数不会被当作零。样本是否代表正式批次仍需人工判断。</p>}
+        ) : <p className="pace-import-help">需同一批次、同一规则版本、两类样本都有记录，且每行标记 <code>reviewed</code>。混合版本会被拒绝；样本是否代表正式批次仍需人工判断。</p>}
       </div>
     </section>
     <section className="pace-workbench" aria-label="评测排期计算器">
