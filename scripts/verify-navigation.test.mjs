@@ -356,6 +356,8 @@ test('Prompt category drawers lead to the matching focusable catalog section', (
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   assert.match(html, /<section\b[^>]*id="prompt-collection"/, 'Prompt catalog target is missing');
   assert.match(html, /<h2\b[^>]*id="prompt-collection-title"[^>]*tabindex="-1"/, 'Prompt catalog heading must accept keyboard focus');
+  const css = readFileSync(join(process.cwd(), 'app', 'globals.css'), 'utf8');
+  assert.match(css, /\.prompt-collection\s*\{\s*scroll-margin-top:\s*0\s*;/, 'Prompt catalog already has section padding; extra anchor offset pushes its filters below the mobile fold');
   for (const category of promptFilters.filter((filter) => filter !== '全部')) {
     assert.ok(promptItems.some((item) => item.category === category), `Empty Prompt category: ${category}`);
     assert.ok(links.some((url) => url.pathname === '/prompts/all/' && url.searchParams.get('category') === category && url.hash === '#prompt-collection'), `Missing category entrance: ${category}`);
