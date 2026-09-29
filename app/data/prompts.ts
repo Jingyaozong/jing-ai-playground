@@ -24,6 +24,12 @@ export const promptSource = {
   title: '都 Agent 时代了，我还是想分享给你这 12 个我最常用的 Prompt',
   author: '数字生命卡兹克',
   url: 'https://mp.weixin.qq.com/s/NAdhdFrUq9-BKelqzqpwBQ',
+  cardLinkLabel: '阅读原文合集 ↗',
+  topicTitles: [
+    '苏格拉底式提问', '双层解释法', '反向拆解', '横纵分析法', '事实核查',
+    '专家会诊', '第一性原理', '跨领域借解', '双向钢人论证', '用最小实验替代空想',
+    '挖掘隐藏天赋', '人生设计术',
+  ],
   note: '前 12 个主题受这篇公开文章启发；本站现提供独立编写的简短任务卡，不展示原文 Prompt 全文，也不代表原作者认可这些改写。想使用作者版本，请直接阅读原文。后 10 条 AI 制作内容是本站编辑候选，待荆确认。',
 };
 
@@ -46,7 +52,7 @@ export const promptItems: PromptItem[] = [
     tags: ['提问', '苏格拉底', '需求澄清'],
     model: '通用对话模型',
     usageNote: '适合问题还模糊的时候。先填一个真实情境，逐轮补信息；这张短卡是本站改写，不是原作者的完整版本。',
-    dateAdded: '2026-08-24', featured: true, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: true, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'two-layer-explanation',
@@ -64,7 +70,7 @@ export const promptItems: PromptItem[] = [
     tags: ['学习', '概念解释', '费曼学习'],
     model: '通用对话模型',
     usageNote: '先建立直觉，再用迁移题检查理解。比喻不是机制本身；这张短卡为本站改写。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'reverse-engineering',
@@ -82,7 +88,7 @@ export const promptItems: PromptItem[] = [
     tags: ['案例拆解', '模仿学习', '方法迁移'],
     model: '支持附件或网页的模型',
     usageNote: '需要成品材料；没有附件时先补材料。只迁移能解释用途的选择，不复制视觉表面。本站改写短版。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'horizontal-vertical-research',
@@ -100,7 +106,7 @@ export const promptItems: PromptItem[] = [
     tags: ['深度研究', '竞品分析', '时间线'],
     model: '支持联网与深度研究的模型',
     usageNote: '这是研究入口，不是自动生成的深度报告；需要实时来源和截止日期。本站改写短版。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'fact-checking',
@@ -118,7 +124,7 @@ export const promptItems: PromptItem[] = [
     tags: ['事实核查', '证据', '推理'],
     model: '支持联网搜索的模型',
     usageNote: '逐条核对原始来源与日期，引用须能支持对应断言。没有检索能力时只产出核查清单。本站改写短版。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'expert-panel',
@@ -136,7 +142,7 @@ export const promptItems: PromptItem[] = [
     tags: ['专家视角', '方案评审', '分歧'],
     model: '通用推理模型',
     usageNote: '分析视角不等于真实专家意见，重要决定仍需适当专业核对。本站改写短版。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'first-principles',
@@ -154,7 +160,7 @@ export const promptItems: PromptItem[] = [
     tags: ['第一性原理', '系统重构', '基本假设'],
     model: '通用推理模型',
     usageNote: '适合反复修补仍不奏效的方案。先验明“不能改变”的部分到底是不是硬约束。本站改写短版。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'cross-domain-analogy',
@@ -172,7 +178,7 @@ export const promptItems: PromptItem[] = [
     tags: ['跨领域', '类比', '机制迁移'],
     model: '支持联网研究的模型',
     usageNote: '先核对约束与反馈结构是否相似，再尝试移植机制。案例未经核实就只当假设。本站改写短版。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'two-way-steelmanning',
@@ -190,7 +196,7 @@ export const promptItems: PromptItem[] = [
     tags: ['决策', '钢人论证', '关键变量'],
     model: '通用推理模型',
     usageNote: '先比较路线成立的条件，再问一个可能改变选择的问题。本站改写短版。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'minimum-experiment',
@@ -208,7 +214,7 @@ export const promptItems: PromptItem[] = [
     tags: ['最小实验', '行动', '验证假设'],
     model: '通用推理模型',
     usageNote: '优先选择可撤回的试验，先记录基线，再看结果是否真的改变判断。本站改写短版。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'hidden-talent',
@@ -224,7 +230,7 @@ export const promptItems: PromptItem[] = [
     tags: ['天赋', '生涯探索', '能量审计'],
     model: '支持长对话的模型',
     usageNote: '本站改写短版。只把经历当作线索，不把模型推断当成天赋或职业诊断。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'life-design',
@@ -240,7 +246,7 @@ export const promptItems: PromptItem[] = [
     tags: ['人生设计', '生活原型', '原型行动'],
     model: '支持长对话的模型',
     usageNote: '本站改写短版。把三个方向当作试验方案，不把未来写成已经确定的结论。',
-    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: '阅读原作者版本 ↗',
+    dateAdded: '2026-08-24', featured: false, demo: false, sourceAdapted: true, sourceHref: promptSource.url, sourceLabel: promptSource.cardLinkLabel,
   },
   {
     id: 'video-character-anchor-brief',

@@ -22,7 +22,7 @@ export default function AllPromptsPage() {
       </section>
       <section className="prompt-collection section-shell" id="prompt-collection">
         <ArchiveFilterHashFocus hash="#prompt-collection" headingId="prompt-collection-title" />
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Find a starting point / 按场景找</p><h2 id="prompt-collection-title" tabIndex={-1}>按需要找，<br />不用逐张翻。</h2></div><p>分类和搜索可以一起使用。首批 12 条是本站改写短版，可从卡片直达原作者版本；AI 制作模板另标编辑状态。</p></div>
+        <div className="section-title-row compact"><div><p className="eyebrow mono">Find a starting point / 按场景找</p><h2 id="prompt-collection-title" tabIndex={-1}>按需要找，<br />不用逐张翻。</h2></div><p>分类和搜索可以一起使用。首批 12 条是本站改写短版，卡片链接通往原作者的整篇合集；AI 制作模板另标编辑状态。</p></div>
         <PromptBrowser items={promptItems} />
       </section>
       <SiteFooter />

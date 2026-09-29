@@ -6,7 +6,7 @@ const [
   { storyDetails },
   { experimentDetails },
   { libraryItems },
-  { promptItems, promptFilters },
+  { promptItems, promptFilters, promptSource },
   { noteCategories },
   { getAllNotes },
 ] = await Promise.all([
@@ -233,6 +233,10 @@ check(libraryItems.filter((item) => item.sourceStatus === 'metadata-pending').le
 check(!promptsPageSource.includes('来自真实项目'), 'Prompt 页面不得把本站故事草案标成“来自真实项目”');
 
 checkUnique(promptItems, 'id', 'Prompt ID');
+check(
+  JSON.stringify(promptItems.filter((item) => item.sourceAdapted).map((item) => item.title)) === JSON.stringify(promptSource.topicTitles),
+  '公众号来源主题与前 12 张改写卡的标题或顺序不一致',
+);
 for (const item of promptItems) {
   const label = `Prompt ${item.id}`;
   check(promptFilters.includes(item.category), `${label} 使用未知分类：${item.category}`);
@@ -243,8 +247,9 @@ for (const item of promptItems) {
 
   if (item.sourceAdapted) {
     check(isSecureExternalUrl(item.sourceHref), `${label} 缺少有效的原作者 HTTPS 链接`);
+    check(item.sourceHref === promptSource.url, `${label} 的公众号原文链接与来源登记不一致`);
     check(/改写|非原文/.test(item.usageNote), `${label} 的使用提示没有说明改写边界`);
-    check(/原作者/.test(item.sourceLabel ?? ''), `${label} 的原文入口标签不明确`);
+    check(item.sourceLabel === promptSource.cardLinkLabel, `${label} 的入口没有标明指向原文合集`);
   }
 
   if (item.editorial) {
