@@ -51,6 +51,16 @@ test('homepage work route reaches trial method, local estimate and delivery gate
   assert.match(html, /人工交付自检/);
 });
 
+test('scroll reveal leaves content visible without browser animation support', () => {
+  const css = readFileSync(join(process.cwd(), 'app', 'globals.css'), 'utf8');
+  const component = readFileSync(join(process.cwd(), 'app', 'components', 'reveal.tsx'), 'utf8');
+  assert.match(css, /\.reveal\s*\{[^}]*transition:/);
+  assert.doesNotMatch(css, /\.reveal\s*\{[^}]*opacity:\s*0/);
+  assert.match(css, /\.reveal\.reveal-armed\s*\{\s*opacity:\s*0/);
+  assert.match(component, /typeof IntersectionObserver === 'undefined'/);
+  assert.match(component, /classList\.add\('reveal-armed'\)/);
+});
+
 test('story cards preserve semantic titles, original status and detail links', () => {
   for (const file of ['index.html', 'stories/index.html']) {
     const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');

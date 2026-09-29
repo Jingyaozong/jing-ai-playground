@@ -8,12 +8,14 @@ export function Reveal({ children, className = '' }: { children: React.ReactNode
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
+    if (typeof IntersectionObserver === 'undefined' || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
+    node.classList.add('reveal-armed');
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         node.classList.add('is-visible');
         observer.disconnect();
       }
-    }, { threshold: 0.12 });
+    }, { threshold: 0 });
     observer.observe(node);
     return () => observer.disconnect();
   }, []);

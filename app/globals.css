@@ -109,8 +109,10 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .mono { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
 .section-shell, .archive-shell, .site-footer, .page-intro, .dark-inner { width: min(100% - 56px, 1420px); margin-inline: auto; }
 .section-shell, .dark-inner { padding-block: 120px; }
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1); }
-.reveal.is-visible { opacity: 1; transform: none; }
+/* Keep server-rendered sections visible until supported browsers arm the entrance effect. */
+.reveal { transition: opacity .65s ease, transform .65s cubic-bezier(.22,1,.36,1); }
+.reveal.reveal-armed { opacity: 0; transform: translateY(28px); }
+.reveal.reveal-armed.is-visible { opacity: 1; transform: none; }
 
 /* Navigation */
 .site-header-shell { position: sticky; z-index: 100; top: 0; width: 100%; border-bottom: 1px solid rgba(191,199,210,.88); background: rgba(255,253,247,.94); box-shadow: 0 8px 24px rgba(22,36,58,.055); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
@@ -2277,6 +2279,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .reveal.reveal-armed { opacity: 1; transform: none; }
   *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
