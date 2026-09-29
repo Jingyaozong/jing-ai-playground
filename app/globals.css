@@ -395,7 +395,7 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .tool-card > p:last-of-type { color: var(--muted); font-size: 13px; line-height: 1.7; }
 .tool-action { position: absolute; left: 25px; bottom: 23px; }
 .tools-all { margin-top: 28px; }
-.home-work-route { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,2.2fr); gap: clamp(28px,4vw,62px); align-items: start; margin-top: 70px; padding: 30px 0 34px; border-block: 2px solid var(--ink); }
+.home-work-route { display: grid; grid-template-columns: minmax(0,.8fr) minmax(0,2.2fr); gap: clamp(28px,4vw,62px); align-items: start; margin-top: 70px; padding: 30px 0 34px; border-block: 2px solid var(--ink); scroll-margin-top: 112px; }
 .home-work-route-intro span { color: var(--blue); font-size: 10px; }
 .home-work-route-intro p { max-width: 24em; margin: 12px 0 0; color: var(--muted); font-size: 12px; line-height: 1.8; }
 .home-work-route ol { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; margin: 0; padding: 0; list-style: none; }
