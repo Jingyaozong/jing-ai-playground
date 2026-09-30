@@ -11,7 +11,7 @@ export type LibraryItem = {
   whyISavedIt: string;
   jingTake: string;
   takeStatus: 'confirmed' | 'draft';
-  sourceStatus?: 'metadata-pending';
+  sourceStatus?: 'content-pending';
   tags: string[];
   dateAdded: string;
   featured: boolean;
@@ -120,7 +120,7 @@ export const libraryItems: LibraryItem[] = [
     takeStatus: 'draft',
     tags: ['PROMPT', 'CHATGPT', 'FOUNDATIONS'],
     dateAdded: '2026-08-25', featured: false, jingPick: false, visual: 'article-yellow',
-    url: 'https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices', demo: false,
+    url: 'https://help.openai.com/en/articles/10032626-prompt-engineering-best-practices-for-chatgpt', demo: false,
   },
   {
     id: 'anthropic-prompt-engineering-overview',
@@ -166,31 +166,31 @@ export const libraryItems: LibraryItem[] = [
   },
   {
     id: 'adobe-structuring-video-prompts',
-    title: '视频 Prompt 教程（待核对）',
+    title: 'Adobe Firefly 视频 Prompt 结构教程',
     type: 'VIDEO',
-    source: 'YouTube',
+    source: 'YouTube · Adobe',
     topic: 'Prompt',
-    description: '指向 YouTube 视频的候选链接；本次未能读取标题、发布者和内容，暂不概述具体教学步骤。',
-    whyISavedIt: '待核对视频标题、发布者和内容后，再判断它是否适合作为视频 Prompt 的入门材料。',
-    jingTake: '待荆确认；在来源内容得到复核前，不把这条视频当成已验证的学习依据。',
-    takeStatus: 'draft', sourceStatus: 'metadata-pending',
-    tags: ['AI VIDEO', 'PROMPT', '待核对'],
+    description: 'YouTube 元信息显示原题为“Structuring Video Prompts for Adobe Firefly | Prompting for Generative AI | Adobe”，发布者为 Adobe；尚未复核视频讲解内容。',
+    whyISavedIt: '题目与 Firefly 视频 Prompt 的结构化写法相关；内容复核后再判断是否适合作为入门材料。',
+    jingTake: '待荆确认；目前只核对平台标题和发布者，不能据此评价教程方法或实际生成效果。',
+    takeStatus: 'draft', sourceStatus: 'content-pending',
+    tags: ['AI VIDEO', 'PROMPT', '内容待复核'],
     dateAdded: '2026-08-25', featured: false, jingPick: false, visual: 'video-blue',
-    url: 'https://www.youtube.com/watch?v=mL7zyasCfrY', demo: false,
+    url: 'https://www.youtube.com/watch?v=mL7zyasCfrY', creator: 'Adobe', demo: false,
   },
   {
     id: 'kling-character-consistency-bilibili',
-    title: '角色一致性视频（待核对）',
+    title: '在生成视频时，怎样保持角色的一致性？',
     type: 'VIDEO',
-    source: 'Bilibili',
+    source: 'Bilibili · 可灵AI',
     topic: 'Consistency',
-    description: '指向 Bilibili 视频的候选链接；平台限制了本次核验，标题、发布者和视频内容尚未独立确认。',
-    whyISavedIt: '待核对是否确为可灵官方的角色参考教程，再决定能否作为中文入门资料。',
-    jingTake: '待荆确认；未看见可复核的视频内容前，不据此判断角色一致性功能或实际效果。',
-    takeStatus: 'draft', sourceStatus: 'metadata-pending',
-    tags: ['AI VIDEO', 'CONSISTENCY', '待核对'],
+    description: 'Bilibili 元信息显示原题为“在生成视频时，怎样保持角色的一致性❓”，发布者为“可灵AI”；尚未复核视频讲解内容。',
+    whyISavedIt: '题目与生成视频中的角色一致性相关；内容复核后再判断是否适合作为中文入门资料。',
+    jingTake: '待荆确认；目前只核对平台标题和发布者，不能据此判断角色一致性功能或实际效果。',
+    takeStatus: 'draft', sourceStatus: 'content-pending',
+    tags: ['AI VIDEO', 'CONSISTENCY', '内容待复核'],
     dateAdded: '2026-08-25', featured: false, jingPick: false, visual: 'video-blue',
-    url: 'https://www.bilibili.com/video/BV1e9QoY9ECr/', demo: false,
+    url: 'https://www.bilibili.com/video/BV1e9QoY9ECr/', creator: '可灵AI', demo: false,
   },
   {
     id: 'google-flow-creative-workspace-2026',

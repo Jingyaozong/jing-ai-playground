@@ -17,8 +17,7 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   const notes = getAllNotes();
-  const pendingSources = libraryItems.filter((item) => item.sourceStatus === 'metadata-pending').length;
-  const checkedSources = libraryItems.length - pendingSources;
+  const pendingVideoContent = libraryItems.filter((item) => item.sourceStatus === 'content-pending').length;
   const answers = [
     {
       label: 'WHAT I MAKE',
@@ -50,8 +49,8 @@ export default function AboutPage() {
     {
       label: 'WHAT IS WORTH SEEING',
       title: '什么值得看',
-      copy: '优先整理能追溯到原始来源的文章、视频、论文和工具；待核对来源单独标明，编辑观点与荆已确认观点分开。',
-      evidence: `${checkedSources} 条来源已核对 · ${pendingSources} 条待核对`,
+      copy: '优先整理能追溯到原始来源的文章、视频、论文和工具；视频元信息与内容复核分开标明，编辑观点与荆已确认观点分开。',
+      evidence: `${libraryItems.length} 条收藏附原链接 · ${pendingVideoContent} 条视频内容待复核`,
       href: '/library/',
       action: '打开收藏路线',
       tone: 'mint',
@@ -114,7 +113,7 @@ export default function AboutPage() {
           <div className="about-status-grid">
             <article><span className="status-chip status-draft mono">结构已完成</span><small className="mono">STORY 001</small><h3>她每天醒来都会忘记昨天</h3><p>六段时间剧本、十四镜分镜、人物锚点和三条动作测试方案已经就位；真实视频生成、剪辑和声音仍待开始。</p><Link href="/stories/she-forgets-yesterday/#generation-pack">查看生成包 ↗</Link></article>
             <article><span className="status-chip status-open mono">协议已完成</span><small className="mono">EXPERIMENT 010</small><h3>撑伞以后，<br />水面能沿一个方向<br />连续退去吗？</h3><p>九格协议、五点动作账本和浏览器本地工具已经就位；真实视频仍为 0 / 9，目前没有模型结论。</p><Link href="/experiments/can-water-recede-after-the-umbrella-opens/">查看实验协议 ↗</Link></article>
-            <article><span className="status-chip status-source mono">来源分级标注</span><small className="mono">CONTENT SYSTEM</small><h3>方法、Prompt 与收藏</h3><p>{notes.length} 篇笔记、{promptItems.length} 个 Prompt、{libraryItems.length} 条收藏和 {tools.length} 个工具已进入网站；收藏中 {pendingSources} 条来源待核对，编辑稿与观点候选也有状态标签。</p><Link href="/notes/">从笔记开始 ↗</Link></article>
+            <article><span className="status-chip status-source mono">来源分级标注</span><small className="mono">CONTENT SYSTEM</small><h3>方法、Prompt 与收藏</h3><p>{notes.length} 篇笔记、{promptItems.length} 个 Prompt、{libraryItems.length} 条收藏和 {tools.length} 个工具已进入网站；收藏中 {pendingVideoContent} 条视频内容待复核，编辑稿与观点候选也有状态标签。</p><Link href="/notes/">从笔记开始 ↗</Link></article>
           </div>
         </section></Reveal>
 

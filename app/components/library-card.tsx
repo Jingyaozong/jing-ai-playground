@@ -4,13 +4,13 @@ export function LibraryCard({ item, compact = false }: { item: LibraryItem; comp
   return (
     <article className={`library-card library-${item.type.toLowerCase()} ${compact ? 'is-compact' : ''}`}>
       <div className={`library-cover cover-${item.visual}`}>
-        <span className="library-type mono">{item.source === 'Bilibili' ? '[ BILIBILI ]' : item.type}</span>
+        <span className="library-type mono">{item.source.startsWith('Bilibili') ? '[ BILIBILI ]' : item.type}</span>
         <span className="library-cover-symbol" aria-hidden="true">{item.type === 'VIDEO' ? '▶' : item.type === 'PDF' ? 'PDF' : item.type === 'TOOL' ? '✦' : 'Aa'}</span>
         {item.duration && <small className="mono">{item.duration}</small>}
       </div>
       <div className="library-copy">
         <div className="library-meta mono"><span>{item.type} · {item.source}</span><span>{item.topic}</span></div>
-        {item.takeStatus === 'draft' && <span className="take-status mono">{item.sourceStatus === 'metadata-pending' ? '来源待核对 · 待荆确认' : '编辑初选 · 待荆确认'}</span>}
+        {item.takeStatus === 'draft' && <span className="take-status mono">{item.sourceStatus === 'content-pending' ? '元信息已核对 · 内容待复核 · 待荆确认' : '编辑初选 · 待荆确认'}</span>}
         <h3>{item.titleParts ? item.titleParts.map((part, index) => <span className="library-title-part" key={index}>{part}</span>) : item.title}</h3>
         {item.creator && <p className="library-creator">发布者 / {item.creator}</p>}
         {!compact && <>
@@ -20,7 +20,7 @@ export function LibraryCard({ item, compact = false }: { item: LibraryItem; comp
         </>}
         <div className="library-bottom">
           <div className="note-tags">{item.tags.slice(0, 3).map((tag) => <span key={tag}>{tag}</span>)}</div>
-          <a href={item.url} target="_blank" rel="noreferrer">{item.sourceStatus === 'metadata-pending' ? '尝试打开原链接 ↗' : '查看原内容 ↗'}</a>
+          <a href={item.url} target="_blank" rel="noreferrer">{item.sourceStatus === 'content-pending' ? '打开视频原链接 ↗' : '查看原内容 ↗'}</a>
         </div>
       </div>
     </article>

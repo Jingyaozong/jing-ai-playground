@@ -157,17 +157,17 @@ test('library semantic title groups preserve original titles in both card contex
   }
 });
 
-test('library distinguishes pending video links, historical sources and unconfirmed opinions', () => {
+test('library distinguishes metadata-checked videos, historical sources and unconfirmed opinions', () => {
   const html = readFileSync(join(process.cwd(), 'out/library/index.html'), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   const routeSection = html.slice(html.indexOf('class="library-routes'), html.indexOf('class="featured-library'));
-  const pending = libraryItems.filter((item) => item.sourceStatus === 'metadata-pending');
+  const pending = libraryItems.filter((item) => item.sourceStatus === 'content-pending');
   assert.equal(pending.length, 2);
   assert.ok(routeSection.length > 0, 'Library reading routes are missing');
-  assert.equal(html.split('来源待核对 · 待荆确认').length - 1, pending.length, 'Each pending source needs its own visible status');
+  assert.equal(html.split('元信息已核对 · 内容待复核 · 待荆确认').length - 1, pending.length, 'Each video needs its own visible review boundary');
   for (const item of pending) {
-    assert.ok(html.includes(item.title), `${item.id}: pending card is missing`);
-    assert.ok(!routeSection.includes(item.url.replaceAll('&', '&amp;')), `${item.id}: unverified item appears in a curated route`);
+    assert.ok(html.includes(item.title), `${item.id}: content-pending card is missing`);
+    assert.ok(!routeSection.includes(item.url.replaceAll('&', '&amp;')), `${item.id}: unreviewed video appears in a curated route`);
   }
   assert.ok(html.includes('编辑推荐理由 · 待荆确认'), 'Draft recommendation is presented as Jing’s confirmed choice');
   assert.ok(html.includes('Sora 产品自 2026 年 4 月 26 日起不再提供'), 'Historical Sora status is missing');
@@ -220,7 +220,7 @@ test('cross-page recommendations remain editorial candidates until Jing confirms
   const library = readPage('library/index.html');
   const about = readPage('about/index.html');
   const prompts = readPage('prompts/index.html');
-  const pending = libraryItems.filter((item) => item.sourceStatus === 'metadata-pending').length;
+  const pending = libraryItems.filter((item) => item.sourceStatus === 'content-pending').length;
   assert.ok(home.includes('Picks to review / 待确认推荐'));
   assert.ok(home.includes('推荐理由与观点仍是编辑候选，待荆确认'));
   assert.ok(home.includes('来源分级标注'));
@@ -229,14 +229,14 @@ test('cross-page recommendations remain editorial candidates until Jing confirms
   assert.ok(library.includes('编辑观点候选 · 待荆确认'));
   const draftCards = [...library.matchAll(/<article class="library-card[^"]*"[^>]*>[\s\S]*?<\/article>/g)]
     .map(([card]) => card)
-    .filter((card) => card.includes('编辑初选 · 待荆确认') || card.includes('来源待核对 · 待荆确认'));
+    .filter((card) => card.includes('编辑初选 · 待荆确认') || card.includes('元信息已核对 · 内容待复核 · 待荆确认'));
   assert.ok(draftCards.length >= libraryItems.filter((item) => item.takeStatus === 'draft').length);
   for (const card of draftCards) {
     assert.ok(card.includes('编辑观点候选 · 待荆确认'), 'Draft card lacks its editorial opinion label');
     assert.ok(!card.includes('JING&#x27;S TAKE'), 'Draft card claims a confirmed personal take');
   }
-  assert.ok(about.includes(`${libraryItems.length - pending} 条来源已核对 · ${pending} 条待核对`));
-  assert.ok(about.includes(`收藏中 ${pending} 条来源待核对`));
+  assert.ok(about.includes(`${libraryItems.length} 条收藏附原链接 · ${pending} 条视频内容待复核`));
+  assert.ok(about.includes(`收藏中 ${pending} 条视频内容待复核`));
   assert.ok(prompts.includes('编辑推荐理由 · 待荆确认'));
   assert.ok(!prompts.includes('我为什么留下'));
 });

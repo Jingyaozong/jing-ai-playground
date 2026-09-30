@@ -243,15 +243,16 @@ for (const item of libraryItems) {
   check(item.tags.length > 0, `收藏 ${item.id} 缺少标签`);
   check(isSecureExternalUrl(item.url), `收藏 ${item.id} 的原链接不是有效 HTTPS 地址：${item.url}`);
   check(item.takeStatus === 'draft' || item.takeStatus === 'confirmed', `收藏 ${item.id} 的 JING'S TAKE 状态无效：${item.takeStatus}`);
-  check(item.sourceStatus === undefined || item.sourceStatus === 'metadata-pending', `收藏 ${item.id} 的来源状态无效：${item.sourceStatus}`);
-  if (item.sourceStatus === 'metadata-pending') {
-    check(item.takeStatus === 'draft' && !item.featured && !item.jingPick, `收藏 ${item.id} 来源未核对，不可作为精选或确认观点`);
-    check(!item.creator && /待核对/.test(item.title) && /未能|尚未/.test(item.description), `收藏 ${item.id} 未明确显示来源核验边界`);
+  check(item.sourceStatus === undefined || item.sourceStatus === 'content-pending', `收藏 ${item.id} 的来源状态无效：${item.sourceStatus}`);
+  if (item.sourceStatus === 'content-pending') {
+    check(item.type === 'VIDEO' && item.takeStatus === 'draft' && !item.featured && !item.jingPick, `收藏 ${item.id} 视频内容未复核，不可作为精选或确认观点`);
+    check(Boolean(item.creator?.trim()) && item.source.includes(item.creator ?? '') && !/待核对/.test(item.title), `收藏 ${item.id} 缺少已核对的标题或发布者`);
+    check(/元信息/.test(item.description) && /尚未复核视频/.test(item.description), `收藏 ${item.id} 未区分平台元信息与视频内容`);
   }
   check(item.demo === false, `收藏 ${item.id} 仍被标记为演示数据`);
 }
 
-check(libraryItems.filter((item) => item.sourceStatus === 'metadata-pending').length === 2, '待核对视频数与页面状态说明不一致');
+check(libraryItems.filter((item) => item.sourceStatus === 'content-pending').length === 2, '内容待复核视频数与页面状态说明不一致');
 
 check(!promptsPageSource.includes('来自真实项目'), 'Prompt 页面不得把本站故事草案标成“来自真实项目”');
 
