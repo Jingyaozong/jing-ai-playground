@@ -1901,6 +1901,14 @@ html:has(.prompt-collection) { scroll-behavior: auto; }
 .library-copy > p { color: var(--muted); font-size: 13px; line-height: 1.7; }
 .saved-reason { margin: 25px 0; padding-top: 18px; border-top: 1px solid var(--line); }
 .saved-reason > span { color: var(--blue); }
+.library-video-review { margin: 24px 0; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--sky); }
+.library-video-review summary { cursor: pointer; font-size: 13px; font-weight: 700; line-height: 1.7; }
+.library-video-review > p { margin: 18px 0; color: var(--muted); font-size: 12px; line-height: 1.85; }
+.library-video-review ol { display: grid; gap: 18px; margin: 22px 0; padding: 0; list-style: none; }
+.library-video-review li > a { display: inline-block; padding: 5px 0; color: var(--blue); font-size: 12px; font-weight: 700; }
+.library-video-review li > p { margin: 6px 0 0; font-size: 13px; line-height: 1.85; }
+.library-review-practice { display: inline-block; padding: 8px 0; color: var(--blue); font-size: 12px; font-weight: 700; line-height: 1.8; }
+.library-video-review :is(summary, a):focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; border-radius: 3px; }
 .saved-reason p { margin-bottom: 0; font-size: 12px; line-height: 1.65; }
 .library-copy blockquote { margin: 24px 0; padding: 17px; border: 2px solid var(--ink); border-radius: 16px; background: var(--yellow); font-family: var(--display); font-size: 1.12rem; font-weight: 610; line-height: 1.4; }
 .library-copy blockquote span { display: block; margin-bottom: 8px; color: var(--blue); }

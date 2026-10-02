@@ -11,7 +11,14 @@ export type LibraryItem = {
   whyISavedIt: string;
   jingTake: string;
   takeStatus: 'confirmed' | 'draft';
-  sourceStatus?: 'content-pending';
+  sourceStatus?: 'content-pending' | 'excerpt-reviewed';
+  videoReview?: {
+    checkedOn: string;
+    basis: string;
+    limitation: string;
+    points: Array<{ seconds: number; text: string }>;
+    practice: { href: string; label: string };
+  };
   tags: string[];
   dateAdded: string;
   featured: boolean;
@@ -170,13 +177,24 @@ export const libraryItems: LibraryItem[] = [
     type: 'VIDEO',
     source: 'YouTube · Adobe',
     topic: 'Prompt',
-    description: 'YouTube 元信息显示原题为“Structuring Video Prompts for Adobe Firefly | Prompting for Generative AI | Adobe”，发布者为 Adobe；尚未复核视频讲解内容。',
-    whyISavedIt: '题目与 Firefly 视频 Prompt 的结构化写法相关；内容复核后再判断是否适合作为入门材料。',
-    jingTake: '待荆确认；目前只核对平台标题和发布者，不能据此评价教程方法或实际生成效果。',
-    takeStatus: 'draft', sourceStatus: 'content-pending',
-    tags: ['AI VIDEO', 'PROMPT', '内容待复核'],
+    description: '这段教程用视觉风格、镜头、主体、动作、地点、光线与调色、美学质感七项要素组织视频 Prompt，并分别举例说明。',
+    whyISavedIt: '适合边看边补全一张镜头卡：先描述主体做什么，再补充景别、机位、运镜与环境信息。',
+    jingTake: '编辑候选：可以用七项要素查漏补缺，再用实际生成结果检验描述是否有效；教程中的方法仍需要在自己的镜头里试用。',
+    takeStatus: 'draft', sourceStatus: 'excerpt-reviewed',
+    videoReview: {
+      checkedOn: '2026-10-02',
+      basis: '依据全片公开英文字幕整理；未完成画面复核。',
+      limitation: '摘要只对应原片讲解，不代表已复现生成效果；功能与界面以当前产品为准。',
+      points: [
+        { seconds: 30, text: '七项要素：从视觉风格到美学质感，先把想要的画面拆成可描述的部分。' },
+        { seconds: 117, text: '镜头信息包括景别、机位与运动；02:44 起用动作动词和速度词描述主体。' },
+        { seconds: 185, text: '补充地点、天气与时间，再分别描述光线、色调、景深和画面质感。' },
+      ],
+      practice: { href: '/tools/shot-prompt-builder/', label: '用镜头 Prompt 组装器练习 ↗' },
+    },
+    tags: ['AI VIDEO', 'PROMPT', '字幕要点已核对'],
     dateAdded: '2026-08-25', featured: false, jingPick: false, visual: 'video-blue',
-    url: 'https://www.youtube.com/watch?v=mL7zyasCfrY', creator: 'Adobe', demo: false,
+    url: 'https://www.youtube.com/watch?v=mL7zyasCfrY', creator: 'Adobe', duration: '05:17', demo: false,
   },
   {
     id: 'kling-character-consistency-bilibili',
@@ -184,13 +202,24 @@ export const libraryItems: LibraryItem[] = [
     type: 'VIDEO',
     source: 'Bilibili · 可灵AI',
     topic: 'Consistency',
-    description: 'Bilibili 元信息显示原题为“在生成视频时，怎样保持角色的一致性❓”，发布者为“可灵AI”；尚未复核视频讲解内容。',
-    whyISavedIt: '题目与生成视频中的角色一致性相关；内容复核后再判断是否适合作为中文入门资料。',
-    jingTake: '待荆确认；目前只核对平台标题和发布者，不能据此判断角色一致性功能或实际效果。',
-    takeStatus: 'draft', sourceStatus: 'content-pending',
-    tags: ['AI VIDEO', 'CONSISTENCY', '内容待复核'],
+    description: '教程演示先用角色参考图生成候选图片，再选图用于视频；后段展示分别上传角色、场景和道具图片的多图参考流程。',
+    whyISavedIt: '适合观察“先准备角色素材，再进入视频”的操作顺序，并把参考图选择与提示描述一起记录。',
+    jingTake: '编辑候选：参考强度是需要试验的变量。原片示例可用于理解流程，跨镜头身份是否稳定仍需逐镜检查。',
+    takeStatus: 'draft', sourceStatus: 'excerpt-reviewed',
+    videoReview: {
+      checkedOn: '2026-10-02',
+      basis: '依据 15 个时间点的画面与画内中文字幕抽查整理；未取得完整音轨转写。',
+      limitation: '原片展示的是当时的界面与示例，未在本站复现；不能由抽查画面判断全片动作连续性。',
+      points: [
+        { seconds: 18, text: '上传角色参考图；00:22 选择“人物长相”，00:27 展示参考强度设置。' },
+        { seconds: 62, text: '从候选结果中选图；01:06 说明将所选图片用于后续视频制作。' },
+        { seconds: 82, text: '多图参考中分别上传角色、场景及所需道具图片，再填写相应提示词。' },
+      ],
+      practice: { href: '/tools/character-anchor/', label: '用人物锚点卡整理参考 ↗' },
+    },
+    tags: ['AI VIDEO', 'CONSISTENCY', '画面要点已核对'],
     dateAdded: '2026-08-25', featured: false, jingPick: false, visual: 'video-blue',
-    url: 'https://www.bilibili.com/video/BV1e9QoY9ECr/', creator: '可灵AI', demo: false,
+    url: 'https://www.bilibili.com/video/BV1e9QoY9ECr/', creator: '可灵AI', duration: '01:34', demo: false,
   },
   {
     id: 'google-flow-creative-workspace-2026',

@@ -243,16 +243,24 @@ for (const item of libraryItems) {
   check(item.tags.length > 0, `收藏 ${item.id} 缺少标签`);
   check(isSecureExternalUrl(item.url), `收藏 ${item.id} 的原链接不是有效 HTTPS 地址：${item.url}`);
   check(item.takeStatus === 'draft' || item.takeStatus === 'confirmed', `收藏 ${item.id} 的 JING'S TAKE 状态无效：${item.takeStatus}`);
-  check(item.sourceStatus === undefined || item.sourceStatus === 'content-pending', `收藏 ${item.id} 的来源状态无效：${item.sourceStatus}`);
+  check(item.sourceStatus === undefined || ['content-pending', 'excerpt-reviewed'].includes(item.sourceStatus), `收藏 ${item.id} 的来源状态无效：${item.sourceStatus}`);
   if (item.sourceStatus === 'content-pending') {
     check(item.type === 'VIDEO' && item.takeStatus === 'draft' && !item.featured && !item.jingPick, `收藏 ${item.id} 视频内容未复核，不可作为精选或确认观点`);
     check(Boolean(item.creator?.trim()) && item.source.includes(item.creator ?? '') && !/待核对/.test(item.title), `收藏 ${item.id} 缺少已核对的标题或发布者`);
     check(/元信息/.test(item.description) && /尚未复核视频/.test(item.description), `收藏 ${item.id} 未区分平台元信息与视频内容`);
   }
+  if (item.sourceStatus === 'excerpt-reviewed') {
+    check(item.type === 'VIDEO' && Boolean(item.videoReview), `收藏 ${item.id} 缺少视频要点依据`);
+  }
+  if (item.videoReview) {
+    const review = item.videoReview;
+    check(item.sourceStatus === 'excerpt-reviewed' && isValidDate(review.checkedOn), `收藏 ${item.id} 要点状态或核对日期无效`);
+    check(Boolean(review.basis.trim()) && Boolean(review.limitation.trim()), `收藏 ${item.id} 缺少核对依据或范围说明`);
+    check(review.points.length > 0 && review.points.every((point, index) => Number.isInteger(point.seconds) && point.seconds >= 0 && Boolean(point.text.trim()) && (index === 0 || point.seconds > review.points[index - 1].seconds)), `收藏 ${item.id} 的视频时间点无效或顺序错误`);
+    check(tools.some((tool) => tool.href === review.practice.href), `收藏 ${item.id} 的练习工具不存在`);
+  }
   check(item.demo === false, `收藏 ${item.id} 仍被标记为演示数据`);
 }
-
-check(libraryItems.filter((item) => item.sourceStatus === 'content-pending').length === 2, '内容待复核视频数与页面状态说明不一致');
 
 check(!promptsPageSource.includes('来自真实项目'), 'Prompt 页面不得把本站故事草案标成“来自真实项目”');
 

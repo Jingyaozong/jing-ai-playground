@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 const shelves = [
   ['ARTICLES', '文章', '真正值得读完和留着回看的文章。', 'yellow', 'ARTICLE'],
-  ['VIDEOS', '视频', 'B站与 YouTube 的视频候选；内容待复核的会单独标明。', 'blue', 'VIDEO'],
+  ['VIDEOS', '视频', 'B站与 YouTube 的视频候选，附核对依据与原片入口。', 'blue', 'VIDEO'],
   ['PAPERS & PDF', '报告与论文', 'Benchmark、白皮书、论文和官方指南。', 'coral', 'PDF'],
   ['TOOLS', '工具', '不是工具墙，只留下真正可能会用的东西。', 'mint', 'TOOL'],
 ];
@@ -58,7 +58,7 @@ export default function LibraryPage() {
       </section>
 
       <Reveal><section className="library-routes section-shell" aria-labelledby="library-routes-title">
-        <aside className="archive-truth-note library-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>可读取的一手资料已按原站核对；两条平台视频的标题与发布者已核对，讲解内容尚未复核。推荐理由与观点是编辑候选，只有荆确认后才会成为正式个人观点。</p></aside>
+        <aside className="archive-truth-note library-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>可读取的一手资料已按原站核对；视频讲解要点注明字幕或画面抽查依据，不代表本站已复现效果。推荐理由与观点是编辑候选，只有荆确认后才会成为正式个人观点。</p></aside>
         <div className="section-title-row compact"><div><p className="eyebrow mono">Choose by purpose / 按用途开始</p><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条入门路线只精选最适合连续阅读的资源；声音、来源记录与开源工具可在下方继续搜索和筛选。</p></div>
         <div className="library-route-grid">
           {libraryRoutes.map((route) => (
@@ -83,7 +83,7 @@ export default function LibraryPage() {
 
       <Reveal><section className="library-shelves section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Five shelves / 收藏分类</p><h2>按内容类型收好，<br />按判断重新找到。</h2></div><p>“精选候选”跨越内容类型；这些推荐仍等待荆确认。</p></div><div className="library-shelf-grid">{shelves.map(([en, zh, description, color, filter], index) => <a className={`library-shelf shelf-${color}`} href={`?type=${filter}#library-all`} key={en}><span className="mono">0{index + 1}</span><strong>{en}</strong><h3>{zh}</h3><p>{description}</p><i>浏览 ↓</i></a>)}<a className="library-shelf shelf-picks" href="?type=JING%20PICKS#library-all"><span className="mono">05</span><strong>PICKS TO REVIEW</strong><h3>精选候选</h3><p>跨越文章、视频、PDF 和工具的编辑推荐候选，等待荆确认。</p><i>只看候选 ↓</i></a></div></section></Reveal>
 
-      <section className="library-all section-shell" id="library-all"><ArchiveFilterHashFocus hash="#library-all" headingId="library-all-title" /><div className="section-title-row compact"><div><p className="eyebrow mono">Saved with a reason</p><h2 id="library-all-title" tabIndex={-1}>这些内容，<br />为什么被留下来。</h2></div><p>可读取的来源已核对；两条平台视频只核对了标题与发布者，内容待复核。推荐理由与观点都是编辑候选，待荆确认。</p></div><LibraryBrowser items={libraryItems} /></section>
+      <section className="library-all section-shell" id="library-all"><ArchiveFilterHashFocus hash="#library-all" headingId="library-all-title" /><div className="section-title-row compact"><div><p className="eyebrow mono">Saved with a reason</p><h2 id="library-all-title" tabIndex={-1}>这些内容，<br />为什么被留下来。</h2></div><p>视频卡可展开讲解要点，按时间回到原片，再用本站工具练习。推荐理由与观点都是编辑候选，待荆确认。</p></div><LibraryBrowser items={libraryItems} /></section>
       <SiteFooter />
     </main>
   );
