@@ -17,6 +17,29 @@ const MAX_FIELD = 8000;
 // Fits a fully populated 100-row export, including UTF-8 and CSV escaping.
 export const MAX_CSV_BYTES = 64_000_000;
 
+// A single-question plain-text handoff, not a restorable batch or automated verdict.
+export function exportReviewText(batch: ReviewBatch, row: ReviewRow): string {
+  const field = (label: string, value: string) => `${label}\n${value.trim() ? value : '未记录'}`;
+  const statuses: Record<ReviewStatus, string> = { not_reviewed: '待复核', pass: '人工通过', fail: '不通过', needs_review: '待讨论' };
+  const routeLabels = ['尚未记录', '直接回答', '先澄清', '转人工', '范围外', '转交失败', '最小信息回答'];
+  const checks = { '': '尚未检查', yes: '支持', no: '不支持', not_applicable: '不适用' };
+  return [
+    '规则答疑 · 单题人工记录',
+    '状态：由填写者记录；工具未调用模型，也未验证答案或引用。',
+    '来源：内置题目为独立虚构演练；导入题目的来源与授权须自行核对。',
+    field('批次名称', batch.runId), field('规则版本', batch.ruleVersion),
+    field('待测系统或版本', batch.systemVersion), field('执行时间', batch.testedAt),
+    field('题目 ID', row.id), field('题目类型', row.type), field('当前问题', row.question),
+    field('题目中的队列条件', row.queue), field('实际回答', row.answer),
+    `实际处理方式\n${routeLabels[routes.indexOf(row.route)]}`,
+    field('引用规则与版本', row.citation), `引用支持结论吗\n${checks[row.citationCheck]}`,
+    field('人工队列记录编号', row.queueId),
+    `错误标签\n${row.errors.length ? row.errors.join('、') : '未勾选（不代表无错误）'}`,
+    field('复核说明', row.note), `人工复核结论\n${statuses[row.status]}`,
+    '此副本仅包含当前题目。恢复整批记录请使用本工具导出的复核 CSV。',
+  ].join('\n\n');
+}
+
 // Read quoted fields, embedded newlines and escaped quotes without treating CSV as code.
 export function parseCsv(text: string): string[][] {
   if (text.length > MAX_CSV_BYTES) throw new Error('CSV 超过 64 MB，请缩小批次。');

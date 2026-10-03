@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { MAX_CSV_BYTES, errorTags, exportReviewCsv, importReviewCsv, type ReviewBatch, type ReviewRow, type ReviewStatus } from '../../lib/rule-review';
+import { MAX_CSV_BYTES, errorTags, exportReviewCsv, exportReviewText, importReviewCsv, type ReviewBatch, type ReviewRow, type ReviewStatus } from '../../lib/rule-review';
+import { LocalRecordCopy } from './local-record-copy';
 
 const statusLabels: Record<ReviewStatus, string> = { not_reviewed: '待复核', pass: '人工通过', fail: '不通过', needs_review: '待讨论' };
 const routeOptions = [['', '尚未记录'], ['answer', '直接回答'], ['clarify', '先澄清'], ['human_review', '转人工'], ['out_of_scope', '范围外'], ['queue_failed', '转交失败'], ['answer_with_data_minimization', '最小信息回答']];
@@ -93,6 +94,12 @@ export function RuleReview({ sample }: { sample: ReviewBatch }) {
           <div className="rule-review-actions"><button type="button" disabled={selected === 0} onClick={() => setSelected(selected - 1)}>上一题</button><button type="button" disabled={selected === batch.rows.length - 1} onClick={() => setSelected(selected + 1)}>下一题</button><button type="button" onClick={download}>导出复核 CSV</button></div>
         </div>
       </div>
+      <section className="rule-review-copy" aria-labelledby="rule-review-copy-title">
+        <span className="mono">CURRENT QUESTION / 单题副本</span>
+        <h2 id="rule-review-copy-title">带走当前题，<br />保留判断依据。</h2>
+        <p>文字副本包含当前题目的全部字段和批次信息，便于交流；可恢复的整批记录仍请导出复核 CSV。复制不会替你保存修改，也不会改变复核状态。</p>
+        <LocalRecordCopy key={selected} value={exportReviewText(batch, row)} label="复制当前题记录" success="已复制当前题的人工记录；整批记录请另行导出 CSV。" />
+      </section>
     </>}
   </section>;
 }
