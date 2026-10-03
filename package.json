@@ -27,7 +27,7 @@
     "verify:agent-trace": "node --experimental-strip-types --test scripts/verify-agent-trace.test.mjs",
     "verify:dataset-release": "node --experimental-strip-types --test scripts/verify-dataset-release.test.mjs",
     "verify:prompt-preflight": "node --experimental-strip-types --test scripts/verify-prompt-preflight.test.mjs",
-    "verify:experiment-export": "node --experimental-strip-types --test scripts/verify-experiment-export.test.mjs",
+    "verify:experiment-export": "node --experimental-strip-types --test scripts/verify-experiment-export.test.mjs scripts/verify-copy-timeout.test.mjs",
     "verify:pages": "node scripts/verify-pages-build.mjs",
     "verify:pages:repository": "node scripts/verify-repository-pages.mjs",
     "verify:upload-readiness": "node scripts/verify-upload-readiness.mjs",

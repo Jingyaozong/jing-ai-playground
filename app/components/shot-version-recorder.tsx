@@ -1,6 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
+import { copyWithTimeout } from '../lib/copy-with-timeout';
 
 type TakeStatus = 'NEW' | 'SHORTLIST' | 'SELECT' | 'HOLD' | 'REJECT';
 type RejectCode = '' | 'NAR' | 'ID' | 'SCN' | 'MOT' | 'CAM' | 'TMP' | 'SND' | 'TEC' | 'CUT';
@@ -94,33 +95,15 @@ function csvCell(value: string) {
   return `"${value.replaceAll('"', '""')}"`;
 }
 
-async function copyText(value: string) {
-  try {
-    if (navigator.clipboard?.writeText) {
-      await navigator.clipboard.writeText(value);
-      return true;
-    }
-  } catch {
-    // Continue to the local fallback.
-  }
-  const textarea = document.createElement('textarea');
-  textarea.value = value;
-  textarea.setAttribute('readonly', '');
-  textarea.style.position = 'fixed';
-  textarea.style.opacity = '0';
-  document.body.appendChild(textarea);
-  textarea.select();
-  const copied = document.execCommand('copy');
-  textarea.remove();
-  return copied;
-}
-
 export function ShotVersionRecorder() {
   const [batch, setBatch] = useState<BatchValues>(emptyBatch);
   const [takes, setTakes] = useState<Take[]>(emptyTakes);
   const [synthetic, setSynthetic] = useState(false);
   const [copied, setCopied] = useState<CopyTarget | null>(null);
   const [manualCopy, setManualCopy] = useState<string | null>(null);
+  const [copying, setCopying] = useState<CopyTarget | null>(null);
+  const copyRevision = useRef(0);
+  const manualField = useRef<HTMLTextAreaElement>(null);
 
   const summary = useMemo(() => {
     const counts = statusOptions.reduce<Record<TakeStatus, number>>((result, option) => ({ ...result, [option.value]: takes.filter((take) => take.status === option.value).length }), { NEW: 0, SHORTLIST: 0, SELECT: 0, HOLD: 0, REJECT: 0 });
@@ -162,6 +145,8 @@ export function ShotVersionRecorder() {
   }
 
   function resetCopy() {
+    copyRevision.current += 1;
+    setCopying(null);
     setCopied(null);
     setManualCopy(null);
   }
@@ -195,12 +180,23 @@ export function ShotVersionRecorder() {
 
   async function copyOutput(target: CopyTarget) {
     const value = target === 'markdown' ? markdown : csv;
-    if (await copyText(value)) {
+    const revision = ++copyRevision.current;
+    const trigger = document.activeElement;
+    setCopied(null);
+    setCopying(target);
+    setManualCopy(value);
+    const success = await copyWithTimeout(value, navigator.clipboard?.writeText?.bind(navigator.clipboard));
+    if (revision !== copyRevision.current) return;
+    setCopying(null);
+    if (success) {
       setManualCopy(null);
       setCopied(target);
-      window.setTimeout(() => setCopied(null), 1800);
+      window.setTimeout(() => { if (revision === copyRevision.current) setCopied(null); }, 1800);
     } else {
-      setManualCopy(value);
+      if (document.activeElement === trigger) {
+        manualField.current?.focus();
+        manualField.current?.select();
+      }
     }
   }
 
@@ -276,7 +272,7 @@ export function ShotVersionRecorder() {
         </div>
       </section>
 
-      {manualCopy && <aside className="version-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制版本记录" /></aside>}
+      {manualCopy && <aside className="version-copy-fallback"><div><span className="mono">MANUAL COPY / 手动复制</span><p role="status">{copying ? '正在请求复制权限；最多等待 1.5 秒。也可直接选中下方文本复制。' : '自动复制未确认完成。电脑先全选，再按 Ctrl+C（Mac 按 ⌘C）；手机长按文本复制。未响应的权限请求可能稍后完成。'}</p></div><button type="button" onClick={resetCopy}>关闭 ×</button><textarea ref={manualField} readOnly value={manualCopy} onFocus={(event) => event.currentTarget.select()} aria-label="手动复制版本记录" /></aside>}
     </section>
   );
 }

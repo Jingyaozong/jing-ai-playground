@@ -14,6 +14,8 @@
   line-height: 1.65;
 }
 .tool-detail-shell textarea { padding: 14px 16px; }
+.tool-detail-shell .version-copy-fallback textarea { width: 100%; min-height: 220px; }
+.tool-detail-shell .version-copy-fallback p { max-width: 64ch; font-size: 13px; line-height: 1.8; }
 .tool-detail-shell label { min-width: 0; }
 .tool-detail-shell label :is(strong, small) { line-height: 1.6; }
 .tool-detail-shell label small { font-size: 11px; }
