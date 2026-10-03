@@ -49,6 +49,7 @@ export function MultimodalEvaluationDesk() {
   const [removePending, setRemovePending] = useState(false);
   const [removedSnapshot, setRemovedSnapshot] = useState<{ batch: EvaluationBatch; sampleIndex: number; dimensionIndex: number } | null>(null);
   const [dirty, setDirty] = useState(false);
+  const [exportedBatch, setExportedBatch] = useState<EvaluationBatch | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('已放入一条空白本地记录，没有预填模型输出或评测结论。');
   const fileInput = useRef<HTMLInputElement>(null);
@@ -139,6 +140,7 @@ export function MultimodalEvaluationDesk() {
 
   function applyImport(next: EvaluationBatch) {
     setRemovedSnapshot(null);
+    setExportedBatch(null);
     setBatch(next); setSelectedSample(0); setSelectedDimension(0); setPendingImport(null); setRemovePending(false); setDirty(false);
     setMessage(`已载入 ${next.samples.length} 个样本、${next.samples.length * 8} 条维度记录；原有人工状态按文件保留。`);
   }
@@ -158,12 +160,19 @@ export function MultimodalEvaluationDesk() {
   }
 
   function downloadCsv() {
+    setExportedBatch(null);
     try {
       const url = URL.createObjectURL(new Blob([exportEvaluationCsv(batch)], { type: 'text/csv;charset=utf-8' }));
       const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'multimodal-evaluation-records.csv';
       document.body.appendChild(anchor); anchor.click(); anchor.remove(); window.setTimeout(() => URL.revokeObjectURL(url), 1000);
-      setDirty(false); setMessage(`已发起导出 ${batch.samples.length} 个样本。CSV 可重新导入继续填写。`);
+      setExportedBatch(batch); setMessage(`已发起导出 ${batch.samples.length} 个样本。请检查浏览器下载记录，确认文件已保存；页面无法自动确认下载完成。`);
     } catch { setMessage('下载未能发起，当前页面记录仍保留。请重试。'); }
+  }
+
+  function confirmSavedExport() {
+    if (exportedBatch !== batch || pendingImport || loading) return;
+    setDirty(false); setExportedBatch(null);
+    setMessage('你已确认当前批次 CSV 保存完成，离页提醒已解除。继续修改后会重新提醒。');
   }
 
   function completeReview() {
@@ -189,9 +198,11 @@ export function MultimodalEvaluationDesk() {
       <div><span className="mono">LOCAL ONLY / 当前浏览器</span><h2>先建一条<br />空白记录。</h2><p>每批最多 30 个样本。CSV 一行对应一个样本的一个维度，可导回本页继续填写。</p></div>
       <div className="evaluation-actions"><button type="button" onClick={addSample}>新增空白样本</button><button type="button" disabled={loading || !!pendingImport} onClick={() => fileInput.current?.click()}>{loading ? '正在读取…' : '导入记录 CSV'}</button><button type="button" onClick={downloadCsv}>导出记录 CSV</button></div>
       <input ref={fileInput} type="file" accept=".csv,text/csv" aria-label="选择评测记录 CSV" hidden onChange={(event) => void importFile(event.target.files?.[0])} />
-      <p className="evaluation-local-note">不会读取或上传视频；CSV 只在浏览器内解析。关闭页面前请导出。{dirty && ' 当前有尚未导出的修改。'}</p>
+      <p className="evaluation-local-note">不会读取或上传视频；CSV 只在浏览器内解析。关闭页面前请导出并确认文件保存。{dirty && ' 当前修改尚未确认保存，离页提醒仍开启。'}</p>
     </div>
     <p ref={importNotice} tabIndex={-1} className="evaluation-message" role="status" aria-live="polite">{pendingImport ? `已读取 ${pendingImport.samples.length} 个样本，尚未替换当前记录。请选择保留当前记录或确认替换。` : message}</p>
+
+    {exportedBatch && <section className="evaluation-save-confirmation" aria-labelledby="evaluation-save-title"><div><h3 id="evaluation-save-title">先确认文件，再离开。</h3><p>{exportedBatch === batch ? '在浏览器下载记录中找到 multimodal-evaluation-records.csv，确认文件保存成功后，再解除当前修改的离页提醒。取消或未找到下载时，请重新导出。' : '导出后记录又有修改，旧文件不包含这些新内容。请重新导出，不能用旧下载解除当前提醒。'}</p></div><div className="evaluation-actions"><button type="button" onClick={downloadCsv}>重新导出 CSV</button><button type="button" disabled={exportedBatch !== batch || !!pendingImport || loading} onClick={confirmSavedExport}>已确认文件保存</button></div></section>}
 
     {pendingImport && <div className="evaluation-replace"><div><span className="mono">REPLACE / 替换确认</span><h3>用导入文件<br />替换当前记录？</h3><p>导入文件包含 {pendingImport.samples.length} 个样本。需要保留当前修改时，请先取消并导出。</p></div><div className="evaluation-actions"><button type="button" onClick={() => setPendingImport(null)}>保留当前记录</button><button type="button" onClick={() => applyImport(pendingImport)}>确认替换</button></div></div>}
 

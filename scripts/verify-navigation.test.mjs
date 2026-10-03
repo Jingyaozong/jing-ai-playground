@@ -14,6 +14,19 @@ import { calculateReviewPace, calculateReviewPaceTarget, compareReviewPaceMix, f
 import { summarizeTrialTimeLog, trialTimeLogHeaders } from '../app/data/review-pace-import.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
+test('evaluation exports retain leave protection until the current snapshot is confirmed saved', () => {
+  const source = readFileSync(join(process.cwd(), 'app/components/multimodal-evaluation-desk.tsx'), 'utf8');
+  const download = source.slice(source.indexOf('function downloadCsv('), source.indexOf('function confirmSavedExport('));
+  assert.ok(!download.includes('setDirty(false)'), 'Starting a download must not mark edits saved');
+  assert.match(download, /setExportedBatch\(batch\)/);
+  const confirm = source.slice(source.indexOf('function confirmSavedExport('), source.indexOf('function completeReview('));
+  assert.match(confirm, /if \(exportedBatch !== batch \|\| pendingImport \|\| loading\) return/);
+  assert.match(confirm, /setDirty\(false\)/);
+  assert.match(source, /disabled=\{exportedBatch !== batch \|\| !!pendingImport \|\| loading\}/);
+  assert.match(source, /旧文件不包含这些新内容/);
+  assert.match(source, /页面无法自动确认下载完成/);
+});
+
 test('evaluation removal offers a bounded undo without overwriting subsequent edits', () => {
   const source = readFileSync(join(process.cwd(), 'app/components/multimodal-evaluation-desk.tsx'), 'utf8');
   assert.match(source, /setRemovedSnapshot\(\{ batch, sampleIndex: selectedSample, dimensionIndex: selectedDimension \}\)/);
