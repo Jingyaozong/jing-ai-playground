@@ -62,7 +62,7 @@ const exampleSections: DeliverySection[] = [
   { id: 'masters', folder: '01_MASTERS', title: '主母版', description: '最终高质量版本与必要的干净版本。', included: true, items: [
     { id: 1, label: '主母版', required: true, done: false, evidence: '待生成真实成片' },
     { id: 2, label: '无字 / 干净版', required: true, done: false, evidence: '是否需要由接收方确认' },
-    { id: 3, label: '封面或代表帧', required: false, done: true, evidence: '结构示例占位，不是最终素材' },
+    { id: 3, label: '封面或代表帧', required: false, done: false, evidence: '结构示例占位，不是最终素材' },
   ] },
   { id: 'platform', folder: '02_PLATFORM', title: '平台版本', description: '横版、竖版、短版或压缩发布版。', included: true, items: [
     { id: 1, label: '16:9 发布版', required: true, done: false, evidence: '规格待平台确认' },
@@ -71,7 +71,7 @@ const exampleSections: DeliverySection[] = [
   { id: 'captions', folder: '03_CAPTIONS', title: '字幕', description: '外挂字幕、烧录参考与字体说明。', included: true, items: [
     { id: 1, label: 'SRT 字幕', required: true, done: false, evidence: '待成片锁定后制作' },
     { id: 2, label: '字幕烧录参考', required: false, done: false, evidence: '' },
-    { id: 3, label: '字体与字形说明', required: true, done: true, evidence: '清单结构已预留' },
+    { id: 3, label: '字体与字形说明', required: true, done: false, evidence: '清单结构已预留，实际说明待补充与复核' },
   ] },
   { id: 'audio', folder: '04_AUDIO', title: '声音', description: '最终混音以及约定的对白、音乐和音效分轨。', included: true, items: [
     { id: 1, label: '最终混音', required: true, done: false, evidence: '真实声音尚未制作' },
@@ -80,16 +80,16 @@ const exampleSections: DeliverySection[] = [
   { id: 'project', folder: '05_PROJECT', title: '工程', description: '收集后的工程、依赖说明与重新链接测试。', included: true, items: [
     { id: 1, label: '收集后的主工程', required: true, done: false, evidence: '待真实制作开始' },
     { id: 2, label: '从新路径重新打开', required: true, done: false, evidence: '尚未执行恢复测试' },
-    { id: 3, label: '字体、插件与软件版本说明', required: true, done: true, evidence: 'README 已预留字段' },
+    { id: 3, label: '字体、插件与软件版本说明', required: true, done: false, evidence: 'README 已预留字段，实际依赖待填写与复核' },
   ] },
   { id: 'rights', folder: '06_RIGHTS', title: '来源与授权', description: '素材来源、使用范围与尚未解决的问题。', included: true, items: [
     { id: 1, label: '音乐 / 字体 / 图片来源表', required: true, done: false, evidence: '待真实素材进入项目后记录' },
-    { id: 2, label: '生成工具与输入来源说明', required: true, done: true, evidence: '清单结构已建立' },
-    { id: 3, label: '待确认授权项列表', required: true, done: true, evidence: '未知项将明确标记，不默认视为可用' },
+    { id: 2, label: '生成工具与输入来源说明', required: true, done: false, evidence: '清单结构已建立，实际来源待填写与复核' },
+    { id: 3, label: '待确认授权项列表', required: true, done: false, evidence: '未知项将明确标记，待逐项确认，不默认视为可用' },
   ] },
   { id: 'manifest', folder: '07_MANIFEST', title: '清单与校验', description: 'README、文件清单、校验值与恢复记录。', included: true, items: [
-    { id: 1, label: 'README', required: true, done: true, evidence: '由本工具生成初稿' },
-    { id: 2, label: 'delivery-manifest.csv', required: true, done: true, evidence: '由本工具生成初稿' },
+    { id: 1, label: 'README', required: true, done: false, evidence: '工具仅生成初稿，待导出与人工验收' },
+    { id: 2, label: 'delivery-manifest.csv', required: true, done: false, evidence: '工具仅生成初稿，待导出与人工验收' },
     { id: 3, label: 'SHA256SUMS.txt', required: true, done: false, evidence: '封箱后在交付目录运行命令' },
     { id: 4, label: '恢复测试记录', required: true, done: false, evidence: '必须对真实工程执行' },
   ] },

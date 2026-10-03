@@ -1881,6 +1881,7 @@ html:has(.prompt-collection) { scroll-behavior: auto; }
 .library-card { overflow: hidden; border: 2px solid var(--ink); border-radius: 28px; background: var(--white); transition: transform .25s ease, box-shadow .25s ease; }
 .library-card:hover { transform: translateY(-6px); box-shadow: 8px 8px 0 var(--ink); }
 .library-card[id] { scroll-margin-top: 112px; }
+.version-source-note { margin: 24px 0 32px; padding: 20px; border: 1px solid var(--line); border-left: 4px solid var(--yellow); border-radius: 0 16px 16px 0; background: var(--paper); color: var(--muted); font-size: 13px; line-height: 1.9; }
 .library-card[id]:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
 .library-cover { position: relative; min-height: 275px; overflow: hidden; border-bottom: 2px solid var(--ink); background: var(--sky); }
 .library-cover::before, .library-cover::after { content: ''; position: absolute; }

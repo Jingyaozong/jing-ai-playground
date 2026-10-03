@@ -116,8 +116,9 @@ async function copyText(value: string) {
 }
 
 export function ShotVersionRecorder() {
-  const [batch, setBatch] = useState<BatchValues>(exampleBatch);
-  const [takes, setTakes] = useState<Take[]>(exampleTakes);
+  const [batch, setBatch] = useState<BatchValues>(emptyBatch);
+  const [takes, setTakes] = useState<Take[]>(emptyTakes);
+  const [synthetic, setSynthetic] = useState(false);
   const [copied, setCopied] = useState<CopyTarget | null>(null);
   const [manualCopy, setManualCopy] = useState<string | null>(null);
 
@@ -131,6 +132,7 @@ export function ShotVersionRecorder() {
   const markdown = useMemo(() => {
     const lines = [
       `# ${batch.shotId.trim() || '未编号镜头'} / ${batch.batchId.trim() || '未编号批次'} · 候选版本记录`, '',
+      synthetic ? '> 合成演练 · 编辑候选 · 待荆确认：候选、时间区间、观察与采用状态均为虚构，不对应真实视频。修改后仍属于演练；记录真实样本请先清空。' : '> 使用者填写记录 · 未经工具验证；空白项不代表已检查或通过。', '',
       `- 镜头职责：${batch.task.trim() || '待填写'}`, `- 平台 / 模型：${[batch.platform, batch.model].filter(Boolean).join(' / ') || '待填写'}`,
       `- 生成方式：${batch.mode.trim() || '待填写'}`, `- 可见参数：${batch.settings.trim() || '待填写'}`,
       `- 输入资产：${batch.inputs.trim() || '待填写'}`, `- 相比上一批只改变：${batch.change.trim() || '待填写'}`,
@@ -141,13 +143,13 @@ export function ShotVersionRecorder() {
       '', '说明：记录表保存的是当前可见输入与选择理由；平台、模型或服务变化仍可能影响复现结果。',
     ];
     return lines.join('\n');
-  }, [batch, takes]);
+  }, [batch, takes, synthetic]);
 
   const csv = useMemo(() => {
-    const header = ['candidate_id', 'shot_id', 'batch_id', 'status', 'usable_range', 'strength', 'reject_code', 'observation', 'edit_use', 'platform', 'model', 'mode', 'settings', 'prompt', 'inputs', 'changed_variable', 'source_link'];
-    const rows = takes.map((take, index) => [takeId(batch, index), batch.shotId, batch.batchId, take.status, take.usableRange, take.strength, take.status === 'REJECT' ? take.rejectCode : '', take.observation, take.editUse, batch.platform, batch.model, batch.mode, batch.settings, batch.prompt, batch.inputs, batch.change, batch.sourceLink]);
+    const header = ['candidate_id', 'shot_id', 'batch_id', 'status', 'usable_range', 'strength', 'reject_code', 'observation', 'edit_use', 'platform', 'model', 'mode', 'settings', 'prompt', 'inputs', 'changed_variable', 'source_link', 'record_origin', 'verification_scope'];
+    const rows = takes.map((take, index) => [takeId(batch, index), batch.shotId, batch.batchId, take.status, take.usableRange, take.strength, take.status === 'REJECT' ? take.rejectCode : '', take.observation, take.editUse, batch.platform, batch.model, batch.mode, batch.settings, batch.prompt, batch.inputs, batch.change, batch.sourceLink, synthetic ? 'synthetic_exercise' : 'user_entered_unverified', synthetic ? '合成演练，无真实视频，编辑候选，待荆确认' : '使用者填写，未经工具验证']);
     return [header.map(csvCell).join(','), ...rows.map((row) => row.map(csvCell).join(','))].join('\r\n');
-  }, [batch, takes]);
+  }, [batch, takes, synthetic]);
 
   function updateBatch(key: keyof BatchValues, value: string) {
     setBatch((current) => ({ ...current, [key]: value }));
@@ -165,12 +167,14 @@ export function ShotVersionRecorder() {
   }
 
   function loadExample() {
+    setSynthetic(true);
     setBatch(exampleBatch);
     setTakes(exampleTakes);
     resetCopy();
   }
 
   function clearRecorder() {
+    setSynthetic(false);
     setBatch(emptyBatch);
     setTakes(emptyTakes);
     resetCopy();
@@ -217,8 +221,10 @@ export function ShotVersionRecorder() {
       <div className="version-editor">
         <div className="version-panel-heading">
           <div><span className="mono">01 / BATCH FACTS</span><h2>每一次生成，<br />都留下选择理由。</h2></div>
-          <div><button type="button" onClick={loadExample}>载入示例</button><button type="button" onClick={clearRecorder}>清空</button></div>
+          <div><button type="button" onClick={loadExample}>载入合成示例</button><button type="button" onClick={clearRecorder}>清空</button></div>
         </div>
+
+        <p className="version-source-note" role="status">{synthetic ? '合成演练 · 编辑候选 · 待荆确认。以下时间、观察和采用状态均为虚构，无真实视频。修改后仍是演练；记录真实样本请先清空。' : '空白起点：没有预填模型输出、可用区间或采用结论。你填写的判断不会由工具自动验证。载入合成示例会替换当前表单，请先导出已有记录。'}</p>
 
         <div className="version-id-strip">
           <label><span className="mono">SHOT / 镜号</span><input value={batch.shotId} onChange={(event) => updateBatch('shotId', event.target.value.toUpperCase())} /></label>
@@ -257,7 +263,7 @@ export function ShotVersionRecorder() {
         <div className="version-status-ledger">
           <span><small>SELECT</small><b>{summary.counts.SELECT}</b></span><span><small>SHORTLIST</small><b>{summary.counts.SHORTLIST}</b></span><span><small>REJECT</small><b>{summary.counts.REJECT}</b></span><span><small>TOP REJECT</small><b>{summary.primaryReject}</b></span>
         </div>
-        <p>接触印样只显示候选状态，不判断画面质量。先写可观察事实，再决定采用与淘汰。</p>
+        <p>{synthetic ? '合成演练：以下状态统计只用于演示，不是实际生成或剪辑结果。' : '接触印样只显示候选状态，不判断画面质量。先写可观察事实，再决定采用与淘汰。'}</p>
         <div className="version-sheet-actions"><button type="button" onClick={() => copyOutput('markdown')}>{copied === 'markdown' ? '已复制记录 ✓' : '复制 Markdown ↗'}</button><button type="button" onClick={downloadCsv}>下载 CSV ↓</button></div>
         <small>所有内容只在当前浏览器页面处理；下载文件由浏览器本地生成。</small>
       </aside>
