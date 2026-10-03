@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { LocalRecordCopy } from './local-record-copy';
 import { tracePractices } from '../../lib/agent-trace-practice';
 import {
   acceptanceLabels, emptyTraceReview, exportTraceBundle, MAX_TRACE_CHARS, parseTraceRecord,
@@ -85,10 +86,6 @@ export function AgentTraceDesk() {
     setMessage(`已发起${kind === 'json' ? '复核包下载；其中包含当前已载入轨迹和人工记录，可粘贴回本页恢复' : 'Markdown 报告下载；记录状态仍为待最终确认'}。${source !== loadedSource ? '输入框的新文本尚未解析，不在本次导出内。' : ''}`);
     } catch (error) { setMessage(error instanceof Error ? error.message : '下载未能发起，当前记录保留。'); }
   }
-  async function copy() {
-    try { await navigator.clipboard.writeText(report); setMessage('已复制复核报告，来源和未完成项一并保留。'); }
-    catch { setMessage('自动复制未获允许，可在报告框中选择文本后手动复制。'); }
-  }
 
   return <div className="trace-desk">
     <section className="trace-practice" aria-labelledby="trace-practice-title" id="practice-pack">
@@ -145,7 +142,7 @@ export function AgentTraceDesk() {
       <section className="trace-acceptance" aria-labelledby="trace-acceptance-title"><div className="trace-section-head"><div><span className="mono">CHECK THE DELIVERABLE</span><h2 id="trace-acceptance-title">最后，验产物。</h2></div><p>这里记录人工判断。工具不会打开或执行日志里提到的文件。</p></div>
         {record.trace.acceptance.map((criterion, index) => <article key={index}><h3>{index + 1}. {criterion}</h3><div className="trace-criterion-fields"><label className="trace-field">验收判断 {index + 1}<select value={record.review.checks[index].result} onChange={(event) => updateCheck(index, { result: event.target.value as TraceReview['checks'][number]['result'] })}>{Object.entries(acceptanceLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select></label><label className="trace-field">验收证据 {index + 1}<textarea rows={2} maxLength={8000} value={record.review.checks[index].evidence} onChange={(event) => updateCheck(index, { evidence: event.target.value })} placeholder="可填写文件名、单元格、核对结果；没有产物时明确写未取得。" /></label></div></article>)}
       </section>
-      <section className="trace-export" aria-labelledby="trace-export-title"><div><span className="mono">TAKE THE EVIDENCE WITH YOU</span><h2 id="trace-export-title">带走一份<br />可复核的记录。</h2><p>复核包保存全部输入与人工记录；Markdown 便于交流。任何未完成项都会跟随导出。</p>{gaps.length ? <ul>{gaps.map((gap) => <li key={gap}>{gap}</li>)}</ul> : <p>必要字段已填写。任务是否成功、根因是否成立，仍以证据和最终复核为准。</p>}<div className="trace-actions"><button type="button" onClick={copy}>复制复核报告</button><button type="button" onClick={() => download('md')}>下载 Markdown</button><button type="button" className="trace-primary" onClick={() => download('json')}>下载可恢复复核包</button></div></div><label className="trace-field">报告预览<textarea readOnly value={report} rows={20} onFocus={(event) => event.currentTarget.select()} /></label></section>
+      <section className="trace-export" aria-labelledby="trace-export-title"><div><span className="mono">TAKE THE EVIDENCE WITH YOU</span><h2 id="trace-export-title">带走一份<br />可复核的记录。</h2><p>复核包保存全部输入与人工记录；Markdown 便于交流。任何未完成项都会跟随导出。</p>{gaps.length ? <ul>{gaps.map((gap) => <li key={gap}>{gap}</li>)}</ul> : <p>必要字段已填写。任务是否成功、根因是否成立，仍以证据和最终复核为准。</p>}<LocalRecordCopy key={loadedSource} value={report} label="复制复核报告" success="已复制复核报告，来源和未完成项一并保留。" /><div className="trace-actions"><button type="button" onClick={() => download('md')}>下载 Markdown</button><button type="button" className="trace-primary" onClick={() => download('json')}>下载可恢复复核包</button></div></div><label className="trace-field">报告预览<textarea readOnly value={report} rows={20} onFocus={(event) => event.currentTarget.select()} /></label></section>
     </>}
   </div>;
 }

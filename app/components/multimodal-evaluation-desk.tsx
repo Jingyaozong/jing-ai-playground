@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { LocalRecordCopy } from './local-record-copy';
 import {
   MAX_EVALUATION_CSV_BYTES, createEmptyEvaluationBatch, createEmptySample,
   evaluationDimensions, exportEvaluationCsv, filterEvaluationIssues, importEvaluationCsv, sampleReadinessIssues, summarizeEvaluationBatch,
@@ -49,7 +50,6 @@ export function MultimodalEvaluationDesk() {
   const [dirty, setDirty] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('已放入一条空白本地记录，没有预填模型输出或评测结论。');
-  const [copied, setCopied] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
   const dimensionTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const sample = batch.samples[selectedSample];
@@ -85,7 +85,7 @@ export function MultimodalEvaluationDesk() {
 
   function updateSample(changes: Partial<EvaluationSample>, preserveState = false) {
     setBatch((current) => ({ ...current, samples: current.samples.map((item, index) => index === selectedSample ? { ...item, ...changes, reviewState: preserveState ? (changes.reviewState ?? item.reviewState) : item.reviewState === 'reviewed' ? 'draft' : item.reviewState } : item) }));
-    setDirty(true); setRemovePending(false); setCopied(false);
+    setDirty(true); setRemovePending(false);
   }
 
   function updateDimension(changes: Partial<DimensionReview>) {
@@ -94,7 +94,7 @@ export function MultimodalEvaluationDesk() {
       reviewState: item.reviewState === 'reviewed' ? 'draft' : item.reviewState,
       dimensions: item.dimensions.map((entry, dimensionIndex) => dimensionIndex === selectedDimension ? { ...entry, ...changes } : entry),
     } : item) }));
-    setDirty(true); setCopied(false);
+    setDirty(true);
   }
 
   function chooseResult(result: EvaluationResult) {
@@ -152,12 +152,6 @@ export function MultimodalEvaluationDesk() {
   function completeReview() {
     if (issues.length) { setMessage(`还不能标记完成：${issues.join('；')}。`); return; }
     updateSample({ reviewState: 'reviewed' }, true); setMessage(`${sample.sampleId} 已由你标记为完成人工复核。工具没有自动判断通过或失败。`);
-  }
-
-  async function copySummary() {
-    try {
-      await navigator.clipboard.writeText(markdown); setCopied(true); setMessage('已复制当前样本的人工记录。');
-    } catch { setCopied(false); setMessage('浏览器没有允许自动复制，可在下方文本框中手动选择。'); }
   }
 
   function locateIssue(sampleIndex: number, dimensionIndex: number) {
@@ -276,7 +270,7 @@ export function MultimodalEvaluationDesk() {
       </div>
     </section>
 
-    <section className="evaluation-export" aria-labelledby="evaluation-export-title"><div><span className="mono">READABLE COPY / 可读副本</span><h2 id="evaluation-export-title">一份给表格，<br />一份给人读。</h2><p>CSV 保存整批八维字段；下方文字只汇总当前样本。两者都来自你填写的记录，不补写结论。</p><button type="button" onClick={() => void copySummary()}>{copied ? '已复制当前记录 ✓' : '复制当前记录'}</button></div><textarea aria-label="当前样本可读记录" readOnly value={markdown} rows={18} onFocus={(event) => event.currentTarget.select()} /></section>
+    <section className="evaluation-export" aria-labelledby="evaluation-export-title"><div><span className="mono">READABLE COPY / 可读副本</span><h2 id="evaluation-export-title">一份给表格，<br />一份给人读。</h2><p>CSV 保存整批八维字段；下方文字只汇总当前样本。两者都来自你填写的记录，不补写结论。</p><LocalRecordCopy key={selectedSample} value={markdown} label="复制当前记录" success="已复制当前样本的人工记录。" /></div><textarea aria-label="当前样本可读记录" readOnly value={markdown} rows={18} onFocus={(event) => event.currentTarget.select()} /></section>
   </section>;
 }
 

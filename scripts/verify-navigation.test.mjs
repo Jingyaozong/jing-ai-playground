@@ -15,7 +15,7 @@ import { summarizeTrialTimeLog, trialTimeLogHeaders } from '../app/data/review-p
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
 test('work desks expose manual copying before asking for clipboard permission', () => {
-  for (const path of ['dataset-release', 'prompt-preflight']) {
+  for (const path of ['dataset-release', 'prompt-preflight', 'multimodal-evaluation']) {
     const page = readFileSync(join(process.cwd(), `out/tools/${path}/index.html`), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
     assert.match(page, /class="local-record-copy"/);
     assert.match(page, /<button[^>]*>手动复制<\/button>/);

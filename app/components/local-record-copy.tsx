@@ -4,6 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 import { copyWithTimeout } from '../lib/copy-with-timeout';
 
 export function LocalRecordCopy({ value, label, success }: { value: string; label: string; success: string }) {
+  return <RecordCopySession key={value} value={value} label={label} success={success} />;
+}
+
+// A changed report starts a new session, even if an older value is restored later.
+function RecordCopySession({ value, label, success }: { value: string; label: string; success: string }) {
   const revision = useRef(0);
   const [result, setResult] = useState<{ value: string; phase: 'waiting' | 'success' | 'unconfirmed' } | null>(null);
   const [manual, setManual] = useState<string | null>(null);
