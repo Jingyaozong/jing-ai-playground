@@ -14,6 +14,15 @@ import { calculateReviewPace, calculateReviewPaceTarget, compareReviewPaceMix, f
 import { summarizeTrialTimeLog, trialTimeLogHeaders } from '../app/data/review-pace-import.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
+test('tool directory distinguishes drafts, human records and restorable formats', () => {
+  const html = readFileSync(join(process.cwd(), 'out/tools/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  assert.match(html, /id="tool-output-guide"/);
+  for (const text of ['生成草案', '记录人工判断', '导入后续填', '复制不等于保存', '文字副本不能代替它', '不解析任意文件']) assert.ok(html.includes(text), text);
+  const guide = html.match(/<aside class="tool-output-guide"[\s\S]*?<\/aside>/)?.[0];
+  assert.ok(guide);
+  for (const path of ['shot-prompt-builder', 'multimodal-evaluation', 'rule-review', 'agent-trace-review']) assert.ok(guide.includes(`href="/tools/${path}/"`), path);
+});
+
 test('work desks expose manual copying before asking for clipboard permission', () => {
   for (const path of ['dataset-release', 'prompt-preflight', 'multimodal-evaluation']) {
     const page = readFileSync(join(process.cwd(), `out/tools/${path}/index.html`), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');

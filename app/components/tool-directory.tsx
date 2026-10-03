@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { toolCategories, tools, type ToolCategory } from '../data/content';
 import { ToolCard } from './tool-card';
+import { ToolOutputGuide } from './tool-output-guide';
 
 export function ToolDirectory() {
   const [query, setQuery] = useState('');
@@ -34,6 +35,7 @@ export function ToolDirectory() {
         <div><p className="eyebrow mono">ALL TOOLS / 完整工具箱</p><h2 id="tool-directory-title" tabIndex={-1}>需要哪一件，<br />就拿哪一件。</h2></div>
         <p>每个工具都可以独立使用，所有输入只在当前浏览器本地处理。</p>
       </div>
+      <ToolOutputGuide />
       <div className="tool-directory-filters" role="group" aria-label="按工作用途筛选工具">
         {(['全部', ...toolCategories] as const).map((option) => (
           <button className="tool-filter" type="button" key={option} aria-pressed={category === option} aria-controls="tool-search-results" onClick={() => setCategory(option)}>
