@@ -51,6 +51,7 @@ export function MultimodalEvaluationDesk() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('已放入一条空白本地记录，没有预填模型输出或评测结论。');
   const fileInput = useRef<HTMLInputElement>(null);
+  const importNotice = useRef<HTMLParagraphElement>(null);
   const dimensionTabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const sample = batch.samples[selectedSample];
   const dimension = sample.dimensions[selectedDimension];
@@ -71,6 +72,8 @@ export function MultimodalEvaluationDesk() {
     evidenceGaps: allDimensions.filter((item) => ['fail', 'uncertain'].includes(item.result) && (!item.severity || !item.timeRange.trim() || !item.evidence.trim())).length,
   };
   const markdown = useMemo(() => sampleSummary(batch, sample), [batch, sample]);
+
+  useEffect(() => { if (pendingImport) importNotice.current?.focus(); }, [pendingImport]);
 
   useEffect(() => {
     if (!dirty) return;
@@ -169,14 +172,14 @@ export function MultimodalEvaluationDesk() {
 
   return <section className="evaluation-desk" aria-label="多模态评测记录台">
     <div className="evaluation-toolbar">
-      <div><span className="mono">LOCAL ONLY / 当前浏览器</span><h2>先建一条空白记录。</h2><p>每批最多 30 个样本。CSV 一行对应一个样本的一个维度，可导回本页继续填写。</p></div>
+      <div><span className="mono">LOCAL ONLY / 当前浏览器</span><h2>先建一条<br />空白记录。</h2><p>每批最多 30 个样本。CSV 一行对应一个样本的一个维度，可导回本页继续填写。</p></div>
       <div className="evaluation-actions"><button type="button" onClick={addSample}>新增空白样本</button><button type="button" disabled={loading || !!pendingImport} onClick={() => fileInput.current?.click()}>{loading ? '正在读取…' : '导入记录 CSV'}</button><button type="button" onClick={downloadCsv}>导出记录 CSV</button></div>
       <input ref={fileInput} type="file" accept=".csv,text/csv" aria-label="选择评测记录 CSV" hidden onChange={(event) => void importFile(event.target.files?.[0])} />
       <p className="evaluation-local-note">不会读取或上传视频；CSV 只在浏览器内解析。关闭页面前请导出。{dirty && ' 当前有尚未导出的修改。'}</p>
     </div>
-    <p className="evaluation-message" role="status" aria-live="polite">{message}</p>
+    <p ref={importNotice} tabIndex={-1} className="evaluation-message" role="status" aria-live="polite">{pendingImport ? `已读取 ${pendingImport.samples.length} 个样本，尚未替换当前记录。请选择保留当前记录或确认替换。` : message}</p>
 
-    {pendingImport && <div className="evaluation-replace"><div><span className="mono">REPLACE / 替换确认</span><h3>用导入文件替换当前记录？</h3><p>导入文件包含 {pendingImport.samples.length} 个样本。需要保留当前修改时，请先取消并导出。</p></div><div className="evaluation-actions"><button type="button" onClick={() => setPendingImport(null)}>保留当前记录</button><button type="button" onClick={() => applyImport(pendingImport)}>确认替换</button></div></div>}
+    {pendingImport && <div className="evaluation-replace"><div><span className="mono">REPLACE / 替换确认</span><h3>用导入文件<br />替换当前记录？</h3><p>导入文件包含 {pendingImport.samples.length} 个样本。需要保留当前修改时，请先取消并导出。</p></div><div className="evaluation-actions"><button type="button" onClick={() => setPendingImport(null)}>保留当前记录</button><button type="button" onClick={() => applyImport(pendingImport)}>确认替换</button></div></div>}
 
     <div className="evaluation-batch-fields">
       <label>批次名称<input maxLength={200} value={batch.batchName} onChange={(event) => updateBatch('batchName', event.target.value)} placeholder="例如：候选版内部试评" /></label>

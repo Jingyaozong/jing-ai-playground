@@ -17,9 +17,12 @@ export function RuleReview({ sample }: { sample: ReviewBatch }) {
   const [dirty, setDirty] = useState(false);
   const [loading, setLoading] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
+  const importNotice = useRef<HTMLParagraphElement>(null);
   const row = batch.rows[selected];
   const visible = batch.rows.map((item, index) => ({ item, index })).filter(({ item }) => filter === 'all' || item.status === filter);
   const reviewed = batch.rows.filter(item => item.status === 'pass' || item.status === 'fail').length;
+
+  useEffect(() => { if (pending) importNotice.current?.focus(); }, [pending]);
 
   useEffect(() => {
     if (!dirty) return;
@@ -69,7 +72,7 @@ export function RuleReview({ sample }: { sample: ReviewBatch }) {
       <input ref={fileInput} type="file" accept=".csv,text/csv" aria-label="选择题目或复核 CSV" onChange={event => void importFile(event.target.files?.[0])} hidden />
       <p className="rule-review-local">文件只在浏览器内读取。记录保留在当前页，关闭前请导出；导出后可重新导入。{dirty && ' 当前有尚未导出的修改。'}</p>
     </div>
-    <p className="rule-review-message" role="status" aria-live="polite">{message}</p>
+    <p ref={importNotice} tabIndex={-1} className="rule-review-message" role="status" aria-live="polite">{pending ? `已读取 ${pending.rows.length} 条记录，尚未替换当前批次。请选择保留当前批次或确认替换。` : message}</p>
     {pending && <div className="rule-review-replace"><h3>替换当前批次？</h3><p>将用 {pending.rows.length} 条记录替换当前 {batch.rows.length} 条记录。需要保留当前内容时，先导出复核 CSV。</p><div className="rule-review-actions"><button type="button" onClick={() => setPending(null)}>保留当前批次</button><button type="button" onClick={() => apply(pending)}>替换为导入批次</button></div></div>}
     {!row ? <div className="rule-review-empty"><span aria-hidden="true">□ → ✓</span><h3>一条回答，一份依据。</h3><p>载入题目后，从第一条开始。所有内置题目初始均为待复核。</p></div> : <>
       <div className="rule-review-meta">

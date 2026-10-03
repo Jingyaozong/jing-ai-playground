@@ -14,6 +14,15 @@ import { calculateReviewPace, calculateReviewPaceTarget, compareReviewPaceMix, f
 import { summarizeTrialTimeLog, trialTimeLogHeaders } from '../app/data/review-pace-import.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
+test('CSV desks announce pending replacements and expose a keyboard focus target', () => {
+  for (const [component, state] of [['rule-review.tsx', 'pending'], ['multimodal-evaluation-desk.tsx', 'pendingImport']]) {
+    const source = readFileSync(join(process.cwd(), 'app/components', component), 'utf8');
+    assert.ok(source.includes(`if (${state}) importNotice.current?.focus()`));
+    assert.match(source, /ref=\{importNotice\} tabIndex=\{-1\}/);
+    assert.match(source, /尚未替换当前/);
+  }
+});
+
 test('tool directory distinguishes drafts, human records and restorable formats', () => {
   const html = readFileSync(join(process.cwd(), 'out/tools/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   assert.match(html, /id="tool-output-guide"/);
