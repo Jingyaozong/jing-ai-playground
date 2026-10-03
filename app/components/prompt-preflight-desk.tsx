@@ -1,6 +1,7 @@
 'use client';
 
 import { Fragment, useMemo, useRef, useState, type ChangeEvent } from 'react';
+import { LocalRecordCopy } from './local-record-copy';
 import { acceptanceVerdicts, createSyntheticPromptPreflight, diffPromptText, emptyPromptPreflight, formatPromptPreflight, inspectPromptPreflight, maxPromptPreflightFileBytes, parsePromptPreflight, serializePromptPreflight, type AcceptanceCheck, type AcceptanceVerdict, type PromptPreflightRecord, type PromptDiffSegment } from '../../lib/prompt-preflight';
 
 const storageKey = 'jing-prompt-preflight-v1';
@@ -88,13 +89,6 @@ export function PromptPreflightDesk() {
     } catch { setFeedback('无法删除浏览器存档；请检查浏览器存储权限。'); }
   }
 
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText(formatPromptPreflight(record));
-      setFeedback('已复制工作卡，包含缺项提醒和真实输出状态。');
-    } catch { setFeedback('复制未成功。请检查浏览器剪贴板权限。'); }
-  }
-
   function exportJson() {
     const json = JSON.stringify(JSON.parse(serializePromptPreflight(record)), null, 2);
     const url = URL.createObjectURL(new Blob([json], { type: 'application/json;charset=utf-8' }));
@@ -169,7 +163,8 @@ export function PromptPreflightDesk() {
       <p className="prompt-preflight-result">{review.readyToTest ? '必要字段已填写 · 可以开始真实测试' : `还有 ${review.gaps.length} 处待补充`}</p>
       <ul>{review.gaps.length ? review.gaps.map((gap) => <li key={gap}>{gap}</li>) : <li>这里只确认字段已填写，不判断 Prompt 是否有效。</li>}</ul>
       <div className="prompt-preflight-output-status"><span className="mono">OUTPUT STATUS</span><strong>{review.resultStatus}</strong></div>
-      <div className="prompt-preflight-actions"><button type="button" onClick={copy}>复制工作卡 ↗</button><button type="button" onClick={save}>保存到此浏览器</button><button type="button" onClick={restore}>恢复上次保存</button><button type="button" onClick={() => { setRecord(emptyPromptPreflight); setDiffVisible(false); setFeedback('当前填写已清空；此前保存的记录仍在，可用“恢复上次保存”取回。'); }}>清空当前填写</button><button type="button" onClick={removeSaved}>删除此浏览器存档</button></div>
+      <LocalRecordCopy value={formatPromptPreflight(record)} label="复制工作卡 ↗" success="已复制工作卡，包含缺项提醒和真实输出状态。" />
+      <div className="prompt-preflight-actions"><button type="button" onClick={save}>保存到此浏览器</button><button type="button" onClick={restore}>恢复上次保存</button><button type="button" onClick={() => { setRecord(emptyPromptPreflight); setDiffVisible(false); setFeedback('当前填写已清空；此前保存的记录仍在，可用“恢复上次保存”取回。'); }}>清空当前填写</button><button type="button" onClick={removeSaved}>删除此浏览器存档</button></div>
       <section className="prompt-preflight-backup" aria-label="本地 JSON 备份与导入">
         <span className="mono">PORTABLE COPY / 本地备份</span>
         <p>换浏览器也能继续填写。导出的是当前页面内容，不要求先保存；导入只在你确认后替换当前填写。</p>

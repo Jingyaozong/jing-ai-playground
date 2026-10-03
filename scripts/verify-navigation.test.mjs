@@ -14,6 +14,16 @@ import { calculateReviewPace, calculateReviewPaceTarget, compareReviewPaceMix, f
 import { summarizeTrialTimeLog, trialTimeLogHeaders } from '../app/data/review-pace-import.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
+test('work desks expose manual copying before asking for clipboard permission', () => {
+  for (const path of ['dataset-release', 'prompt-preflight']) {
+    const page = readFileSync(join(process.cwd(), `out/tools/${path}/index.html`), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    assert.match(page, /class="local-record-copy"/);
+    assert.match(page, /<button[^>]*>手动复制<\/button>/);
+    assert.match(page, /修改记录后请重新复制/);
+    assert.doesNotMatch(page, /正在复制…/);
+  }
+});
+
 function anchors(file) {
   const html = readFileSync(join(process.cwd(), 'out', file), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');

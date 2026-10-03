@@ -1,32 +1,21 @@
 'use client';
 
 import { useState } from 'react';
+import { LocalRecordCopy } from './local-record-copy';
 import { assessRelease, blankReleaseRecord, isBlankReleaseRecord, paperBoatB02Practice, paperBoatB02RetestPractice, releaseGates, releaseReport, type ReleaseCheckId, type ReleaseCheckStatus, type ReleaseRecord } from '../../lib/dataset-release';
 
 export function DatasetReleaseDesk() {
   const [record, setRecord] = useState<ReleaseRecord>(blankReleaseRecord);
-  const [copyMessage, setCopyMessage] = useState('');
   const assessment = assessRelease(record);
   const report = releaseReport(record);
   const canLoadPractice = isBlankReleaseRecord(record);
 
   function updateIdentity(key: 'dataset' | 'batch' | 'ruleVersion', value: string) {
     setRecord((current) => ({ ...current, [key]: value }));
-    setCopyMessage('');
   }
 
   function updateCheck(id: ReleaseCheckId, change: Partial<{ status: ReleaseCheckStatus; evidence: string }>) {
     setRecord((current) => ({ ...current, checks: { ...current.checks, [id]: { ...current.checks[id], ...change } } }));
-    setCopyMessage('');
-  }
-
-  async function copyReport() {
-    try {
-      await navigator.clipboard.writeText(report);
-      setCopyMessage(record.synthetic ? '已复制虚构演练记录；不得用于实际交付。' : '已复制当前自检记录；仍需人工核对实际文件。');
-    } catch {
-      setCopyMessage('复制不可用。可选中下方文本框内容，手动复制。');
-    }
   }
 
   return <div className="dataset-release-desk">
@@ -89,7 +78,7 @@ export function DatasetReleaseDesk() {
         {assessment.blocked.map((check) => <li key={check.id}>{check.gate} · {check.label}：需处理。</li>)}
         {assessment.pending.map((check) => <li key={check.id}>{check.gate} · {check.label}：待核实或缺少依据。</li>)}
       </ul></div>}
-      <div className="release-copy-row"><button type="button" onClick={copyReport}>复制交接记录 ↗</button><span role="status" aria-live="polite">{copyMessage}</span></div>
+      <div className="release-copy-row"><LocalRecordCopy value={report} label="复制交接记录 ↗" success={record.synthetic ? '已复制虚构演练记录；不得用于实际交付。' : '已复制当前自检记录；仍需人工核对实际文件。'} /></div>
       <label className="release-report-label" htmlFor="release-report">当前记录预览，可选中复制</label><textarea id="release-report" readOnly value={report} rows={12} />
     </section>
   </div>;
