@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 
 type OutputKey = 'prompt' | 'checklist' | 'revision';
 type PromptValues = {
@@ -21,10 +22,10 @@ type TextFieldKey = Exclude<keyof PromptValues, 'shotName' | 'duration'>;
 const storageKey = 'jing-shot-prompt-builder-v1';
 
 const exampleValues: PromptValues = {
-  shotName: '乔野拿起白杯',
+  shotName: '合成演练：乔野拿起白杯',
   duration: 5,
   subject: '乔野，27岁，黑色低马尾，珊瑚红夹克、浅蓝衬衫、深蓝阔腿裤；右手接近杯子',
-  scene: '旧家厨房晨光；白色陶瓷杯位于黄色杯垫中央；杯柄朝画面右侧；背景家具和北窗位置固定',
+  scene: '写实生活场景，旧家厨房晨光；白色陶瓷杯位于黄色杯垫中央；杯柄朝画面右侧；背景家具和北窗位置固定；柔和中性色，陶瓷与布料保留自然质感',
   startState: '乔野站在桌边，右手距离杯柄约一厘米；杯底完整落在杯垫上，人物与杯子都静止',
   action: '右手缓慢靠近；指尖接触杯柄后四指闭合；完成抓握以后，杯底平稳离开杯垫两厘米',
   endState: '右手保持抓握，白杯悬停在杯垫上方两厘米；人物停住，杯口、杯柄方向不变',
@@ -168,10 +169,36 @@ export function ShotPromptBuilder() {
 
   return (
     <section className="shot-prompt-workbench" aria-label="AI 视频镜头 Prompt 组装器">
+      <section className="shot-practice-guide" id="single-shot-practice" aria-labelledby="shot-practice-title">
+        <p className="eyebrow mono">合成演练 · 编辑候选 · 待荆确认</p>
+        <h2 id="shot-practice-title"><span>一只白杯，</span><span>练清楚一个动作。</span></h2>
+        <p>这是本站编写的虚构练习，不是教程原案例或真实客户项目。无参考图、无视频、未调用模型；以下都是制作要求与待执行验收，不是成功结果。</p>
+        <details>
+          <summary>展开白杯单镜演练</summary>
+          <div className="shot-practice-steps">
+            <article><h3>从教程找到填写位置</h3><p>借用 Adobe 教程的七项要素查漏补缺，不照搬原片示例，也不保证适用于所有模型。</p><dl>
+              <div><dt>主体、动作</dt><dd>主体锚点写人物与服装；动作顺序写靠近、接触、抓握、抬起、停住。</dd></div>
+              <div><dt>镜头</dt><dd>摄影机写固定近景，手、杯柄与杯底持续可见；不要让运镜遮住接触点。</dd></div>
+              <div><dt>地点、光线与调色</dt><dd>场景锚点写旧家厨房、北窗晨光与柔和中性色；必须保持项记录光线方向。</dd></div>
+              <div><dt>视觉风格、美学质感</dt><dd>场景锚点写写实生活场景、自然陶瓷与布料质感；不要用“电影级”代替可见要求。</dd></div>
+            </dl><Link href="/library/?type=VIDEO#library-adobe-structuring-video-prompts">对照教程的时间点要点 ↗</Link></article>
+            <article><h3>先定动作，再看输出</h3><p>载入示例会替换当前表单。先保存自己的文本，再用下方三份输出分别保留提示、空白清单与返修记录。</p><button type="button" onClick={() => replaceValues(exampleValues)}>载入合成示例（替换当前表单）</button><ul>
+              <li>起点：杯底落在杯垫上，手与杯柄尚未接触。</li>
+              <li>过程：指尖接触、完成抓握之后，杯子才离开杯垫；不能提前移动。</li>
+              <li>终点：杯子在杯垫上方两厘米停住，手仍承重，杯柄方向不变。画面尺度不足时，此距离记为无法确认。</li>
+            </ul></article>
+            <article><h3>有视频后才填写判定</h3><p>先核对首尾状态，再慢放接触区间；记录候选 ID、失败时间或帧号和可见现象。没有证据时写“无法确认”，不要补一个通过。</p><ul>
+              <li>若杯子先动、手后抓：记录时序错误；下一轮只细化动作顺序，其他字段保持。</li>
+              <li>若接触点被挡住：记录证据缺口；下一轮只改摄影机可见范围，不同时改动作。</li>
+              <li>若修正接触后人物或杯子漂移：保留旧样本并复查锚点，不能只凭一个维度宣布成功。</li>
+            </ul><p>上述失败是假设分支，不是已观察到的 Bad Case。当前判定：待执行。</p><Link href="/tools/multimodal-evaluation/">有真实样本后记录八维评测 ↗</Link></article>
+          </div>
+        </details>
+      </section>
       <div className="shot-prompt-editor">
         <header className="shot-builder-heading">
           <div><span className="mono">01 / SHOT FACTS</span><h2>把镜头拆成<br />九层事实。</h2></div>
-          <div><button type="button" onClick={() => replaceValues(exampleValues)}>载入示例</button><button type="button" onClick={() => replaceValues(emptyValues)}>清空草稿</button></div>
+          <div><button type="button" onClick={() => replaceValues(exampleValues)}>载入合成示例</button><button type="button" onClick={() => replaceValues(emptyValues)}>清空草稿</button></div>
         </header>
 
         <div className="shot-prompt-basics">

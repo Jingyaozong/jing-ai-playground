@@ -4737,6 +4737,25 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
 .shot-copy-fallback { display: grid; grid-template-columns: 1fr auto; gap: 14px; margin-top: 24px; padding: 22px; border: 2px solid var(--ink); border-radius: 22px; background: var(--coral); }
 .shot-copy-fallback p { margin: 4px 0 0; }
 .shot-copy-fallback textarea { grid-column: 1 / -1; min-height: 220px; padding: 16px; border: 1.5px solid var(--ink); border-radius: 14px; }
+.shot-practice-guide { grid-column: 1 / -1; padding: clamp(24px,3vw,40px); border: 1.5px solid var(--ink); border-radius: 24px; background: var(--paper); scroll-margin-top: 112px; }
+.shot-practice-guide h2 { margin: 18px 0; font: 700 clamp(1.5rem,2.2vw,2rem)/1.55 var(--display); }
+.shot-practice-guide h2 span { display: inline-block; }
+.shot-practice-guide > p:not(.eyebrow) { max-width: 76ch; margin: 0 0 24px; color: var(--muted); font-size: 14px; line-height: 1.9; }
+.shot-practice-guide summary { padding: 12px 0; cursor: pointer; font-size: 14px; font-weight: 700; }
+.shot-practice-steps { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; margin-top: 24px; }
+.shot-practice-steps h3 { margin: 0 0 18px; font-size: 18px; line-height: 1.65; text-wrap: balance; }
+.shot-practice-steps :is(p,li,dd) { font-size: 13px; line-height: 1.9; }
+.shot-practice-steps p { margin: 0 0 20px; }
+.shot-practice-steps dl { margin: 24px 0; }
+.shot-practice-steps dl > div { margin-bottom: 22px; }
+.shot-practice-steps dt { font-size: 13px; font-weight: 750; line-height: 1.8; }
+.shot-practice-steps dd { margin: 6px 0 0; color: var(--muted); }
+.shot-practice-steps ul { padding-left: 18px; margin: 24px 0; }
+.shot-practice-steps li + li { margin-top: 16px; }
+.shot-practice-steps a { display: inline-block; padding-block: 12px; color: var(--blue); font-size: 13px; line-height: 1.8; font-weight: 700; }
+.shot-practice-steps button { min-height: 44px; padding: 12px 16px; border: 1.5px solid var(--ink); border-radius: 14px; background: var(--yellow); color: var(--ink); font: 700 13px/1.8 var(--body); cursor: pointer; }
+.shot-practice-guide :is(summary,button,a):focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+@media (max-width: 1000px) { .shot-practice-steps { grid-template-columns: 1fr; gap: 32px; } .shot-practice-steps article + article { border-top: 1px solid var(--line); padding-top: 28px; } }
 .shot-prompt-method {
   display: grid;
   grid-template-columns: 1.1fr .9fr;

@@ -157,6 +157,14 @@ test('library semantic title groups preserve original titles in both card contex
   }
 });
 
+test('single-shot practice keeps synthetic scope and empty assessment separate', () => {
+  const html = readFileSync(join(process.cwd(), 'out/tools/shot-prompt-builder/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  for (const text of ['id="single-shot-practice"', '合成演练 · 编辑候选 · 待荆确认', '无参考图、无视频、未调用模型', '不是已观察到的 Bad Case', '当前判定：待执行', '判定：待真实样本生成后填写', '待观看后填写，不推测模型内部原因', '合成演练：乔野拿起白杯']) assert.ok(html.includes(text), `Practice boundary missing: ${text}`);
+  assert.ok(html.includes('/library/?type=VIDEO#library-adobe-structuring-video-prompts'));
+  assert.ok(html.includes('/tools/multimodal-evaluation/'));
+  assert.ok(!html.includes('- [x]'), 'Practice checklist invents completed verification');
+});
+
 test('reviewed video guides and practice tools have unique bidirectional anchors', () => {
   const html = readFileSync(join(process.cwd(), 'out/library/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   for (const item of libraryItems.filter((item) => item.videoReview)) {
