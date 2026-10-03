@@ -14,6 +14,19 @@ import { calculateReviewPace, calculateReviewPaceTarget, compareReviewPaceMix, f
 import { summarizeTrialTimeLog, trialTimeLogHeaders } from '../app/data/review-pace-import.ts';
 
 // Run after build: inspect real exported anchors, not embedded React payloads.
+test('evaluation removal offers a bounded undo without overwriting subsequent edits', () => {
+  const source = readFileSync(join(process.cwd(), 'app/components/multimodal-evaluation-desk.tsx'), 'utf8');
+  assert.match(source, /setRemovedSnapshot\(\{ batch, sampleIndex: selectedSample, dimensionIndex: selectedDimension \}\)/);
+  assert.match(source, /setBatch\(removedSnapshot.batch\)/);
+  assert.match(source, /setSelectedDimension\(removedSnapshot.dimensionIndex\)/);
+  for (const handler of ['updateBatch', 'updateSample', 'updateDimension', 'addSample', 'applyImport']) {
+    const body = source.slice(source.indexOf(`function ${handler}(`)).split(/\n  (?:async )?function /)[0];
+    assert.ok(body.includes('setRemovedSnapshot(null)'), handler);
+  }
+  assert.match(source, /撤销上次移除/);
+  assert.match(source, /继续编辑、新增或确认导入后，撤销失效/);
+});
+
 test('CSV desks announce pending replacements and expose a keyboard focus target', () => {
   for (const [component, state] of [['rule-review.tsx', 'pending'], ['multimodal-evaluation-desk.tsx', 'pendingImport']]) {
     const source = readFileSync(join(process.cwd(), 'app/components', component), 'utf8');

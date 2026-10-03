@@ -47,6 +47,7 @@ export function MultimodalEvaluationDesk() {
   const [issueFilter, setIssueFilter] = useState<EvaluationIssueFilter>('all');
   const [pendingImport, setPendingImport] = useState<EvaluationBatch | null>(null);
   const [removePending, setRemovePending] = useState(false);
+  const [removedSnapshot, setRemovedSnapshot] = useState<{ batch: EvaluationBatch; sampleIndex: number; dimensionIndex: number } | null>(null);
   const [dirty, setDirty] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('已放入一条空白本地记录，没有预填模型输出或评测结论。');
@@ -83,15 +84,18 @@ export function MultimodalEvaluationDesk() {
   }, [dirty]);
 
   function updateBatch(key: keyof Omit<EvaluationBatch, 'samples'>, value: string) {
+    setRemovedSnapshot(null); setRemovePending(false);
     setBatch((current) => ({ ...current, [key]: value })); setDirty(true);
   }
 
   function updateSample(changes: Partial<EvaluationSample>, preserveState = false) {
+    setRemovedSnapshot(null);
     setBatch((current) => ({ ...current, samples: current.samples.map((item, index) => index === selectedSample ? { ...item, ...changes, reviewState: preserveState ? (changes.reviewState ?? item.reviewState) : item.reviewState === 'reviewed' ? 'draft' : item.reviewState } : item) }));
     setDirty(true); setRemovePending(false);
   }
 
   function updateDimension(changes: Partial<DimensionReview>) {
+    setRemovedSnapshot(null); setRemovePending(false);
     setBatch((current) => ({ ...current, samples: current.samples.map((item, sampleIndex) => sampleIndex === selectedSample ? {
       ...item,
       reviewState: item.reviewState === 'reviewed' ? 'draft' : item.reviewState,
@@ -107,6 +111,7 @@ export function MultimodalEvaluationDesk() {
 
   function addSample() {
     if (batch.samples.length >= 30) { setMessage('每批最多 30 个样本，请先导出，再开始下一批。'); return; }
+    setRemovedSnapshot(null);
     let index = batch.samples.length + 1;
     while (batch.samples.some((item) => item.sampleId === `LOCAL-${String(index).padStart(3, '0')}`)) index += 1;
     setBatch((current) => ({ ...current, samples: [...current.samples, createEmptySample(index)] }));
@@ -115,16 +120,25 @@ export function MultimodalEvaluationDesk() {
   }
 
   function removeSample() {
+    setRemovedSnapshot({ batch, sampleIndex: selectedSample, dimensionIndex: selectedDimension });
     if (batch.samples.length === 1) {
       setBatch((current) => ({ ...current, samples: [createEmptySample()] })); setSelectedSample(0);
     } else {
       setBatch((current) => ({ ...current, samples: current.samples.filter((_, index) => index !== selectedSample) }));
       setSelectedSample(Math.max(0, selectedSample - 1));
     }
-    setSelectedDimension(0); setRemovePending(false); setDirty(true); setMessage('当前样本已从页面记录中移除。尚未导出的内容无法恢复。');
+    setSelectedDimension(0); setRemovePending(false); setDirty(true); setMessage('当前样本已移除。继续编辑前，可撤销这次移除；刷新页面后无法撤销。');
+  }
+
+  function undoRemoval() {
+    if (!removedSnapshot) return;
+    setBatch(removedSnapshot.batch); setSelectedSample(removedSnapshot.sampleIndex); setSelectedDimension(removedSnapshot.dimensionIndex);
+    setRemovedSnapshot(null); setRemovePending(false); setDirty(true);
+    setMessage('已恢复移除前的样本、八维记录与人工状态。请重新导出完整批次。');
   }
 
   function applyImport(next: EvaluationBatch) {
+    setRemovedSnapshot(null);
     setBatch(next); setSelectedSample(0); setSelectedDimension(0); setPendingImport(null); setRemovePending(false); setDirty(false);
     setMessage(`已载入 ${next.samples.length} 个样本、${next.samples.length * 8} 条维度记录；原有人工状态按文件保留。`);
   }
@@ -226,7 +240,7 @@ export function MultimodalEvaluationDesk() {
           <aside className="evaluation-gate"><span className="mono">HUMAN GATE / 人工关口</span><h3>{issues.length ? '还不能收口。' : '证据已经齐了。'}</h3>{issues.length ? <ul>{issues.map((issue) => <li key={issue}>{issue}</li>)}</ul> : <p>八维状态与必要证据完整。仍需由你确认，不会自动判定样本优劣。</p>}<label>当前流程状态<select value={sample.reviewState} disabled={sample.reviewState === 'reviewed'} onChange={(event) => updateSample({ reviewState: event.target.value as SampleReviewState }, true)}><option value="draft">填写中</option><option value="ready_for_review">待人工复核</option><option value="needs_discussion">待讨论</option>{sample.reviewState === 'reviewed' && <option value="reviewed">已完成人工复核</option>}</select></label><button type="button" onClick={completeReview}>由我确认完成人工复核</button></aside>
         </div>
 
-        <div className="evaluation-sheet-actions"><div>{removePending ? <><p>移除后，尚未导出的当前样本无法恢复。</p><button type="button" onClick={() => setRemovePending(false)}>取消移除</button><button type="button" onClick={removeSample}>确认移除</button></> : <button type="button" onClick={() => setRemovePending(true)}>移除当前样本</button>}</div><button type="button" onClick={downloadCsv}>导出全部记录 CSV</button></div>
+        <div className="evaluation-sheet-actions"><div>{removePending ? <><p>将移除当前样本 {sample.sampleId || '未命名样本'}。继续编辑前可撤销一次；刷新后无法撤销。</p><button type="button" onClick={() => setRemovePending(false)}>取消移除</button><button type="button" onClick={removeSample}>确认移除</button></> : <button type="button" onClick={() => setRemovePending(true)}>移除当前样本</button>}{removedSnapshot && <><p>可恢复 {removedSnapshot.batch.samples[removedSnapshot.sampleIndex].sampleId || '未命名样本'}；继续编辑、新增或确认导入后，撤销失效。</p><button type="button" disabled={!!pendingImport || loading} onClick={undoRemoval}>撤销上次移除</button></>}</div><button type="button" onClick={downloadCsv}>导出全部记录 CSV</button></div>
       </div>
     </div>
 
