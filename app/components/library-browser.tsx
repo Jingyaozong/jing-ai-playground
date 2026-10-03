@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useSyncExternalStore } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import type { LibraryItem } from '../data/library';
 import { readUrlFilter, writeUrlFilter } from '../../lib/filter-url';
 import { libraryFilters } from '../data/library';
@@ -36,6 +36,22 @@ export function LibraryBrowser({ items }: { items: LibraryItem[] }) {
     });
   }, [active, items, query]);
 
+  useEffect(() => {
+    const revealLinkedCard = () => {
+      const item = visible.find((item) => window.location.hash === `#library-${item.id}`);
+      if (!item) return;
+      const card = document.getElementById(`library-${item.id}`);
+      if (!card) return;
+      const review = card.querySelector('details');
+      if (review) review.open = true;
+      card.scrollIntoView({ block: 'start' });
+      card.focus({ preventScroll: true });
+    };
+    revealLinkedCard();
+    window.addEventListener('hashchange', revealLinkedCard);
+    return () => window.removeEventListener('hashchange', revealLinkedCard);
+  }, [visible]);
+
   return (
     <section className="content-browser library-browser" aria-label="筛选收藏内容">
       <div className="browser-toolbar">
@@ -43,7 +59,7 @@ export function LibraryBrowser({ items }: { items: LibraryItem[] }) {
         <div className="filter-row">{libraryFilters.map((filter) => <button aria-pressed={active === filter} className={active === filter ? 'is-active' : ''} onClick={() => selectFilter(filter)} key={filter}>{filterLabels[filter]}</button>)}</div>
       </div>
       <p className="library-result-count" role="status">{filterLabels[active]} · 显示 {visible.length} 项收藏{query.trim() && ` · 关键词：${query.trim()}`}</p>
-      <div className="library-grid">{visible.map((item) => <LibraryCard item={item} key={item.id} />)}</div>
+      <div className="library-grid">{visible.map((item) => <LibraryCard item={item} anchorId={`library-${item.id}`} key={item.id} />)}</div>
       {visible.length === 0 && <div className="empty-result"><b>这里暂时没有匹配收藏。</b><span>试试其他关键词，或清除筛选重新浏览。</span><button onClick={() => { selectFilter('全部'); setQuery(''); }}>查看全部收藏</button></div>}
     </section>
   );

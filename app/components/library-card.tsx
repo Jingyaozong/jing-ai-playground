@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import type { LibraryItem } from '../data/library';
 
-export function LibraryCard({ item, compact = false }: { item: LibraryItem; compact?: boolean }) {
+export function LibraryCard({ item, compact = false, anchorId }: { item: LibraryItem; compact?: boolean; anchorId?: string }) {
   return (
-    <article className={`library-card library-${item.type.toLowerCase()} ${compact ? 'is-compact' : ''}`}>
+    <article id={anchorId} tabIndex={anchorId ? -1 : undefined} className={`library-card library-${item.type.toLowerCase()} ${compact ? 'is-compact' : ''}`}>
       <div className={`library-cover cover-${item.visual}`}>
         <span className="library-type mono">{item.source.startsWith('Bilibili') ? '[ BILIBILI ]' : item.type}</span>
         <span className="library-cover-symbol" aria-hidden="true">{item.type === 'VIDEO' ? '▶' : item.type === 'PDF' ? 'PDF' : item.type === 'TOOL' ? '✦' : 'Aa'}</span>

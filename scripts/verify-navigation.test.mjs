@@ -157,6 +157,17 @@ test('library semantic title groups preserve original titles in both card contex
   }
 });
 
+test('reviewed video guides and practice tools have unique bidirectional anchors', () => {
+  const html = readFileSync(join(process.cwd(), 'out/library/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  for (const item of libraryItems.filter((item) => item.videoReview)) {
+    const anchorId = `library-${item.id}`;
+    assert.equal(html.split(`id="${anchorId}"`).length - 1, 1, `Duplicate or missing library anchor: ${item.id}`);
+    const toolHtml = readFileSync(join(process.cwd(), 'out', item.videoReview.practice.href, 'index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+    assert.ok(toolHtml.includes(`/library/?type=VIDEO#${anchorId}`), `Missing return route: ${item.id}`);
+    assert.ok(html.includes(item.videoReview.practice.href), `Missing practice entry: ${item.id}`);
+  }
+});
+
 test('library distinguishes reviewed excerpts, historical sources and unconfirmed opinions', () => {
   const html = readFileSync(join(process.cwd(), 'out/library/index.html'), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
@@ -166,7 +177,7 @@ test('library distinguishes reviewed excerpts, historical sources and unconfirme
   assert.ok(routeSection.length > 0, 'Library reading routes are missing');
   assert.equal(html.split('讲解要点已核对 · 待荆确认').length - 1, reviewed.length, 'Each video needs its own visible review boundary');
   for (const item of reviewed) {
-    assert.ok(html.includes(item.title), `${item.id}: reviewed card is missing`);
+    assert.ok(html.includes(`id="library-${item.id}"`), `${item.id}: reviewed card is missing`);
     assert.ok(html.includes(item.videoReview.basis) && html.includes(item.videoReview.limitation), `${item.id}: review scope is missing`);
     for (const point of item.videoReview.points) {
       const url = new URL(item.url);
@@ -234,7 +245,7 @@ test('cross-page recommendations remain editorial candidates until Jing confirms
   assert.ok(library.includes('编辑初选<br/>待荆确认'));
   assert.ok(library.includes('PICKS TO REVIEW'));
   assert.ok(library.includes('编辑观点候选 · 待荆确认'));
-  const draftCards = [...library.matchAll(/<article class="library-card[^"]*"[^>]*>[\s\S]*?<\/article>/g)]
+  const draftCards = [...library.matchAll(/<article\b[^>]*\bclass="library-card[^"]*"[^>]*>[\s\S]*?<\/article>/g)]
     .map(([card]) => card)
     .filter((card) => card.includes('编辑初选 · 待荆确认') || card.includes('元信息已核对 · 内容待复核 · 待荆确认') || card.includes('讲解要点已核对 · 待荆确认'));
   assert.ok(draftCards.length >= libraryItems.filter((item) => item.takeStatus === 'draft').length);

@@ -1880,6 +1880,8 @@ html:has(.prompt-collection) { scroll-behavior: auto; }
 .library-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 19px; align-items: start; }
 .library-card { overflow: hidden; border: 2px solid var(--ink); border-radius: 28px; background: var(--white); transition: transform .25s ease, box-shadow .25s ease; }
 .library-card:hover { transform: translateY(-6px); box-shadow: 8px 8px 0 var(--ink); }
+.library-card[id] { scroll-margin-top: 112px; }
+.library-card[id]:focus-visible { outline: 3px solid var(--blue); outline-offset: 5px; }
 .library-cover { position: relative; min-height: 275px; overflow: hidden; border-bottom: 2px solid var(--ink); background: var(--sky); }
 .library-cover::before, .library-cover::after { content: ''; position: absolute; }
 .library-cover::before { width: 46%; aspect-ratio: 1; right: -6%; top: -14%; border: 2px solid var(--ink); border-radius: 50%; background: var(--yellow); }

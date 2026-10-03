@@ -29,7 +29,7 @@ export default function CharacterAnchorPage() {
         <section className="anchor-method">
           <div><span className="mono">WHY / 为什么</span><h2>Prompt 负责描述，<br />参考图负责证明。</h2></div>
           <p>角色锚点的作用，是让团队知道哪些变化属于表演、哪些变化已经破坏身份。它不能代替清晰的人物母版，也不能保证任何模型百分之百一致。</p>
-          <nav className="tool-method-links" aria-label="角色锚点相关内容"><Link href="/notes/ai-video-character-consistency/">先读人物一致性方法 ↗</Link><Link href="/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-character-anchor-brief">复制角色锚点模板 ↗</Link></nav>
+          <nav className="tool-method-links" aria-label="角色锚点相关内容"><Link href="/notes/ai-video-character-consistency/">先读人物一致性方法 ↗</Link><Link href="/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-character-anchor-brief">复制角色锚点模板 ↗</Link><Link href="/library/?type=VIDEO#library-kling-character-consistency-bilibili">回看可灵角色参考教程 ↗</Link></nav>
         </section>
       </div>
       <SiteFooter />

@@ -174,6 +174,7 @@ export const libraryItems: LibraryItem[] = [
   {
     id: 'adobe-structuring-video-prompts',
     title: 'Adobe Firefly 视频 Prompt 结构教程',
+    titleParts: ['Adobe Firefly ', '视频 Prompt ', '结构教程'],
     type: 'VIDEO',
     source: 'YouTube · Adobe',
     topic: 'Prompt',
