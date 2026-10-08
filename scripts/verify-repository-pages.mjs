@@ -11,7 +11,7 @@ const environment = {
   NEXT_PUBLIC_SITE_URL: siteUrl,
 };
 
-for (const script of ['build', 'verify:pages']) {
+for (const script of ['build', 'verify:pages', 'verify:navigation']) {
   const result = spawnSync(process.execPath, [npmEntry, 'run', script], {
     cwd: process.cwd(),
     env: environment,

@@ -13,6 +13,21 @@ import { promptResources } from '../app/data/prompt-resources.ts';
 import { calculateReviewPace, calculateReviewPaceTarget, compareReviewPaceMix, formatReviewPaceSummary } from '../app/data/review-pace.ts';
 import { summarizeTrialTimeLog, trialTimeLogHeaders } from '../app/data/review-pace-import.ts';
 
+const repositoryName = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? '';
+const deploymentBasePath = process.env.GITHUB_ACTIONS === 'true' && repositoryName && !repositoryName.endsWith('.github.io') ? `/${repositoryName}` : '';
+
+function routeWithoutBase(href, base = deploymentBasePath) {
+  if (!base) return href;
+  return href === base ? '/' : href.startsWith(`${base}/`) ? href.slice(base.length) : href;
+}
+
+test('deployment route comparisons strip only the exact repository prefix', () => {
+  assert.equal(routeWithoutBase('/jing-ai-playground/tools/?x=1#desk', '/jing-ai-playground'), '/tools/?x=1#desk');
+  assert.equal(routeWithoutBase('/jing-ai-playground-other/tools/', '/jing-ai-playground'), '/jing-ai-playground-other/tools/');
+  assert.equal(routeWithoutBase('https://example.com/jing-ai-playground/tools/', '/jing-ai-playground'), 'https://example.com/jing-ai-playground/tools/');
+  assert.equal(routeWithoutBase('/tools/', ''), '/tools/');
+});
+
 // Run after build: inspect real exported anchors, not embedded React payloads.
 test('evaluation exports retain leave protection until the current snapshot is confirmed saved', () => {
   const source = readFileSync(join(process.cwd(), 'app/components/multimodal-evaluation-desk.tsx'), 'utf8');
@@ -55,7 +70,7 @@ test('tool directory distinguishes drafts, human records and restorable formats'
   for (const text of ['生成草案', '记录人工判断', '导入后续填', '复制不等于保存', '文字副本不能代替它', '不解析任意文件']) assert.ok(html.includes(text), text);
   const guide = html.match(/<aside class="tool-output-guide"[\s\S]*?<\/aside>/)?.[0];
   assert.ok(guide);
-  for (const path of ['shot-prompt-builder', 'multimodal-evaluation', 'rule-review', 'agent-trace-review']) assert.ok(guide.includes(`href="/tools/${path}/"`), path);
+  for (const path of ['shot-prompt-builder', 'multimodal-evaluation', 'rule-review', 'agent-trace-review']) assert.ok(guide.includes(`href="${deploymentBasePath}/tools/${path}/"`), path);
 });
 
 test('work desks expose manual copying before asking for clipboard permission', () => {
@@ -72,7 +87,7 @@ function anchors(file) {
   const html = readFileSync(join(process.cwd(), 'out', file), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   return [...html.matchAll(/<a\b[^>]*\bhref="([^"]*)"[^>]*>/g)]
-    .map((match) => match[1].replaceAll('&amp;', '&'));
+    .map((match) => routeWithoutBase(match[1].replaceAll('&amp;', '&')));
 }
 
 const groups = [
