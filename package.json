@@ -9,6 +9,7 @@
     "briefing:review": "node scripts/briefing/review-server.mjs",
     "briefing:sources": "node scripts/briefing/cli.mjs sources",
     "briefing:watch": "node scripts/briefing/watch-cli.mjs",
+    "briefing:observation": "node scripts/briefing/observation-collect.mjs",
     "briefing:wechat:check": "node scripts/briefing/wechat-cli.mjs check",
     "briefing:wechat:crosscheck": "node scripts/briefing/wechat-cli.mjs crosscheck",
     "briefing:wechat:sources": "node scripts/briefing/source-audit-cli.mjs",
