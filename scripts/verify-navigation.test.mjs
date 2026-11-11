@@ -109,7 +109,13 @@ test('portfolio puts cases, review methods and sourced research before legacy ma
   assert.match(home, /id="window-highlight-rolloff"/);
   assert.match(home, /id="folio-ac-toggle"/);
   assert.match(home, /for="folio-ac-toggle"/);
-  assert.doesNotMatch(home, /class="(?:playing-list|home-picks section-shell)"/);
+  const lead = home.indexOf('id="ab-review"');
+  assert.ok(lead >= 0 && lead < home.indexOf('id="featured-story"'));
+  assert.equal((home.match(/<h1\b/g) ?? []).length, 1);
+  for (const block of ['live-strip', 'story-grid', 'experiment-preview-grid', 'home-notes-grid', 'tool-grid', 'playing-list', 'home-picks-grid', 'about-copy']) {
+    assert.ok(home.indexOf(`class="${block}"`) > lead, block);
+  }
+  for (const href of ['/stories/', '/experiments/', '/notes/', '/library/', '/tools/', '/prompts/']) assert.ok(links.includes(href), href);
   const briefing = readFileSync(join(process.cwd(), 'out/briefing/index.html'), 'utf8');
   assert.match(briefing, /待执行。尚无样本对比/);
   assert.ok(anchors('briefing/index.html').includes('https://42zhangjing.qiaomu.ai/ep/6ada2be4c96c8942ec10cb1e.html'));

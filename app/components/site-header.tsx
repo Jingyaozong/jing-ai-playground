@@ -2,11 +2,14 @@ import Link from 'next/link';
 
 const navItems = [
   ['Home', '首页', '/'],
+  ['Multimodal', '多模态', '/#ab-review'],
   ['Stories', '故事', '/stories'],
   ['Experiments', '实验', '/experiments'],
   ['Notes', '笔记', '/notes'],
   ['Library', '收藏', '/library'],
   ['Tools', '工具', '/tools'],
+  ['Prompts', 'Prompt', '/prompts'],
+  ['Briefing', '精读', '/briefing'],
   ['About', '关于', '/about'],
 ];
 

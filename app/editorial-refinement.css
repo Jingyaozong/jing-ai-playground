@@ -9,7 +9,7 @@
 .mobile-menu summary { display: flex; align-items: center; justify-content: center; min-width: 60px; min-height: 44px; border: 1px solid var(--line); border-radius: 99px; font: 600 12px var(--body); }
 .mobile-menu nav { top: 54px; }
 .hero-layout { align-items: center; gap: clamp(40px,7vw,108px); }
-.hero h1 { font-size: clamp(3.4rem,5.8vw,5.65rem); line-height: 1.14; }
+.hero .home-collection-title { font-size: clamp(3.4rem,5.8vw,5.65rem); line-height: 1.14; }
 .hero-card { min-height: 232px; transform: rotate(2deg); }
 .hero-card-sun { width: 76px; height: 76px; }
 .hero-card p { max-width: 19ch; margin-top: 44px; font-size: 1.35rem; line-height: 1.25; }
@@ -145,7 +145,7 @@
 
 @media (max-width: 760px) {
   .site-header { height: 72px; }
-  .hero h1 { font-size: clamp(2.5rem,10.8vw,3.75rem); line-height: 1.2; }
+  .hero .home-collection-title { font-size: clamp(2.5rem,10.8vw,3.75rem); line-height: 1.2; }
   .story-detail-title h1,
   .story-detail-title h1:has(> span) { font-size: clamp(2.1rem,9vw,3.2rem); line-height: 1.24; }
   .hero-layout { gap: 38px; }

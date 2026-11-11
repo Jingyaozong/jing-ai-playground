@@ -138,10 +138,10 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--coral); outlin
 .hero-kicker { display: flex; justify-content: space-between; color: var(--muted); }
 .hero-layout { display: grid; grid-template-columns: minmax(0,1.55fr) minmax(250px,.45fr); align-items: end; gap: 6vw; padding: 72px 0 44px; }
 .hero-name { margin: 0 0 18px; color: var(--blue); font-weight: 600; }
-.hero h1 { margin: 0; font-family: var(--display); font-size: clamp(4.4rem,9.2vw,9.4rem); font-weight: 730; line-height: .88; letter-spacing: -.065em; }
-.hero h1 span { display: block; }
-.hero h1 em { position: relative; z-index: 1; display: inline-block; padding: 0 .09em; color: var(--ink); font-style: normal; }
-.hero h1 em::before { content: ''; position: absolute; z-index: -1; left: -.04em; right: -.04em; bottom: .02em; height: .74em; border-radius: .4em .18em .45em .2em; background: var(--yellow); transform: rotate(-2deg); }
+.hero .home-collection-title { margin: 0; font-family: var(--display); font-size: clamp(4.4rem,9.2vw,9.4rem); font-weight: 730; line-height: .88; letter-spacing: -.065em; }
+.hero .home-collection-title span { display: block; }
+.hero .home-collection-title em { position: relative; z-index: 1; display: inline-block; padding: 0 .09em; color: var(--ink); font-style: normal; }
+.hero .home-collection-title em::before { content: ''; position: absolute; z-index: -1; left: -.04em; right: -.04em; bottom: .02em; height: .74em; border-radius: .4em .18em .45em .2em; background: var(--yellow); transform: rotate(-2deg); }
 .hero-card { position: relative; min-height: 258px; display: flex; flex-direction: column; justify-content: flex-end; padding: 28px; overflow: hidden; border: 2px solid var(--ink); border-radius: 28px; background: var(--blue); color: var(--white); box-shadow: 9px 9px 0 var(--mint); transform: rotate(1.4deg); }
 .hero-card-sun { position: absolute; width: 92px; height: 92px; top: -15px; right: -10px; display: grid; place-items: center; border-radius: 50%; background: var(--yellow); color: var(--ink); font-size: 34px; animation: slow-spin 15s linear infinite; }
 .hero-card p { margin: 0 0 18px; font-family: var(--display); font-size: clamp(1.35rem,2.2vw,2rem); font-weight: 570; line-height: 1.08; }
@@ -2014,7 +2014,7 @@ html:has(.prompt-collection) { scroll-behavior: auto; }
   .section-shell, .dark-inner { padding-block: 80px; }
   .hero { padding-top: 24px; }
   .hero-layout { padding: 50px 0 34px; }
-  .hero h1 { font-size: clamp(3.6rem,16vw,5.7rem); }
+  .hero .home-collection-title { font-size: clamp(3.6rem,16vw,5.7rem); }
   .hero-card { min-height: 210px; }
   .letter-board { grid-template-columns: repeat(2,1fr); border-radius: 22px; }
   .letter-board > span { min-height: 165px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); font-size: 7.5rem; }
@@ -4356,7 +4356,7 @@ h1:lang(zh-CN), h2:lang(zh-CN), h3:lang(zh-CN) {
 h1:lang(zh-CN) { line-height: var(--zh-title-leading); }
 h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
 
-.hero h1 { font-size: clamp(4.2rem,8vw,8rem); }
+.hero .home-collection-title { font-size: clamp(4.2rem,8vw,8rem); }
 .page-intro h1 { font-size: clamp(4.8rem,9.5vw,9.25rem); }
 .footer-lead h2 { font-size: clamp(3.7rem,7vw,7.2rem); }
 
@@ -4429,7 +4429,7 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
     --zh-heading-leading: 1.1;
   }
 
-  .hero h1,
+  .hero .home-collection-title,
   .page-intro h1,
   .tool-detail-title h1,
   .budget-detail-hero .tool-detail-title h1,
@@ -5352,7 +5352,7 @@ body { font-size: 15px; }
 
 .hero { padding-block: 54px 92px; }
 .hero-layout { gap: 8vw; padding-block: 96px 60px; }
-.hero h1 { font-size: clamp(3.8rem,6.45vw,6.7rem); line-height: 1.01; }
+.hero .home-collection-title { font-size: clamp(3.8rem,6.45vw,6.7rem); line-height: 1.01; }
 .hero-card { min-height: 236px; padding: 25px; }
 .hero-card p { font-size: clamp(1.2rem,1.7vw,1.65rem); line-height: 1.14; }
 .letter-board > span { min-height: clamp(165px,16vw,230px); font-size: clamp(6rem,11vw,11rem); }

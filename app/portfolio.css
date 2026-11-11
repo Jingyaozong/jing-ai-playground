@@ -26,6 +26,8 @@
 .folio-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 22px; margin-top: 28px; font-size: .9rem; }
 .folio-button { display: inline-block; padding: 12px 18px; background: var(--folio-ink); color: white; white-space: nowrap; font-size: .9rem; }
 .folio-ab { padding-block: clamp(36px, 6vw, 78px); }
+#ab-review,#method,#cases { scroll-margin-top: 90px; }
+.folio-collection-link { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 18px; border-top: 1px solid var(--folio-line); font-size: .9rem; font-weight: 650; }
 .folio-ab h1 { font-size: clamp(2rem, 5vw, 4.65rem); margin-block: 12px; }
 .folio-ab-status,.folio-ab-origin { color: var(--folio-muted); font-size: .85rem; line-height: 1.65; }
 .folio .folio-ab-brief { margin-block: 24px 16px; padding: 12px 16px; border-left: 3px solid #5848a4; background: var(--folio-lilac); font-size: .92rem; line-height: 1.65; }
