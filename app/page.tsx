@@ -11,6 +11,15 @@ export default function Home() {
     <PortfolioHeader />
     <div className="folio-shell">
       <section id="ab-review" className="folio-ab" aria-labelledby="folio-title">
+        <svg className="folio-ab-filter" aria-hidden="true" width="0" height="0">
+          <defs><filter id="window-highlight-rolloff" colorInterpolationFilters="sRGB">
+            <feComponentTransfer>
+              <feFuncR type="table" tableValues="0 .125 .25 .375 .5 .625 .737 .832 .92" />
+              <feFuncG type="table" tableValues="0 .125 .25 .375 .5 .625 .737 .832 .92" />
+              <feFuncB type="table" tableValues="0 .125 .25 .375 .5 .625 .737 .832 .92" />
+            </feComponentTransfer>
+          </filter></defs>
+        </svg>
         <div className="folio-ab-intro">
           <p className="folio-kicker">AIGC PROJECT / MULTIMODAL AESTHETICS</p>
           <h1 id="folio-title">晨光里，先看见谁？</h1>
@@ -19,7 +28,7 @@ export default function Home() {
         <p className="folio-ab-brief"><strong>同一镜头要求</strong>固定中景。知夏穿芥末黄外套坐在冷蓝卧室的床边。保留窗侧晨光，但第一眼应落在人物，不是窗户。</p>
         <div className="folio-ab-pair">
           <figure className="folio-ab-frame">
-            <div className="folio-ab-label"><h2>A <span>原始调色</span></h2><span className="folio-ab-pick">选为底版</span></div>
+            <div className="folio-ab-label"><h2>A <span>原始调色</span></h2></div>
             <div className="folio-ab-image"><Image src={frame} alt="候选 A：窗边晨光照进冷蓝卧室，知夏穿黄色外套坐在床边" sizes="(max-width: 540px) 50vw, (max-width: 1250px) 48vw, 580px" preload /><span className="folio-ab-pin folio-ab-person" aria-hidden="true">①</span><span className="folio-ab-pin folio-ab-window" aria-hidden="true">②</span></div>
             <figcaption><p><b>① 好：</b>暖黄外套与冷蓝墙面分开，人物轮廓清楚。</p><p><b>② 问题：</b>左窗仍是大块亮面，与人物争抢焦点。</p></figcaption>
           </figure>
@@ -28,11 +37,20 @@ export default function Home() {
             <div className="folio-ab-image folio-ab-bright"><Image src={frame} alt="候选 B：同一画面整体提亮、增反差，窗边和床单更亮" sizes="(max-width: 540px) 50vw, (max-width: 1250px) 48vw, 580px" /><span className="folio-ab-pin folio-ab-person" aria-hidden="true">①</span><span className="folio-ab-pin folio-ab-window" aria-hidden="true">②</span></div>
             <figcaption><p><b>① 好：</b>脸部更亮，晨光氛围更直接。</p><p><b>② 问题：</b>窗帘褶皱变淡，床单也更抢眼，视线更容易离开人物。</p></figcaption>
           </figure>
+          <figure className="folio-ab-frame">
+            <div className="folio-ab-label"><h2>C <span>局部压高光</span></h2></div>
+            <div className="folio-ab-image">
+              <Image src={frame} alt="候选 C：保留 A 的人物和整体曝光，只减弱左窗和白帘的高光" sizes="(max-width: 1250px) 33vw, 390px" />
+              <div className="folio-ab-window-grade" aria-hidden="true"><Image src={frame} alt="" sizes="(max-width: 1250px) 33vw, 390px" /></div>
+              <span className="folio-ab-pin folio-ab-person" aria-hidden="true">①</span><span className="folio-ab-pin folio-ab-window" aria-hidden="true">②</span>
+            </div>
+            <figcaption><p><b>① 人物：</b>脸和黄外套未改，人物与窗边的亮度竞争减弱。</p><p><b>② 白帘：</b>亮面更收敛，原有褶皱仍在；没有补造白窗里缺失的纹理。</p></figcaption>
+          </figure>
         </div>
-        <p className="folio-ab-origin">两版使用同一张虚构 AI 概念帧；B 仅在浏览器中改变亮度和反差。构图与人物不变，不代表两次模型生成或盲评统计。</p>
+        <p className="folio-ab-origin">三版使用同一张虚构 AI 概念帧。B 整体提亮并增加反差；C 只在 A 的左窗与白帘范围内，用羽化蒙版压低高亮。没有重新生成图片，也不是视频或盲评结果。</p>
         <div className="folio-ab-verdict">
-          <div><h2>为什么选 A</h2><p>B 的脸部更亮，但连窗户和床单一起提亮了。A 的人物与环境更容易分开，更符合「先看见知夏」的镜头意图。</p></div>
-          <div><h2>下一版怎么改</h2><p>以 A 为底，只对左窗和白帘做局部蒙版，高光先压约 0.3 EV，边缘羽化；不动脸、外套或全局曝光。缩到同尺寸并排复看：白帘仍有层次，第一眼能落在人物，才保留修改。</p></div>
+          <div><h2>为什么从 A 改</h2><p>B 的脸部更亮，却也让窗户和床单更抢眼。A 的冷暖关系更符合镜头要求，问题集中在左窗，没必要再调全图。</p></div>
+          <div><h2>C 版复看</h2><p>同尺寸看，C 的窗边没有 A 那么刺眼，也不像 B 那样让床单跳出来。白帘原有明暗层次保住了，但没有恢复已经过白的细节。建议保留 C：它让人物更容易先被注意到，同时仍看得出是窗侧晨光。</p></div>
         </div>
       </section>
       <section id="cases" className="folio-section">

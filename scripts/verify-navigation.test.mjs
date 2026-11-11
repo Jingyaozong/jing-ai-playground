@@ -102,9 +102,11 @@ test('portfolio puts cases, review methods and sourced research before legacy ma
     assert.ok(links.includes(href), href);
   }
   assert.match(home, /虚构静帧实评 · 非视频结果/);
-  assert.match(home, /两版使用同一张虚构 AI 概念帧/);
-  assert.match(home, /为什么选 A/);
-  assert.match(home, /下一版怎么改/);
+  assert.match(home, /三版使用同一张虚构 AI 概念帧/);
+  assert.match(home, /为什么从 A 改/);
+  assert.match(home, /C 版复看/);
+  assert.equal((home.match(/class="folio-ab-frame"/g) ?? []).length, 3);
+  assert.match(home, /id="window-highlight-rolloff"/);
   assert.doesNotMatch(home, /class="(?:playing-list|home-picks section-shell)"/);
   const briefing = readFileSync(join(process.cwd(), 'out/briefing/index.html'), 'utf8');
   assert.match(briefing, /待执行。尚无样本对比/);

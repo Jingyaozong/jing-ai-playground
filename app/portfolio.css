@@ -30,15 +30,23 @@
 .folio-ab-status,.folio-ab-origin { color: var(--folio-muted); font-size: .85rem; line-height: 1.65; }
 .folio .folio-ab-brief { margin-block: 24px 16px; padding: 12px 16px; border-left: 3px solid #5848a4; background: var(--folio-lilac); font-size: .92rem; line-height: 1.65; }
 .folio-ab-brief strong { margin-inline-end: .85em; }
-.folio-ab-pair { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(8px, 2vw, 22px); }
+.folio-ab-filter { position: absolute; pointer-events: none; }
+.folio-ab-pair { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: clamp(8px, 2vw, 22px); }
 .folio-ab-frame { min-width: 0; background: white; border: 1px solid var(--folio-line); }
 .folio-ab-label { display: flex; align-items: center; gap: 8px; justify-content: space-between; min-height: 48px; padding: 8px 12px; }
 .folio .folio-ab-label h2 { margin: 0; font: 700 1.15rem var(--display); }
 .folio-ab-label h2 span { font-size: .85rem; margin-inline-start: .2em; }
-.folio-ab-pick { background: var(--folio-marker); padding: 2px 6px; font-size: .72rem; white-space: nowrap; }
 .folio-ab-image { position: relative; }
 .folio-ab-image img,.folio-cases img { width: 100%; height: auto; display: block; }
 .folio-ab-bright img { filter: brightness(1.28) contrast(1.09); }
+.folio-ab-window-grade {
+  position: absolute;
+  inset: 0;
+  filter: url(#window-highlight-rolloff);
+  mask-image: linear-gradient(to right, #000 18%, transparent 26%), linear-gradient(to bottom, #000 59%, transparent 78%);
+  mask-composite: intersect;
+  pointer-events: none;
+}
 .folio-ab-pin { position: absolute; display: grid; place-items: center; width: clamp(16px, 2vw, 25px); aspect-ratio: 1; border-radius: 50%; border: 1px solid var(--folio-ink); background: var(--folio-marker); color: var(--folio-ink); font-size: clamp(.62rem, 1.5vw, .88rem); line-height: 1; }
 .folio-ab-person { left: 58%; top: 26%; }
 .folio-ab-window { left: 13%; top: 29%; }
@@ -85,6 +93,6 @@
 @media (max-width: 540px) {
   .folio-ab-label { gap: 3px; padding-inline: 6px; }
   .folio-ab-label h2 span { font-size: .74rem; }
-  .folio-ab-pick { font-size: .62rem; padding-inline: 3px; }
+  .folio-ab-label h2 span { display: block; margin-inline-start: 0; }
   .folio-ab-frame figcaption { font-size: .78rem; padding: 8px; }
 }
