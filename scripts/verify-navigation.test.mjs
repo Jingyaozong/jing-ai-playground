@@ -101,7 +101,10 @@ test('portfolio puts cases, review methods and sourced research before legacy ma
   for (const href of ['/stories/she-forgets-yesterday/', '/tools/multimodal-evaluation/', '/briefing/', '/archive/']) {
     assert.ok(links.includes(href), href);
   }
-  assert.match(home, /AI 概念帧 · 单帧审读 · 非视频结果/);
+  assert.match(home, /虚构静帧实评 · 非视频结果/);
+  assert.match(home, /两版使用同一张虚构 AI 概念帧/);
+  assert.match(home, /为什么选 A/);
+  assert.match(home, /下一版怎么改/);
   assert.doesNotMatch(home, /class="(?:playing-list|home-picks section-shell)"/);
   const briefing = readFileSync(join(process.cwd(), 'out/briefing/index.html'), 'utf8');
   assert.match(briefing, /待执行。尚无样本对比/);
