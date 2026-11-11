@@ -40,6 +40,11 @@ export default function Briefing() {
         <div className="observation-question"><strong>怎么验证 · 待执行</strong><p>对同一输入依次提交两条相反的运镜指令。记录每次发出指令到出现首个可用画面的时间，并单独复核转向是否执行、角色是否漂移；不要把首帧快当成整个交互顺畅。</p></div>
         <div className="folio-actions"><a href="https://www.xiaoyuzhoufm.com/episode/6a5c6a91a3fec224d59fd014">节目原声 ↗</a><a href="https://crossing.qiaomu.ai/ep/6a5c6a91a3fec224d59fd014.html">单集精读 ↗</a></div>
       </article>
+      <article className="folio-episode">
+        <header><p className="folio-kicker">AI 炼金术 · 播客补读 · 26:58 段落</p><h3>旧偏好会不会盖过当前的视觉指令？</h3><p>节目精读在 26:58 标出关于记忆相关性和时效性的讨论。</p></header>
+        <div className="observation-question"><strong>怎么验证 · 待执行</strong><p>给同一模型 12 张虚构海报和相同改图指令，比较无历史、相关历史、过期冲突历史三组。例如旧偏好为暖黄，本轮明确要求保留冷蓝。盲审建议，记录当前指令遵循率、过期偏好误用率，以及建议是否指向画面里确实存在的元素。</p></div>
+        <div className="folio-actions"><a href="https://aialchemy.qiaomu.ai/ep/6aebf2dec33509d82976625e.html">节目精读与原声（26:58） ↗</a></div>
+      </article>
       </section>
       <section id="sources" className="observation-section folio-sources"><h2>取材来源</h2><p>AIHOT 用于发现线索，文章以原始发布为准；播客按单集选编，不转载全文。本页发布的是带日期的核对稿，不是实时镜像或定时更新。</p><p className="observation-source-links"><a href="https://aihot.news/">AIHOT 精选 ↗</a> · <a href="https://aihot.news/hot">AIHOT 热点 ↗</a></p><ul>{podcastSources.map(({name,origin,feed}) => <li key={origin}><a href={origin}>{name} ↗</a><a href={feed} aria-label={`${name} RSS`}>RSS</a></li>)}</ul><p>8 个独立播客订阅源已接入候选采集；并非每期都收录。</p></section>
     </div>

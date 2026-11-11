@@ -120,7 +120,9 @@ test('portfolio puts cases, review methods and sourced research before legacy ma
   assert.match(briefing, /待执行。尚无样本对比/);
   assert.ok(anchors('briefing/index.html').includes('https://42zhangjing.qiaomu.ai/ep/6ada2be4c96c8942ec10cb1e.html'));
   for (const section of ['daily', 'hot', 'podcasts', 'sources']) assert.ok(briefing.includes(`id="${section}"`), section);
-  assert.equal((briefing.match(/class="observation-card"/g) ?? []).length, 4);
+  assert.equal((briefing.match(/class="observation-card"/g) ?? []).length, 5);
+  assert.match(briefing, /旧偏好会不会盖过当前的视觉指令？/);
+  assert.ok(anchors('briefing/index.html').includes('https://aialchemy.qiaomu.ai/ep/6aebf2dec33509d82976625e.html'));
   assert.equal(anchors('briefing/index.html').filter(href => /^https:\/\/[^/]+\.qiaomu\.ai\/feed\.xml$/.test(href)).length, 8);
   for (const card of briefing.matchAll(/<article class="observation-card">([\s\S]*?)<\/article>/g)) {
     assert.match(card[1], /怎么验证 · 待执行/);

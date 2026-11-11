@@ -25,6 +25,16 @@ export const selected = [
 
 export const hot = [
   {
+    title: 'Gemini 4 Carbon：能跨页找依据，也能识别证据不足吗？',
+    category: '文档理解',
+    date: '2026-11-10',
+    source: 'Google',
+    original: 'https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/',
+    index: 'https://aihot.news/story/e16f5d00-5477-42b8-83d3-4162e0262249',
+    fact: 'Google 发布文介绍了 Carbon 处理图表、图片与表格等复杂文档的应用。',
+    question: '用同一份 6 页虚构产品手册和同一提示比较 Carbon 与 Argon。手册含两款相似产品、跨页图表和不同计量单位。设计 12 道题，其中 4 道缺关键证据。逐题核对数值和单位、引用页码是否支撑答案，以及缺证题是否编造。',
+  },
+  {
     title: 'Seedream 5.5：局部修改会不会动到人物？',
     category: '区域编辑',
     date: '2026-11-09',
