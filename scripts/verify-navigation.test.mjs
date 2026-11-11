@@ -107,6 +107,8 @@ test('portfolio puts cases, review methods and sourced research before legacy ma
   assert.match(home, /C 版复看/);
   assert.equal((home.match(/class="folio-ab-frame"/g) ?? []).length, 3);
   assert.match(home, /id="window-highlight-rolloff"/);
+  assert.match(home, /id="folio-ac-toggle"/);
+  assert.match(home, /for="folio-ac-toggle"/);
   assert.doesNotMatch(home, /class="(?:playing-list|home-picks section-shell)"/);
   const briefing = readFileSync(join(process.cwd(), 'out/briefing/index.html'), 'utf8');
   assert.match(briefing, /待执行。尚无样本对比/);

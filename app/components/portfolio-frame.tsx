@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 export function PortfolioHeader() {
-  return <header className="folio-header"><Link className="folio-brand" href="/"><b>荆</b> JING / AIGC</Link><nav aria-label="作品集导航"><Link href="/#cases">案例</Link><Link href="/#method">评测</Link><Link href="/briefing/">精读</Link><Link href="/about/">关于</Link></nav></header>;
+  return <header className="folio-header"><Link className="folio-brand" href="/"><b>荆</b> JING / AIGC</Link><nav aria-label="作品集导航"><Link href="/#ab-review">案例</Link><Link href="/#method">评测</Link><Link href="/briefing/">精读</Link><Link href="/about/">关于</Link></nav></header>;
 }
 
 export function PortfolioFooter() {

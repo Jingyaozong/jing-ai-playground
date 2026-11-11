@@ -52,6 +52,19 @@ export default function Home() {
           <div><h2>为什么从 A 改</h2><p>B 的脸部更亮，却也让窗户和床单更抢眼。A 的冷暖关系更符合镜头要求，问题集中在左窗，没必要再调全图。</p></div>
           <div><h2>C 版复看</h2><p>同尺寸看，C 的窗边没有 A 那么刺眼，也不像 B 那样让床单跳出来。白帘原有明暗层次保住了，但没有恢复已经过白的细节。建议保留 C：它让人物更容易先被注意到，同时仍看得出是窗侧晨光。</p></div>
         </div>
+        <details className="folio-ac-inspect">
+          <summary>放大复看 A / C：在同一画面切换修正</summary>
+          <p>切换时重点看左窗白帘，再看脸和黄外套。只比较这个静帧，不推断视频一致性。</p>
+          <input id="folio-ac-toggle" type="checkbox" />
+          <label htmlFor="folio-ac-toggle">显示 C 版局部修正</label>
+          <figure className="folio-ac-stage">
+            <div className="folio-ab-image">
+              <Image src={frame} alt="放大对照：知夏、左窗和白帘" loading="lazy" />
+              <div className="folio-ab-window-grade" aria-hidden="true"><Image src={frame} alt="" loading="lazy" /></div>
+            </div>
+            <figcaption><span className="folio-ac-a">A / 原始调色</span><span className="folio-ac-c">C / 仅左窗与白帘压高光</span></figcaption>
+          </figure>
+        </details>
       </section>
       <section id="cases" className="folio-section">
         <p className="folio-kicker">SELECTED CASES</p><h2>从画面到镜头</h2>
