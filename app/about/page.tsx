@@ -11,8 +11,8 @@ import { getAllNotes } from '../../lib/notes';
 import './about.css';
 
 export const metadata: Metadata = {
-  title: 'About JING — JING AI PLAYGROUND',
-  description: '关于荆，以及这个持续生长的 AI 创作工作台。',
+  title: '关于荆 — 多模态美学评测作品集',
+  description: '荆的 AIGC 项目、视觉判断与可复核的评测方法。',
 };
 
 export default function AboutPage() {
@@ -82,7 +82,7 @@ export default function AboutPage() {
   return (
     <main>
       <SiteHeader active="About" />
-      <PageIntro eyebrow="About / 荆" count="A living creative workspace" title="This is JING’s working desk." description="这里不是写完就不动的简历，而是一张持续更新的 AI 创作工作台。" />
+      <PageIntro eyebrow="About / 荆" count="AIGC / Multimodal aesthetics" title="关于荆" description="我关注多模态生成的视觉质量，以及怎样把对构图、光色、人物和时序的判断写成可以复核的评测记录。" />
 
       <section className="about-page section-shell">
         <Reveal><div className="about-manifesto"><span className="mono">Why this site exists</span><p>我想把脑子里的想法做成故事，也把它们怎样变成镜头、工具和判断的过程留下来。</p><p>完成的作品会被展示；还在制作的内容会标注状态；没有真实样本支持的判断，不会被写成结论。</p></div></Reveal>

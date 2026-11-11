@@ -1,115 +1,46 @@
 import Link from 'next/link';
-import { ExperimentCard } from './components/experiment-card';
-import { LibraryCard } from './components/library-card';
-import { NoteCard } from './components/note-card';
-import { ProjectVisual } from './components/project-visual';
-import { Reveal } from './components/reveal';
-import { SiteFooter } from './components/site-footer';
-import { SiteHeader } from './components/site-header';
-import { StoryCard } from './components/story-card';
-import { ToolCard } from './components/tool-card';
-import { currentlyPlaying, experiments, stories, tools } from './data/content';
-import { libraryItems } from './data/library';
-import { getAllNotes } from '../lib/notes';
+import Image from 'next/image';
+import frame from './assets/generated/she-forgets-yesterday-frame-01-v2.webp';
+import eveningFrame from './assets/generated/she-forgets-yesterday-frame-03-v2.webp';
+import waterFrame from './assets/generated/before-the-water-recedes-frame-01.png';
+import { PortfolioFooter, PortfolioHeader } from './components/portfolio-frame';
+import './portfolio.css';
 
 export default function Home() {
-  const featured = stories.find((story) => story.slug === 'she-forgets-yesterday') ?? stories[0];
-  const recentStories = stories.slice(-2).reverse();
-  const recentExperiments = experiments.filter((experiment) => experiment.stage === 'documented').slice(-3).reverse();
-  const recentTools = tools.slice(-4).reverse();
-  const latestNotes = getAllNotes().slice(0, 4);
-  const jingPicks = libraryItems.filter((item) => item.jingPick)
-    .sort((a, b) => b.dateAdded.localeCompare(a.dateAdded)).slice(0, 4);
-  const causalExperiment = experiments.find((experiment) => experiment.slug === 'can-water-recede-after-the-umbrella-opens') ?? recentExperiments[0];
-  const causalStory = stories.find((story) => story.slug === 'before-the-water-recedes') ?? recentStories[0];
-  return (
-    <main>
-      <SiteHeader />
-      <section className="hero" id="top">
-        <div className="hero-kicker mono"><span>JING / 荆</span><span>AI creator · Since 2026</span></div>
-        <div className="hero-layout">
-          <div className="hero-main">
-            <p className="hero-name mono">JING AI PLAYGROUND</p>
-            <h1><span>把奇怪的想法，</span><span><em>认真</em>做出来。</span></h1>
-          </div>
-          <aside className="hero-card">
-            <span className="hero-card-sun" aria-hidden="true">✦</span>
-            <p>Stories, visuals, tools and weird little things made with AI.</p>
-            <small>一个持续更新的个人 AI 创作现场。</small>
-          </aside>
+  return <main className="folio">
+    <PortfolioHeader />
+    <div className="folio-shell">
+      <section className="folio-hero" aria-labelledby="folio-title">
+        <div>
+          <p className="folio-kicker">AIGC PROJECT / MULTIMODAL AESTHETICS</p>
+          <h1 id="folio-title"><span>多模态美学</span><span>评测作品集</span></h1>
+          <p className="folio-deck">一张图哪里好，一个镜头哪里失效？从构图、光色和视觉焦点出发，把判断落实到能标注、比较和复查的证据。</p>
+          <div className="folio-actions"><Link className="folio-button" href="#cases">查看精选案例 ↓</Link><Link href="#method">查看评测方法 ↗</Link></div>
         </div>
-        <div className="letter-board" aria-label="JING">
-          <span className="letter-j">J<small>stories</small></span>
-          <span className="letter-i">I<small>images</small></span>
-          <span className="letter-n">N<small>new ideas</small></span>
-          <span className="letter-g">G<small>good work</small></span>
+        <figure className="folio-proof">
+          <div className="folio-proof-top"><span>FRAME REVIEW</span><span>01 / 画面样张</span></div>
+          <div className="folio-proof-image"><Image src={frame} alt="虚构角色知夏坐在蓝色卧室的床边，穿芥末黄色外套" sizes="(max-width: 800px) 100vw, 55vw" preload /><span aria-hidden="true">01</span></div>
+          <figcaption><b>01 / 视觉焦点</b><p>蓝色房间托住暖黄色外套，人物先被看见。窗边亮区仍可能争夺注意力，可作为下一版的对照变量。</p><small>AI 概念帧 · 单帧审读 · 非视频结果</small></figcaption>
+        </figure>
+      </section>
+      <section id="cases" className="folio-section">
+        <p className="folio-kicker">SELECTED CASES</p><h2>从画面到镜头</h2>
+        <div className="folio-cases">
+          <article><Image src={eveningFrame} alt="《她每天醒来都会忘记昨天》的傍晚见面概念帧" sizes="(max-width: 800px) 100vw, 50vw" /><div><p className="folio-kicker">视觉开发 / AI 概念帧</p><h3>她每天醒来都会忘记昨天</h3><p>看人物锚点如何贯穿四张概念画面：服装、发饰与光色变化分别承担什么任务。</p><Link href="/stories/she-forgets-yesterday/">查看人物锚点与关键帧 ↗</Link></div></article>
+          <article><Image src={waterFrame} alt="《退水以前》档案馆概念画面" sizes="(max-width: 800px) 100vw, 50vw" /><div><p className="folio-kicker">时序评测 / 协议待执行</p><h3>撑伞以后，水面何时开始退？</h3><p>用伞锁定、水首动和退水方向定位失败；九格视频试验尚未执行。</p><Link href="/experiments/can-water-recede-after-the-umbrella-opens/">查看测试协议 ↗</Link></div></article>
+        </div>
+        <Link className="folio-secondary" href="/stories/">查看全部故事 ↗</Link>
+      </section>
+      <section id="method" className="folio-section folio-method">
+        <div><p className="folio-kicker">REVIEW METHOD</p><h2>先给证据，<br />再下判断。</h2><p>把美学偏好与指令、结构、时序等错误分开。用时间段和可见事实说明判断，把没有证据的项留为待复核。</p></div>
+        <div className="folio-method-links">
+          <Link href="/notes/video-evaluation-eight-dimensions/"><span>方法</span><strong>视频评测八维</strong><b aria-hidden="true">↗</b></Link>
+          <Link href="/tools/multimodal-evaluation/"><span>工具</span><strong>多模态评测记录台</strong><b aria-hidden="true">↗</b></Link>
+          <Link href="/notes/synthetic-multimodal-evaluation-delivery/"><span>虚构演练</span><strong>从需求到交付报告</strong><b aria-hidden="true">↗</b></Link>
         </div>
       </section>
-      <div className="live-strip" aria-label="最近动态">
-        <span className="live-label mono"><i /> ON THE DESK</span>
-        <div className="ticker-track"><span>准备因果动作九格测试</span><b>✦</b><span>填写五点动作账本</span><b>✦</b><span>完善原创短片视觉开发</span><b>✦</b><span>核对值得留下的来源</span><b>✦</b><span>准备因果动作九格测试</span></div>
-      </div>
-
-      <Reveal><section className="featured" id="featured-story">
-        <div className="section-heading"><div><p className="eyebrow mono">Featured / 本期主角</p><h2>这次，先认真<br />做完一个故事。</h2></div><p className="featured-intro">{featured.description}</p></div>
-        <article className="feature-card"><ProjectVisual variant={`${featured.visual} feature`} label={featured.title} /><div className="feature-meta"><div><p className="mono">{featured.type} · {featured.status}</p><h3>{featured.title}</h3></div><Link className="round-link" href={`/stories/${featured.slug}/`} aria-label={`查看《${featured.title}》详情`}>View <span>↗</span></Link></div></article>
-      </section></Reveal>
-
-      <Reveal><section className="latest section-shell">
-        <div className="section-title-row"><div><p className="eyebrow mono">Current research / 最近在研究</p><h2>先后不是同时，<br />要留下可见间隔。</h2></div><p>从《退水以前》的一个高风险镜头出发，把故事问题拆成九格实验、五点账本和浏览器本地工具。真实视频仍是 0 / 9，所以这里展示研究路径，不提前展示结论。</p></div>
-        <div className="latest-grid">
-          <Link className="latest-lead" href={`/experiments/${causalExperiment.slug}/`}><ProjectVisual variant={causalExperiment.visual} label={causalExperiment.title} /><span className="mono">EXPERIMENT / {causalExperiment.status}</span><h3>{causalExperiment.title}</h3></Link>
-          <Link className="latest-note note-violet latest-method-note" href="/notes/causal-motion-five-point-ledger/"><span className="mono">METHOD NOTE / EDITING DRAFT</span><blockquote>“随后”不是气氛描述，<br />而是一个可以失败的时间条件。</blockquote><small>阅读五点账本与逐帧验收方法 ↗</small></Link>
-          <Link className="latest-small" href={`/stories/${causalStory.slug}/`}><ProjectVisual variant={causalStory.visual} label={causalStory.title} /><span className="mono">STORY / {causalStory.status}</span><h3>{causalStory.title}</h3></Link>
-          <Link className="latest-note note-apricot latest-causal-tool" href="/tools/waterline-motion-card/"><div><span className="mono">LOCAL TOOL / 五点动作账本</span><h3>先锁定，<br />再移动。</h3><p>填写伞锁定与水首动时刻，导出待测试 Prompt 和空白验收表。</p></div><div className="latest-causal-ruler" aria-label="锁定、保持、移动的五点动作轨道"><span>LOCK</span><span>MOVE</span>{[0,25,50,75,100].map((point) => <i key={point}><b>{point}%</b></i>)}</div><strong>打开水线动作卡 ↗</strong></Link>
-        </div>
-      </section></Reveal>
-
-      <Reveal><section className="stories-preview section-shell">
-        <div className="section-index mono">Archive A / AI Stories</div>
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Stories</p><h2>把脑子里的<br />奇怪故事做出来。</h2></div><Link className="text-link" href="/stories">View all stories ↗</Link></div>
-        <div className="story-grid">{recentStories.map((story) => <StoryCard story={story} key={story.id} />)}</div>
-      </section></Reveal>
-
-      <Reveal><section className="experiments-preview dark-section"><div className="dark-inner">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Experiments</p><h2>不急着有用，<br />先看看会发生什么。</h2></div><Link className="text-link" href="/experiments">Open the lab ↗</Link></div>
-        <div className="experiment-preview-grid">{recentExperiments.map((experiment) => <ExperimentCard experiment={experiment} key={experiment.id} />)}</div>
-      </div></section></Reveal>
-
-      <Reveal><section className="home-notes section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Latest notes / 最近的笔记</p><h2>做过的留下来，<br />想明白的也留下来。</h2></div><div className="home-notes-intro"><p>AI 技巧、评测方法与创作过程笔记。资料、编辑稿和虚构演练会分别标注，不把计划写成成果。</p><Link className="text-link" href="/notes/">查看全部笔记 ↗</Link></div></div>
-        <div className="home-notes-grid">{latestNotes.map((note, index) => <NoteCard note={note} size={index === 0 ? 'large' : index === 1 ? 'tall' : index === 2 ? 'small' : 'wide'} key={note.slug} />)}</div>
-      </section></Reveal>
-
-      <Reveal><section className="tools-preview section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Little tools</p><h2>顺手做点<br />有用的小东西。</h2></div><p>不是产品中心，只是把重复的小麻烦做成按钮。</p></div>
-        <div className="tool-grid">{recentTools.map((tool, index) => <ToolCard tool={tool} index={index} key={tool.id} />)}</div>
-        <nav className="home-work-route" id="home-work-route" aria-label="从试标到交付的工作路径">
-          <div className="home-work-route-intro"><span className="mono">一条工作路径 / EDITING DRAFT</span><p>先把试标口径说清，再谈容量与交付。方法内容为编辑候选，待荆确认。</p></div>
-          <ol>
-            <li><Link href="/notes/trial-to-review-pace/"><small>方法笔记</small><strong><span>先试标，</span><span>再谈排期。</span></strong><i>阅读 ↗</i></Link></li>
-            <li><Link href="/tools/review-pace/"><small>浏览器本地工具</small><strong><span>把耗时，</span><span>换成容量。</span></strong><i>打开 ↗</i></Link></li>
-            <li><Link href="/tools/dataset-release/"><small>人工交付自检</small><strong><span>交付前，</span><span>再过四关。</span></strong><i>核对 ↗</i></Link></li>
-          </ol>
-        </nav>
-        <Link className="text-link tools-all" href="/tools/#work-scenes">按工作场景找工具 ↗</Link>
-      </section></Reveal>
-
-      <Reveal><section className="playing section-shell">
-        <div className="playing-title"><p className="eyebrow mono">Currently playing with</p><h2>最近在折腾</h2><span className="hand-note">点击查看当前状态 ↘</span></div>
-        <div className="playing-list">{currentlyPlaying.map((item, index) => <Link className="playing-row" href={item.href} key={item.title}><span className="mono">0{index + 1}</span><b aria-hidden="true">{item.icon}</b><div className="playing-row-title"><h3>{item.title}</h3><small className="mono">{item.status}</small></div><p>{item.detail}</p><i aria-hidden="true">↗</i></Link>)}</div>
-      </section></Reveal>
-
-      <Reveal><section className="home-picks section-shell">
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Picks to review / 待确认推荐</p><h2>先收好来源，<br />再讨论值不值得留。</h2></div><div className="home-notes-intro"><p>这组来源已核对；推荐理由与观点仍是编辑候选，待荆确认。</p><Link className="text-link" href="/library/">打开收藏夹 ↗</Link></div></div>
-        <div className="home-picks-grid">{jingPicks.map((item) => <LibraryCard item={item} compact key={item.id} />)}</div>
-      </section></Reveal>
-
-      <Reveal><section className="about-preview section-shell">
-        <div className="about-stamp" aria-hidden="true"><span>J</span><small>MADE BY<br />A CURIOUS HUMAN</small></div>
-        <div className="about-copy"><p className="eyebrow mono">About JING</p><h2>我是荆。</h2><p>我喜欢研究 AI 能不能把脑子里那些奇怪、有趣，或者没来得及实现的想法真正做出来。</p><p>这里记录我的 AI 故事、视频、实验和一些小工具。</p><Link className="text-link" href="/about">More about me ↗</Link></div>
-      </section></Reveal>
-      <SiteFooter />
-    </main>
-  );
+      <section className="folio-section folio-reading"><div><p className="folio-kicker">RESEARCH BRIEF</p><h2>从行业访谈提炼测试问题</h2><p>播客精读用于定位观点。每则简报保留出处，并单独列出可验证的任务。</p></div><Link className="folio-button" href="/briefing/">阅读多模态简报 ↗</Link></section>
+    </div>
+    <PortfolioFooter />
+  </main>;
 }

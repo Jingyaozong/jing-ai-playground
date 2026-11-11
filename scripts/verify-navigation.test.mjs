@@ -95,19 +95,32 @@ const groups = [
   { path: 'library', key: 'type', hash: '#library-all', values: ['ARTICLE', 'VIDEO', 'PDF', 'TOOL', 'JING PICKS'] },
 ];
 
+test('portfolio puts cases, review methods and sourced research before legacy material', () => {
+  const home = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  const links = anchors('index.html');
+  for (const href of ['/stories/she-forgets-yesterday/', '/tools/multimodal-evaluation/', '/briefing/', '/archive/']) {
+    assert.ok(links.includes(href), href);
+  }
+  assert.match(home, /AI 概念帧 · 单帧审读 · 非视频结果/);
+  assert.doesNotMatch(home, /class="(?:playing-list|home-picks section-shell)"/);
+  const briefing = readFileSync(join(process.cwd(), 'out/briefing/index.html'), 'utf8');
+  assert.match(briefing, /待执行。尚无样本对比/);
+  assert.ok(anchors('briefing/index.html').includes('https://42zhangjing.qiaomu.ai/ep/6ada2be4c96c8942ec10cb1e.html'));
+});
+
 test('homepage tool entrance reaches the work-scene choices', () => {
-  const home = anchors('index.html');
+  const home = anchors('archive/index.html');
   const toolsHtml = readFileSync(join(process.cwd(), 'out/tools/index.html'), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   assert.ok(home.includes('/tools/#work-scenes'), 'Homepage must link directly to work scenes');
   assert.match(toolsHtml, /<section\b[^>]*id="work-scenes"/, 'Work-scene target is missing');
 });
 
-test('homepage work route reaches trial method, local estimate and delivery gate without invented results', () => {
-  const home = anchors('index.html');
+test('archive work route reaches trial method, local estimate and delivery gate without invented results', () => {
+  const home = anchors('archive/index.html');
   const note = anchors('notes/trial-to-review-pace/index.html');
   const pace = anchors('tools/review-pace/index.html');
-  const html = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+  const html = readFileSync(join(process.cwd(), 'out/archive/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   for (const href of ['/notes/trial-to-review-pace/', '/tools/review-pace/', '/tools/dataset-release/']) {
     assert.ok(home.includes(href), `Homepage work route missing ${href}`);
   }
@@ -131,11 +144,11 @@ test('scroll reveal leaves content visible without browser animation support', (
 });
 
 test('story cards preserve semantic titles, original status and detail links', () => {
-  for (const file of ['index.html', 'stories/index.html']) {
+  for (const file of ['archive/index.html', 'stories/index.html']) {
     const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
     for (const item of stories) {
       const start = html.indexOf(`<article class="story-card" id="${item.id}">`);
-      if (start < 0 && file === 'index.html') continue;
+      if (start < 0 && file === 'archive/index.html') continue;
       assert.ok(start >= 0, `Missing story card: ${item.id}`);
       const next = html.indexOf('<article class="story-card"', start + 1);
       const card = html.slice(start, next < 0 ? undefined : next);
@@ -155,7 +168,7 @@ test('story cards preserve semantic titles, original status and detail links', (
 });
 
 test('experiment card title groups preserve titles, status and detail links', () => {
-  for (const file of ['index.html', 'experiments/index.html']) {
+  for (const file of ['archive/index.html', 'experiments/index.html']) {
     const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
     for (const item of experiments) {
       assert.equal(item.titleParts.join(''), item.title, `Title changed: ${item.id}`);
@@ -164,7 +177,7 @@ test('experiment card title groups preserve titles, status and detail links', ()
       const start = html.indexOf(`<article class="experiment-card" id="${item.id}">`);
       const next = html.indexOf('<article class="experiment-card"', start + 1);
       const card = start < 0 ? undefined : html.slice(start, next < 0 ? undefined : next);
-      if (!card && file === 'index.html') continue;
+      if (!card && file === 'archive/index.html') continue;
       assert.ok(card, `Missing experiment card: ${item.id}`);
       for (const part of item.titleParts) assert.ok(card.includes(`<span class="experiment-title-part">${part}</span>`), `Missing title group: ${item.id} / ${part}`);
       assert.ok(card.includes(item.status), `Status changed: ${item.id}`);
@@ -213,7 +226,7 @@ test('pending experiment references and empty visual cells cannot read as genera
 });
 
 test('library semantic title groups preserve original titles in both card contexts', () => {
-  const pages = ['index.html', 'library/index.html'].map((file) => readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ''));
+  const pages = ['archive/index.html', 'library/index.html'].map((file) => readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ''));
   for (const item of libraryItems.filter((item) => item.titleParts)) {
     assert.equal(item.titleParts.join(''), item.title, `Title changed: ${item.id}`);
     assert.ok(item.titleParts.every((part) => part.trim().length > 1), `Orphan title group: ${item.id}`);
@@ -283,8 +296,8 @@ test('library distinguishes reviewed excerpts, historical sources and unconfirme
   assert.ok(html.includes('https://huggingface.co/docs/diffusers/main/using-diffusers/text-img2vid'), 'Current Diffusers guide is missing');
 });
 
-test('homepage featured story and recent library picks match source data', () => {
-  const html = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+test('archive featured story and recent library picks match source data', () => {
+  const html = readFileSync(join(process.cwd(), 'out/archive/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   const featured = stories.find((story) => story.slug === 'she-forgets-yesterday') ?? stories[0];
   const section = html.match(/<section\b[^>]*id="featured-story"[^>]*>([\s\S]*?)<\/section>/)?.[1];
   assert.ok(section, 'Missing featured story');
@@ -305,7 +318,7 @@ test('homepage featured story and recent library picks match source data', () =>
 test('entry pages keep fictional, pending and local-only work visibly distinct', () => {
   const readPage = (path) => readFileSync(join(process.cwd(), 'out', path), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  const home = readPage('index.html');
+  const home = readPage('archive/index.html');
   const notes = readPage('notes/index.html');
   const toolIndex = readPage('tools/index.html');
   assert.ok(home.includes('点击查看当前状态'));
@@ -325,7 +338,7 @@ test('cross-page recommendations remain editorial candidates until Jing confirms
   const readPage = (path) => readFileSync(join(process.cwd(), 'out', path), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
     .replace(/<!--\s*-->/g, '');
-  const home = readPage('index.html');
+  const home = readPage('archive/index.html');
   const library = readPage('library/index.html');
   const about = readPage('about/index.html');
   const prompts = readPage('prompts/index.html');
@@ -627,7 +640,7 @@ test('all notes, including featured notes, are present in the exported search li
 });
 
 test('unpublished contact destinations remain explicit non-links', () => {
-  const html = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8')
+  const html = readFileSync(join(process.cwd(), 'out/archive/index.html'), 'utf8')
     .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   const footer = html.match(/<footer\b[^>]*class="site-footer"[^>]*>([\s\S]*?)<\/footer>/)?.[1];
   assert.ok(footer, 'Missing site footer');

@@ -17,21 +17,21 @@ const socialImage = new URL('og.png', metadataBase);
 
 export const metadata: Metadata = {
   metadataBase,
-  title: 'JING AI PLAYGROUND — 荆的 AI 创作游乐场',
-  description: '用 AI 做故事、影像、工具，以及一些有意思的小东西。',
+  title: 'JING — 多模态美学评测作品集',
+  description: '荆的 AIGC 项目：视觉案例、视频评测方法、评测记录工具与行业精读。',
   openGraph: {
     url: metadataBase,
-    siteName: 'JING AI PLAYGROUND',
-    title: 'JING AI PLAYGROUND',
-    description: 'Stories, visuals, tools and weird little things made with AI.',
+    siteName: 'JING / 多模态美学',
+    title: 'JING — 多模态美学评测作品集',
+    description: '从视觉案例到可复查的评测证据。',
     images: [{ url: socialImage, width: 1536, height: 864, alt: 'JING AI PLAYGROUND' }],
     type: 'website',
     locale: 'zh_CN',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JING AI PLAYGROUND',
-    description: 'Stories, visuals, tools and weird little things made with AI.',
+    title: 'JING — 多模态美学评测作品集',
+    description: '从视觉案例到可复查的评测证据。',
     images: [socialImage],
   },
 };
