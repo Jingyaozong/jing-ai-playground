@@ -115,7 +115,7 @@ export function ShotVersionRecorder() {
   const markdown = useMemo(() => {
     const lines = [
       `# ${batch.shotId.trim() || '未编号镜头'} / ${batch.batchId.trim() || '未编号批次'} · 候选版本记录`, '',
-      synthetic ? '> 合成演练 · 编辑候选 · 待荆确认：候选、时间区间、观察与采用状态均为虚构，不对应真实视频。修改后仍属于演练；记录真实样本请先清空。' : '> 使用者填写记录 · 未经工具验证；空白项不代表已检查或通过。', '',
+      synthetic ? '> 示例数据：候选、时间区间、观察与采用状态均为示例，不对应真实视频。修改后仍属于演练；记录真实样本请先清空。' : '> 使用者填写记录 · 未经工具验证；空白项不代表已检查或通过。', '',
       `- 镜头职责：${batch.task.trim() || '待填写'}`, `- 平台 / 模型：${[batch.platform, batch.model].filter(Boolean).join(' / ') || '待填写'}`,
       `- 生成方式：${batch.mode.trim() || '待填写'}`, `- 可见参数：${batch.settings.trim() || '待填写'}`,
       `- 输入资产：${batch.inputs.trim() || '待填写'}`, `- 相比上一批只改变：${batch.change.trim() || '待填写'}`,
@@ -130,7 +130,7 @@ export function ShotVersionRecorder() {
 
   const csv = useMemo(() => {
     const header = ['candidate_id', 'shot_id', 'batch_id', 'status', 'usable_range', 'strength', 'reject_code', 'observation', 'edit_use', 'platform', 'model', 'mode', 'settings', 'prompt', 'inputs', 'changed_variable', 'source_link', 'record_origin', 'verification_scope'];
-    const rows = takes.map((take, index) => [takeId(batch, index), batch.shotId, batch.batchId, take.status, take.usableRange, take.strength, take.status === 'REJECT' ? take.rejectCode : '', take.observation, take.editUse, batch.platform, batch.model, batch.mode, batch.settings, batch.prompt, batch.inputs, batch.change, batch.sourceLink, synthetic ? 'synthetic_exercise' : 'user_entered_unverified', synthetic ? '合成演练，无真实视频，编辑候选，待荆确认' : '使用者填写，未经工具验证']);
+    const rows = takes.map((take, index) => [takeId(batch, index), batch.shotId, batch.batchId, take.status, take.usableRange, take.strength, take.status === 'REJECT' ? take.rejectCode : '', take.observation, take.editUse, batch.platform, batch.model, batch.mode, batch.settings, batch.prompt, batch.inputs, batch.change, batch.sourceLink, synthetic ? 'synthetic_exercise' : 'user_entered_unverified', synthetic ? '示例数据，无真实视频' : '使用者填写，未经工具验证']);
     return [header.map(csvCell).join(','), ...rows.map((row) => row.map(csvCell).join(','))].join('\r\n');
   }, [batch, takes, synthetic]);
 
@@ -216,16 +216,16 @@ export function ShotVersionRecorder() {
     <section className="version-workbench" aria-label="镜头版本记录器">
       <div className="version-editor">
         <div className="version-panel-heading">
-          <div><span className="mono">01 / BATCH FACTS</span><h2>每一次生成，<br />都留下选择理由。</h2></div>
+          <div><span className="mono">01</span><h2>每一次生成，<br />都留下选择理由。</h2></div>
           <div><button type="button" onClick={loadExample}>载入合成示例</button><button type="button" onClick={clearRecorder}>清空</button></div>
         </div>
 
-        <p className="version-source-note" role="status">{synthetic ? '合成演练 · 编辑候选 · 待荆确认。以下时间、观察和采用状态均为虚构，无真实视频。修改后仍是演练；记录真实样本请先清空。' : '空白起点：没有预填模型输出、可用区间或采用结论。你填写的判断不会由工具自动验证。载入合成示例会替换当前表单，请先导出已有记录。'}</p>
+        <p className="version-source-note" role="status">{synthetic ? '示例数据：以下时间、观察和采用状态均为示例，不对应真实视频。修改后仍是演练；记录真实样本请先清空。' : '空白起点：没有预填模型输出、可用区间或采用结论。你填写的判断不会由工具自动验证。载入合成示例会替换当前表单，请先导出已有记录。'}</p>
 
         <div className="version-id-strip">
-          <label><span className="mono">SHOT / 镜号</span><input value={batch.shotId} onChange={(event) => updateBatch('shotId', event.target.value.toUpperCase())} /></label>
+          <label><span className="mono">镜号</span><input value={batch.shotId} onChange={(event) => updateBatch('shotId', event.target.value.toUpperCase())} /></label>
           <b aria-hidden="true">/</b>
-          <label><span className="mono">BATCH / 批次</span><input value={batch.batchId} onChange={(event) => updateBatch('batchId', event.target.value.toUpperCase())} /></label>
+          <label><span className="mono">批次</span><input value={batch.batchId} onChange={(event) => updateBatch('batchId', event.target.value.toUpperCase())} /></label>
         </div>
 
         <div className="version-batch-grid">
@@ -235,7 +235,7 @@ export function ShotVersionRecorder() {
           </label>)}
         </div>
 
-        <div className="version-takes-heading"><div><span className="mono">02 / TAKES</span><h3>逐个候选，记录可用与不可用。</h3></div><button type="button" onClick={addTake} disabled={takes.length >= 8}>{takes.length >= 8 ? '最多 8 个候选' : '＋ 添加候选'}</button></div>
+        <div className="version-takes-heading"><div><span className="mono">02</span><h3>逐个候选，记录可用与不可用。</h3></div><button type="button" onClick={addTake} disabled={takes.length >= 8}>{takes.length >= 8 ? '最多 8 个候选' : '＋ 添加候选'}</button></div>
         <div className="version-take-list">
           {takes.map((take, index) => <article className={`version-take-row status-${take.status.toLowerCase()}`} key={take.id}>
             <div className="version-take-id"><span className="mono">TAKE</span><strong>{String(index + 1).padStart(2, '0')}</strong><small>{takeId(batch, index)}</small></div>
@@ -265,14 +265,14 @@ export function ShotVersionRecorder() {
       </aside>
 
       <section className="version-export-section">
-        <div className="version-export-heading"><div><span className="mono">03 / EXPORT</span><h2>一个给人读，<br />一个给表格用。</h2></div><p>Markdown 保存批次上下文与选择理由；CSV 每行对应一个候选，适合继续筛选、排序或合并到项目总表。</p></div>
+        <div className="version-export-heading"><div><span className="mono">03</span><h2>一个给人读，<br />一个给表格用。</h2></div><p>Markdown 保存批次上下文与选择理由；CSV 每行对应一个候选，适合继续筛选、排序或合并到项目总表。</p></div>
         <div className="version-export-grid">
-          <article><div><span className="mono">MARKDOWN / 完整记录</span><button type="button" onClick={() => copyOutput('markdown')}>{copied === 'markdown' ? '已复制 ✓' : '复制 ↗'}</button></div><pre>{markdown}</pre></article>
+          <article><div><span className="mono">完整记录</span><button type="button" onClick={() => copyOutput('markdown')}>{copied === 'markdown' ? '已复制 ✓' : '复制 ↗'}</button></div><pre>{markdown}</pre></article>
           <article><div><span className="mono">CSV / 候选行</span><button type="button" onClick={() => copyOutput('csv')}>{copied === 'csv' ? '已复制 ✓' : '复制 ↗'}</button></div><pre>{csv}</pre></article>
         </div>
       </section>
 
-      {manualCopy && <aside className="version-copy-fallback"><div><span className="mono">MANUAL COPY / 手动复制</span><p role="status">{copying ? '正在请求复制权限；最多等待 1.5 秒。也可直接选中下方文本复制。' : '自动复制未确认完成。电脑先全选，再按 Ctrl+C（Mac 按 ⌘C）；手机长按文本复制。未响应的权限请求可能稍后完成。'}</p></div><button type="button" onClick={resetCopy}>关闭 ×</button><textarea ref={manualField} readOnly value={manualCopy} onFocus={(event) => event.currentTarget.select()} aria-label="手动复制版本记录" /></aside>}
+      {manualCopy && <aside className="version-copy-fallback"><div><span className="mono">手动复制</span><p role="status">{copying ? '正在请求复制权限；最多等待 1.5 秒。也可直接选中下方文本复制。' : '自动复制未确认完成。电脑先全选，再按 Ctrl+C（Mac 按 ⌘C）；手机长按文本复制。未响应的权限请求可能稍后完成。'}</p></div><button type="button" onClick={resetCopy}>关闭 ×</button><textarea ref={manualField} readOnly value={manualCopy} onFocus={(event) => event.currentTarget.select()} aria-label="手动复制版本记录" /></aside>}
     </section>
   );
 }

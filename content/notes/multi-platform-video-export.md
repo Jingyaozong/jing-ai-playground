@@ -9,28 +9,9 @@ cover: "tips-blue"
 featured: true
 tags: ["AI VIDEO", "DELIVERY", "EDITING", "WORKFLOW"]
 readingTime: "15 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "YouTube Video Aspect Ratios / Meta Reels Ads / TikTok Creative Quality Checklist"
 sourceUrl: "https://support.google.com/youtube/answer/6375112"
-sourceNote: "不同播放器会适配不同画幅、竖屏内容需要关注安全区与声音等事实依据 YouTube、Meta 与 TikTok 官方资料核对；发布矩阵、画幅风险分级和拆版流程是本站编辑整理。平台规格可能变化，本文不把时长、分辨率或安全区数值作为永久规则。"
 relatedNotes: ["ai-video-asset-archive-delivery", "ai-video-shot-rhythm", "ai-video-sound-workflow"]
-connections:
-  - label: "TOOL"
-    title: "多平台发布规格规划器"
-    description: "填写母版与当前发布要求，自动生成画幅裁切、时长、安全区、字幕和音频输出矩阵。"
-    href: "/tools/release-matrix/"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "交付清单生成器"
-    description: "把确认后的各平台版本连同字幕、声音、授权与清单一起封装交付。"
-    href: "/tools/delivery-pack/"
-    tone: "mint"
-  - label: "TOOL"
-    title: "镜头节奏规划器"
-    description: "为短版重新分配镜头职责与秒数，避免只从母版结尾机械截短。"
-    href: "/tools/shot-rhythm-planner/"
-    tone: "coral"
 ---
 
 横版完成以后再点一次“自动重构为 9:16”，看起来像是多平台发布的最后一步。真正打开成片时却经常出现另一种结果：人物被切掉一半，字幕被界面盖住，原本靠左右关系成立的反打失去意义，十五秒短版只剩一段没有结论的开场。

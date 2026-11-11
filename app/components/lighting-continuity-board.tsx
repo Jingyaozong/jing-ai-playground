@@ -185,22 +185,22 @@ export function LightingContinuityBoard() {
   return (
     <section className="experiment-record-board lighting-record-board" id="record-desk" aria-label="十二格光线连续性实验记录台">
       <div className="experiment-record-top">
-        <div><p className="eyebrow mono">04 / Record desk</p><h2>十二格先空着，<br />只记灯从哪边来。</h2></div>
+        <div><h2>十二格先空着，<br />只记灯从哪边来。</h2></div>
         <div className="experiment-record-intro"><p>每格对应一种光线输入条件和一个固定镜头任务。评分、文件名与备注只保存在当前浏览器，不上传任何素材。</p><LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">
-        <article><span className="mono">COMPLETE</span><strong>{completed}<i>/12</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
-        <article><span className="mono">GENERATED</span><strong>{generated}<i>/12</i></strong><p>本机标记为已有输出</p></article>
-        <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
-        <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
+        <article><span className="mono">已完成</span><strong>{completed}<i>/12</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
+        <article><span className="mono">已生成</span><strong>{generated}<i>/12</i></strong><p>本机标记为已有输出</p></article>
+        <article><span className="mono">平均分</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
+        <article><span className="mono">已标记</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
       <LocalRecordBoundary loaded={loaded} markedCount={generated} />
       <div className="experiment-record-workspace">
         <div className="experiment-contact-sheet">
           <div className="light-axis-diagram" aria-label="固定北窗冷光、桌灯暖光与四个可变摄影机位示意">
-            <span className="mono">NORTH WINDOW · COOL KEY</span><div className="light-axis-window" /><div className="light-axis-beam beam-one" /><div className="light-axis-beam beam-two" /><b>S<small className="mono">SUBJECT</small></b><i>●<small className="mono">WARM PRACTICAL</small></i>{['C1', 'C2', 'C3', 'C4'].map((camera) => <em className={`axis-${camera.toLowerCase()}`} key={camera}>{camera}</em>)}<strong className="mono">WORLD FIXED / SCREEN CHANGES</strong>
+            <span className="mono">NORTH WINDOW · COOL KEY</span><div className="light-axis-window" /><div className="light-axis-beam beam-one" /><div className="light-axis-beam beam-two" /><b>S<small className="mono">主体</small></b><i>●<small className="mono">WARM PRACTICAL</small></i>{['C1', 'C2', 'C3', 'C4'].map((camera) => <em className={`axis-${camera.toLowerCase()}`} key={camera}>{camera}</em>)}<strong className="mono">WORLD FIXED / SCREEN CHANGES</strong>
           </div>
           <div className="experiment-record-filters"><div aria-label="按光线输入条件筛选">{(['ALL', 'A', 'B', 'C'] as const).map((group) => <button type="button" className={groupFilter === group ? 'is-active' : ''} onClick={() => setGroupFilter(group)} key={group}>{group === 'ALL' ? '全部组' : `${group} 组`}</button>)}</div><span className="mono">A 氛围 · B 坐标 · C 首帧</span></div>
           <div className="experiment-contact-grid reference-record-grid lighting-record-grid">
@@ -224,7 +224,7 @@ export function LightingContinuityBoard() {
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>灯位和调色分开记，空白不算结果。</strong><p>复制完整 Markdown 时，未执行样本保留为“—”；分组平均只使用实际填写的分数。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制光线连续性实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">本地导出</span><strong>灯位和调色分开记，空白不算结果。</strong><p>复制完整 Markdown 时，未执行样本保留为“—”；分组平均只使用实际填写的分数。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制光线连续性实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

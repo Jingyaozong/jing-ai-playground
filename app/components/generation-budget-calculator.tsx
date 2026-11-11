@@ -191,7 +191,7 @@ export function GenerationBudgetCalculator() {
     <section className="budget-workbench" aria-label="生成预算计算器">
       <div className="budget-editor">
         <div className="budget-panel-heading">
-          <div><span className="mono">01 / SET THE LIMITS</span><h2>先分预算池，<br />再决定生成多少。</h2></div>
+          <div><span className="mono">01</span><h2>先分预算池，<br />再决定生成多少。</h2></div>
           <div><button type="button" onClick={loadExample}>载入示例</button><button type="button" onClick={clearBudget}>清空</button></div>
         </div>
 
@@ -202,10 +202,10 @@ export function GenerationBudgetCalculator() {
           <label><span>预算上限<small>0 表示暂不设置</small></span><input type="number" min="0" step="1" value={project.budgetCap} onChange={(event) => updateProject('budgetCap', safeNumber(event.target.value))} /></label>
         </div>
 
-        <div className="budget-groups-heading"><div><span className="mono">02 / RISK GROUPS</span><h3>不同难度，使用不同候选计划。</h3></div><button type="button" onClick={addGroup} disabled={groups.length >= 8}>{groups.length >= 8 ? '最多 8 个风险组' : '＋ 添加风险组'}</button></div>
+        <div className="budget-groups-heading"><div><span className="mono">02</span><h3>不同难度，使用不同候选计划。</h3></div><button type="button" onClick={addGroup} disabled={groups.length >= 8}>{groups.length >= 8 ? '最多 8 个风险组' : '＋ 添加风险组'}</button></div>
         <div className="budget-group-list">
           {budget.rows.map((group, index) => <article className={`budget-group budget-group-${index % 4}`} key={group.id}>
-            <div className="budget-group-index"><span className="mono">GROUP</span><strong>{String(index + 1).padStart(2, '0')}</strong><small>{formatMoney(group.totalCost, project.unit)}</small></div>
+            <div className="budget-group-index"><span className="mono">分组</span><strong>{String(index + 1).padStart(2, '0')}</strong><small>{formatMoney(group.totalCost, project.unit)}</small></div>
             <label className="budget-group-name"><span>风险组名称</span><input value={group.name} onChange={(event) => updateGroup(group.id, { name: event.target.value })} /></label>
             <label><span>镜头数</span><input type="number" min="0" step="1" value={group.shots} onChange={(event) => updateGroup(group.id, { shots: safeNumber(event.target.value) })} /></label>
             <label><span>每镜候选</span><input type="number" min="0" step="1" value={group.candidates} onChange={(event) => updateGroup(group.id, { candidates: safeNumber(event.target.value) })} /></label>
@@ -218,7 +218,7 @@ export function GenerationBudgetCalculator() {
           </article>)}
         </div>
 
-        <div className="budget-fixed-heading"><span className="mono">03 / BEYOND GENERATION</span><h3>生成之外，也是真实成本。</h3></div>
+        <div className="budget-fixed-heading"><span className="mono">03</span><h3>生成之外，也是真实成本。</h3></div>
         <div className="budget-fixed-grid">
           <label><span>开发 / Pilot<small>风格、角色、场景与可行性测试</small></span><input type="number" min="0" step="1" value={project.development} onChange={(event) => updateProject('development', safeNumber(event.target.value))} /></label>
           <label><span>画面后期<small>放大、延长、编辑、合成与调色</small></span><input type="number" min="0" step="1" value={project.visualPost} onChange={(event) => updateProject('visualPost', safeNumber(event.target.value))} /></label>
@@ -245,11 +245,11 @@ export function GenerationBudgetCalculator() {
       </aside>
 
       <section className="budget-report-section">
-        <div className="budget-report-heading"><div><span className="mono">04 / BUDGET REPORT</span><h2>把数字和假设，<br />放在同一张表里。</h2></div><button type="button" onClick={copyReport}>{copied ? '已复制 ✓' : '复制 Markdown ↗'}</button></div>
+        <div className="budget-report-heading"><div><span className="mono">04</span><h2>把数字和假设，<br />放在同一张表里。</h2></div><button type="button" onClick={copyReport}>{copied ? '已复制 ✓' : '复制 Markdown ↗'}</button></div>
         <pre>{report}</pre>
       </section>
 
-      {manualCopy && <aside className="budget-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制生成预算表" /></aside>}
+      {manualCopy && <aside className="budget-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制生成预算表" /></aside>}
     </section>
   );
 }

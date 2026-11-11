@@ -13,3 +13,13 @@ export const noteCategories: Array<{
 ];
 
 export const noteFilters = ['全部', 'AI VIDEO', 'PROMPT', 'EVALUATION', 'AIGC', 'IMAGE', 'TOOLS'];
+
+// 方法页收录的六篇核心方法文，按阅读顺序排列。
+export const methodNoteSlugs = [
+  'ai-video-evaluation',
+  'video-evaluation-eight-dimensions',
+  'video-failure-cases',
+  'bad-case-review-loop',
+  'dataset-release-gates',
+  'causal-motion-five-point-ledger',
+];

@@ -9,28 +9,9 @@ cover: "tips-coral"
 featured: true
 tags: ["AI VIDEO", "BUDGET", "WORKFLOW", "PRODUCTION"]
 readingTime: "17 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Credits / Vertex AI Pricing / Adobe Firefly Generative Credits"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/15124877443219-How-do-credits-work"
-sourceNote: "计费单位、生成秒数、模型与分辨率对 Credits 或价格的影响依据 Runway、Google Cloud 和 Adobe 官方资料核对；预算分层、风险分组、有效产出率和阶段闸门是本站的编辑整理。文中不保存平台费率；实际预算应在执行当天查看官方价格、套餐、税费与币种。"
 relatedNotes: ["ai-video-generation-version-log", "ai-video-evaluation", "first-last-frame-motion-prompt"]
-connections:
-  - label: "TOOL"
-    title: "生成预算计算器"
-    description: "填写自己的单位成本、风险组、候选数、生成秒数与返工预留，生成完整预算明细。"
-    href: "/tools/generation-budget/"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "镜头风险检查器"
-    description: "生成前识别动作、机位、时长和首尾帧差异，把高风险镜头单独设置候选与返工预算。"
-    href: "/tools/shot-risk-checker/"
-    tone: "coral"
-  - label: "TOOL"
-    title: "镜头节奏规划器"
-    description: "先确认每镜职责与目标时长，避免把统一的最长生成时长直接套给所有镜头。"
-    href: "/tools/shot-rhythm-planner/"
-    tone: "mint"
 ---
 
 一支 60 秒的 AI 短片，生成成本通常不等于“60 秒 × 某个平台单价”。成片里的 60 秒，是从更多候选里剪出来的：同一镜可能生成四次，每次返回多个版本；有些只用中间两秒；人物一致性失败以后还要重做参考图；最后可能继续做延长、口型、声音、放大和修复。

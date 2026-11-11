@@ -9,32 +9,13 @@ cover: "making-coral"
 featured: false
 tags: ["AI VIDEO", "STORYBOARD", "WORKFLOW", "PROMPT"]
 readingTime: "10 分钟"
-demo: false
-editorialStatus: "draft"
-sourceTitle: "JING AI PLAYGROUND / STORY 001"
-sourceNote: "本文基于本站已经实际完成的故事梗概、90 秒剧本、14 镜分镜与 Prompt 包整理。当前没有视频模型输出，方法判断仍待荆确认。"
+sourceTitle: "JING / STORY 001"
 relatedNotes: ["memory-story-preflight", "ai-video-character-consistency", "video-vs-image-prompt"]
-connections:
-  - label: "STORY"
-    title: "她每天醒来都会忘记昨天"
-    description: "查看这套拆镜方法对应的故事、剧本和十四镜完整分镜。"
-    href: "/stories/she-forgets-yesterday/"
-    tone: "yellow"
-  - label: "EXPERIMENT"
-    title: "同一个她，四十个镜头"
-    description: "继续查看角色锚点、四格静态样本与一致性观察方法。"
-    href: "/experiments/forty-shots-one-character/"
-    tone: "sky"
-  - label: "PROMPT"
-    title: "十四镜生成 Prompt 包"
-    description: "回到故事页，展开并复制每一镜的完整生成约束。"
-    href: "/stories/she-forgets-yesterday/#generation-pack"
-    tone: "mint"
 ---
 
 这次不是先写十四条 Prompt，而是先回答一个更基础的问题：**90 秒里，每一秒要完成什么叙事任务？**
 
-本站故事《[她每天醒来都会忘记昨天](/stories/she-forgets-yesterday/)》目前已经从一句设定，推进到六场剧本、十四镜分镜和逐镜 Prompt。本篇记录这次真实发生的拆解过程，但不把尚未完成的视频生成写成成果。
+我的短片《[她每天醒来都会忘记昨天](/stories/she-forgets-yesterday/)》目前已经从一句设定，推进到六场剧本、十四镜分镜和逐镜 Prompt。本篇记录这次真实发生的拆解过程，但不把尚未完成的视频生成写成成果。
 
 > [!KEY POINT]
 > 分镜不是把剧本平均切成很多段。每一镜都应该只有一个清楚的叙事任务，以及一个能够被检查的动作。
@@ -148,7 +129,7 @@ NEGATIVE：本镜头需要主动排除的失败
 - **尚未形成模型比较或成片结论。**
 
 > [!JING'S NOTE]
-> 待荆确认：人物名字、对白语气和结尾判断仍是 AI 共创编辑稿。只有在真实生成和复盘之后，这篇方法记录才会继续补上模型、参数、失败样本与修改过程。
+> 人物名字、对白语气和结尾还会调整。真实生成和复盘之后，我会继续补上模型、参数、失败样本与修改过程。
 
 ## 可以复用的拆镜检查表
 

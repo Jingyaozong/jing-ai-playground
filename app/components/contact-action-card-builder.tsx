@@ -182,7 +182,7 @@ export function ContactActionCardBuilder() {
     <section className="contact-card-workbench" aria-label="接触动作拆分卡生成器">
       <div className="contact-card-editor">
         <div className="contact-card-heading">
-          <div><span className="mono">01 / DEFINE THE CONTACT</span><h2>手先碰到，<br />物体才移动。</h2></div>
+          <div><span className="mono">01</span><h2>手先碰到，<br />物体才移动。</h2></div>
           <div><button type="button" onClick={() => replaceValues(exampleValues)}>载入示例</button><button type="button" onClick={() => replaceValues(emptyValues)}>清空</button></div>
         </div>
 
@@ -204,7 +204,7 @@ export function ContactActionCardBuilder() {
           <ContactGroupHeading label="C / CAMERA & LIMITS" note="让关键接触点始终留在证据里" />
           <ContactField label="摄影机规则" note="景别、角度、运动与可见范围" value={values.cameraRule} placeholder="例如：固定近景，杯柄和杯底始终可见" onChange={(value) => update('cameraRule', value)} />
           <ContactField label="排除项" note="只写能够从真实画面核对的失败" value={values.negative} placeholder="例如：多指、穿模、杯子提前移动" onChange={(value) => update('negative', value)} />
-          <label className="contact-duration-field"><span><strong>镜头时长</strong><small>同一实验组保持一致</small></span><div><input type="number" min="2" max="20" value={values.duration} onChange={(event) => update('duration', Math.max(2, Math.min(20, Number(event.target.value) || 2)))} /><b className="mono">SEC</b></div></label>
+          <label className="contact-duration-field"><span><strong>镜头时长</strong><small>同一实验组保持一致</small></span><div><input type="number" min="2" max="20" value={values.duration} onChange={(event) => update('duration', Math.max(2, Math.min(20, Number(event.target.value) || 2)))} /><b className="mono">秒</b></div></label>
         </section>
 
         <section className="contact-stage-editor">
@@ -237,9 +237,9 @@ export function ContactActionCardBuilder() {
         </div>
         <h2>{values.shotName.trim() || '未命名接触动作'}</h2>
         <div className="contact-transfer-ledger">
-          <span><small className="mono">CONTACT</small><b>{clean(values.contactPoint, '等待接触点')}</b></span>
-          <span><small className="mono">BEFORE</small><b>{clean(values.objectLock, '等待接触前锁定')}</b></span>
-          <span><small className="mono">TRANSFER</small><b>{clean(values.supportRule, '等待承重规则')}</b></span>
+          <span><small className="mono">接触</small><b>{clean(values.contactPoint, '等待接触点')}</b></span>
+          <span><small className="mono">之前</small><b>{clean(values.objectLock, '等待接触前锁定')}</b></span>
+          <span><small className="mono">交接</small><b>{clean(values.supportRule, '等待承重规则')}</b></span>
         </div>
         <div className="contact-stage-strip" role="list" aria-label="接触动作的五个阶段">
           {values.stages.map((stage, index) => <article key={stage.label} role="listitem"><div><span className="mono">0{index + 1}</span><strong>{stage.label}</strong></div><i /><p>{clean(stage.support, '待定义')}</p></article>)}
@@ -249,7 +249,7 @@ export function ContactActionCardBuilder() {
       </aside>
 
       <section className="contact-card-outputs">
-        <div className="contact-output-heading"><div><span className="mono">02 / COPY THE TEST FILES</span><h2>一次接触，<br />生成三份工作文件。</h2></div><p>Prompt 说明单镜因果，九格比较输入方式，五阶段表记录真实输出。它们帮助排错，不替代真实生成和逐帧判断。</p></div>
+        <div className="contact-output-heading"><div><span className="mono">02</span><h2>一次接触，<br />生成三份工作文件。</h2></div><p>Prompt 说明单镜因果，九格比较输入方式，五阶段表记录真实输出。它们帮助排错，不替代真实生成和逐帧判断。</p></div>
         <div className="contact-output-grid">
           <ContactOutputCard label="A / PROMPT" title="接触链提示块" outputKey="prompt" text={outputs.prompt} copied={copied} onCopy={copyOutput} />
           <ContactOutputCard label="B / 3 × 3" title="九格变量矩阵" outputKey="matrix" text={outputs.matrix} copied={copied} onCopy={copyOutput} />
@@ -257,7 +257,7 @@ export function ContactActionCardBuilder() {
         </div>
       </section>
 
-      {manualCopy && <aside className="contact-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制接触动作拆分卡内容" onFocus={(event) => event.currentTarget.select()} /></aside>}
+      {manualCopy && <aside className="contact-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制接触动作拆分卡内容" onFocus={(event) => event.currentTarget.select()} /></aside>}
     </section>
   );
 }

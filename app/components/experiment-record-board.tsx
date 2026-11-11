@@ -182,7 +182,7 @@ export function ExperimentRecordBoard() {
     <section className="experiment-record-board" id="record-desk" aria-label="四十镜实验记录板">
       <div className="experiment-record-top">
         <div>
-          <p className="eyebrow mono">04 / Record desk</p>
+          
           <h2>四十格先空着，<br />等结果自己说话。</h2>
         </div>
         <div className="experiment-record-intro">
@@ -192,10 +192,10 @@ export function ExperimentRecordBoard() {
       </div>
 
       <div className="experiment-record-summary" aria-label="实验记录汇总">
-        <article><span className="mono">COMPLETE</span><strong>{completed}<i>/40</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
-        <article><span className="mono">GENERATED</span><strong>{generated}<i>/40</i></strong><p>本机标记为已有输出</p></article>
-        <article><span className="mono">AVG SCORE</span><strong>{overallAverage}<i>/5</i></strong><p>{overallScores.length ? `${overallScores.length} 个有效分数` : '尚无真实评分'}</p></article>
-        <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
+        <article><span className="mono">已完成</span><strong>{completed}<i>/40</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
+        <article><span className="mono">已生成</span><strong>{generated}<i>/40</i></strong><p>本机标记为已有输出</p></article>
+        <article><span className="mono">平均分</span><strong>{overallAverage}<i>/5</i></strong><p>{overallScores.length ? `${overallScores.length} 个有效分数` : '尚无真实评分'}</p></article>
+        <article><span className="mono">已标记</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
       <LocalRecordBoundary loaded={loaded} markedCount={generated} />
@@ -203,7 +203,7 @@ export function ExperimentRecordBoard() {
         <div className="experiment-contact-sheet">
           <div className="experiment-record-filters">
             <div aria-label="按组别筛选">{(['ALL', 'A', 'B', 'C', 'D'] as const).map((group) => <button type="button" className={groupFilter === group ? 'is-active' : ''} onClick={() => setGroupFilter(group)} key={group}>{group === 'ALL' ? '全部组' : `${group} 组`}</button>)}</div>
-            <label><span className="mono">STATUS</span><select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}><option value="all">全部状态</option><option value="untested">待测试</option><option value="generated">已生成</option><option value="reviewed">已评估</option></select></label>
+            <label><span className="mono">状态</span><select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as typeof statusFilter)}><option value="all">全部状态</option><option value="untested">待测试</option><option value="generated">已生成</option><option value="reviewed">已评估</option></select></label>
           </div>
           <div className="experiment-contact-grid">
             {records.map((record) => {
@@ -230,7 +230,7 @@ export function ExperimentRecordBoard() {
       </div>
 
       <div className="experiment-record-export">
-        <div><span className="mono">LOCAL EXPORT</span><strong>记录属于你，也留在你这里。</strong><p>复制的是 40 镜完整 Markdown 表；没有填写的字段保留为“—”，不会被包装成实验结论。</p></div>
+        <div><span className="mono">本地导出</span><strong>记录属于你，也留在你这里。</strong><p>复制的是 40 镜完整 Markdown 表；没有填写的字段保留为“—”，不会被包装成实验结论。</p></div>
         <div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div>
         <LocalRecordRecovery source={recoverySource} />
         {copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制实验记录" onFocus={(event) => event.currentTarget.select()} />}

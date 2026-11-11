@@ -55,7 +55,7 @@ export function StoryPromptPack({ promptGuide, prompts, motionTests, promptTempl
     <>
       <section className="story-prompts" id="generation-pack">
         <div className="story-section-inner">
-          <div className="story-section-heading"><div><p className="eyebrow mono">06 / Generation pack</p><h2>每一镜，<br />都有自己的约束。</h2></div><p>Prompt 使用英文描述模型动作，中文说明风险。复制时会自动带上统一的人物锚点、画面风格和负面约束。</p></div>
+          <div className="story-section-heading"><div><h2>每一镜，<br />都有自己的约束。</h2></div><p>Prompt 使用英文描述模型动作，中文说明风险。复制时会自动带上统一的人物锚点、画面风格和负面约束。</p></div>
 
           <div className="story-prompt-locks">
             <article><span className="mono">IDENTITY LOCK</span><h3>先锁定角色是谁</h3><p>{promptGuide.identityLock}</p></article>
@@ -72,12 +72,12 @@ export function StoryPromptPack({ promptGuide, prompts, motionTests, promptTempl
               </div>
             </details>)}
           </div>
-          {promptTemplate && <div className="story-prompt-template-link"><p>这组镜头属于虚构故事草案；配套通用模板是编辑候选，待荆确认，也不代表视频已生成。</p><Link className="text-link" href={promptTemplate.href}>{promptTemplate.label}</Link></div>}
+          {promptTemplate && <div className="story-prompt-template-link"><p>这组镜头有配套的通用 Prompt 模板。</p><Link className="text-link" href={promptTemplate.href}>{promptTemplate.label}</Link></div>}
         </div>
       </section>
 
       <section className="story-motion-tests section-shell">
-        <div className="story-section-heading"><div><p className="eyebrow mono">07 / Motion tests</p><h2>先测高风险镜头，<br />再决定要不要做完。</h2></div><p>先用少量动作验证人物、道具和空间连续性，尽早暴露问题，再决定是否生成完整镜头表。</p></div>
+        <div className="story-section-heading"><div><h2>先测高风险镜头，<br />再决定要不要做完。</h2></div><p>先用少量动作验证人物、道具和空间连续性，尽早暴露问题，再决定是否生成完整镜头表。</p></div>
         <div className="story-test-grid">
           {motionTests.map((test, index) => <article key={test.shot}>
             <div className="story-test-top"><b>{test.shot}</b><span className="mono">TEST {String(index + 1).padStart(2, '0')} · {test.duration}</span><em>{test.status}</em></div>

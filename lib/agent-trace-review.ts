@@ -33,7 +33,7 @@ export function parseTraceRecord(source: string): { trace: AgentTrace; review: T
   const isBundle = data.format === 'jing-agent-review-v1';
   if ('format' in data && !isBundle) throw new Error('复核包版本不支持。');
   const raw = isBundle ? data.trace : data;
-  if (!object(raw) || raw.version !== 1) throw new Error('轨迹 version 必须为 1。可先载入虚构演练查看格式。');
+  if (!object(raw) || raw.version !== 1) throw new Error('轨迹 version 必须为 1。可先载入示例演练查看格式。');
   if (!Array.isArray(raw.acceptance) || raw.acceptance.length < 1 || raw.acceptance.length > 12) throw new Error('acceptance 需要 1–12 条验收要求。');
   if (!Array.isArray(raw.steps) || raw.steps.length < 1 || raw.steps.length > 100) throw new Error('steps 需要 1–100 个步骤，数组顺序就是执行顺序。');
   const ids = new Set<string>();
@@ -96,7 +96,7 @@ export function traceReport(trace: AgentTrace, review: TraceReview): string {
   const gaps = traceReviewGaps(trace, review);
   return [
     '# 办公 Agent 轨迹复核记录', '',
-    `来源：${trace.kind === 'synthetic' ? '独立虚构演练；没有执行模型，不代表真实项目或效果' : '使用者导入；真实性与完整性由复核者核对'}`,
+    `来源：${trace.kind === 'synthetic' ? '示例演练；没有执行模型，不代表真实项目或效果' : '使用者导入；真实性与完整性由复核者核对'}`,
     '状态：人工记录 · 待最终确认；工具没有执行任务或验证文件。',
     'Case ID：', literalBlock(trace.caseId), '', '## 任务', literalBlock(trace.task), '', '## 轨迹概览',
     `共 ${trace.steps.length} 步；日志显式 error ${errors.length} 步；首个显式报错：${errors[0]?.id ?? '未记录'}。`,
@@ -111,7 +111,7 @@ export function traceReport(trace: AgentTrace, review: TraceReview): string {
 
 export const syntheticAgentTrace: AgentTrace = {
   version: 1, kind: 'synthetic', caseId: 'DEMO-OFFICE-001',
-  task: '独立虚构任务：汇总三条订单，排除已退款与已取消，保存可编辑的销售表，并核对合计。',
+  task: '示例任务：汇总三条订单，排除已退款与已取消，保存可编辑的销售表，并核对合计。',
   acceptance: ['只纳入 paid 订单，合计应为 120 元。', 'sales-summary.xlsx 可打开，包含状态与金额字段，且原始文件保留。'],
   steps: [
     { id: 'S1', tool: 'read_orders', status: 'ok', input: '读取 orders-demo.csv', output: 'paid: 120；refunded: 80；cancelled: 40。共 3 行。' },

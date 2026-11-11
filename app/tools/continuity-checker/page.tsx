@@ -1,22 +1,23 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../../lib/seo';
 import Link from 'next/link';
 import { ContinuityChecker } from '../../components/continuity-checker';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 
-export const metadata: Metadata = {
-  title: '相邻镜头连续性检查器 — JING AI PLAYGROUND',
+export const metadata: Metadata = pageMeta({ og: 'tool-continuity-checker',
+  title: '相邻镜头连续性检查器',
   description: '检查镜头 A 出口与镜头 B 入口之间的人物、方向、视线、动作、场景事实和声音交接。',
-};
+});
 
 export default function ContinuityCheckerPage() {
   return (
     <main>
       <SiteHeader active="Tools" />
       <header className="tool-detail-hero continuity-detail-hero">
-        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link><span>JING TOOL / 007</span></div>
+        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link></div>
         <div className="tool-detail-title">
-          <div><p className="eyebrow mono">Continuity checker / 切点检查</p><h1>单镜会发生，<br /><em>切点要会交接。</em></h1></div>
+          <div><h1>单镜会发生，<br /><em>切点要会交接。</em></h1></div>
           <p>把镜头 A 的出口和镜头 B 的入口放在一起，沿六条连续线检查真正需要保持、解释或重做的部分。</p>
         </div>
       </header>

@@ -5,7 +5,7 @@ import { selectedCandidates, selectionOptions } from './selection.mjs';
 const now = new Date('2026-09-08T12:00:00Z');
 const record = (n) => {
   const url = `https://www.qbitai.com/2026/09/${n}.html`;
-  return { id: createHash('sha256').update(url).digest('hex').slice(0,16), source: '量子位官网（非公众号全量）', url, publishedAt: now.toISOString(), title: `虚构测试${n}`, excerpt: '离线测试摘要' };
+  return { id: createHash('sha256').update(url).digest('hex').slice(0,16), source: '量子位官网（非公众号全量）', url, publishedAt: now.toISOString(), title: `示例测试${n}`, excerpt: '离线测试摘要' };
 };
 const snapshot = () => ({ fetchedAt: now.toISOString(), candidates: [record(1), record(2), record(3)] });
 test('selection arguments require bounded explicit file and unique positions', () => {

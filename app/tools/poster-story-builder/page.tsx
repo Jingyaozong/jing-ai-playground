@@ -1,22 +1,23 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../../lib/seo';
 import Link from 'next/link';
 import { PosterStoryBuilder } from '../../components/poster-story-builder';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 
-export const metadata: Metadata = {
-  title: '海报反推故事组装器 — JING AI PLAYGROUND',
+export const metadata: Metadata = pageMeta({ og: 'tool-poster-story-builder', robots: { index: false, follow: true },
+  title: '海报反推故事组装器',
   description: '把海报里的可见证据、合理推测和主动创作选择分开记录，生成证据账本、故事任务卡和可复制 Prompt。',
-};
+});
 
 export default function PosterStoryBuilderPage() {
   return (
     <main>
       <SiteHeader active="Tools" />
       <header className="tool-detail-hero poster-story-hero">
-        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link><span>JING TOOL / 019</span></div>
+        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link></div>
         <div className="tool-detail-title">
-          <div><p className="eyebrow mono">Poster to story / 来源分层</p><h1>别急着讲故事，<br /><em>先把海报分三层。</em></h1></div>
+          <div><h1>别急着讲故事，<br /><em>先把海报分三层。</em></h1></div>
           <p>把“画面确实给了什么”“证据允许怎样推测”和“创作者决定加入什么”分开，再把它们组装成能追溯来源的故事任务。</p>
         </div>
       </header>

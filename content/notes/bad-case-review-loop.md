@@ -10,30 +10,10 @@ cover: "review-checksheet"
 featured: false
 tags: ["EVALUATION", "Bad Case", "数据优化"]
 readingTime: "7 分钟"
-demo: false
-editorialStatus: "draft"
-sourceTitle: "荆提供的 Bad Case 分析与评测后数据优化方法"
-sourceNote: "分类、五层归因、处理闭环和评测集优化原则来自荆的工作方法说明。示例与记录细则由 AI 独立编写，属于编辑候选，待荆确认；没有真实项目样本、人员数据或效果数值。"
 relatedNotes: ["video-evaluation-eight-dimensions", "dataset-release-gates", "synthetic-annotation-delivery"]
-connections:
-  - label: "AGENT"
-    title: "沿调用轨迹定位"
-    description: "区分首个工具报错、任务偏离与最终产物问题。"
-    href: "/notes/office-agent-trajectory-review/"
-    tone: "yellow"
-  - label: "METHOD"
-    title: "先用八维定位"
-    description: "把视频异常落在明确的观察维度上。"
-    href: "/notes/video-evaluation-eight-dimensions/"
-    tone: "sky"
-  - label: "DELIVERY"
-    title: "修好以后再交付"
-    description: "用四道检查关口保留返修与版本证据。"
-    href: "/notes/dataset-release-gates/"
-    tone: "mint"
 ---
 
-> 本文依据荆提供的方法整理，扩展表达待荆确认。文中的小例子完全虚构，只用于解释判断过程，不是实际项目的脱敏复刻，也不是已验证的模型问题。
+> 文中的纸风车任务是为了说明判断过程设计的示例，不是项目数据。
 
 Bad Case 不是一筐“坏样本”。它需要回答：哪里不符合要求、依据是什么、可能是哪一层出了问题、改变以后怎样验证。
 
@@ -63,9 +43,9 @@ Bad Case 不是一筐“坏样本”。它需要回答：哪里不符合要求�
 
 这是排查方向，不是五选一的自动结论。同一个问题可以有多个原因；证据不够就保留“待确认”，不要见到坏输出就写“模型能力不足”。
 
-## 一个虚构的小例子
+## 一个小例子
 
-独立虚构的图像任务要求：“桌上放两个绿色纸风车。”假设评测记录写着“数量错误”，但展示缩略图只看到一个。
+设想一个图像任务，要求：“桌上放两个绿色纸风车。”假设评测记录写着“数量错误”，但展示缩略图只看到一个。
 
 先打开完整输入与输出，确认第二个是否被裁切；再查文件与 Prompt 是否配对正确。如果规则没说清被遮挡主体怎样计数，需要先裁决规则。只有在文件、关联和规则都确认后，才能讨论输出是否真的漏生成。
 
@@ -106,6 +86,6 @@ Bad Case 不是一筐“坏样本”。它需要回答：哪里不符合要求�
 
 数据优化建议至少写清“能力缺口、证据样本、拟补场景、质量规则、去重要求、验证方式”。不要只写“多补一些高质量数据”。
 
-例如，虚构纸风车任务如果最终确认是遮挡条件下的计数缺口，可以提出分层构造遮挡程度与数量组合的候选方案。但补多少、是否有效，仍需真实执行后验证；本文不预设改善幅度。
+例如，纸风车任务如果最终确认是遮挡条件下的计数缺口，可以提出分层构造遮挡程度与数量组合的候选方案。但补多少、是否有效，仍需真实执行后验证；本文不预设改善幅度。
 
-方法可以在 [六阶段虚构标注演练](/notes/synthetic-annotation-delivery/) 中串起来：试标暴露问题，规则修订后再放量，交付时保留首检与复检的不同记录。
+方法可以在 [六阶段标注交付演示](/notes/synthetic-annotation-delivery/) 中串起来：试标暴露问题，规则修订后再放量，交付时保留首检与复检的不同记录。

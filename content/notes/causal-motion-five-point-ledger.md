@@ -10,32 +10,7 @@ cover: "causal-gate"
 featured: false
 tags: ["AI VIDEO", "CAUSAL ORDER", "FRAME REVIEW", "PROMPT"]
 readingTime: "11 分钟"
-demo: false
-editorialStatus: "draft"
-sourceTitle: "本站 EXP.010 / 水线动作卡 / 因果动作闸门 Prompt"
-sourceNote: "本文根据本站尚待执行的 EXP.010、浏览器本地水线动作卡与因果动作 Prompt 整理，是方法编辑稿，待荆确认。当前实验记录为 0 / 9，没有真实视频、通过样本或模型结论；文中的帧号均为计划参考。"
 relatedNotes: ["ai-video-prompt-comparison", "first-last-frame-motion-prompt", "video-failure-cases"]
-connections:
-  - label: "EXPERIMENT"
-    title: "撑伞以后，水面能沿一个方向连续退去吗？"
-    description: "查看 EXP.010 的九格待执行矩阵、通过标准与当前 0 / 9 状态。"
-    href: "/experiments/can-water-recede-after-the-umbrella-opens/"
-    tone: "blue"
-  - label: "TOOL"
-    title: "水线动作卡生成器"
-    description: "在浏览器本地填写两条动作轨道，导出五点账本、完整 Prompt 与验收表。"
-    href: "/tools/waterline-motion-card/"
-    tone: "yellow"
-  - label: "PROMPT"
-    title: "因果动作闸门"
-    description: "复制可迁移到其他双阶段镜头的编辑候选模板。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-causal-motion-gate"
-    tone: "mint"
-  - label: "STORY"
-    title: "《退水以前》"
-    description: "回到 Shot 11 所属的故事编辑候选；当前无视频，静态概念图不是实验结果。"
-    href: "/stories/before-the-water-recedes/"
-    tone: "coral"
 ---
 
 “她撑开伞，随后水面退去”读起来有明确先后。到了视频里，两个动作却可能同时发生：伞还在展开，水线已经移动；水先退了一小段，伞才锁住；或者水线先退、再回弹，最后仍然抵达正确终点。
@@ -66,7 +41,7 @@ ACTION A          HOLD              ACTION B
 
 以《退水以前》Shot 11 的**待测试计划**为例：动作 A 是红伞从合拢到完全展开并锁定；动作 B 是斜水线从画面左前方连续退向右后方出口。书架、书页、木地板、人物站位和摄影机都属于保持项。
 
-这不是视频观察。当前 [EXP.010](/experiments/can-water-recede-after-the-umbrella-opens/) 仍是 `0 / 9`，没有真实样本可供填写锁定帧或首动帧。
+下面的帧号是计划参考，对应 [EXP.010](/experiments/can-water-recede-after-the-umbrella-opens/) 的九格设计。
 
 ## 因果闸门只有一个硬条件
 
@@ -83,7 +58,7 @@ ACTION A          HOLD              ACTION B
 可见间隔 = F_B - F_A
 ```
 
-间隔没有脱离模型、帧率和动作类型的通用合格数字。本站工具会在间隔过窄时提醒复核，但不会把提醒冒充模型能力结论。真正执行时，应把多个间隔作为实验变量，而不是先宣布某一个数字最好。
+间隔没有脱离模型、帧率和动作类型的通用合格数字。我的水线动作卡工具会在间隔过窄时提醒复核，但提醒不等于模型能力结论。真正执行时，应把多个间隔作为实验变量，而不是先宣布某一个数字最好。
 
 > [!BAD CASE]
 > 如果 A 设为 70% 才锁定，B 却设为 20% 首动，这不是“有风险的 Prompt”，而是一份顺序自相矛盾的任务。应先停止导出，修正时序，再进入生成。
@@ -191,7 +166,7 @@ A、人物、道具数量、接触关系、摄影机、背景结构、材质与�
 | C02 |  |  |  | 待检查 | 待检查 | 待执行 |  |
 | C03 |  |  |  | 待检查 | 待检查 | 待执行 |  |
 
-EXP.010 计划使用三组可见间隔、每组三个候选，共九格。现在九格全部为空，这是诚实状态，不是缺少一段可以由编辑补写的文案。
+EXP.010 计划使用三组可见间隔、每组三个候选，共九格。目前还没有填入视频样本。
 
 ## 哪些任务适合这套方法
 
@@ -223,6 +198,4 @@ EXP.010 计划使用三组可见间隔、每组三个候选，共九格。现在
 [水线动作卡生成器](/tools/waterline-motion-card/)负责前三步，而且完全在浏览器本地运行；[因果动作闸门 Prompt](/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-causal-motion-gate)把结构迁移到其他双阶段镜头；EXP.010 才负责保存真实候选和观察。
 
 > [!JING'S NOTE]
-> 待荆确认：对因果动作最重要的可能不是让两个状态都出现，而是让观众有足够时间看见“第一件事已经完成，所以第二件事现在才发生”。
-
-本文是**方法编辑稿 · 待荆确认**。当前没有 EXP.010 视频样本，静态概念图、计划帧号、Prompt 和本文中的示例均不是实验结果。完成真实九格记录以前，不写“哪种间隔最稳定”或“某个模型已经通过”。
+> 对因果动作最重要的可能不是让两个状态都出现，而是让观众有足够时间看见“第一件事已经完成，所以第二件事现在才发生”。

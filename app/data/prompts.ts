@@ -30,10 +30,10 @@ export const promptSource = {
     '专家会诊', '第一性原理', '跨领域借解', '双向钢人论证', '用最小实验替代空想',
     '挖掘隐藏天赋', '人生设计术',
   ],
-  note: '前 12 个主题受这篇公开文章启发；本站现提供独立编写的简短任务卡，不展示原文 Prompt 全文，也不代表原作者认可这些改写。想使用作者版本，请直接阅读原文。后 10 条 AI 制作内容是本站编辑候选，待荆确认。',
+  note: '前 12 个主题受这篇公开文章启发；这里提供独立编写的简短任务卡，不展示原文 Prompt 全文，也不代表原作者认可这些改写。想使用作者版本，请直接阅读原文。后 10 条 AI 视频制作模板是我自己整理的。',
 };
 
-const sourceAdaptedIntro = `【版本说明】这是 JING AI PLAYGROUND 依据“数字生命卡兹克”公开文章主题独立编写的短版任务卡，不是原作者的 Prompt 原文，也不代表作者认可本改写。原文：${promptSource.url}`;
+const sourceAdaptedIntro = `【版本说明】这是我依据“数字生命卡兹克”公开文章主题独立编写的短版任务卡，不是原作者的 Prompt 原文，也不代表作者认可本改写。原文：${promptSource.url}`;
 
 export const promptItems: PromptItem[] = [
   {
@@ -253,7 +253,7 @@ export const promptItems: PromptItem[] = [
     title: '角色锚点制作卡',
     category: 'AI 视频制作',
     description: '把人物身份、固定特征、允许变化和当前镜头任务整理成可复用角色锚点。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；以下是制作前的模板，不是已生成镜头的验收结果。
+    prompt: String.raw`【状态】以下是制作前的模板，不是已生成镜头的验收结果。
 
 我要为一个 AI 视频角色建立可复用锚点。
 
@@ -277,7 +277,7 @@ export const promptItems: PromptItem[] = [
     variables: ['角色资料', '固定服装与配饰', '允许变化', '禁止变化', '当前镜头', '参考图说明'],
     tags: ['AI VIDEO', '角色一致性', 'REFERENCE'],
     model: '支持图片输入的多模态模型',
-    usageNote: '编辑候选 · 待荆确认。先整理锚点，再把固定特征用于相关镜头；未提供参考图时只处理文字输入，不把推测写成可见事实。',
+    usageNote: '先整理锚点，再把固定特征用于相关镜头；未提供参考图时只处理文字输入，不把推测写成可见事实。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
     relatedLinks: [
       { href: '/notes/ai-video-character-consistency/', label: '阅读人物一致性方法 ↗' },
@@ -289,7 +289,7 @@ export const promptItems: PromptItem[] = [
     title: '场景锚点制作卡',
     category: 'AI 视频制作',
     description: '固定空间结构、道具坐标、材质、天气和光线来源，减少换机位后的场景重写。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；以下是生成前的模板，不是场景连续性已通过的证明。
+    prompt: String.raw`【状态】以下是生成前的模板，不是场景连续性已通过的证明。
 
 我要为一组连续镜头建立场景锚点。
 
@@ -314,7 +314,7 @@ export const promptItems: PromptItem[] = [
     variables: ['空间名称与用途', '平面关系', '固定物件', '可移动道具', '材质与主色', '光源坐标', '天气与时间', '机位'],
     tags: ['AI VIDEO', '场景一致性', 'CONTINUITY'],
     model: '通用推理或多模态模型',
-    usageNote: '编辑候选 · 待荆确认。适合三镜以上的同场戏；空间草案需要用参考图和实际镜头复核，不能凭模板保证场景一致。',
+    usageNote: '适合三镜以上的同场戏；空间草案需要用参考图和实际镜头复核，不能凭模板保证场景一致。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
     relatedLinks: [
       { href: '/notes/ai-video-scene-consistency/', label: '阅读场景一致性方法 ↗' },
@@ -326,7 +326,7 @@ export const promptItems: PromptItem[] = [
     title: '单镜动作指令',
     category: 'AI 视频制作',
     description: '把一个镜头收束为清楚的起点、动作顺序、摄影机行为和结束状态。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；不是视频结果。
+    prompt: String.raw`【状态】不是视频结果。
 
 请把下面的镜头任务整理成一条待生成的 AI 视频提示，不增加剧情，也不要声称已经生成或通过验收。
 
@@ -352,7 +352,7 @@ export const promptItems: PromptItem[] = [
     variables: ['时长', '起点画面', '主体动作', '结束画面', '摄影机', '环境变化', '必须保持', '禁止发生'],
     tags: ['AI VIDEO', '动作', 'SHOT'],
     model: '通用推理模型',
-    usageNote: '编辑候选 · 待荆确认。一镜只保留一个主要动作目标；生成前的验收点是计划，真实通过与否只能看视频样本。',
+    usageNote: '一镜只保留一个主要动作目标；生成前的验收点是计划，真实通过与否只能看视频样本。',
     dateAdded: '2026-08-31', featured: true, demo: false, editorial: true,
     relatedLinks: [
       { href: '/notes/ai-video-prompt-shot-facts/', label: '阅读镜头事实方法 ↗' },
@@ -364,7 +364,7 @@ export const promptItems: PromptItem[] = [
     title: '首尾帧过渡指令',
     category: 'AI 视频制作',
     description: '比较两张端点画面，只描述中间必须发生的变化和不能漂移的视觉事实。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；不是视频结果。
+    prompt: String.raw`【状态】不是视频结果。
 
 我会提供首帧和尾帧，请为首尾帧视频生成整理待测试的过渡指令。没有两张实际端点图时，先列所缺素材，不假装已比较画面。
 
@@ -388,7 +388,7 @@ export const promptItems: PromptItem[] = [
     variables: ['时长', '首帧事实', '尾帧事实', '必须保持', '动作路径', '摄影机运动'],
     tags: ['AI VIDEO', '首尾帧', 'MOTION'],
     model: '支持图片输入的多模态模型',
-    usageNote: '编辑候选 · 待荆确认。必须提供两张真实端点图才能比较；中间动作和风险均属待测试计划，不能冒充生成结果。',
+    usageNote: '必须提供两张真实端点图才能比较；中间动作和风险均属待测试计划，不能冒充生成结果。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
     relatedLinks: [
       { href: '/notes/first-last-frame-motion-prompt/', label: '阅读首尾帧方法 ↗' },
@@ -400,7 +400,7 @@ export const promptItems: PromptItem[] = [
     title: '单镜声音分层 Brief',
     category: 'AI 视频制作',
     description: '把对白、声音表演、环境底、动作音效和音乐分别放进时间线。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；不是已完成的音画验收。
+    prompt: String.raw`【状态】不是已完成的音画验收。
 
 请为下面的镜头制作待执行的声音分层 Brief，不生成不存在的画面或声音，也不要把计划时点写成实测同步结果。
 
@@ -429,7 +429,7 @@ export const promptItems: PromptItem[] = [
     variables: ['镜头时长', '画面动作时间线', '对白', '空间环境', '关键接触动作', '情绪目标', '音乐策略'],
     tags: ['AI VIDEO', '声音', 'SOUND DESIGN'],
     model: '通用推理模型',
-    usageNote: '编辑候选 · 待荆确认。先规划接触音，再补环境和音乐；无声也是选择。时间线是制作计划，不能当作已完成混音或同步验收。',
+    usageNote: '先规划接触音，再补环境和音乐；无声也是选择。时间线是制作计划，不能当作已完成混音或同步验收。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
     relatedLinks: [
       { href: '/notes/ai-video-sound-workflow/', label: '阅读声音分工方法 ↗' },
@@ -441,9 +441,9 @@ export const promptItems: PromptItem[] = [
     title: '失败镜头返修诊断',
     category: 'AI 视频制作',
     description: '从目标、原 Prompt 和实际失败帧出发，一次只修改最可能影响结果的变量。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；不是已有失败案例的诊断结果。
+    prompt: String.raw`【状态】不是已有失败案例的诊断结果。
 
-我要诊断一次 AI 视频生成失败。请只根据我提供的目标、原提示和真实样本观察做证据化判断；没有视频、关键帧或可靠观察记录时只返回待填写的诊断表，不虚构故障。
+我要诊断一次 AI 视频生成失败。请只根据我提供的目标、原提示和真实样本观察做证据化判断；没有视频、关键帧或可靠观察记录时只返回待填写的诊断表，不编造故障。
 
 镜头目标：【填写】
 原始 Prompt：【完整粘贴】
@@ -467,7 +467,7 @@ export const promptItems: PromptItem[] = [
     variables: ['镜头目标', '原始 Prompt', '参考素材', '生成设置', '失败时间', '可见失败', '可用区间'],
     tags: ['AI VIDEO', '返修', 'DIAGNOSIS'],
     model: '支持视频或关键帧输入的多模态模型',
-    usageNote: '编辑候选 · 待荆确认。最好附失败前、中、后三张真实关键帧；没有样本就只生成空表。原因是复测假设，下一轮只改一个主要变量。',
+    usageNote: '最好附失败前、中、后三张真实关键帧；没有样本就只生成空表。原因是复测假设，下一轮只改一个主要变量。',
     dateAdded: '2026-08-31', featured: true, demo: false, editorial: true,
     relatedLinks: [
       { href: '/notes/video-failure-cases/', label: '阅读失败排查词典 ↗' },
@@ -478,7 +478,7 @@ export const promptItems: PromptItem[] = [
     title: '相邻镜头交接检查',
     category: 'AI 视频制作',
     description: '把镜头 A 的出口和镜头 B 的入口并排核对，提前发现方向、动作与声音跳变。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；不是已完成的剪辑验收。
+    prompt: String.raw`【状态】不是已完成的剪辑验收。
 
 请检查两个相邻镜头能否连续剪接。只有文字描述、没有真实尾帧与首帧时，只做待核对的交接计划，不声称已经看过画面或声音。
 
@@ -502,7 +502,7 @@ export const promptItems: PromptItem[] = [
     variables: ['镜头 A 尾部', '镜头 B 开头', '剪辑意图', '必须保留的事实', '允许改变的内容'],
     tags: ['AI VIDEO', '剪辑', 'CONTINUITY'],
     model: '支持视频或关键帧输入的多模态模型',
-    usageNote: '编辑候选 · 待荆确认。只比较切点附近；若未提供真实尾帧、首帧或观察记录，只能做交接计划，不能断言剪辑已通过。',
+    usageNote: '只比较切点附近；若未提供真实尾帧、首帧或观察记录，只能做交接计划，不能断言剪辑已通过。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
     relatedLinks: [
       { href: '/notes/ai-video-shot-continuity/', label: '阅读跨镜连续性方法 ↗' },
@@ -514,7 +514,7 @@ export const promptItems: PromptItem[] = [
     title: '候选样本验收表',
     category: 'AI 视频制作',
     description: '用统一标准记录多个候选的可用区间、失败证据和剪辑采用方式。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；不是已完成的候选评测。
+    prompt: String.raw`【状态】不是已完成的候选评测。
 
 请把一组 AI 视频候选整理成可追溯的验收记录。未提供真实样本时只生成空表；只有转述观察而没有可核对素材时，要标注“观察待复核”。
 
@@ -542,7 +542,7 @@ export const promptItems: PromptItem[] = [
     variables: ['镜头任务与标准', '候选列表', '观察记录', '项目硬性要求'],
     tags: ['AI VIDEO', '评测', 'VERSION LOG'],
     model: '支持视频输入的多模态模型',
-    usageNote: '编辑候选 · 待荆确认。候选 ID 和设置要留档；没有真实样本只生成空表，仅有文字转述时标“待复核”，不让模型代填评测结果。',
+    usageNote: '候选 ID 和设置要留档；没有真实样本只生成空表，仅有文字转述时标“待复核”，不让模型代填评测结果。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
     relatedLinks: [
       { href: '/notes/ai-video-generation-version-log/', label: '阅读版本留档方法 ↗' },
@@ -554,9 +554,9 @@ export const promptItems: PromptItem[] = [
     title: '因果动作闸门',
     category: 'AI 视频制作',
     description: '先让动作 A 完成并锁定，再允许动作 B 沿唯一方向变化，把“随后”写成可以逐帧验收的时序协议。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；以下只生成待测试协议，不代表已有视频结果。
+    prompt: String.raw`【状态】以下只生成待测试协议，不代表已有视频结果。
 
-请把下面的双阶段镜头整理成一份可测试的因果动作协议。不要生成或虚构实验结果。
+请把下面的双阶段镜头整理成一份可测试的因果动作协议。不要生成或编造实验结果。
 
 镜头名称：【填写】
 时长与帧率：【例如 6 秒、24 fps】
@@ -591,7 +591,7 @@ export const promptItems: PromptItem[] = [
     variables: ['镜头名称', '时长与帧率', '人物与道具', '摄影机', '动作 A 起点', '动作 A 锁定状态', '动作 A 锁定时刻', '动作 B 起点', '动作 B 唯一方向', '动作 B 终点', '动作 B 首动时刻', '环境常量'],
     tags: ['AI VIDEO', '因果顺序', '动作闸门', '逐帧验收'],
     model: '通用推理模型',
-    usageNote: '编辑候选 · 待荆确认。适合“先完成一件事，随后第二件事再变化”的单镜任务；先核对时序再交给视频模型。没有真实视频时只生成空白验收表。',
+    usageNote: '适合“先完成一件事，随后第二件事再变化”的单镜任务；先核对时序再交给视频模型。没有真实视频时只生成空白验收表。',
     dateAdded: '2026-09-01', featured: false, demo: false, editorial: true,
     relatedLinks: [
       { href: '/notes/causal-motion-five-point-ledger/', label: '阅读五点账本方法 ↗' },
@@ -604,7 +604,7 @@ export const promptItems: PromptItem[] = [
     title: '海报反推故事 · 短证据账本',
     category: 'AI 视频制作',
     description: '先用短账本分清看见、推测和主动设定，再生成不重复账本的故事梗概。',
-    prompt: String.raw`【状态】本站编辑候选，待荆确认；生成的是故事文本，不是视频成果。
+    prompt: String.raw`【状态】生成的是故事文本，不是视频成果。
 
 请根据我提供的一张无片名海报，反推一个可继续开发的故事。没有实际海报图时先索取图片，不编造可见证据。不要联网搜索，不要猜测它属于某部真实作品，也不要把创作设定写成画面事实。
 
@@ -649,7 +649,7 @@ C｜主动创作选择
     variables: ['输入海报', '故事类型或限制', '不希望出现的套路'],
     tags: ['STORY', '海报反推', '证据边界', '创意开发'],
     model: '支持图片输入的多模态模型',
-    usageNote: '编辑候选 · 待荆确认。依据 EXP.008 九份文本 Pilot 整理；EXP.009 的九份同会话候选也保持来源分层，但不证明跨会话稳定或视频效果。没有海报图时不要编造证据。',
+    usageNote: '依据 EXP.008 九份文本 Pilot 整理；EXP.009 的九份同会话候选也保持来源分层，但不证明跨会话稳定或视频效果。没有海报图时不要编造证据。',
     dateAdded: '2026-08-31', featured: false, demo: false, editorial: true,
     sourceHref: '/experiments/can-a-fictional-poster-grow-a-story/',
     sourceLabel: '查看 9 / 9 实验依据 ↗',

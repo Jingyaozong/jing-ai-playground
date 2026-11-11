@@ -1,13 +1,13 @@
-import experimentPilotSamples from '../assets/generated/forty-shots-pilot-samples.png';
+import experimentPilotSamples from '../assets/generated/forty-shots-pilot-samples.webp';
 import fictionalPosterInputs from '../assets/generated/fictional-poster-inputs.webp';
-import posterRetestLibrary from '../assets/generated/poster-pilot-02-flooded-library.png';
+import posterRetestLibrary from '../assets/generated/poster-pilot-02-flooded-library.webp';
 import pierTicketFrame from '../assets/generated/no-boat-at-pier-seven-frame-01.webp';
 import rainKitchenFrame from '../assets/generated/before-the-rain-ends-frame-01.webp';
 import earlyShadowFrame from '../assets/generated/shadow-arrives-five-minutes-early-frame-03.webp';
 import objectMemoryFrame from '../assets/generated/objects-remember-frame-03.webp';
 import memoryMorningFrame from '../assets/generated/she-forgets-yesterday-frame-01-v2.webp';
-import waterRecedesFrame from '../assets/generated/before-the-water-recedes-frame-01.png';
-import waterlineMotionFrame from '../assets/generated/before-the-water-recedes-frame-03.png';
+import waterRecedesFrame from '../assets/generated/before-the-water-recedes-frame-01.webp';
+import waterlineMotionFrame from '../assets/generated/before-the-water-recedes-frame-03.webp';
 
 const generatedVisuals = {
   memory: { image: memoryMorningFrame, caption: 'Scene 01 · AI concept frame · no video' },
@@ -31,7 +31,7 @@ export function ProjectVisual({ variant, label }: { variant: string; label: stri
     const stages = [['01', '接近'], ['02', '接触'], ['03', '承重'], ['04', '移动'], ['05', '释放']];
     return (
       <div className={`project-visual visual-${variant} is-protocol-diagram`} aria-label={`${label}的五阶段接触动作实验协议图；不是模型样本`}>
-        <span className="contact-protocol-kicker mono">CONTACT CHAIN / 实验协议图</span>
+        <span className="contact-protocol-kicker mono">实验协议图</span>
         <div className="contact-protocol-stage" aria-hidden="true">
           <div className="contact-protocol-hand"><b /><i /><i /><i /></div>
           <div className="contact-protocol-cup"><i /><b /></div>
@@ -51,11 +51,11 @@ export function ProjectVisual({ variant, label }: { variant: string; label: stri
     const locks = [['01', '灯位固定'], ['02', '人物转向'], ['03', '机位 A'], ['04', '机位 B']];
     return (
       <div className={`project-visual visual-${variant} is-protocol-diagram`} aria-label={`${label}的世界坐标光线实验协议图；不是模型样本`}>
-        <span className="lighting-protocol-kicker mono">WORLD LIGHT MAP / 实验协议图</span>
+        <span className="lighting-protocol-kicker mono">实验协议图</span>
         <div className="lighting-protocol-map" aria-hidden="true">
           <div className="lighting-north-window"><span className="mono">NORTH WINDOW</span></div>
           <div className="lighting-cold-beams"><i /><i /><i /></div>
-          <div className="lighting-subject"><i /><b className="mono">SUBJECT</b></div>
+          <div className="lighting-subject"><i /><b className="mono">主体</b></div>
           <div className="lighting-table-lamp"><i /><b className="mono">TABLE<br />LIGHT</b></div>
           <div className="lighting-camera camera-a"><i /><b className="mono">A</b></div>
           <div className="lighting-camera camera-b"><i /><b className="mono">B</b></div>
@@ -78,7 +78,7 @@ export function ProjectVisual({ variant, label }: { variant: string; label: stri
     ];
     return (
       <div className={`project-visual visual-${variant} is-protocol-diagram`} aria-label={`${label}的三组参考输入实验协议图；不是模型样本`}>
-        <span className="reference-protocol-kicker mono">REFERENCE INPUT / 实验协议图</span>
+        <span className="reference-protocol-kicker mono">实验协议图</span>
         <div className="reference-protocol-groups">
           {groups.map((group) => <article className={`reference-group-card is-${group.tone}`} key={group.code}>
             <div className="reference-group-top mono"><b>{group.code}</b><span>INPUT</span></div>
@@ -138,7 +138,7 @@ export function ProjectVisual({ variant, label }: { variant: string; label: stri
       <span className="visual-shape shape-b" />
       <span className="visual-shape shape-c" />
       <span className="grain" />
-      <span className="visual-caption mono">Concept visual</span>
+      <span className="visual-caption mono">概念图</span>
     </div>
   );
 }

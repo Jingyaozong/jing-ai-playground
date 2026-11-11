@@ -86,7 +86,7 @@ export function ReviewPaceCalculator() {
   const inputs = { reviewers, workDays, hoursPerDay, regularMinutes, highRiskShare, highRiskMinutes, reworkRate };
   const result = calculateReviewPace(inputs);
   const targetResult = targetItems === null ? null : calculateReviewPaceTarget(inputs, result, targetItems);
-  const sourceLine = source === 'example' ? '虚构演练参数起步 · 可经过手动修改 · 非真实试标记录\n'
+  const sourceLine = source === 'example' ? '示例演练参数起步 · 可经过手动修改 · 非真实试标记录\n'
     : source === 'import' ? `本地 CSV 汇总参数起步 · 可经过手动修改 · 仅核对耗时，未验证质量或批次代表性${batchAppliedShare !== null ? '；正式批次占比为手工输入的待核对假设' : ''}\n` : '';
   const timingReviewLine = source === 'import' && appliedTimingReview
     ? appliedTimingReview.eligible
@@ -180,11 +180,11 @@ export function ReviewPaceCalculator() {
     <>
     <section className="pace-example" aria-labelledby="pace-example-title">
       <div>
-        <p className="eyebrow mono">虚构演练 · 编辑候选</p>
+        
         <h2 id="pace-example-title">试标数字，<br />怎样变成排期？</h2>
         <p>假设一批 200 条样本中，160 条常规样本平均耗时 6 分钟，40 条高风险样本平均耗时 18 分钟，后者包含复核与裁决。以下数字仅供练习，并非真实项目记录。</p>
         <button type="button" className="pace-copy-button" onClick={loadExample}>填入演练参数（替换当前输入） ↗</button>
-        <small role="status">{source === 'example' ? '已填入虚构参数，可继续修改；复制摘要会保留演练来源。' : '加载后可调整任意条件，观察估算结果变化。'}</small>
+        <small role="status">{source === 'example' ? '已填入示例参数，可继续修改；复制摘要会保留演练来源。' : '加载后可调整任意条件，观察估算结果变化。'}</small>
       </div>
       <div className="pace-example-ledger">
         <article><h3>先把复杂样本算进去</h3><p>高风险占比 40 ÷ 200 = 20%；加权耗时为 6 × 80% + 18 × 20% = <strong>8.4 分钟/条</strong>。这需要试标样本能代表待处理批次的结构。</p></article>
@@ -194,7 +194,7 @@ export function ReviewPaceCalculator() {
     </section>
     <section className="pace-import" aria-labelledby="pace-import-title">
       <div className="pace-import-intro">
-        <span className="mono">LOCAL CSV / 本地汇总</span>
+        <span className="mono">本地汇总</span>
         <h2 id="pace-import-title">把试标耗时，<br />带进排期。</h2>
         <p>选择按模板填写的 CSV，先预览两类样本的数量、占比与平均耗时，再决定是否填入。仅在当前浏览器汇总，不上传、不保存原始行；极端耗时只提示复查。</p>
         <Link href="/downloads/trial-review-time-log-v1.csv" download>下载空白模板 ↓</Link>
@@ -286,7 +286,7 @@ export function ReviewPaceCalculator() {
 
       <aside className="pace-result-card" aria-live="polite">
         <div className="pace-result-topline mono"><span>02 / 计算结果</span><span>Live estimate</span></div>
-        {source && <p className="pace-example-origin">{source === 'example' ? '虚构演练参数起步 · 可经过手动修改' : batchAppliedShare !== null ? '本地 CSV 耗时起步 · 批次占比为人工假设；质量及代表性未验证' : '本地 CSV 汇总起步 · 可经过手动修改；质量及代表性未验证'}</p>}
+        {source && <p className="pace-example-origin">{source === 'example' ? '示例演练参数起步 · 可经过手动修改' : batchAppliedShare !== null ? '本地 CSV 耗时起步 · 批次占比为人工假设；质量及代表性未验证' : '本地 CSV 汇总起步 · 可经过手动修改；质量及代表性未验证'}</p>}
         {source === 'import' && appliedTimingReview && (appliedTimingReview.flaggedLines.length > 0 || !appliedTimingReview.eligible) && <p className="pace-result-review">{appliedTimingReview.eligible ? `导入时有 ${appliedTimingReview.flaggedLines.length} 条极端耗时待复核；估算仍包含这些记录。` : '导入时样本量不足，未运行同组极端耗时提示。'}</p>}
         <div className={`pace-big-number${result.daily >= 1000 ? ' is-compact' : ''}`}>
           <strong id="pace-title">{result.daily}</strong>
@@ -350,7 +350,7 @@ export function ReviewPaceCalculator() {
             ) : <p className="pace-mix-empty">填写批次预计占比后，才会出现两种结构的容量对照；未知时请保持空白。</p>}
             <small className="pace-mix-caveat">这不是正式批次的真实分布或交付承诺。两组都只估处理容量，不代表质检通过量。</small>
           </>
-        ) : <p className="pace-mix-empty">先在上方<a href="#pace-import-title">导入已核对的试标耗时 CSV ↗</a>，这里才会保留试标占比。没有记录时，不生成虚构的批次对照。</p>}
+        ) : <p className="pace-mix-empty">先在上方<a href="#pace-import-title">导入已核对的试标耗时 CSV ↗</a>，这里才会保留试标占比。没有记录时，不生成示例批次对照。</p>}
       </div>
     </section>
     </>

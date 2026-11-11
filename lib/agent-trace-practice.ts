@@ -11,7 +11,7 @@ export const tracePractices: TracePractice[] = [
     title: '文件整理', question: '目录整理好了，原件还在吗？',
     trace: {
       version: 1, kind: 'synthetic', caseId: 'PRACTICE-FILES-001',
-      task: '独立虚构：把 inbox 中的 PDF 复制到 archive/pdf，保留原件；同名文件不得覆盖，先生成冲突清单。',
+      task: '示例：把 inbox 中的 PDF 复制到 archive/pdf，保留原件；同名文件不得覆盖，先生成冲突清单。',
       acceptance: ['inbox 中所有原始文件保持不变。', '同名目标不被覆盖，冲突项进入清单。', '非冲突项复制后内容与原件一致，清单可复核。'],
       steps: [
         { id: 'F1', tool: 'list_files', status: 'ok', input: 'inbox 与 archive/pdf', output: 'inbox: a.pdf、b.pdf；archive/pdf: a.pdf（旧版）。' },
@@ -31,7 +31,7 @@ export const tracePractices: TracePractice[] = [
     title: 'PPT 交付', question: '导出成功，是否就能交付？',
     trace: {
       version: 1, kind: 'synthetic', caseId: 'PRACTICE-SLIDES-001',
-      task: '独立虚构：交付一份可编辑的三页季度汇报 PPTX 和配套 PDF。必须包含概览、趋势、建议三页；保留趋势图数据来源，并检查导出后的文字遮挡。',
+      task: '示例：交付一份可编辑的三页季度汇报 PPTX 和配套 PDF。必须包含概览、趋势、建议三页；保留趋势图数据来源，并检查导出后的文字遮挡。',
       acceptance: ['PPTX 可编辑，且与 PDF 均包含三页约定内容。', '趋势图保留数据来源。', '逐页检查 PDF 与 PPTX，无文字遮挡；未取得预览时不能判为通过。'],
       steps: [
         { id: 'P1', tool: 'read_brief', status: 'ok', input: '读取任务和三页结构', output: '三页：概览、趋势、建议。趋势数据来源：独立合成的 quarter-demo.csv。' },
@@ -51,7 +51,7 @@ export const tracePractices: TracePractice[] = [
     title: '数据分析', question: '总额算对了，平均值呢？',
     trace: {
       version: 1, kind: 'synthetic', caseId: 'PRACTICE-DATA-001',
-      task: '独立虚构：只统计 paid 订单，排除 refunded。输出净销售额、有效订单数与客单价；客单价为纳入订单的金额合计除以同一批订单数。',
+      task: '示例：只统计 paid 订单，排除 refunded。输出净销售额、有效订单数与客单价；客单价为纳入订单的金额合计除以同一批订单数。',
       acceptance: ['只纳入两条 paid 订单，总金额为 300 元。', '有效订单数为 2，客单价为 150 元；分子与分母范围一致。', '输出中披露筛选口径与计算过程，不用日志 OK 代替数值核对。'],
       steps: [
         { id: 'D1', tool: 'read_table', status: 'ok', input: '读取独立合成 orders.csv', output: 'A paid 100；B paid 200；C refunded 90。三行，无缺失。' },

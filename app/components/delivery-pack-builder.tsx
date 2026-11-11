@@ -297,7 +297,7 @@ export function DeliveryPackBuilder() {
     <section className="delivery-workbench" aria-label="交付清单生成器">
       <div className="delivery-editor">
         <div className="delivery-panel-heading">
-          <div><span className="mono">01 / NAME THE PACKAGE</span><h2>先写清交付身份，<br />再开始装箱。</h2></div>
+          <div><span className="mono">01</span><h2>先写清交付身份，<br />再开始装箱。</h2></div>
           <div><button type="button" onClick={loadExample}>载入示例</button><button type="button" onClick={clearBuilder}>清空</button></div>
         </div>
 
@@ -305,12 +305,12 @@ export function DeliveryPackBuilder() {
           {basicFields.map((field) => <label className={field.wide ? 'is-wide' : ''} key={field.key}><span><strong>{field.label}</strong><small>{field.note}</small></span><input value={meta[field.key]} placeholder={field.placeholder} onChange={(event) => updateMeta(field.key, event.target.value)} /></label>)}
         </div>
 
-        <div className="delivery-spec-heading"><span className="mono">02 / DECLARE THE SPECS</span><h3>不要让扩展名替你说明规格。</h3></div>
+        <div className="delivery-spec-heading"><span className="mono">02</span><h3>不要让扩展名替你说明规格。</h3></div>
         <div className="delivery-spec-grid">
           {specFields.map((field) => <label key={field.key}><span>{field.label}</span><input value={meta[field.key]} placeholder={field.placeholder} onChange={(event) => updateMeta(field.key, event.target.value)} /></label>)}
         </div>
 
-        <div className="delivery-sections-heading"><span className="mono">03 / PACK AND CONFIRM</span><h3>每个目录，都要知道为什么存在。</h3></div>
+        <div className="delivery-sections-heading"><span className="mono">03</span><h3>每个目录，都要知道为什么存在。</h3></div>
         <div className="delivery-section-list">
           {sections.map((section, index) => {
             const done = section.items.filter((item) => item.done).length;
@@ -348,7 +348,7 @@ export function DeliveryPackBuilder() {
       </aside>
 
       <section className="delivery-output-section">
-        <div className="delivery-output-heading"><div><span className="mono">04 / PACKAGE OUTPUTS</span><h2>目录、说明、清单和校验，<br />一次放到同一处。</h2></div><p>复制后仍要把真实文件名、规格检查、恢复结果和授权状态补齐。校验命令只确认文件字节是否变化。</p></div>
+        <div className="delivery-output-heading"><div><span className="mono">04</span><h2>目录、说明、清单和校验，<br />一次放到同一处。</h2></div><p>复制后仍要把真实文件名、规格检查、恢复结果和授权状态补齐。校验命令只确认文件字节是否变化。</p></div>
         <div className="delivery-output-grid">
           <article><div><span className="mono">FOLDER TREE</span><button type="button" onClick={() => copyOutput('tree')}>{copied === 'tree' ? '已复制 ✓' : '复制目录'}</button></div><pre>{tree}</pre></article>
           <article><div><span className="mono">README.MD</span><span><button type="button" onClick={() => copyOutput('readme')}>{copied === 'readme' ? '已复制 ✓' : '复制'}</button><button type="button" onClick={() => downloadText(readme, `${rootName}_README.md`, 'text/markdown;charset=utf-8')}>下载</button></span></div><pre>{readme}</pre></article>
@@ -357,7 +357,7 @@ export function DeliveryPackBuilder() {
         </div>
       </section>
 
-      {manualCopy && <aside className="delivery-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制交付计划" /></aside>}
+      {manualCopy && <aside className="delivery-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制交付计划" /></aside>}
     </section>
   );
 }

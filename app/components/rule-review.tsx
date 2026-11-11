@@ -68,7 +68,7 @@ export function RuleReview({ sample }: { sample: ReviewBatch }) {
   }
   return <section className="rule-review-desk" aria-label="规则答疑验收台">
     <div className="rule-review-toolbar"><div><h2>把题目放上来。</h2><p>支持演练包的 test-questions.csv，或本工具导出的复核 CSV。每批最多 100 题、文件不超过 64 MB。</p></div>
-      <div className="rule-review-actions"><button type="button" disabled={loading || !!pending} onClick={() => propose(sample)}>载入 12 条虚构题</button><button type="button" disabled={loading || !!pending} onClick={() => fileInput.current?.click()}>{loading ? '正在读取…' : '导入 CSV'}</button><button type="button" disabled={!batch.rows.length || loading} onClick={download}>导出复核 CSV</button></div>
+      <div className="rule-review-actions"><button type="button" disabled={loading || !!pending} onClick={() => propose(sample)}>载入 12 条示例题</button><button type="button" disabled={loading || !!pending} onClick={() => fileInput.current?.click()}>{loading ? '正在读取…' : '导入 CSV'}</button><button type="button" disabled={!batch.rows.length || loading} onClick={download}>导出复核 CSV</button></div>
       <input ref={fileInput} type="file" accept=".csv,text/csv" aria-label="选择题目或复核 CSV" onChange={event => void importFile(event.target.files?.[0])} hidden />
       <p className="rule-review-local">文件只在浏览器内读取。记录保留在当前页，关闭前请导出；导出后可重新导入。{dirty && ' 当前有尚未导出的修改。'}</p>
     </div>
@@ -98,7 +98,7 @@ export function RuleReview({ sample }: { sample: ReviewBatch }) {
         </div>
       </div>
       <section className="rule-review-copy" aria-labelledby="rule-review-copy-title">
-        <span className="mono">CURRENT QUESTION / 单题副本</span>
+        <span className="mono">单题副本</span>
         <h2 id="rule-review-copy-title">带走当前题，<br />保留判断依据。</h2>
         <p>文字副本包含当前题目的全部字段和批次信息，便于交流；可恢复的整批记录仍请导出复核 CSV。复制不会替你保存修改，也不会改变复核状态。</p>
         <LocalRecordCopy key={selected} value={exportReviewText(batch, row)} label="复制当前题记录" success="已复制当前题的人工记录；整批记录请另行导出 CSV。" />

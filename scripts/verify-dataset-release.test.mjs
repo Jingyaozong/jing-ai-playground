@@ -44,7 +44,7 @@ test('paper boat B02 practice remains a synthetic hold, not a completed delivery
   assert.equal(result.readyForHumanApproval, false);
   assert.deepEqual(result.blocked.map((check) => check.id), ['review']);
   assert.ok(result.pending.some((check) => check.id === 'retest'));
-  assert.match(report, /完全虚构的练习/);
+  assert.match(report, /示例练习/);
   assert.match(report, /普通不合格 4，约定最多 2/);
   assert.match(report, /不得作为实际交付记录/);
   assert.doesNotMatch(report, /状态：记录齐备/);

@@ -170,9 +170,9 @@ export function ShotPromptBuilder() {
   return (
     <section className="shot-prompt-workbench" aria-label="AI 视频镜头 Prompt 组装器">
       <section className="shot-practice-guide" id="single-shot-practice" aria-labelledby="shot-practice-title">
-        <p className="eyebrow mono">合成演练 · 编辑候选 · 待荆确认</p>
+        
         <h2 id="shot-practice-title"><span>一只白杯，</span><span>练清楚一个动作。</span></h2>
-        <p>这是本站编写的虚构练习，不是教程原案例或真实客户项目。无参考图、无视频、未调用模型；以下都是制作要求与待执行验收，不是成功结果。</p>
+        <p>这是一份示例练习，不是教程原案例或真实客户项目。无参考图、无视频、未调用模型；以下都是制作要求与待执行验收，不是成功结果。</p>
         <details>
           <summary>展开白杯单镜演练</summary>
           <div className="shot-practice-steps">
@@ -197,7 +197,7 @@ export function ShotPromptBuilder() {
       </section>
       <div className="shot-prompt-editor">
         <header className="shot-builder-heading">
-          <div><span className="mono">01 / SHOT FACTS</span><h2>把镜头拆成<br />九层事实。</h2></div>
+          <div><span className="mono">01</span><h2>把镜头拆成<br />九层事实。</h2></div>
           <div><button type="button" onClick={() => replaceValues(exampleValues)}>载入合成示例</button><button type="button" onClick={() => replaceValues(emptyValues)}>清空草稿</button></div>
         </header>
 
@@ -230,7 +230,7 @@ export function ShotPromptBuilder() {
       </aside>
 
       <section className="shot-prompt-outputs" id="prompt-output">
-        <div className="shot-output-heading"><div><span className="mono">02 / OUTPUT PACK</span><h2>一次填写，<br />留下三份记录。</h2></div><p>生成提示负责执行，验收清单负责判断，返修记录负责下一轮只改一个变量。三份内容都来自当前表单，不调用外部模型。</p></div>
+        <div className="shot-output-heading"><div><span className="mono">02</span><h2>一次填写，<br />留下三份记录。</h2></div><p>生成提示负责执行，验收清单负责判断，返修记录负责下一轮只改一个变量。三份内容都来自当前表单，不调用外部模型。</p></div>
         <div className="shot-output-grid">
           {([
             ['prompt', '生成 Prompt', '直接复制到视频模型前，再按对应平台语法微调。'],

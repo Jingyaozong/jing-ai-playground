@@ -1,34 +1,24 @@
 import Link from 'next/link';
+import { profile } from '../data/profile';
+import { ContactList } from './contact-links';
+import { navItems } from './site-header';
 
 export function SiteFooter() {
-  const destinations = [
-    { name: '抖音', status: '主页尚未公开' },
-    { name: '小红书', status: '主页尚未公开' },
-    { name: 'Bilibili', status: '主页尚未公开' },
-    { name: 'Email / 商务合作', status: '联系地址尚未公开' },
-  ];
-
   return (
-    <footer className="site-footer" id="contact">
-      <div className="footer-lead">
+    <footer className="site-footer pf-footer">
+      <div className="pf-footer-main">
         <div>
-          <p className="eyebrow mono">Elsewhere / pending</p>
-          <p className="footer-status-note">当前没有公开的社交账号或联系邮箱；确认真实地址后，再开放可以使用的链接。</p>
+          <strong>{profile.siteName}</strong>
+          <p>{profile.roleLine}</p>
         </div>
-        <h2><span>其他平台，</span><span>确认以后再见。</span></h2>
+        <ContactList />
       </div>
-      <div className="social-grid" aria-label="尚未公开的站外连接">
-        {destinations.map((item) => (
-          <div className="social-placeholder" key={item.name}>
-            <strong>{item.name === 'Email / 商务合作' ? <>Email<span>商务合作</span></> : item.name}</strong>
-            <small>{item.status}</small>
-          </div>
-        ))}
-      </div>
-      <div className="footer-bottom mono">
-        <span>© 2026 JING AI PLAYGROUND</span>
-        <span>Made with curiosity + AI</span>
-        <Link href="/">Back to top ↑</Link>
+      <div className="pf-footer-bottom">
+        <nav aria-label="页脚导航">
+          {navItems.map(([id, label, href]) => <Link key={id} href={href}>{label}</Link>)}
+          <Link href="/notes/">归档</Link>
+        </nav>
+        <span>© 2026 {profile.name}</span>
       </div>
     </footer>
   );

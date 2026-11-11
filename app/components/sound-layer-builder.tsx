@@ -163,7 +163,7 @@ export function SoundLayerBuilder() {
     <section className="sound-workbench" aria-label="声音分层卡生成器">
       <div className="sound-input-panel">
         <div className="sound-panel-heading">
-          <div><span className="mono">01 / SOUND PLAN</span><h2>先分轨，<br />再让声音发生。</h2></div>
+          <div><span className="mono">01</span><h2>先分轨，<br />再让声音发生。</h2></div>
           <div><button type="button" onClick={() => setState(exampleState)}>载入示例</button><button type="button" onClick={() => setState(emptyState)}>清空</button></div>
         </div>
 
@@ -193,7 +193,7 @@ export function SoundLayerBuilder() {
 
       <aside className="sound-mix-card" aria-live="polite">
         <div className="sound-card-topline mono"><span>02 / TRACK CARD</span><span>{activeLayers} / 5 层已写</span></div>
-        <div className="sound-card-title"><span className="mono">SHOT</span><strong>{state.shot.trim() || '—'}</strong><div><b>{state.duration}s</b><small>{routeNames[state.route]}</small></div></div>
+        <div className="sound-card-title"><span className="mono">镜头</span><strong>{state.shot.trim() || '—'}</strong><div><b>{state.duration}s</b><small>{routeNames[state.route]}</small></div></div>
 
         <div className="sound-track-stack">
           {tracks.map((track) => <article className={`sound-track sound-track-${track.id} ${track.value.trim() ? '' : 'is-empty'}`} key={track.id}><span className="mono">{track.short}</span><div><strong>{track.label}</strong><p>{track.value.trim() || '本层还没有内容'}</p></div><i aria-hidden="true">{track.value.trim() ? '●' : '○'}</i></article>)}
@@ -205,7 +205,7 @@ export function SoundLayerBuilder() {
         <p className="sound-local-note">所有内容只在当前浏览器中整理，不上传。路线提醒是透明条件判断，不代表模型成功率。</p>
       </aside>
 
-      {manualCopy && <aside className="sound-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制声音工作卡" /></aside>}
+      {manualCopy && <aside className="sound-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制声音工作卡" /></aside>}
     </section>
   );
 }

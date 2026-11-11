@@ -152,7 +152,7 @@ export function SceneAnchorBuilder() {
     <section className="scene-workbench" aria-label="场景锚点卡生成器">
       <div className="scene-input-panel">
         <div className="scene-panel-heading">
-          <div><span className="mono">01 / DEFINE THE WORLD</span><h2>先把空间画清楚，<br />再让摄影机移动。</h2></div>
+          <div><span className="mono">01</span><h2>先把空间画清楚，<br />再让摄影机移动。</h2></div>
           <div><button type="button" onClick={() => setValues(exampleValues)}>载入示例</button><button type="button" onClick={() => setValues(emptyValues)}>清空</button></div>
         </div>
 
@@ -192,7 +192,7 @@ export function SceneAnchorBuilder() {
         </div>
       </section>
 
-      {manualCopy && <aside className="scene-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制场景锚点内容" /></aside>}
+      {manualCopy && <aside className="scene-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制场景锚点内容" /></aside>}
     </section>
   );
 }

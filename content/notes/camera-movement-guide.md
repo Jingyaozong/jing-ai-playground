@@ -9,28 +9,9 @@ cover: "tips-blue"
 featured: false
 tags: ["AI VIDEO", "CAMERA", "PROMPT", "CINEMATOGRAPHY"]
 readingTime: "16 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Camera Terms / Google Veo Prompt Guide"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/47313504791059-Camera-Terms-Prompts-Examples"
-sourceNote: "摄影机术语依据官方生成指南核对；中文分类、验收方法与 Prompt 模板是本站的编辑转译，不代表所有模型稳定支持每一种高级运镜。"
 relatedNotes: ["video-vs-image-prompt", "shot-size-guide", "video-failure-cases"]
-connections:
-  - label: "PROMPT"
-    title: "图生视频和文生视频，到底差在哪？"
-    description: "先决定画面由谁负责，再把这里的运镜指令放进对应的 Prompt 结构。"
-    href: "/notes/video-vs-image-prompt/"
-    tone: "coral"
-  - label: "TOOL"
-    title: "分镜整理器"
-    description: "把主体动作和摄影机运动拆到不同字段，生成前先排除互相打架的方向。"
-    href: "/tools/shot-list-cleaner/"
-    tone: "mint"
-  - label: "STORY"
-    title: "十四镜故事生成包"
-    description: "查看固定、推近、横移与跟拍怎样被分配到同一个短故事的不同镜头。"
-    href: "/stories/she-forgets-yesterday/#generation-pack"
-    tone: "yellow"
 ---
 
 镜头“乱跑”，很多时候不是因为模型不懂“电影感”，而是因为指令没有说清楚：**是谁在动、摄影机从哪里到哪里、运动过程中要揭示什么。**
@@ -264,12 +245,12 @@ The move is smooth and restrained, ending in a wide two-shot.
 
 ## 把运镜放回分镜表
 
-本站的[分镜整理器](/tools/shot-list-cleaner/)会把“画面”和“运镜”拆成不同字段，正是为了避免把人物行为和摄影机行为写成一团。写完后，再进入[图生视频与文生视频 Prompt 指南](/notes/video-vs-image-prompt/)决定哪些信息由图片承担、哪些必须进入文字。
+我做的[分镜整理器](/tools/shot-list-cleaner/)会把“画面”和“运镜”拆成不同字段，正是为了避免把人物行为和摄影机行为写成一团。写完后，再进入[图生视频与文生视频 Prompt 指南](/notes/video-vs-image-prompt/)决定哪些信息由图片承担、哪些必须进入文字。
 
 在[十四镜故事生成包](/stories/she-forgets-yesterday/#generation-pack)里，固定、缓慢推近、横移和背后跟拍被分配给不同叙事任务。它们目前都是待测试 Prompt，不代表已经获得稳定输出；真正生成后，还需要用[AI 视频翻车词典](/notes/video-failure-cases/)检查无意漂移、视差错误和背景空间重建。
 
 > [!JING'S NOTE]
-> 待荆确认：运镜的价值不是证明摄影机在动，而是让观众在正确的时刻靠近、离开、发现或陪伴。
+> 运镜的价值不是证明摄影机在动，而是让观众在正确的时刻靠近、离开、发现或陪伴。
 
 ## 参考来源
 
@@ -278,5 +259,3 @@ The move is smooth and restrained, ending in a wide two-shot.
 - [Runway：Image to Video Prompting Guide（Gen-4.5）](https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide)
 - [Google Cloud：Veo 视频生成提示指南](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/video-gen-prompt-guide?hl=zh-CN)
 - [Adobe Firefly：Writing effective text prompts for video generation](https://helpx.adobe.com/firefly/web/work-with-audio-and-video/work-with-video/writing-effective-text-prompts-for-video-generation.html)
-
-本文是 **资料文章**：摄影机术语与模型建议已经核对，中文模板和验收流程是本站的编辑转译。文中示例均为待测试设计，不冒充真实模型输出，也不代表荆已经确认的个人经验。

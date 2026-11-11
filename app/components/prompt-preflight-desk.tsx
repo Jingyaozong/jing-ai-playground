@@ -137,13 +137,13 @@ export function PromptPreflightDesk() {
     setDiffVisible(false);
     setPendingImport(null);
     setExamplePreview(false);
-    setFeedback('已载入虚构演练；两版实际输出仍为空，验收项均为未评。浏览器存档未改变。');
+    setFeedback('已载入示例演练；两版实际输出仍为空，验收项均为未评。浏览器存档未改变。');
   }
 
   const example = createSyntheticPromptPreflight();
   return <><section className="prompt-preflight-practice" aria-labelledby="prompt-practice-title">
-    <div className="prompt-preflight-practice-heading"><span className="mono">FICTIONAL WALKTHROUGH / 虚构演练 · 待执行</span><h2 id="prompt-practice-title">先看怎样补规则，<br />再决定是否试跑。</h2><p>用一段完全虚构的匿名会议记录，演示一轮只改一处的 Prompt 预检。这里没有调用模型，也没有任何已验证结果。</p></div>
-    <div className="prompt-preflight-practice-paper"><div><span className="mono">原版</span><p>{example.originalPrompt}</p></div><div><span className="mono">新增的一条规则</span><p>未在记录中出现的负责人或期限标为“待确认”，不要推测。</p></div><button type="button" onClick={() => setExamplePreview(true)}>查看并载入虚构示例 ↗</button>{examplePreview && <div className="prompt-preflight-practice-confirm" role="group" aria-label="确认载入虚构示例"><p>将用虚构示例替换当前页面填写；此前保存到浏览器的记录不变。示例只有准备内容，没有模型输出或验收结论。</p><div><button type="button" onClick={loadExample}>确认替换当前填写</button><button type="button" onClick={() => setExamplePreview(false)}>取消</button></div></div>}</div>
+    <div className="prompt-preflight-practice-heading"><span className="mono">示例演练 · 待执行</span><h2 id="prompt-practice-title">先看怎样补规则，<br />再决定是否试跑。</h2><p>用一段示例用的匿名会议记录，演示一轮只改一处的 Prompt 预检。这里没有调用模型，也没有任何已验证结果。</p></div>
+    <div className="prompt-preflight-practice-paper"><div><span className="mono">原版</span><p>{example.originalPrompt}</p></div><div><span className="mono">新增的一条规则</span><p>未在记录中出现的负责人或期限标为“待确认”，不要推测。</p></div><button type="button" onClick={() => setExamplePreview(true)}>查看并载入示例 ↗</button>{examplePreview && <div className="prompt-preflight-practice-confirm" role="group" aria-label="确认载入示例"><p>将用示例替换当前页面填写；此前保存到浏览器的记录不变。示例只有准备内容，没有模型输出或验收结论。</p><div><button type="button" onClick={loadExample}>确认替换当前填写</button><button type="button" onClick={() => setExamplePreview(false)}>取消</button></div></div>}</div>
   </section><section className="prompt-preflight-desk" aria-label="Prompt 歧义预检工作台">
     <div className="prompt-preflight-form">
       {groups.map((group, index) => <Fragment key={group.eyebrow}><fieldset className="prompt-preflight-group">
@@ -152,7 +152,7 @@ export function PromptPreflightDesk() {
         <div className="prompt-preflight-fields">{group.fields.map((field) => <label key={field.key} htmlFor={`preflight-${field.key}`}><span>{field.label}</span><textarea id={`preflight-${field.key}`} rows={field.rows ?? 2} maxLength={4000} value={record[field.key]} onChange={(event) => change(field.key, event.target.value)} placeholder={field.hint} /></label>)}</div>
         <span className="prompt-preflight-group-count mono">{index + 1} / 3</span>
       </fieldset>{index === 1 && <section className="prompt-preflight-diff" aria-labelledby="prompt-diff-title">
-        <div className="prompt-preflight-diff-heading"><div><span className="mono">TEXT CHANGE / 文字对照</span><h2 id="prompt-diff-title">改了哪里，<br />一眼看清。</h2></div><button type="button" disabled={!record.originalPrompt || !record.revisedPrompt} onClick={() => setDiffVisible((visible) => !visible)}>{diffVisible ? '收起文字差异' : '查看文字差异 ↗'}</button></div>
+        <div className="prompt-preflight-diff-heading"><div><span className="mono">文字对照</span><h2 id="prompt-diff-title">改了哪里，<br />一眼看清。</h2></div><button type="button" disabled={!record.originalPrompt || !record.revisedPrompt} onClick={() => setDiffVisible((visible) => !visible)}>{diffVisible ? '收起文字差异' : '查看文字差异 ↗'}</button></div>
         {!record.originalPrompt || !record.revisedPrompt ? <p>填写原版与新版完整 Prompt 后，再查看文字增删。这里只对照文本，不分析语义。</p> : diff ? <><div className="prompt-preflight-diff-grid"><div><span className="mono">原版 / 删除用珊瑚色标出</span><p>{diff.before.map((segment, part) => <DiffPart segment={segment} key={part} />)}</p></div><div><span className="mono">新版 / 增加用薄荷色标出</span><p>{diff.after.map((segment, part) => <DiffPart segment={segment} key={part} />)}</p></div></div><p>{diff.mode === 'coarse' ? '文本较长：仅区分共同前后文与中间改写范围，中间未逐字对齐。' : '按字符对齐文字增删；相同文字保持原色。'}差异不代表哪版更好，仍需用同一输入测试并人工验收。</p></> : <p>点击“查看文字差异”后显示；编辑任一版本会收起旧对照。</p>}
       </section>}</Fragment>)}
       <AcceptanceMatrix record={record} issues={review.matrix.issues} onAdd={addCheck} onUpdate={updateCheck} onRemove={removeCheck} />
@@ -166,7 +166,7 @@ export function PromptPreflightDesk() {
       <LocalRecordCopy value={formatPromptPreflight(record)} label="复制工作卡 ↗" success="已复制工作卡，包含缺项提醒和真实输出状态。" />
       <div className="prompt-preflight-actions"><button type="button" onClick={save}>保存到此浏览器</button><button type="button" onClick={restore}>恢复上次保存</button><button type="button" onClick={() => { setRecord(emptyPromptPreflight); setDiffVisible(false); setFeedback('当前填写已清空；此前保存的记录仍在，可用“恢复上次保存”取回。'); }}>清空当前填写</button><button type="button" onClick={removeSaved}>删除此浏览器存档</button></div>
       <section className="prompt-preflight-backup" aria-label="本地 JSON 备份与导入">
-        <span className="mono">PORTABLE COPY / 本地备份</span>
+        <span className="mono">本地备份</span>
         <p>换浏览器也能继续填写。导出的是当前页面内容，不要求先保存；导入只在你确认后替换当前填写。</p>
         <div className="prompt-preflight-backup-actions"><button type="button" onClick={exportJson}>下载 JSON 备份 ↓</button><button type="button" onClick={() => importInput.current?.click()}>选择 JSON 导入 ↗</button></div>
         <input ref={importInput} className="prompt-preflight-file-input" type="file" accept=".json,application/json" aria-label="选择预检卡 JSON 文件" onChange={chooseImport} />
@@ -174,7 +174,7 @@ export function PromptPreflightDesk() {
         <small>仅在浏览器本地读写；JSON 文件未加密，请勿保存或分享含敏感资料的备份。</small>
       </section>
       <p className="prompt-preflight-feedback" role="status" aria-live="polite">{feedback}</p>
-      <p className="prompt-preflight-privacy">不调用 AI、不上传输入、不自动保存。缺项提示只看空白字段，不理解 Prompt 内容；效果判断需要真实输出与人工验收。本站编辑工具 · 待荆确认。</p>
+      <p className="prompt-preflight-privacy">不调用 AI、不上传输入、不自动保存。缺项提示只看空白字段，不理解 Prompt 内容；效果判断需要真实输出与人工验收。</p>
     </aside>
   </section></>;
 }
@@ -187,7 +187,7 @@ function DiffPart({ segment }: { segment: PromptDiffSegment }) {
 
 function AcceptanceMatrix({ record, issues, onAdd, onUpdate, onRemove }: { record: PromptPreflightRecord; issues: string[]; onAdd: () => void; onUpdate: (id: string, patch: Partial<AcceptanceCheck>) => void; onRemove: (id: string) => void }) {
   return <section className="prompt-acceptance-matrix" aria-labelledby="prompt-acceptance-title">
-    <div className="prompt-acceptance-heading"><div><span className="mono">HUMAN REVIEW / 逐项验收</span><h2 id="prompt-acceptance-title">同一把尺子，<br />看两版输出。</h2></div><button type="button" onClick={onAdd} disabled={record.checks.length >= 8}>添加验收项 ＋</button></div>
+    <div className="prompt-acceptance-heading"><div><span className="mono">逐项验收</span><h2 id="prompt-acceptance-title">同一把尺子，<br />看两版输出。</h2></div><button type="button" onClick={onAdd} disabled={record.checks.length >= 8}>添加验收项 ＋</button></div>
     <p>每项只写可观察的条件。判定由你选择，工具不自动评分；没有实际输出时只能保持“未评”。最多记录 8 项。</p>
     {record.checks.length === 0 ? <div className="prompt-acceptance-empty">还没有验收项。先添加一条，再把原版与新版放到同一条件下核对。</div> : <div className="prompt-acceptance-list">{record.checks.map((check, index) => <article className="prompt-acceptance-card" key={check.id}>
       <div className="prompt-acceptance-card-top"><span className="mono">条件 {String(index + 1).padStart(2, '0')}</span><button type="button" onClick={() => onRemove(check.id)}>移除此项</button></div>

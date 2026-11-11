@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../lib/seo';
 import { LibraryBrowser } from '../components/library-browser';
 import { ArchiveFilterHashFocus } from '../components/archive-filter-hash-focus';
 import { LibraryCard } from '../components/library-card';
@@ -7,10 +8,11 @@ import { SiteFooter } from '../components/site-footer';
 import { SiteHeader } from '../components/site-header';
 import { libraryItems } from '../data/library';
 
-export const metadata: Metadata = {
-  title: '荆的 AI 收藏夹 — JING AI PLAYGROUND',
-  description: '编辑整理的 AI 文章、视频、论文与工具候选，附来源和待荆确认的推荐理由。',
-};
+export const metadata: Metadata = pageMeta({
+  title: '收藏',
+  description: '我收藏的 AI 文章、视频、论文与工具，附来源和收藏理由。',
+  robots: { index: false, follow: true },
+});
 
 const shelves = [
   ['ARTICLES', '文章', '真正值得读完和留着回看的文章。', 'yellow', 'ARTICLE'],
@@ -52,14 +54,14 @@ export default function LibraryPage() {
     <main>
       <SiteHeader active="Library" />
       <section className="library-hero page-intro">
-        <div className="page-intro-top mono"><span>JING LIBRARY / 荆的 AI 收藏夹</span><span>Curated, not collected</span></div>
-        <div className="library-title-lockup"><h1>LIBRARY</h1><span className="library-pick-stamp">编辑初选<br />待荆确认</span></div>
+        <div className="page-intro-top mono"><span>归档 / 收藏</span><span></span></div>
+        <div className="library-title-lockup"><h1>LIBRARY</h1></div>
         <div className="notes-hero-bottom"><p>不是把链接堆在一起，<br />而是留下它为什么值得先看。</p><span className="mono">Articles / Videos / Papers / Tools</span></div>
       </section>
 
       <Reveal><section className="library-routes section-shell" aria-labelledby="library-routes-title">
-        <aside className="archive-truth-note library-truth-note"><span className="mono">STATUS NOTE / 状态说明</span><p>可读取的一手资料已按原站核对；视频讲解要点注明字幕或画面抽查依据，不代表本站已复现效果。推荐理由与观点是编辑候选，只有荆确认后才会成为正式个人观点。</p></aside>
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Choose by purpose / 按用途开始</p><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条入门路线只精选最适合连续阅读的资源；声音、来源记录与开源工具可在下方继续搜索和筛选。</p></div>
+        
+        <div className="section-title-row compact"><div><h2 id="library-routes-title">先确定用途，<br />再打开资源。</h2></div><p>三条入门路线只精选最适合连续阅读的资源；声音、来源记录与开源工具可在下方继续搜索和筛选。</p></div>
         <div className="library-route-grid">
           {libraryRoutes.map((route) => (
             <article className={`library-route-card library-route-${route.tone}`} key={route.id}>
@@ -79,11 +81,11 @@ export default function LibraryPage() {
         </div>
       </section></Reveal>
 
-      <Reveal><section className="featured-library section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Reading candidate / 阅读候选</p><h2>先看一个可能<br />值得花时间的内容。</h2></div><p>来源已经核对，并附有编辑推荐理由；等荆确认判断后，它才会成为正式“荆选”。</p></div><LibraryCard item={featured} /></section></Reveal>
+      <Reveal><section className="featured-library section-shell"><div className="section-title-row compact"><div><h2>先看一个可能<br />值得花时间的内容。</h2></div><p>来源已经核对，并附有收藏理由。</p></div><LibraryCard item={featured} /></section></Reveal>
 
-      <Reveal><section className="library-shelves section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Five shelves / 收藏分类</p><h2>按内容类型收好，<br />按判断重新找到。</h2></div><p>“精选候选”跨越内容类型；这些推荐仍等待荆确认。</p></div><div className="library-shelf-grid">{shelves.map(([en, zh, description, color, filter], index) => <a className={`library-shelf shelf-${color}`} href={`?type=${filter}#library-all`} key={en}><span className="mono">0{index + 1}</span><strong>{en}</strong><h3>{zh}</h3><p>{description}</p><i>浏览 ↓</i></a>)}<a className="library-shelf shelf-picks" href="?type=JING%20PICKS#library-all"><span className="mono">05</span><strong>PICKS TO REVIEW</strong><h3>精选候选</h3><p>跨越文章、视频、PDF 和工具的编辑推荐候选，等待荆确认。</p><i>只看候选 ↓</i></a></div></section></Reveal>
+      <Reveal><section className="library-shelves section-shell"><div className="section-title-row compact"><div><h2>按内容类型收好，<br />按判断重新找到。</h2></div><p>“精选”跨越内容类型。</p></div><div className="library-shelf-grid">{shelves.map(([en, zh, description, color, filter], index) => <a className={`library-shelf shelf-${color}`} href={`?type=${filter}#library-all`} key={en}><span className="mono">0{index + 1}</span><strong>{en}</strong><h3>{zh}</h3><p>{description}</p><i>浏览 ↓</i></a>)}<a className="library-shelf shelf-picks" href="?type=JING%20PICKS#library-all"><span className="mono">05</span><strong>PICKS TO REVIEW</strong><h3>精选</h3><p>跨越文章、视频、PDF 和工具的重点推荐。</p><i>只看精选 ↓</i></a></div></section></Reveal>
 
-      <section className="library-all section-shell" id="library-all"><ArchiveFilterHashFocus hash="#library-all" headingId="library-all-title" /><div className="section-title-row compact"><div><p className="eyebrow mono">Saved with a reason</p><h2 id="library-all-title" tabIndex={-1}>这些内容，<br />为什么被留下来。</h2></div><p>视频卡可展开讲解要点，按时间回到原片，再用本站工具练习。推荐理由与观点都是编辑候选，待荆确认。</p></div><LibraryBrowser items={libraryItems} /></section>
+      <section className="library-all section-shell" id="library-all"><ArchiveFilterHashFocus hash="#library-all" headingId="library-all-title" /><div className="section-title-row compact"><div><h2 id="library-all-title" tabIndex={-1}>这些内容，<br />为什么被留下来。</h2></div><p>视频卡可展开讲解要点，按时间回到原片，再用配套工具练习。</p></div><LibraryBrowser items={libraryItems} /></section>
       <SiteFooter />
     </main>
   );

@@ -1,22 +1,23 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../../lib/seo';
 import Link from 'next/link';
 import { ShadowMotionCardBuilder } from '../../components/shadow-motion-card-builder';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 
-export const metadata: Metadata = {
-  title: '影子动作拆分卡 — JING AI PLAYGROUND',
+export const metadata: Metadata = pageMeta({ og: 'tool-shadow-motion-card', robots: { index: false, follow: true },
+  title: '影子动作拆分卡',
   description: '把实体、影子、光线和摄影机拆成四条控制轨，生成双时间线 Prompt、九格变量矩阵与五点验收表。',
-};
+});
 
 export default function ShadowMotionCardPage() {
   return (
     <main>
       <SiteHeader active="Tools" />
       <header className="tool-detail-hero shadow-motion-hero">
-        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link><span>JING TOOL / 016</span></div>
+        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link></div>
         <div className="tool-detail-title">
-          <div><p className="eyebrow mono">Shadow motion card / 双时间线</p><h1>人物留在现在，<br /><em>影子先走一步。</em></h1></div>
+          <div><h1>人物留在现在，<br /><em>影子先走一步。</em></h1></div>
           <p>先锁住实体、光线与摄影机，再给单一影子一条独立时间线。把一句容易耦合的指令，拆成可以逐帧核对的四轨控制卡。</p>
         </div>
       </header>

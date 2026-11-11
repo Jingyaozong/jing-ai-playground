@@ -171,7 +171,7 @@ export function ReleaseMatrixPlanner() {
     <section className="release-workbench" aria-label="多平台发布规格规划器">
       <div className="release-editor">
         <div className="release-panel-heading">
-          <div><span className="mono">01 / MASTER SOURCE</span><h2>先锁母版，<br />再拆发布版本。</h2></div>
+          <div><span className="mono">01</span><h2>先锁母版，<br />再拆发布版本。</h2></div>
           <div><button type="button" onClick={loadExample}>载入示例</button><button type="button" onClick={clearAll}>清空</button></div>
         </div>
 
@@ -186,7 +186,7 @@ export function ReleaseMatrixPlanner() {
           <label className="is-wide"><span>字幕源<small>无字母版、SRT、双语稿等</small></span><input value={master.captionSource} onChange={(event) => updateMaster('captionSource', event.target.value)} /></label>
         </div>
 
-        <div className="release-destinations-heading"><div><span className="mono">02 / DESTINATIONS</span><h3>每一个发布位置，都是独立版本。</h3></div><button type="button" onClick={addDestination} disabled={destinations.length >= 6}>{destinations.length >= 6 ? '最多 6 个版本' : '＋ 添加发布版本'}</button></div>
+        <div className="release-destinations-heading"><div><span className="mono">02</span><h3>每一个发布位置，都是独立版本。</h3></div><button type="button" onClick={addDestination} disabled={destinations.length >= 6}>{destinations.length >= 6 ? '最多 6 个版本' : '＋ 添加发布版本'}</button></div>
         <div className="release-destination-list">
           {destinations.map((item, index) => <details className={`release-destination release-tone-${index % 4}`} open={openIds.includes(item.id)} onToggle={(event) => {
             const isOpen = event.currentTarget.open;
@@ -203,7 +203,7 @@ export function ReleaseMatrixPlanner() {
                 <label><span>时长上限</span><div><input type="number" min="0" step="0.1" value={item.maxDuration} onChange={(event) => updateDestination(item.id, { maxDuration: safeNumber(event.target.value) })} /><b>秒</b></div></label>
                 <label><span>文件名后缀</span><input value={item.suffix} onChange={(event) => updateDestination(item.id, { suffix: event.target.value.toUpperCase() })} /></label>
               </div>
-              <div className="release-safe-fields"><span className="mono">SAFE AREA / 安全边距（画面百分比）</span>{(['safeTop', 'safeRight', 'safeBottom', 'safeLeft'] as const).map((key, safeIndex) => <label key={key}><span>{['上', '右', '下', '左'][safeIndex]}</span><input type="number" min="0" max="80" value={item[key]} onChange={(event) => updateDestination(item.id, { [key]: safeNumber(event.target.value, 80) })} /><b>%</b></label>)}</div>
+              <div className="release-safe-fields"><span className="mono">安全边距（画面百分比）</span>{(['safeTop', 'safeRight', 'safeBottom', 'safeLeft'] as const).map((key, safeIndex) => <label key={key}><span>{['上', '右', '下', '左'][safeIndex]}</span><input type="number" min="0" max="80" value={item[key]} onChange={(event) => updateDestination(item.id, { [key]: safeNumber(event.target.value, 80) })} /><b>%</b></label>)}</div>
               <div className="release-fields release-notes-fields">
                 <label><span>字幕交付方式</span><input value={item.caption} placeholder="烧录、外挂或无字幕" onChange={(event) => updateDestination(item.id, { caption: event.target.value })} /></label>
                 <label><span>音频要求</span><input value={item.audio} placeholder="声道、响度或实听要求" onChange={(event) => updateDestination(item.id, { audio: event.target.value })} /></label>
@@ -237,14 +237,14 @@ export function ReleaseMatrixPlanner() {
       </aside>
 
       <section className="release-output-section">
-        <div className="release-output-heading"><div><span className="mono">03 / HANDOFF SHEETS</span><h2>把每个版本，<br />交给下一道工序。</h2></div><p>矩阵让剪辑、字幕、声音和发布人员看到同一组要求。执行前仍需在真实平台与设备上核对。</p></div>
+        <div className="release-output-heading"><div><span className="mono">03</span><h2>把每个版本，<br />交给下一道工序。</h2></div><p>矩阵让剪辑、字幕、声音和发布人员看到同一组要求。执行前仍需在真实平台与设备上核对。</p></div>
         <div className="release-output-grid">
           <article><div><span className="mono">MARKDOWN MATRIX</span><button type="button" onClick={() => handleCopy('md', markdown)}>{copied === 'md' ? '已复制 ✓' : '复制'}</button></div><pre>{markdown}</pre></article>
           <article><div><span className="mono">CSV EXPORT LIST</span><button type="button" onClick={() => handleCopy('csv', csv)}>{copied === 'csv' ? '已复制 ✓' : '复制'}</button></div><pre>{csv}</pre></article>
         </div>
       </section>
 
-      {manualCopy && <aside className="release-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制发布矩阵" /></aside>}
+      {manualCopy && <aside className="release-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制发布矩阵" /></aside>}
     </section>
   );
 }

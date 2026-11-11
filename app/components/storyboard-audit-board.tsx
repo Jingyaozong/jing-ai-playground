@@ -40,7 +40,7 @@ const scoreLabels: Array<{ key: ScoreKey; label: string; hint: string }> = [
   { key: 'shootability', label: '制作明确', hint: '每镜主体、动作、景别、运镜、对白和声音是否可执行' },
   { key: 'timing', label: '时长可用', hint: '单镜秒数与总时长是否完整、合理且可核对' },
 ];
-const failureOptions = ['关键拍点遗漏', '不同拍点错并', '虚构新动作', '因果顺序颠倒', '对白归属错误', '空间跳变', '不可拍的抽象描述', '字段缺失', '总时长不符', '过度切分', '其他'];
+const failureOptions = ['关键拍点遗漏', '不同拍点错并', '编造新动作', '因果顺序颠倒', '对白归属错误', '空间跳变', '不可拍的抽象描述', '字段缺失', '总时长不符', '过度切分', '其他'];
 const statusLabels: Record<RecordStatus, string> = { untested: '待执行', generated: '已有输出', reviewed: '已审计' };
 
 function emptyRecords(): StoryboardRecord[] {
@@ -184,15 +184,15 @@ export function StoryboardAuditBoard() {
   return (
     <section className="experiment-record-board storyboard-audit-record-board" id="record-desk" aria-label="九格自动分镜审计记录台">
       <div className="experiment-record-top">
-        <div><p className="eyebrow mono">04 / Audit desk</p><h2>九份输出先留空，<br />只对真实文本打分。</h2></div>
+        <div><h2>九份输出先留空，<br />只对真实文本打分。</h2></div>
         <div className="experiment-record-intro"><p>每格对应一种拆镜流程和一篇固定故事。输出、镜头数、秒数、评分与备注只保存在当前浏览器，不上传故事或生成文本。</p><LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">
-        <article><span className="mono">AUDITED</span><strong>{completed}<i>/9</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
+        <article><span className="mono">已审</span><strong>{completed}<i>/9</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
         <article><span className="mono">OUTPUTS</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
-        <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
-        <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了错误标签</p></article>
+        <article><span className="mono">平均分</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
+        <article><span className="mono">已标记</span><strong>{flagged}</strong><p>记录了错误标签</p></article>
       </div>
 
       <LocalRecordBoundary loaded={loaded} markedCount={generated} />
@@ -217,11 +217,11 @@ export function StoryboardAuditBoard() {
           <div className="experiment-record-meta"><label><span>模型 / 版本 / 入口</span><input value={active.model} onChange={(event) => updateActive({ model: event.target.value })} placeholder="执行当天填写真实版本" /></label><label><span>原始输出文件 / 链接</span><input value={active.asset} onChange={(event) => updateActive({ asset: event.target.value })} placeholder={`例：${active.id}.md`} /></label><label><span>输出镜头数</span><input value={active.shotCount} onChange={(event) => updateActive({ shotCount: event.target.value })} inputMode="numeric" placeholder="按原始输出填写" /></label><label><span>分镜总秒数</span><input value={active.duration} onChange={(event) => updateActive({ duration: event.target.value })} placeholder="例：72 秒" /></label></div>
           <fieldset className="experiment-score-fields"><legend className="mono">人工审计 · 1 差 / 5 完整</legend>{scoreLabels.map(({ key, label, hint }) => <div className="experiment-score-row" key={key}><div><strong>{label}</strong><small>{hint}</small></div><div><button type="button" className={active.scores[key] === null ? 'is-active' : ''} onClick={() => updateScore(key, null)} aria-label={`${label}未评分`}>—</button>{[1, 2, 3, 4, 5].map((score) => <button type="button" className={active.scores[key] === score ? 'is-active' : ''} onClick={() => updateScore(key, score)} aria-label={`${label}${score}分`} key={score}>{score}</button>)}</div></div>)}</fieldset>
           <fieldset className="experiment-failure-fields"><legend className="mono">错误标签 · 可多选</legend><div>{failureOptions.map((label) => <button type="button" className={active.failures.includes(label) ? 'is-active' : ''} onClick={() => toggleFailure(label)} aria-pressed={active.failures.includes(label)} key={label}>{label}</button>)}</div></fieldset>
-          <label className="experiment-record-note"><span>拍点审计备注</span><textarea value={active.note} onChange={(event) => updateActive({ note: event.target.value })} placeholder="按人工基准逐项记录：哪些拍点保留、遗漏、错并或被虚构内容替换；再写镜头字段与时长问题。" /></label>
+          <label className="experiment-record-note"><span>拍点审计备注</span><textarea value={active.note} onChange={(event) => updateActive({ note: event.target.value })} placeholder="按人工基准逐项记录：哪些拍点保留、遗漏、错并或被编造内容替换；再写镜头字段与时长问题。" /></label>
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>人工基准与模型输出，分开保存。</strong><p>复制 Markdown 时保留九格编号、镜头数、总秒数、四项评分、错误标签与审计备注；空白不算结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制自动分镜审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">本地导出</span><strong>人工基准与模型输出，分开保存。</strong><p>复制 Markdown 时保留九格编号、镜头数、总秒数、四项评分、错误标签与审计备注；空白不算结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制自动分镜审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

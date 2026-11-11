@@ -9,33 +9,9 @@ cover: "tips-coral"
 featured: true
 tags: ["AI VIDEO", "CONTINUITY", "EDITING", "TOOLS"]
 readingTime: "15 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Adobe Continuity Editing / Premiere J & L Cuts / Runway Last Frame"
 sourceUrl: "https://www.adobe.com/creativecloud/video/hub/ideas/what-is-continuity-editing-in-film.html"
-sourceNote: "剪辑术语与基础原则依据 Adobe、BFI、Runway 和 Google Cloud 官方资料核对；六线账本、A/B 接口卡和 AI 镜头验收流程是本站的编辑整理，不代表任何模型能够自动保证连续性。"
 relatedNotes: ["first-last-frame-motion-prompt", "ai-video-character-consistency", "ai-video-sound-workflow"]
-connections:
-  - label: "PROMPT"
-    title: "相邻镜头交接检查"
-    description: "先并排填写镜头 A 出口和镜头 B 入口，再判断跳变是否需要修复。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-cut-continuity-handoff"
-    tone: "mint"
-  - label: "TOOL"
-    title: "相邻镜头连续性检查器"
-    description: "填写镜头 A 出口与镜头 B 入口，沿六条连续线找出需要补锚点或重做的位置。"
-    href: "/tools/continuity-checker/"
-    tone: "coral"
-  - label: "TOOL"
-    title: "角色锚点卡生成器"
-    description: "先锁定不能跨镜漂移的人物身份、服装、配饰与道具。"
-    href: "/tools/character-anchor/"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "声音分层卡生成器"
-    description: "为切点两侧安排对白、环境底、动作音效与音乐的进入和延续。"
-    href: "/tools/sound-layer-card/"
-    tone: "sky"
 ---
 
 两个镜头都很好看，剪在一起却可能像两个不同的世界：人物忽然换边，视线找不到对象，抬到一半的手重新开始，门把手换了一只，道具消失，雨声在切点突然断掉。

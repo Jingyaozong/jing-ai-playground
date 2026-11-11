@@ -16,20 +16,10 @@ export type NoteMeta = {
   featured: boolean;
   tags: string[];
   readingTime: string;
-  demo: boolean;
   synthetic: boolean;
-  editorialStatus: 'draft' | 'source-backed' | 'published';
   sourceTitle?: string;
   sourceUrl?: string;
-  sourceNote?: string;
   relatedNotes: string[];
-  connections: Array<{
-    label: string;
-    title: string;
-    description: string;
-    href: string;
-    tone: 'yellow' | 'sky' | 'mint' | 'coral' | 'blue';
-  }>;
 };
 
 export type NoteDocument = NoteMeta & { content: string };
@@ -54,20 +44,10 @@ function parseNote(filename: string): NoteDocument {
     featured: Boolean(data.featured),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : [],
     readingTime: String(data.readingTime ?? '5 分钟'),
-    demo: data.demo !== false,
     synthetic: data.synthetic === true,
-    editorialStatus: data.editorialStatus === 'draft' ? 'draft' : data.editorialStatus === 'source-backed' ? 'source-backed' : 'published',
     sourceTitle: data.sourceTitle ? String(data.sourceTitle) : undefined,
     sourceUrl: data.sourceUrl ? String(data.sourceUrl) : undefined,
-    sourceNote: data.sourceNote ? String(data.sourceNote) : undefined,
     relatedNotes: Array.isArray(data.relatedNotes) ? data.relatedNotes.map(String) : [],
-    connections: Array.isArray(data.connections) ? data.connections.map((item) => ({
-      label: String(item.label ?? ''),
-      title: String(item.title ?? ''),
-      description: String(item.description ?? ''),
-      href: String(item.href ?? '#'),
-      tone: ['yellow', 'sky', 'mint', 'coral', 'blue'].includes(String(item.tone)) ? item.tone : 'yellow',
-    })) : [],
     content,
   };
 }

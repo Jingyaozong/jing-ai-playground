@@ -10,35 +10,11 @@ cover: "making-coral"
 featured: true
 tags: ["STORY", "VISUAL EVIDENCE", "PROMPT", "CREATIVE WORKFLOW"]
 readingTime: "13 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "EXP.008 Poster-to-Story Pilot / 9 份原始文本"
-sourceNote: "方法依据本站 EXP.008 的三张固定虚构海报、三种反推路径与九份未改写文本整理；评分是页面编辑初审，只描述这批样本，不代表荆已确认的个人观点，也不构成模型能力排名。"
 relatedNotes: ["ninety-second-storyboard", "image-prompt-guide", "ai-video-prompt-shot-facts"]
-connections:
-  - label: "EXPERIMENT"
-    title: "让 AI 先画一张不会发生的海报"
-    description: "查看三张输入海报、九份原始故事、四项评分与首轮局限。"
-    href: "/experiments/can-a-fictional-poster-grow-a-story/"
-    tone: "coral"
-  - label: "RETEST"
-    title: "短证据账本，换海报以后还能成立吗？"
-    description: "查看三张新海报、九份候选与跨题材复测的当前局限。"
-    href: "/experiments/does-the-short-evidence-ledger-travel/"
-    tone: "sky"
-  - label: "TOOL"
-    title: "海报反推故事组装器"
-    description: "填写 E／I／C 来源链，生成证据账本、故事任务卡和完整 Prompt。"
-    href: "/tools/poster-story-builder/"
-    tone: "mint"
-  - label: "PROMPT"
-    title: "海报反推故事 · 短证据账本"
-    description: "复制经过九份文本 Pilot 压缩后的制作模板。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-poster-to-story-short-ledger"
-    tone: "yellow"
 ---
 
-一张虚构海报已经很像一个故事：异常天空、空荡站台、亮着灯的旧电影院，或者晴天街道旁只在室内落下的雪。看见这些画面时，人会立刻补上人物、原因、过去和结局。
+一张没有片名的海报已经很像一个故事：异常天空、空荡站台、亮着灯的旧电影院，或者晴天街道旁只在室内落下的雪。看见这些画面时，人会立刻补上人物、原因、过去和结局。
 
 问题是，**补得合理不等于画面已经证明。** 如果把联想全部写成“海报里有什么”，故事也许很顺，却无法解释哪一部分来自输入，哪一部分来自类型惯例，哪一部分才是创作者真正做出的选择。
 
@@ -55,9 +31,9 @@ C / CHOICE      创作者为了让故事成立而主动加入的设定
 
 ## 为什么“直接看图写故事”不够
 
-本站的 [EXP.008 海报反推故事实验](/experiments/can-a-fictional-poster-grow-a-story/)固定使用三张 AI 生成的无片名海报：双月公交站、退潮电影院、室内落雪的失物招领处。每张图分别使用三种路径，各保留一次未经人工修订的文本：
+我的 [EXP.008 海报反推故事实验](/experiments/can-a-fictional-poster-grow-a-story/)固定使用三张 AI 生成的无片名海报：双月公交站、退潮电影院、室内落雪的失物招领处。每张图分别使用三种路径，各保留一次未经人工修订的文本：
 
-| 路径 | 操作方式 | 首轮页面编辑初审 |
+| 路径 | 操作方式 | 首轮初审 |
 | --- | --- | --- |
 | A / 直接反推 | 看图后直接输出人物、规则、冲突与梗概 | 综合均值 3.33 / 5；成稿快，但三次边界透明均为 1 / 5 |
 | B / 证据优先 | 先列可见线索，再进入故事 | 综合均值 4.67 / 5；线索利用清楚，但推测与主动设定仍混在一起 |
@@ -157,7 +133,7 @@ C3. 主人公是负责关闭这座建筑的工程师。（回应：E1、E5）
 | 两难 | 保留唯一能持续预警的影院，或带走这一次能救人的撤离信息 |
 | 不可逆选择 | 她签下拆除令，带走撤离路线，让影院随涨潮永久消失 |
 
-这仍然只是编辑示例，不是已经完成的故事。它展示的是每一层怎样使用前一层，而不是要求所有海报都变成灾难寓言。
+这只是示例，不是已经完成的故事。它展示的是每一层怎样使用前一层，而不是要求所有海报都变成灾难寓言。
 
 ## 三个问题，检查设定是不是类型套壳
 
@@ -232,7 +208,7 @@ E／I／C 适合从单张视觉输入发展故事，但不是所有创作都需�
 
 **创作不需要假装自己只是“发现”了一个藏在画面里的故事。** 更诚实也更有用的做法，是保存画面给出的起点，标明推测走了多远，再对真正决定加入的设定负责。
 
-## 本站记录
+## 实验记录
 
 - [EXP.008：让 AI 先画一张不会发生的海报](/experiments/can-a-fictional-poster-grow-a-story/)
 - [EXP.009：短证据账本，换海报以后还能成立吗？](/experiments/does-the-short-evidence-ledger-travel/)
@@ -241,4 +217,4 @@ E／I／C 适合从单张视觉输入发展故事，但不是所有创作都需�
 - [P02 / B 组原始文本：证据优先](/records/poster-to-story/p02-b-evidence-first.md)
 - [P02 / C 组原始文本：三栏反推](/records/poster-to-story/p02-c-three-column.md)
 
-本文是基于本站首轮文本 Pilot 整理的**资料方法文章**。EXP.009 已经换用水中图书馆、果园电梯和海中洗衣机三张新海报完成 9 份同会话复测：来源边界继续清楚，但规则代价与选择强度仍会失分。两轮评分都待荆或第二位评审者独立复核；由于第二轮仍来自同一次会话，目前不能宣称跨会话稳定。
+这篇方法基于首轮文本 Pilot 整理。EXP.009 已经换用水中图书馆、果园电梯和海中洗衣机三张新海报完成 9 份同会话复测：来源边界继续清楚，但规则代价与选择强度仍会失分。两轮评分还需要第二位评审复核。

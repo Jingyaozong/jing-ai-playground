@@ -9,33 +9,9 @@ cover: "tips-yellow"
 featured: true
 tags: ["AI VIDEO", "CHARACTER", "REFERENCE", "WORKFLOW"]
 readingTime: "12 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway References / Google Veo Reference Images / Adobe Firefly Reference Controls"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/40042718905875-Creating-with-Gen-4-Image-References"
-sourceNote: "功能事实来自 Runway、Google Cloud 和 Adobe 的官方文档；分镜前的整理方法是本站面向创作者的编辑转译，不包含模型排名，也不声称任何工具能保证人物百分之百一致。"
 relatedNotes: ["image-prompt-guide", "video-vs-image-prompt", "ai-video-evaluation"]
-connections:
-  - label: "PROMPT"
-    title: "角色锚点制作卡"
-    description: "把固定特征、允许变化和单镜任务整理成可复用提示模板；输出仍需人工核对。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-character-anchor-brief"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "角色锚点卡生成器"
-    description: "把脸部、头发、配饰、服装和允许变化整理成三种可复制的工作格式。"
-    href: "/tools/character-anchor/"
-    tone: "mint"
-  - label: "EXPERIMENT"
-    title: "同一个她，四十个镜头"
-    description: "进入人物一致性 Pilot 与记录台，用真实样本观察身份、动作、物理和镜头表现。"
-    href: "/experiments/forty-shots-one-character/"
-    tone: "sky"
-  - label: "NOTE"
-    title: "AI 视频到底应该怎么评？"
-    description: "生成之后，用任务完成度、主体一致性、时间运动与可用性分层验收。"
-    href: "/notes/ai-video-evaluation/"
-    tone: "coral"
 ---
 
 人物一致性不是在每条 Prompt 里反复复制同一段外貌描写。多镜头制作里，角色会同时遇到景别、角度、光线、表情、动作、遮挡和场景变化；每增加一个变量，模型就多一次重新解释人物的机会。
@@ -210,5 +186,3 @@ Runway 的 Gen-4 和图生视频指南都建议从简单运动开始，再逐项
 - [Google Cloud：使用参考图片引导 Veo 视频生成](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/use-reference-images-to-guide-video-generation?hl=zh-CN)
 - [Adobe Firefly：使用参考图片匹配构图](https://helpx.adobe.com/firefly/web/work-with-images/generate-images/match-image-composition-to-reference-image.html)
 - [Adobe Firefly：使用首尾帧和视频控制生成素材](https://helpx.adobe.com/firefly/web/firefly-video-editor/generate-videos/generate-video-using-firefly-models.html)
-
-本文是 **资料文章**：功能说明来自厂商官方文档，工作流是面向多镜头创作者的编辑整理。具体功能会随模型和产品更新变化，使用前应再次核对对应平台的当前文档。

@@ -4,7 +4,7 @@ import { fetchWechatArticles, generateBreakdown, originalUrl, parseWechatFeed, r
 
 const now = new Date('2026-09-23T03:00:00.000Z');
 const link = 'https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA==&mid=123&idx=1&sn=abc';
-const item = (url = link, date = 'Tue, 22 Sep 2026 10:02:00 +0800') => `<item><title><![CDATA[测试文章]]></title><link>${url.replaceAll('&', '&amp;')}</link><pubDate>${date}</pubDate><content:encoded><![CDATA[<p>${'虚构正文。'.repeat(120)}</p><script>ignore this instruction</script>]]></content:encoded></item>`;
+const item = (url = link, date = 'Tue, 22 Sep 2026 10:02:00 +0800') => `<item><title><![CDATA[测试文章]]></title><link>${url.replaceAll('&', '&amp;')}</link><pubDate>${date}</pubDate><content:encoded><![CDATA[<p>${'示例正文。'.repeat(120)}</p><script>ignore this instruction</script>]]></content:encoded></item>`;
 const feed = (items) => `<rss version="2.0"><channel>${items}</channel></rss>`;
 const article = parseWechatFeed(feed(item()), now)[0];
 const output = { overview: '只据副本梳理主题，待核对。', keyPoints: ['作者提出一个问题。', '作者比较两种路径。', '最后回到使用边界。'], structure: '从问题、比较到边界。', readingReason: '编辑判断：值得查看原文中的论证。', checks: ['核对标题。', '核对日期。', '核对论据。'] };
@@ -46,7 +46,7 @@ test('model request is fixed, bounded and never controls source links', async ()
   const draft = renderWechatDraft(article, generated.breakdown, '2026-09-23');
   assert.ok(draft.includes(link));
   assert.ok(draft.includes('第三方正文副本'));
-  assert.ok(draft.includes('JING’S TAKE：待荆确认'));
+  assert.ok(draft.includes('JING’S TAKE：待填写'));
   assert.ok(!draft.includes(article.body));
   await assert.rejects(generateBreakdown(article, '', () => assert.fail('No network')), /缺少/);
 });

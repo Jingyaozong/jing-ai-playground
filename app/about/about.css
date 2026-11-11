@@ -18,7 +18,7 @@
 .about-methods-heading h2 {
   margin: 24px 0 0;
   font-family: var(--display);
-  font-size: clamp(2.65rem, 5vw, 5rem);
+  font-size: clamp(2.65rem, 5vw, 2.75rem);
   font-weight: 700;
   line-height: 1.08;
   letter-spacing: -.04em;
@@ -46,7 +46,7 @@
   top: 35px;
   left: 35px;
   right: 35px;
-  border-top: 2px dashed var(--ink);
+  border-top: 1px dashed var(--line);
 }
 
 .about-method-card {
@@ -57,9 +57,9 @@
   display: flex;
   flex-direction: column;
   padding: 24px;
-  border: 2px solid var(--ink);
+  border: 1px solid var(--line);
   border-radius: 26px;
-  box-shadow: 6px 6px 0 var(--ink);
+  box-shadow: none;
 }
 
 .about-method-white { background: var(--white); }
@@ -80,11 +80,11 @@
   display: grid;
   place-items: center;
   flex: 0 0 auto;
-  border: 2px solid var(--ink);
+  border: 1px solid var(--line);
   border-radius: 50%;
-  background: var(--blue);
-  color: var(--white);
-  font: 750 .8rem var(--mono);
+  background: var(--tint);
+  color: var(--ink);
+  font: 750 0.8125rem var(--mono);
 }
 
 .about-method-marker span {
@@ -106,7 +106,7 @@
 .about-method-card > p {
   margin: 0 0 34px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.75;
 }
 
@@ -114,7 +114,7 @@
   width: fit-content;
   margin-top: auto;
   color: var(--blue);
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 750;
 }
 
@@ -127,29 +127,29 @@
   gap: 28px;
   margin-top: 54px;
   padding: 24px 28px;
-  border: 2px solid var(--ink);
+  border: 1px solid var(--line);
   border-radius: 22px;
   background: var(--coral);
-  box-shadow: 6px 6px 0 var(--mint);
+  box-shadow: none;
 }
 
 .about-method-footnote span { color: var(--blue); font-weight: 700; }
-.about-method-footnote p { margin: 0; font-size: 12px; line-height: 1.75; }
+.about-method-footnote p { margin: 0; font-size: 13px; line-height: 1.75; }
 .about-method-footnote a {
   padding: 11px 15px;
-  border: 1.5px solid var(--ink);
+  border: 1px solid var(--line);
   border-radius: 99px;
   background: var(--white);
   color: var(--ink);
-  font-size: 9px;
+  font-size: 13px;
   font-weight: 750;
-  box-shadow: 3px 3px 0 var(--ink);
+  box-shadow: none;
   white-space: nowrap;
 }
 
 .about-method-card a:focus-visible,
 .about-method-footnote a:focus-visible {
-  outline: 3px solid var(--blue);
+  outline: 1px solid var(--line);
   outline-offset: 4px;
 }
 
@@ -164,9 +164,9 @@
 @media (max-width: 760px) {
   .about-methods { padding: 105px 0; }
   .about-methods-heading { grid-template-columns: 1fr; gap: 30px; margin-bottom: 54px; }
-  .about-methods-heading h2 { font-size: clamp(2.2rem, 10vw, 3.15rem); line-height: 1.12; }
+  .about-methods-heading h2 { font-size: clamp(2.2rem, 10vw, 2.75rem); line-height: 1.12; }
   .about-method-route { grid-template-columns: 1fr; gap: 14px; }
-  .about-method-card { min-height: 310px; padding: 22px; border-radius: 23px; box-shadow: 5px 5px 0 var(--ink); }
+  .about-method-card { min-height: 310px; padding: 22px; border-radius: 23px; box-shadow: none; }
   .about-method-card h3 { margin-top: 56px; font-size: 2rem; }
   .about-method-footnote { grid-template-columns: 1fr; gap: 18px; margin-top: 44px; padding: 22px; }
   .about-method-footnote a { grid-column: auto; }

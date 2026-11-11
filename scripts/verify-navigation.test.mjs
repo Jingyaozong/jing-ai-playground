@@ -2,10 +2,9 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import test from 'node:test';
-import matter from 'gray-matter';
 import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
 import { getAllNotes } from '../lib/notes.ts';
-import { stories, experiments, experimentEvidenceLabels, tools, toolCategories } from '../app/data/content.ts';
+import { experiments, experimentEvidenceLabels, tools, toolCategories } from '../app/data/content.ts';
 import { experimentDetails } from '../app/data/experiments.ts';
 import { libraryItems } from '../app/data/library.ts';
 import { promptFilters, promptItems, promptSource } from '../app/data/prompts.ts';
@@ -91,70 +90,8 @@ function anchors(file) {
 }
 
 const groups = [
-  { path: 'notes', key: 'category', hash: '#all-notes', values: ['AI TIPS', 'AI EVAL', 'MAKING OF', 'AI BRIEFING'] },
   { path: 'library', key: 'type', hash: '#library-all', values: ['ARTICLE', 'VIDEO', 'PDF', 'TOOL', 'JING PICKS'] },
 ];
-
-test('portfolio puts cases, review methods and sourced research before legacy material', () => {
-  const home = readFileSync(join(process.cwd(), 'out/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  const links = anchors('index.html');
-  for (const href of ['/stories/she-forgets-yesterday/', '/tools/multimodal-evaluation/', '/briefing/', '/archive/']) {
-    assert.ok(links.includes(href), href);
-  }
-  assert.match(home, /虚构静帧实评 · 非视频结果/);
-  assert.match(home, /三版使用同一张虚构 AI 概念帧/);
-  assert.match(home, /为什么从 A 改/);
-  assert.match(home, /C 版复看/);
-  assert.equal((home.match(/class="folio-ab-frame"/g) ?? []).length, 3);
-  assert.match(home, /id="window-highlight-rolloff"/);
-  assert.match(home, /id="folio-ac-toggle"/);
-  assert.match(home, /for="folio-ac-toggle"/);
-  const lead = home.indexOf('id="ab-review"');
-  assert.ok(lead >= 0 && lead < home.indexOf('id="featured-story"'));
-  assert.equal((home.match(/<h1\b/g) ?? []).length, 1);
-  for (const block of ['live-strip', 'story-grid', 'experiment-preview-grid', 'home-notes-grid', 'tool-grid', 'playing-list', 'home-picks-grid', 'about-copy']) {
-    assert.ok(home.indexOf(`class="${block}"`) > lead, block);
-  }
-  for (const href of ['/stories/', '/experiments/', '/notes/', '/library/', '/tools/', '/prompts/']) assert.ok(links.includes(href), href);
-  const briefing = readFileSync(join(process.cwd(), 'out/briefing/index.html'), 'utf8');
-  assert.match(briefing, /待执行。尚无样本对比/);
-  assert.ok(anchors('briefing/index.html').includes('https://42zhangjing.qiaomu.ai/ep/6ada2be4c96c8942ec10cb1e.html'));
-  for (const section of ['daily', 'hot', 'podcasts', 'sources']) assert.ok(briefing.includes(`id="${section}"`), section);
-  assert.equal((briefing.match(/class="observation-card"/g) ?? []).length, 5);
-  assert.match(briefing, /旧偏好会不会盖过当前的视觉指令？/);
-  assert.ok(anchors('briefing/index.html').includes('https://aialchemy.qiaomu.ai/ep/6aebf2dec33509d82976625e.html'));
-  assert.equal(anchors('briefing/index.html').filter(href => /^https:\/\/[^/]+\.qiaomu\.ai\/feed\.xml$/.test(href)).length, 8);
-  for (const card of briefing.matchAll(/<article class="observation-card">([\s\S]*?)<\/article>/g)) {
-    assert.match(card[1], /怎么验证 · 待执行/);
-    assert.match(card[1], /href="https:\/\/[^"]+">发布原文/);
-    assert.match(card[1], /href="https:\/\/aihot\.news\/[^"]+">AIHOT 发现入口/);
-  }
-});
-
-test('homepage tool entrance reaches the work-scene choices', () => {
-  const home = anchors('archive/index.html');
-  const toolsHtml = readFileSync(join(process.cwd(), 'out/tools/index.html'), 'utf8')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  assert.ok(home.includes('/tools/#work-scenes'), 'Homepage must link directly to work scenes');
-  assert.match(toolsHtml, /<section\b[^>]*id="work-scenes"/, 'Work-scene target is missing');
-});
-
-test('archive work route reaches trial method, local estimate and delivery gate without invented results', () => {
-  const home = anchors('archive/index.html');
-  const note = anchors('notes/trial-to-review-pace/index.html');
-  const pace = anchors('tools/review-pace/index.html');
-  const html = readFileSync(join(process.cwd(), 'out/archive/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  for (const href of ['/notes/trial-to-review-pace/', '/tools/review-pace/', '/tools/dataset-release/']) {
-    assert.ok(home.includes(href), `Homepage work route missing ${href}`);
-  }
-  assert.ok(note.includes('/tools/review-pace/'));
-  assert.ok(pace.includes('/tools/dataset-release/'));
-  assert.match(html, /aria-label="从试标到交付的工作路径"/);
-  assert.match(html, /id="home-work-route"/);
-  assert.match(html, /方法内容为编辑候选，待荆确认/);
-  assert.match(html, /浏览器本地工具/);
-  assert.match(html, /人工交付自检/);
-});
 
 test('scroll reveal leaves content visible without browser animation support', () => {
   const css = readFileSync(join(process.cwd(), 'app', 'globals.css'), 'utf8');
@@ -164,30 +101,6 @@ test('scroll reveal leaves content visible without browser animation support', (
   assert.match(css, /\.reveal\.reveal-armed\s*\{\s*opacity:\s*0/);
   assert.match(component, /typeof IntersectionObserver === 'undefined'/);
   assert.match(component, /classList\.add\('reveal-armed'\)/);
-});
-
-test('story cards preserve semantic titles, original status and detail links', () => {
-  for (const file of ['archive/index.html', 'stories/index.html']) {
-    const html = readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-    for (const item of stories) {
-      const start = html.indexOf(`<article class="story-card" id="${item.id}">`);
-      if (start < 0 && file === 'archive/index.html') continue;
-      assert.ok(start >= 0, `Missing story card: ${item.id}`);
-      const next = html.indexOf('<article class="story-card"', start + 1);
-      const card = html.slice(start, next < 0 ? undefined : next);
-      if (item.titleParts) {
-        assert.equal(item.titleParts.join(''), item.title, `Title changed: ${item.id}`);
-        assert.ok(item.titleParts.every((part) => part.trim().length > 1), `Orphan group: ${item.id}`);
-        for (const part of item.titleParts) assert.ok(card.includes(`<span class="story-title-part">${part}</span>`), `Missing title group: ${item.id} / ${part}`);
-      } else {
-        assert.ok(card.includes(`<h3>${item.title}</h3>`), `Short title changed: ${item.id}`);
-      }
-      assert.ok(card.includes(item.status), `Status changed: ${item.id}`);
-      assert.ok(card.includes(`>${item.status}</span>`), `Story status is not visible in its badge: ${item.id}`);
-      assert.ok(!card.includes('有详情记录') && !card.includes('最新故事 · 有详情'), `Generic story badge remains: ${item.id}`);
-      assert.ok(card.includes(`/stories/${item.slug}/`), `Missing detail link: ${item.id}`);
-    }
-  }
 });
 
 test('experiment card title groups preserve titles, status and detail links', () => {
@@ -211,27 +124,6 @@ test('experiment card title groups preserve titles, status and detail links', ()
   }
 });
 
-test('experiment detail first screens match archive evidence and distinguish planned from completed units', () => {
-  for (const item of experiments) {
-    const detail = experimentDetails.find((experiment) => experiment.slug === item.slug);
-    assert.ok(detail, `Missing experiment detail: ${item.number}`);
-    if (detail.titleLines) {
-      assert.equal(detail.titleLines.join(''), detail.title, `Detail title groups changed text: ${item.number}`);
-      assert.ok(detail.titleLines.every((line) => line.trim().length > 1), `Detail title has an orphan group: ${item.number}`);
-    }
-    const html = readFileSync(join(process.cwd(), 'out', `experiments/${item.slug}/index.html`), 'utf8')
-      .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-    const hero = html.match(/<header class="experiment-detail-hero">([\s\S]*?)<\/header>/)?.[1];
-    assert.ok(hero, `Missing detail hero: ${item.number}`);
-    assert.ok(hero.includes(experimentEvidenceLabels[item.evidenceKind]), `Archive/detail evidence differs: ${item.number}`);
-    assert.ok(hero.includes('class="experiment-evidence-note"'), `Missing plain-language evidence boundary: ${item.number}`);
-    const expectedBoard = item.evidenceKind === 'static-pilot'
-      ? '40 PLANNED · 4 STATIC · NO VIDEO'
-      : item.evidenceKind === 'text-pilot' ? 'TEXT OUTPUTS · NO VIDEO' : 'PLANNED CELLS · 0 GENERATED';
-    if (item.number !== '010') assert.ok(hero.includes(expectedBoard), `Unit count lacks evidence type: ${item.number}`);
-  }
-});
-
 test('pending experiment references and empty visual cells cannot read as generated results', () => {
   for (const item of experiments.filter((experiment) => experiment.evidenceKind === 'protocol')) {
     const detail = experimentDetails.find((experiment) => experiment.slug === item.slug);
@@ -242,7 +134,6 @@ test('pending experiment references and empty visual cells cannot read as genera
       ? '参考图待制作 · 非实验结果'
       : detail.reference?.kind === 'character' ? 'AI 角色锚点 · 非实验结果' : '协议示意图 · 非实验结果';
     assert.ok(html.includes(`class="experiment-reference-kind mono">${expectedReference}</span>`), `Reference lacks visible evidence boundary: ${item.number}`);
-    assert.ok(html.includes('02 / Planned cells · 待执行'), `Sample section reads as completed: ${item.number}`);
     const visualStatus = [...html.matchAll(/<div class="experiment-sample-visual[^>]*>[\s\S]*?<b class="mono">([^<]+)<\/b>/g)].map((match) => match[1]);
     assert.deepEqual(visualStatus, detail.samples.map((sample) => sample.status), `Empty cell visual status differs from record: ${item.number}`);
   }
@@ -276,14 +167,6 @@ test('version records start blank and delivery placeholders are not completed', 
   assert.ok(delivery.includes('待导出与人工验收'));
 });
 
-test('single-shot practice keeps synthetic scope and empty assessment separate', () => {
-  const html = readFileSync(join(process.cwd(), 'out/tools/shot-prompt-builder/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  for (const text of ['id="single-shot-practice"', '合成演练 · 编辑候选 · 待荆确认', '无参考图、无视频、未调用模型', '不是已观察到的 Bad Case', '当前判定：待执行', '判定：待真实样本生成后填写', '待观看后填写，不推测模型内部原因', '合成演练：乔野拿起白杯']) assert.ok(html.includes(text), `Practice boundary missing: ${text}`);
-  assert.ok(html.includes('/library/?type=VIDEO#library-adobe-structuring-video-prompts'));
-  assert.ok(html.includes('/tools/multimodal-evaluation/'));
-  assert.ok(!html.includes('- [x]'), 'Practice checklist invents completed verification');
-});
-
 test('reviewed video guides and practice tools have unique bidirectional anchors', () => {
   const html = readFileSync(join(process.cwd(), 'out/library/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
   for (const item of libraryItems.filter((item) => item.videoReview)) {
@@ -293,97 +176,6 @@ test('reviewed video guides and practice tools have unique bidirectional anchors
     assert.ok(toolHtml.includes(`/library/?type=VIDEO#${anchorId}`), `Missing return route: ${item.id}`);
     assert.ok(html.includes(item.videoReview.practice.href), `Missing practice entry: ${item.id}`);
   }
-});
-
-test('library distinguishes reviewed excerpts, historical sources and unconfirmed opinions', () => {
-  const html = readFileSync(join(process.cwd(), 'out/library/index.html'), 'utf8')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  const routeSection = html.slice(html.indexOf('class="library-routes'), html.indexOf('class="featured-library'));
-  const reviewed = libraryItems.filter((item) => item.sourceStatus === 'excerpt-reviewed');
-  assert.equal(reviewed.length, 2);
-  assert.ok(routeSection.length > 0, 'Library reading routes are missing');
-  assert.equal(html.split('讲解要点已核对 · 待荆确认').length - 1, reviewed.length, 'Each video needs its own visible review boundary');
-  for (const item of reviewed) {
-    assert.ok(html.includes(`id="library-${item.id}"`), `${item.id}: reviewed card is missing`);
-    assert.ok(html.includes(item.videoReview.basis) && html.includes(item.videoReview.limitation), `${item.id}: review scope is missing`);
-    for (const point of item.videoReview.points) {
-      const url = new URL(item.url);
-      url.searchParams.set('t', String(point.seconds));
-      assert.ok(html.includes(url.href.replaceAll('&', '&amp;')), `${item.id}: source timestamp link is missing`);
-    }
-    assert.ok(html.includes(item.videoReview.practice.href), `${item.id}: practice route is missing`);
-    assert.ok(!routeSection.includes(item.url.replaceAll('&', '&amp;')), `${item.id}: editorial candidate appears in a curated route`);
-  }
-  assert.ok(html.includes('编辑推荐理由 · 待荆确认'), 'Draft recommendation is presented as Jing’s confirmed choice');
-  assert.ok(html.includes('Sora 产品自 2026 年 4 月 26 日起不再提供'), 'Historical Sora status is missing');
-  assert.ok(html.includes('https://huggingface.co/docs/diffusers/main/using-diffusers/text-img2vid'), 'Current Diffusers guide is missing');
-});
-
-test('archive featured story and recent library picks match source data', () => {
-  const html = readFileSync(join(process.cwd(), 'out/archive/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  const featured = stories.find((story) => story.slug === 'she-forgets-yesterday') ?? stories[0];
-  const section = html.match(/<section\b[^>]*id="featured-story"[^>]*>([\s\S]*?)<\/section>/)?.[1];
-  assert.ok(section, 'Missing featured story');
-  for (const value of [featured.title, featured.description, featured.status, `/stories/${featured.slug}/`]) {
-    assert.ok(section.includes(value), `Featured story mismatch: ${value}`);
-  }
-  const picksSection = html.match(/<section\b[^>]*class="home-picks section-shell"[^>]*>([\s\S]*?)<\/section>/)?.[1];
-  assert.ok(picksSection, 'Missing home picks');
-  const expected = libraryItems.filter((item) => item.jingPick).sort((a, b) => b.dateAdded.localeCompare(a.dateAdded)).slice(0, 4);
-  let previous = -1;
-  for (const item of expected) {
-    const position = picksSection.indexOf(item.url.replaceAll('&', '&amp;'));
-    assert.ok(position > previous, `Missing or out-of-order recent pick: ${item.id}`);
-    previous = position;
-  }
-});
-
-test('entry pages keep fictional, pending and local-only work visibly distinct', () => {
-  const readPage = (path) => readFileSync(join(process.cwd(), 'out', path), 'utf8')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  const home = readPage('archive/index.html');
-  const notes = readPage('notes/index.html');
-  const toolIndex = readPage('tools/index.html');
-  assert.ok(home.includes('点击查看当前状态'));
-  assert.ok(home.includes('不把计划写成成果'));
-  assert.ok(notes.includes('没有执行过的测试不会写成结果'));
-  assert.ok(toolIndex.includes('输入不会上传；生成的计划与记录仍需人工核对'));
-  for (const note of getAllNotes().filter((item) => item.synthetic && item.editorialStatus === 'draft')) {
-    const card = [...notes.matchAll(/<article class="note-card[^\"]*"[^>]*>[\s\S]*?<\/article>/g)]
-      .map(([markup]) => markup)
-      .find((markup) => markup.includes(`/notes/${note.slug}/`));
-    assert.ok(card, `Fictional note card missing: ${note.slug}`);
-    assert.ok(card.includes('虚构演练 · 待荆确认'), `Fictional draft lacks both status labels: ${note.slug}`);
-  }
-});
-
-test('cross-page recommendations remain editorial candidates until Jing confirms them', () => {
-  const readPage = (path) => readFileSync(join(process.cwd(), 'out', path), 'utf8')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
-    .replace(/<!--\s*-->/g, '');
-  const home = readPage('archive/index.html');
-  const library = readPage('library/index.html');
-  const about = readPage('about/index.html');
-  const prompts = readPage('prompts/index.html');
-  const reviewed = libraryItems.filter((item) => item.sourceStatus === 'excerpt-reviewed').length;
-  assert.ok(home.includes('Picks to review / 待确认推荐'));
-  assert.ok(home.includes('推荐理由与观点仍是编辑候选，待荆确认'));
-  assert.ok(home.includes('来源分级标注'));
-  assert.ok(library.includes('编辑初选<br/>待荆确认'));
-  assert.ok(library.includes('PICKS TO REVIEW'));
-  assert.ok(library.includes('编辑观点候选 · 待荆确认'));
-  const draftCards = [...library.matchAll(/<article\b[^>]*\bclass="library-card[^"]*"[^>]*>[\s\S]*?<\/article>/g)]
-    .map(([card]) => card)
-    .filter((card) => card.includes('编辑初选 · 待荆确认') || card.includes('元信息已核对 · 内容待复核 · 待荆确认') || card.includes('讲解要点已核对 · 待荆确认'));
-  assert.ok(draftCards.length >= libraryItems.filter((item) => item.takeStatus === 'draft').length);
-  for (const card of draftCards) {
-    assert.ok(card.includes('编辑观点候选 · 待荆确认'), 'Draft card lacks its editorial opinion label');
-    assert.ok(!card.includes('JING&#x27;S TAKE'), 'Draft card claims a confirmed personal take');
-  }
-  assert.ok(about.includes(`${libraryItems.length} 条收藏附原链接 · ${reviewed} 条视频附时间点要点`));
-  assert.ok(about.includes(`收藏中 ${reviewed} 条视频附时间点要点与核对依据`));
-  assert.ok(prompts.includes('编辑推荐理由 · 待荆确认'));
-  assert.ok(!prompts.includes('我为什么留下'));
 });
 
 test('prompt resource cards distinguish checked source text from reviewed video captions', () => {
@@ -399,54 +191,6 @@ test('prompt resource cards distinguish checked source text from reviewed video 
   for (const item of promptResources) {
     assert.ok(html.includes(item.url.replaceAll('&', '&amp;')), `Original resource link missing: ${item.id}`);
   }
-});
-
-test('caption-derived Prompt note preserves source limits and returns to the resource', () => {
-  const slug = 'prompt-iteration-ambiguity-output';
-  const note = getAllNotes().find((item) => item.slug === slug);
-  assert.ok(note, 'Missing caption-derived note');
-  assert.equal(note.editorialStatus, 'draft');
-  assert.equal(note.sourceUrl, 'https://www.youtube.com/watch?v=T9aRN5JkmL8');
-  assert.match(note.sourceNote, /没有逐帧核对完整视频/);
-  const html = readFileSync(join(process.cwd(), 'out', 'notes', slug, 'index.html'), 'utf8')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  for (const time of ['03:14', '12:45', '51:12']) assert.ok(html.includes(time));
-  assert.ok(html.includes('编辑稿 · 待荆确认'));
-  assert.ok(html.includes('无测试结果'));
-  assert.ok(anchors(`notes/${slug}/index.html`).includes('/prompts/#prompt-resources'));
-  assert.ok(anchors('prompts/index.html').includes(`/notes/${slug}/`));
-  const prompts = readFileSync(join(process.cwd(), 'out/prompts/index.html'), 'utf8');
-  assert.match(prompts, /<section\b[^>]*id="prompt-resources"/);
-});
-
-test('Prompt pre-flight tool and its method note are connected without invented results', () => {
-  const noteLinks = anchors('notes/prompt-iteration-ambiguity-output/index.html');
-  const toolLinks = anchors('tools/prompt-preflight/index.html');
-  assert.ok(noteLinks.includes('/tools/prompt-preflight/'));
-  assert.ok(toolLinks.includes('/notes/prompt-iteration-ambiguity-output/'));
-  assert.ok(anchors('tools/index.html').includes('/tools/prompt-preflight/'));
-  const html = readFileSync(join(process.cwd(), 'out/tools/prompt-preflight/index.html'), 'utf8');
-  assert.ok(html.includes('不调用 AI、不上传输入、不自动保存'));
-    assert.ok(html.includes('待执行 · 无输出'));
-    assert.ok(html.includes('HUMAN REVIEW / 逐项验收'));
-    assert.ok(html.includes('虚构演练 · 待执行'));
-    assert.ok(html.includes('查看并载入虚构示例'));
-  assert.ok(html.includes('工具不自动评分'));
-});
-
-test('featured note introduction follows the selected note metadata', () => {
-  const notes = getAllNotes();
-  const featured = notes.find((note) => note.featured) ?? notes[0];
-  assert.ok(featured);
-  const html = readFileSync(join(process.cwd(), 'out/notes/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  const section = html.match(/<section\b[^>]*id="featured-note"[^>]*>([\s\S]*?)<\/section>/)?.[1];
-  assert.ok(section, 'Missing featured section');
-  const escape = (text) => text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#x27;');
-  assert.ok(section.replaceAll('<br/>', '').includes(escape(featured.title)), 'Featured title mismatch');
-  assert.ok(section.includes(escape(featured.description)), 'Featured introduction mismatch');
-  assert.ok(section.includes(`/notes/${featured.slug}/"`), 'Featured target mismatch');
-  const status = featured.demo ? 'Demo 内容' : featured.editorialStatus === 'draft' ? '编辑稿 · 待荆确认' : featured.editorialStatus === 'source-backed' ? '资料文章 · 来源已核对' : '正式笔记';
-  assert.ok(section.includes(status), 'Missing featured content status');
 });
 
 for (const group of groups) {
@@ -560,117 +304,6 @@ test('story and experiment Prompt entrances reach their exact reusable templates
     assert.match(html, new RegExp(`<article\\b[^>]*id="prompt-${promptId}"`), `Missing template anchor: ${promptId}`);
     assert.match(html, new RegExp(`<h2\\b[^>]*id="prompt-title-${promptId}"[^>]*tabindex="-1"`), `Template heading must accept focus: ${promptId}`);
   }
-});
-
-test('method notes and companion tools open the matching Prompt template or category', () => {
-  const catalog = readFileSync(join(process.cwd(), 'out/prompts/all/index.html'), 'utf8')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  for (const [source, promptId] of [
-    ['notes/poster-to-story-evidence-ledger', 'poster-to-story-short-ledger'],
-    ['notes/causal-motion-five-point-ledger', 'video-causal-motion-gate'],
-    ['notes/ai-video-character-consistency', 'video-character-anchor-brief'],
-    ['notes/ai-video-scene-consistency', 'video-scene-anchor-brief'],
-    ['notes/ai-video-prompt-shot-facts', 'video-single-shot-motion'],
-    ['notes/first-last-frame-motion-prompt', 'video-first-last-frame-bridge'],
-    ['notes/ai-video-sound-workflow', 'video-sound-layer-brief'],
-    ['notes/video-failure-cases', 'video-failure-revision'],
-    ['notes/ai-video-shot-continuity', 'video-cut-continuity-handoff'],
-    ['notes/ai-video-generation-version-log', 'video-candidate-review-table'],
-    ['tools/poster-story-builder', 'poster-to-story-short-ledger'],
-    ['tools/character-anchor', 'video-character-anchor-brief'],
-    ['tools/scene-anchor', 'video-scene-anchor-brief'],
-    ['tools/shot-prompt-builder', 'video-single-shot-motion'],
-    ['tools/shot-risk-checker', 'video-first-last-frame-bridge'],
-    ['tools/sound-layer-card', 'video-sound-layer-brief'],
-    ['tools/continuity-checker', 'video-cut-continuity-handoff'],
-    ['tools/shot-version-recorder', 'video-candidate-review-table'],
-  ]) {
-    assert.ok(promptItems.some((item) => item.id === promptId), `Unknown Prompt template: ${promptId}`);
-    const links = anchors(`${source}/index.html`).map((href) => new URL(href, `http://localhost:3000/${source}/`));
-    assert.ok(links.some((url) => url.pathname === '/prompts/all/' && url.hash === `#prompt-${promptId}` && url.searchParams.get('category') === 'AI 视频制作'), `Missing exact template entrance from ${source}`);
-    assert.match(catalog, new RegExp(`<article\\b[^>]*id="prompt-${promptId}"`), `Missing template anchor: ${promptId}`);
-  }
-  for (const source of ['tools/shot-prompt-builder']) {
-    const links = anchors(`${source}/index.html`).map((href) => new URL(href, `http://localhost:3000/${source}/`));
-    assert.ok(links.some((url) => url.pathname === '/prompts/all/' && url.hash === '#prompt-collection' && url.searchParams.get('category') === 'AI 视频制作'), `Missing video category entrance from ${source}`);
-  }
-  assert.equal(promptItems.filter((item) => item.category === 'AI 视频制作').length, 10, 'Production template count changed');
-  for (const [promptId, destinations] of [
-    ['video-character-anchor-brief', ['/notes/ai-video-character-consistency/', '/tools/character-anchor/']],
-    ['video-scene-anchor-brief', ['/notes/ai-video-scene-consistency/', '/tools/scene-anchor/']],
-    ['video-single-shot-motion', ['/notes/ai-video-prompt-shot-facts/', '/tools/shot-prompt-builder/']],
-    ['video-first-last-frame-bridge', ['/notes/first-last-frame-motion-prompt/', '/tools/shot-risk-checker/']],
-    ['video-sound-layer-brief', ['/notes/ai-video-sound-workflow/', '/tools/sound-layer-card/']],
-    ['video-failure-revision', ['/notes/video-failure-cases/']],
-    ['video-cut-continuity-handoff', ['/notes/ai-video-shot-continuity/', '/tools/continuity-checker/']],
-    ['video-candidate-review-table', ['/notes/ai-video-generation-version-log/', '/tools/shot-version-recorder/']],
-    ['video-causal-motion-gate', ['/notes/causal-motion-five-point-ledger/', '/tools/waterline-motion-card/']],
-    ['poster-to-story-short-ledger', ['/notes/poster-to-story-evidence-ledger/', '/tools/poster-story-builder/']],
-  ]) {
-    const prompt = promptItems.find((item) => item.id === promptId);
-    assert.ok(prompt, `Unknown Prompt template: ${promptId}`);
-    for (const href of destinations) assert.ok(prompt.relatedLinks?.some((link) => link.href === href), `Missing contextual link from ${promptId} to ${href}`);
-  }
-  assert.ok(readFileSync(join(process.cwd(), 'out/tools/shot-prompt-builder/index.html'), 'utf8').includes('查看 10 条制作模板'), 'Tool page template count is stale');
-});
-
-test('copied video templates preserve editorial status and evidence boundaries', () => {
-  const videoItems = promptItems.filter((item) => item.category === 'AI 视频制作');
-  assert.equal(videoItems.length, 10);
-  for (const item of videoItems) {
-    assert.equal(item.editorial, true, `${item.id}: missing editorial status`);
-    assert.ok(item.prompt.startsWith('【状态】本站编辑候选，待荆确认'), `${item.id}: copied Prompt omits status`);
-    assert.ok(item.usageNote.startsWith('编辑候选 · 待荆确认'), `${item.id}: visible usage note omits status`);
-  }
-  for (const [id, boundary] of [
-    ['video-character-anchor-brief', '未提供参考图时'],
-    ['video-scene-anchor-brief', '没有参考图或场景图时'],
-    ['video-single-shot-motion', '实际观察栏留空'],
-    ['video-first-last-frame-bridge', '没有两张实际端点图时'],
-    ['video-sound-layer-brief', '没有实际音视频时'],
-    ['video-failure-revision', '不强行凑主因或次因'],
-    ['video-cut-continuity-handoff', '资料不足／待实测'],
-    ['video-candidate-review-table', '未提供真实样本时只生成空表'],
-    ['video-causal-motion-gate', '待测试 Prompt，不代表已经生成或通过'],
-    ['poster-to-story-short-ledger', '没有实际海报图时'],
-  ]) {
-    assert.ok(videoItems.find((item) => item.id === id)?.prompt.includes(boundary), `${id}: missing evidence boundary`);
-  }
-});
-
-test('every exported note has top and bottom links to its own category', () => {
-  const filenames = readdirSync(join(process.cwd(), 'content/notes')).filter((name) => name.endsWith('.md'));
-  assert.ok(filenames.length > 0);
-  for (const filename of filenames) {
-    const { data } = matter(readFileSync(join(process.cwd(), 'content/notes', filename), 'utf8'));
-    const slug = data.slug ?? filename.replace(/\.md$/, '');
-    const links = anchors(`notes/${slug}/index.html`).map((href) => new URL(href, `http://localhost:3000/notes/${slug}/`));
-    const returns = links.filter((url) => url.pathname.endsWith('/notes/') && url.hash === '#all-notes' && url.searchParams.get('category') === data.category);
-    assert.equal(returns.length, 2, `${slug}: expected top and bottom category links`);
-  }
-});
-
-test('all notes, including featured notes, are present in the exported search list', () => {
-  const html = readFileSync(join(process.cwd(), 'out/notes/index.html'), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  const resultStart = html.indexOf('id="note-browser-results"');
-  assert.ok(resultStart >= 0, 'Missing note result container');
-  const results = html.slice(resultStart);
-  for (const filename of readdirSync(join(process.cwd(), 'content/notes')).filter((name) => name.endsWith('.md'))) {
-    const { data } = matter(readFileSync(join(process.cwd(), 'content/notes', filename), 'utf8'));
-    const slug = data.slug ?? filename.replace(/\.md$/, '');
-    assert.ok(results.includes(`/notes/${slug}/"`), `Missing searchable note: ${slug}`);
-  }
-});
-
-test('unpublished contact destinations remain explicit non-links', () => {
-  const html = readFileSync(join(process.cwd(), 'out/archive/index.html'), 'utf8')
-    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
-  const footer = html.match(/<footer\b[^>]*class="site-footer"[^>]*>([\s\S]*?)<\/footer>/)?.[1];
-  assert.ok(footer, 'Missing site footer');
-  assert.ok(footer.includes('当前没有公开的社交账号或联系邮箱'), 'Missing public contact boundary');
-  assert.ok(footer.includes('联系地址尚未公开'), 'Email placeholder is not explicit');
-  assert.equal((footer.match(/<a\b/g) ?? []).length, 1, 'Unpublished destinations must not become links');
-  assert.ok(footer.includes('Back to top'), 'Footer navigation link is missing');
 });
 
 test('tool work scenes link each real desk to its method note', () => {
@@ -875,7 +508,7 @@ test('review pace mix comparison changes only the risk share and keeps target ev
   const page = readFileSync(join(process.cwd(), 'out/tools/review-pace/index.html'), 'utf8');
   assert.match(page, /试标比例/);
   assert.match(page, /正式批次/);
-  assert.match(page, /没有记录时，不生成虚构的批次对照/);
+  assert.match(page, /没有记录时，不生成示例批次对照/);
 });
 
 test('risk routing note and calculator link to each other', () => {
@@ -883,4 +516,68 @@ test('risk routing note and calculator link to each other', () => {
   const toolLinks = anchors('tools/review-pace/index.html');
   assert.ok(noteLinks.includes('/tools/review-pace/'));
   assert.ok(toolLinks.includes('/notes/dataset-release-gates/'));
+});
+
+// —— 作品集信息架构 ——
+const page = (file) => readFileSync(join(process.cwd(), 'out', file), 'utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '');
+const internalPaths = (file) => anchors(file).map((href) => routeWithoutBase(href)).filter((href) => href.startsWith('/')).map((href) => href.split('#')[0].split('?')[0]);
+
+test('primary navigation has at most five items and the archive lives in the footer', () => {
+  const home = page('index.html');
+  const nav = home.match(/<nav class="desktop-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1] ?? '';
+  const labels = [...nav.matchAll(/<a\b[^>]*>([^<]+)<\/a>/g)].map((match) => match[1]);
+  assert.deepEqual(labels, ['评测案例', '方法', '项目经历', '创作实践', '关于与联系']);
+  const footer = home.match(/<footer[\s\S]*<\/footer>/)?.[0] ?? '';
+  assert.match(footer, />归档<\/a>/);
+});
+
+test('homepage leads to cases, method, projects, practice and contact', () => {
+  const paths = internalPaths('index.html');
+  for (const route of ['/cases/', '/cases/video-model-comparison/', '/method/', '/projects/', '/stories/', '/about/']) {
+    assert.ok(paths.includes(route), `Homepage does not link to ${route}`);
+  }
+  const home = page('index.html');
+  assert.match(home, /我关注多模态生成的视觉质量/);
+  assert.match(home, /下载简历/);
+});
+
+test('method page lists the six core method notes and the aesthetic case', () => {
+  const paths = internalPaths('method/index.html');
+  for (const slug of ['ai-video-evaluation', 'video-evaluation-eight-dimensions', 'video-failure-cases', 'bad-case-review-loop', 'dataset-release-gates', 'causal-motion-five-point-ledger']) {
+    assert.ok(paths.includes(`/notes/${slug}/`), `Method page is missing ${slug}`);
+  }
+  assert.match(page('method/index.html'), /id="aesthetic"/);
+});
+
+test('video case page has task card, contract, score table, bad cases and scoped conclusion', () => {
+  const html = page('cases/video-model-comparison/index.html');
+  for (const text of ['任务卡', '验收合同', '同步播放', '八维评分', '严重度结论', 'Bad Case', '结论仅限本测试集']) assert.ok(html.includes(text), `Missing: ${text}`);
+});
+
+test('every exported page resolves its internal links', () => {
+  const files = [];
+  const walk = (directory) => {
+    for (const entry of readdirSync(join(process.cwd(), 'out', directory), { withFileTypes: true })) {
+      const path = directory ? `${directory}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) { if (entry.name !== '_next') walk(path); } else if (entry.name === 'index.html') files.push(path);
+    }
+  };
+  walk('');
+  const exists = (route) => {
+    try { readFileSync(join(process.cwd(), 'out', route.endsWith('/') ? `${route}index.html` : route)); return true; } catch { return false; }
+  };
+  for (const file of files) {
+    for (const route of internalPaths(file)) assert.ok(exists(decodeURIComponent(route)), `${file} links to a missing target: ${route}`);
+  }
+});
+
+test('archived method demonstrations carry exactly one plain disclosure line', () => {
+  for (const note of getAllNotes().filter((item) => item.synthetic)) {
+    const html = page(`notes/${note.slug}/index.html`);
+    assert.equal(html.split('方法演示，非真实项目数据').length - 1, 1, `${note.slug} should disclose once`);
+  }
+});
+
+test('the old homepage copy redirects to the new homepage', () => {
+  assert.match(page('archive/index.html'), /http-equiv="refresh"/i);
 });

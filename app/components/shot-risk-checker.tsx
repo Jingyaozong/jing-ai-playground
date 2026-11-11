@@ -168,7 +168,7 @@ export function ShotRiskChecker() {
     <section className="risk-workbench" aria-label="AI 视频镜头风险预检器">
       <div className="risk-form-panel">
         <div className="risk-form-heading">
-          <div><span className="mono">01 / SHOT CONDITIONS</span><h2>这一镜，<br />到底要做几件事？</h2></div>
+          <div><span className="mono">01</span><h2>这一镜，<br />到底要做几件事？</h2></div>
           <div><button type="button" onClick={() => setState(exampleState)}>载入示例</button><button type="button" onClick={() => setState(emptyState)}>清空</button></div>
         </div>
 

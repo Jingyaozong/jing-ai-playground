@@ -9,33 +9,9 @@ cover: "tips-yellow"
 featured: true
 tags: ["AI VIDEO", "SCENE", "CONTINUITY", "REFERENCES"]
 readingTime: "16 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Environment Plates / Adobe Continuity / Premiere Color Match"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/26871350018835-How-to-create-longer-videos-and-films"
-sourceNote: "参考图、环境 Plate、构图标注与颜色比较能力依据 Runway、Adobe 和 Google Cloud 官方资料核对；六层场景账本、场景状态表与四镜最小测试是本站的编辑整理，不代表参考图可以自动锁定空间。"
 relatedNotes: ["ai-video-shot-continuity", "ai-video-character-consistency", "camera-movement-guide"]
-connections:
-  - label: "PROMPT"
-    title: "场景锚点制作卡"
-    description: "逐项填写空间关系、固定物件和可变化状态，再交给单镜任务使用。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-scene-anchor-brief"
-    tone: "sky"
-  - label: "TOOL"
-    title: "场景锚点卡生成器"
-    description: "把空间结构、固定家具、道具状态、材质、光线和天气整理成场景母版与单镜接口。"
-    href: "/tools/scene-anchor/"
-    tone: "coral"
-  - label: "TOOL"
-    title: "角色锚点卡生成器"
-    description: "把人物身份与场景身份分开整理，避免一张参考图同时承担所有一致性任务。"
-    href: "/tools/character-anchor/"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "分镜整理器"
-    description: "为每个镜头补上地点、道具状态、光线方向和允许变化，再进入生成。"
-    href: "/tools/shot-list-cleaner/"
-    tone: "mint"
 ---
 
 同一个房间在 AI 视频里可能有很多种“换房间”的方式：窗户从左墙跑到右墙，床忽然换了方向，桌上多出一盏灯，门后出现新的走廊，木地板变成水泥，雨夜的蓝光下一镜又变成午后暖阳。

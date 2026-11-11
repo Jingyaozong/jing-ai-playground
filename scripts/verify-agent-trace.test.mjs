@@ -13,13 +13,13 @@ test('worked acceptance example preserves synthetic scope and unresolved evidenc
   const example = readFileSync(new URL('../public/downloads/office-agent-acceptance-example-v1.0.md', import.meta.url), 'utf8');
   const trace = tracePractices.find((p) => p.trace.caseId === 'PRACTICE-DATA-001').trace;
   assert.equal(trace.steps.find((s) => s.id === 'D3').status, 'ok');
-  for (const required of [trace.caseId, 'AC-01', 'AC-02', 'AC-03', 'D3 calculate_metrics', '待荆确认', '未执行', '无法判断', '实际模型运行数：0', '成功率：不计算', '不是可导入的 JSON']) assert.ok(example.includes(required), required);
+  for (const required of [trace.caseId, 'AC-01', 'AC-02', 'AC-03', 'D3 calculate_metrics', '未执行', '无法判断', '实际模型运行数：0', '成功率：不计算', '不是可导入的 JSON']) assert.ok(example.includes(required), required);
   assert.equal((example.match(/^## [A-E]\./gm) ?? []).length, 5);
 });
 
 test('acceptance template remains blank, traceable and explicit about tool boundaries', () => {
   const template = readFileSync(new URL('../public/downloads/office-agent-acceptance-v1.0.md', import.meta.url), 'utf8');
-  for (const required of ['待荆确认', 'Case ID', 'Run ID', 'AC-01', '无法判断', '不适用', '待最终复核', '不能直接作为轨迹 JSON 导入', '不覆盖原记录']) assert.ok(template.includes(required), required);
+  for (const required of ['Case ID', 'Run ID', 'AC-01', '无法判断', '不适用', '待最终复核', '不能直接作为轨迹 JSON 导入', '不覆盖原记录']) assert.ok(template.includes(required), required);
   assert.equal((template.match(/^## [A-E]\./gm) ?? []).length, 5);
   assert.ok(template.includes('- [ ]'));
   assert.doesNotMatch(template, /^- \[[xX]\]/m);
@@ -54,7 +54,7 @@ test('synthetic trace remains explicit and never auto-selects the first error as
   assert.equal(review.localization, 'pending');
   assert.equal(review.firstDeviationId, '');
   assert.ok(review.checks.every((check) => check.result === 'pending' && !check.evidence));
-  assert.match(traceReport(trace, review), /独立虚构演练/);
+  assert.match(traceReport(trace, review), /示例演练/);
   assert.match(traceReport(trace, review), /待最终确认/);
 });
 

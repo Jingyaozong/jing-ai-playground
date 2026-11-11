@@ -26,8 +26,8 @@ async function main() {
   if (selection && command !== 'draft') throw new Error('选择参数仅用于 briefing:draft');
   if (command === 'sources') { console.log(sourceReport()); return; }
   if (command === 'demo') {
-    const candidates = [{ id: 'demo-only', source: '离线虚构来源', url: 'https://example.com/demo-only', publishedAt: `${day}T00:00:00.000Z`, title: '虚构工具样例', excerpt: '仅测试排版和流程。' }];
-    const items = validateDraft({ items: [{ sourceId: 'demo-only', title: '离线样例：镜头整理工具更新', summary: '这是人为编写的虚构输入，仅用于验证待审稿模板，不对应真实新闻。', relevance: '编辑推测：这类更新可能帮助整理镜头；本例不构成工具推荐。', uncertainty: '没有真实产品、评测或事件，不能发布为新闻。' }] }, candidates);
+    const candidates = [{ id: 'demo-only', source: '离线示例来源', url: 'https://example.com/demo-only', publishedAt: `${day}T00:00:00.000Z`, title: '示例工具', excerpt: '仅测试排版和流程。' }];
+    const items = validateDraft({ items: [{ sourceId: 'demo-only', title: '离线样例：镜头整理工具更新', summary: '这是人为编写的示例输入，仅用于验证待审稿模板，不对应真实新闻。', relevance: '编辑推测：这类更新可能帮助整理镜头；本例不构成工具推荐。', uncertainty: '没有真实产品、评测或事件，不能发布为新闻。' }] }, candidates);
     await save(items, null, true);
     return;
   }

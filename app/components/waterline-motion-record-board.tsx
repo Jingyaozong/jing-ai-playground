@@ -220,15 +220,15 @@ export function WaterlineMotionRecordBoard() {
   return (
     <section className="experiment-record-board waterline-motion-record-board" id="record-desk" aria-label="九格撑伞退水实验记录台">
       <div className="experiment-record-top">
-        <div><p className="eyebrow mono">04 / Record desk</p><h2><span>从一帧开始，</span><span>把观察留下来。</span></h2></div>
+        <div><h2><span>从一帧开始，</span><span>把观察留下来。</span></h2></div>
         <div className="experiment-record-intro"><p>每格对应一种提示结构和一个固定动作任务。评分、帧号与备注只保存在当前浏览器，不上传视频、人物或故事素材。</p><LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">
         <article><span className="mono">REVIEWED</span><strong>{completed}<i>/9</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
         <article><span className="mono">VIDEO</span><strong>{generated}<i>/9</i></strong><p>本机标记为有视频</p></article>
-        <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
-        <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
+        <article><span className="mono">平均分</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
+        <article><span className="mono">已标记</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
       <LocalRecordBoundary loaded={loaded} markedCount={generated} />
@@ -258,7 +258,7 @@ export function WaterlineMotionRecordBoard() {
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>伞锁定帧与水首动帧分开记录。</strong><p>复制 Markdown 时保留九格编号、五点真实帧号、四项评分和失败标签；空白格仍标为“待执行 · 无视频”，不会被包装成实验结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制撑伞退水实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">本地导出</span><strong>伞锁定帧与水首动帧分开记录。</strong><p>复制 Markdown 时保留九格编号、五点真实帧号、四项评分和失败标签；空白格仍标为“待执行 · 无视频”，不会被包装成实验结果。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制撑伞退水实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

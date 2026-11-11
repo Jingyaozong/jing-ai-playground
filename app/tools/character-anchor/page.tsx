@@ -1,23 +1,24 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../../lib/seo';
 import Link from 'next/link';
 import { CharacterAnchorBuilder } from '../../components/character-anchor-builder';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 
-export const metadata: Metadata = {
-  title: '角色锚点卡生成器 — JING AI PLAYGROUND',
+export const metadata: Metadata = pageMeta({ og: 'tool-character-anchor', robots: { index: false, follow: true },
+  title: '角色锚点卡生成器',
   description: '把人物外貌、配饰、服装和允许变化整理成角色参考卡、图像锚点与视频验收清单。',
-};
+});
 
 export default function CharacterAnchorPage() {
   return (
     <main>
       <SiteHeader active="Tools" />
       <header className="tool-detail-hero anchor-detail-hero">
-        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link><span>JING TOOL / 004</span></div>
+        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link></div>
         <div className="tool-detail-title">
           <div>
-            <p className="eyebrow mono">Character anchor / 角色锚点</p>
+            
             <h1>先认出她，<br /><em>再让她动起来。</em></h1>
           </div>
           <p>把人物身份拆成看得见、能核对的细节，再分别生成参考卡、图像锚点和视频验收清单。</p>

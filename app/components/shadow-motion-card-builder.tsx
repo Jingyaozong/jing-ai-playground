@@ -173,7 +173,7 @@ export function ShadowMotionCardBuilder() {
     <section className="shadow-card-workbench" aria-label="影子动作拆分卡生成器">
       <div className="shadow-card-editor">
         <div className="shadow-card-heading">
-          <div><span className="mono">01 / SEPARATE THE CLOCKS</span><h2>先分开谁不动，<br />再写谁在动。</h2></div>
+          <div><span className="mono">01</span><h2>先分开谁不动，<br />再写谁在动。</h2></div>
           <div><button type="button" onClick={() => updateAll(setValues, exampleValues)}>载入示例</button><button type="button" onClick={() => updateAll(setValues, emptyValues)}>清空</button></div>
         </div>
 
@@ -194,7 +194,7 @@ export function ShadowMotionCardBuilder() {
           <ShadowField label="光线规则" note="来源、方向、长度、软硬与色温" value={values.lightRule} placeholder="例如：左前方同一盏硬光，全程不变" onChange={(value) => update('lightRule', value)} />
           <ShadowField label="摄影机规则" note="优先固定机位与连续镜头" value={values.cameraRule} placeholder="例如：固定中景，不推拉、不切镜" onChange={(value) => update('cameraRule', value)} />
           <ShadowField label="排除项" note="只写能从画面核对的失败" value={values.negative} placeholder="例如：实体抬臂、多个影子、灯位翻转" onChange={(value) => update('negative', value)} />
-          <label className="shadow-duration-field"><span><strong>镜头时长</strong><small>同一实验组保持一致</small></span><div><input type="number" min="2" max="20" value={values.duration} onChange={(event) => update('duration', Math.max(2, Math.min(20, Number(event.target.value) || 2)))} /><b className="mono">SEC</b></div></label>
+          <label className="shadow-duration-field"><span><strong>镜头时长</strong><small>同一实验组保持一致</small></span><div><input type="number" min="2" max="20" value={values.duration} onChange={(event) => update('duration', Math.max(2, Math.min(20, Number(event.target.value) || 2)))} /><b className="mono">秒</b></div></label>
         </section>
 
         <section className="shadow-card-timeline-editor">
@@ -221,9 +221,9 @@ export function ShadowMotionCardBuilder() {
         </div>
         <h2>{values.shotName.trim() || '未命名影子动作'}</h2>
         <div className="shadow-clock-tracks">
-          <div className="shadow-track-label"><span className="mono">BODY</span><p>{clean(values.bodyLock, '等待实体锁定')}</p></div>
+          <div className="shadow-track-label"><span className="mono">身体</span><p>{clean(values.bodyLock, '等待实体锁定')}</p></div>
           <div className="shadow-track-line shadow-track-body">{values.timeline.map((point) => <span key={point.time}><i /><small>{point.time}</small><b>{clean(point.body, '—')}</b></span>)}</div>
-          <div className="shadow-track-label"><span className="mono">SHADOW</span><p>{clean(values.shadowAction, '等待影子动作')}</p></div>
+          <div className="shadow-track-label"><span className="mono">影子</span><p>{clean(values.shadowAction, '等待影子动作')}</p></div>
           <div className="shadow-track-line shadow-track-shadow">{values.timeline.map((point) => <span key={point.time}><i /><small>{point.time}</small><b>{clean(point.shadow, '—')}</b></span>)}</div>
         </div>
         <p>{completed < 5 ? '继续补齐光线、接触和摄影机规则，双时间线才具备可核对条件。' : '控制卡已具备试跑条件；真实输出仍需在五个时间点逐帧记录。'}</p>
@@ -231,7 +231,7 @@ export function ShadowMotionCardBuilder() {
       </aside>
 
       <section className="shadow-card-outputs">
-        <div className="shadow-output-heading"><div><span className="mono">02 / COPY THE TEST FILES</span><h2>一张拆分卡，<br />对应三份工作文件。</h2></div><p>Prompt 负责单镜控制，九格负责比较写法，五点表负责记录真实输出。三份文件互相对照，不把提示词当作实验结论。</p></div>
+        <div className="shadow-output-heading"><div><span className="mono">02</span><h2>一张拆分卡，<br />对应三份工作文件。</h2></div><p>Prompt 负责单镜控制，九格负责比较写法，五点表负责记录真实输出。三份文件互相对照，不把提示词当作实验结论。</p></div>
         <div className="shadow-output-grid">
           <OutputCard label="A / PROMPT" title="双时间线提示块" outputKey="prompt" text={outputs.prompt} copied={copied} onCopy={copyOutput} />
           <OutputCard label="B / 3 × 3" title="九格变量矩阵" outputKey="matrix" text={outputs.matrix} copied={copied} onCopy={copyOutput} />
@@ -239,7 +239,7 @@ export function ShadowMotionCardBuilder() {
         </div>
       </section>
 
-      {manualCopy && <aside className="shadow-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制影子动作拆分卡内容" onFocus={(event) => event.currentTarget.select()} /></aside>}
+      {manualCopy && <aside className="shadow-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制影子动作拆分卡内容" onFocus={(event) => event.currentTarget.select()} /></aside>}
     </section>
   );
 }

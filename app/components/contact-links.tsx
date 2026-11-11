@@ -1,0 +1,30 @@
+import { isPlaceholder, profile } from '../data/profile';
+
+// 占位符未填写时渲染为不可点击的文字，避免产生死链。
+export function ResumeButton({ className = 'pf-button' }: { className?: string }) {
+  if (isPlaceholder(profile.resumeHref)) {
+    return <span className={`${className} is-pending`}>下载简历 {profile.resumeHref}</span>;
+  }
+  return <a className={className} href={profile.resumeHref} download>下载简历</a>;
+}
+
+export function ContactList() {
+  return (
+    <ul className="pf-contact-list">
+      <li>
+        <span>邮箱</span>
+        {isPlaceholder(profile.email) ? <b>{profile.email}</b> : <a href={`mailto:${profile.email}`}>{profile.email}</a>}
+      </li>
+      {profile.links.map((link) => (
+        <li key={link.label}>
+          <span>平台</span>
+          {isPlaceholder(link.href) ? <b>{link.label}</b> : <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>}
+        </li>
+      ))}
+      <li>
+        <span>简历</span>
+        <ResumeButton className="pf-text-link" />
+      </li>
+    </ul>
+  );
+}

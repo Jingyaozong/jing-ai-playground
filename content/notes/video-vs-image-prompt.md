@@ -9,28 +9,9 @@ cover: "tips-coral"
 featured: false
 tags: ["AI VIDEO", "PROMPT", "TEXT TO VIDEO", "IMAGE TO VIDEO"]
 readingTime: "14 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway / Adobe Firefly / Google Veo 官方提示指南"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide"
-sourceNote: "事实部分依据官方产品指南核对；两套模板是本站的跨模型编辑起点，不代表所有模型共享同一语法，也不包含尚未执行的生成结果。"
 relatedNotes: ["ninety-second-storyboard", "camera-movement-guide", "ai-video-evaluation"]
-connections:
-  - label: "STORY"
-    title: "她每天醒来都会忘记昨天"
-    description: "把同一人物的十四个镜头 Prompt 带进实际故事制作包，逐镜替换待测试内容。"
-    href: "/stories/she-forgets-yesterday/#generation-pack"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "分镜整理器"
-    description: "生成前先把景别、主体动作、运镜、对白和声音拆成一张可检查的镜头表。"
-    href: "/tools/shot-list-cleaner/"
-    tone: "mint"
-  - label: "METHOD"
-    title: "AI 视频到底应该怎么评？"
-    description: "Prompt 写完不是终点；用任务、连续性、物理和用途四层检查生成结果。"
-    href: "/notes/ai-video-evaluation/"
-    tone: "blue"
 ---
 
 文生视频和图生视频的差别，不是谁的 Prompt 更长，而是：**初始画面由谁负责，时间里的变化又由谁负责。**
@@ -67,7 +48,7 @@ Runway 的官方入门指南直接区分了两种输入：图生视频的 Prompt
 [画面风格、动作速度与需要保持的状态]
 ```
 
-下面用本站故事中的一个镜头做**待测试示例**，它不是已经生成成功的记录：
+下面用我的短片中的一个镜头做**待测试示例**，它不是已经生成成功的记录：
 
 ```prompt
 清晨室内中近景，摄影机固定。
@@ -188,7 +169,7 @@ Runway 和 Adobe 都建议从较简单的 Prompt 开始，再逐步添加细节�
 写完以后，可以先用[分镜整理器](/tools/shot-list-cleaner/)拆出景别、动作和运镜，再把镜头放进[十四镜故事生成包](/stories/she-forgets-yesterday/#generation-pack)逐条测试。结果回来后，再用[AI 视频评测流程](/notes/ai-video-evaluation/)记录任务完成度、连续性、物理问题和实际用途。
 
 > [!JING'S NOTE]
-> 待荆确认：Prompt 不是文学描写，也不是越长越专业。它更像一份微型拍摄指令——先决定谁负责画面，再决定这一秒以后发生什么。
+> Prompt 不是文学描写，也不是越长越专业。它更像一份微型拍摄指令——先决定谁负责画面，再决定这一秒以后发生什么。
 
 ## 参考来源
 
@@ -197,5 +178,3 @@ Runway 和 Adobe 都建议从较简单的 Prompt 开始，再逐步添加细节�
 - [Runway：Gen-4 Video Prompting Guide](https://help.runwayml.com/hc/en-us/articles/39789879462419-Gen-4-Video-Prompting-Guide)
 - [Adobe Firefly：Writing effective text prompts for video generation](https://helpx.adobe.com/firefly/web/work-with-audio-and-video/work-with-video/writing-effective-text-prompts-for-video-generation.html)
 - [Google Cloud：Veo 视频生成提示指南](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/video-gen-prompt-guide?hl=zh-CN)
-
-本文是 **资料文章**：来源事实已经核对，两套模板和制作流程是本站的编辑转译。文中的示例均标记为待测试，不冒充真实生成结果，也不代表荆已经确认的个人经验。

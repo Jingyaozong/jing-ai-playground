@@ -11,7 +11,7 @@
 
 ## 使用
 
-1. `npm run briefing:demo`：离线生成明确标注为虚构样例的 Markdown 审阅稿，无网络、无 API 费用。
+1. `npm run briefing:demo`：离线生成明确标注为示例的 Markdown 审阅稿，无网络、无 API 费用。
 2. `npm run briefing:collect`：读取白名单官方 RSS，收集近七日候选。同步保存同名 JSON 和可阅读的 Markdown 清单，终端提供路径。清单含来源摘要、日期、原文链接和核对勾选框；无模型费用，不是全文核实。文件只在私有工作目录，不进入公开网页。清单勾选仅供人工阅读，不会触发批准、发布或影响 draft 的选稿。
 3. 在本地 `.env.local` 设置 `DEEPSEEK_API_KEY`（不要提交、截图或粘贴到聊天）。
 4. `npm run briefing:draft`：重新读取来源，调用一次 DeepSeek Flash，输出最多五条待审内容。终端打印稿件路径，可用 Markdown 预览打开。
@@ -33,7 +33,7 @@
 - AI前线：[InfoQ 官方文章](https://www.infoq.cn/article/2017/09/all-around-ai) 确认公众号名称；2026-09-23 另发现 BestBlogs 的第三方 Wechat2RSS 订阅源，已进入私有元数据来源看板，未进入普通 collect/draft 或 DeepSeek 草稿。
 - 机器之心：[官网](https://www.jiqizhixin.com/) 本次可访问，首页未发现声明的 RSS；2026-09-23 发现 BestBlogs 第三方 Wechat2RSS 订阅源，仅用于私有元数据核验，未核实微信官方身份或进入模型。
 - 极客公园：[官网介绍](https://about.geekpark.net/) 有公众号入口；此前官网请求返回 403，未绕过。2026-09-23 发现 BestBlogs 第三方 Wechat2RSS 订阅源，仅用于私有元数据核验，未核实微信官方身份或进入模型。
-- 数字生命卡兹克：2026-09-23 验证到本人运营的 [AIHOT](https://aihot.news/about) 可发现公众号原文链接；另在 [BestBlogs 公开 OPML](https://github.com/ginobefun/BestBlogs/blob/main/opml/bestblogs_wechat2rss_opml_all.opml) 发现该账号的第三方 Wechat2RSS 正文订阅源。`briefing:wechat:check/draft` 只在私有本地使用后者，DeepSeek 只能生成标注“第三方副本、待核对”的编辑候选，不是微信官方全文接口、授权转载或已核实的原文。
+- 数字生命卡兹克：2026-09-23 验证到本人运营的 [AIHOT](https://aihot.news/about) 可发现公众号原文链接；另在 [BestBlogs 公开 OPML](https://github.com/ginobefun/BestBlogs/blob/main/opml/bestblogs_wechat2rss_opml_all.opml) 发现该账号的第三方 Wechat2RSS 正文订阅源。`briefing:wechat:check/draft` 只在私有本地使用后者，DeepSeek 只能生成标注“第三方副本、待核对”的草稿，不是微信官方全文接口、授权转载或已核实的原文。
 - Founder Park：尚未验证到可直接接入的官方自动订阅入口，待接通。
 
 待接通名单不会被普通 collect/draft 请求。`briefing:watch` 只发现卡兹克公众号链接，不读取微信正文，也不保证 AIHOT 收录该账号全部文章。AIHOT 条目标题和摘要是聚合方加工信息，不能冒充公众号原文；重要事实要回原文核实。其[公开使用规则](https://aihot.news/terms)区分个人非商业使用与公开镜像、商业再分发，后者需要授权，所以清单仅留在本地私有目录。语鲸的可读摘要同样不等于原文或获授权的自动导出接口；本轮不接入其内部接口。

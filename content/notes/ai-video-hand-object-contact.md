@@ -9,33 +9,9 @@ cover: "tips-coral"
 featured: true
 tags: ["AI VIDEO", "HAND", "OBJECT", "PHYSICS"]
 readingTime: "16 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Image to Video / Google Veo Prompt Guide / T2V-CompBench / TASTE-Rob / PhyGenBench"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide"
-sourceNote: "产品提示方式依据 Runway 与 Google Cloud 官方文档；动作绑定、物体互动、抓握姿态和物理可信度的研究背景依据 CVPR 论文与官方项目。五状态接触账本、失败标签和九格测试是本站编辑方法，不代表任何消费级模型已经通过测试。"
 relatedNotes: ["first-last-frame-motion-prompt", "video-failure-cases", "ai-video-shot-continuity"]
-connections:
-  - label: "TOOL"
-    title: "接触动作拆分卡"
-    description: "填写手、道具、接触点和承重点，生成五阶段 Prompt、九格矩阵与验收表。"
-    href: "/tools/contact-action-card/"
-    tone: "coral"
-  - label: "EXPERIMENT"
-    title: "一只手能否稳定拿起同一个杯子？"
-    description: "九格空白协议比较普通动作句、五状态顺序与端点证据，等待真实输出。"
-    href: "/experiments/can-one-hand-lift-the-same-cup/"
-    tone: "yellow"
-  - label: "STORY"
-    title: "她碰过的东西，会记住最后一句话"
-    description: "把白杯接触链写进一部 60 秒魔幻现实故事，关键帧与视频仍待制作。"
-    href: "/stories/objects-remember-the-last-sentence/"
-    tone: "blue"
-  - label: "TOOL"
-    title: "AI 视频镜头风险预检器"
-    description: "先检查动作数量、时长和首尾差异，决定一镜完成还是拆成两镜。"
-    href: "/tools/shot-risk-checker/"
-    tone: "mint"
 ---
 
 她把手伸向桌上的杯子，握住杯柄，拿起来喝一口，再把杯子放回原位。
@@ -256,5 +232,3 @@ The mug keeps the same shape and orientation. Her hand and the mug stop together
 - [T2V-CompBench：动作绑定与物体互动评测（CVPR 2025）](https://openaccess.thecvf.com/content/CVPR2025/html/Sun_T2V-CompBench_A_Comprehensive_Benchmark_for_Compositional_Text-to-video_Generation_CVPR_2025_paper.html)
 - [TASTE-Rob：面向任务的手物互动视频生成（CVPR 2025）](https://openaccess.thecvf.com/content/CVPR2025/html/Zhao_TASTE-Rob_Advancing_Video_Generation_of_Task-Oriented_Hand-Object_Interaction_for_Generalizable_CVPR_2025_paper.html)
 - [PhyGenBench：视频生成物理常识评测](https://phygenbench123.github.io/)
-
-本文是**资料方法文章**。文中的拆分、模板、标签和测试矩阵是待真实执行的制作方法，不是某个模型的实测结论。

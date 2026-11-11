@@ -26,7 +26,7 @@ export function exportReviewText(batch: ReviewBatch, row: ReviewRow): string {
   return [
     '规则答疑 · 单题人工记录',
     '状态：由填写者记录；工具未调用模型，也未验证答案或引用。',
-    '来源：内置题目为独立虚构演练；导入题目的来源与授权须自行核对。',
+    '来源：内置题目为示例演练；导入题目的来源与授权须自行核对。',
     field('批次名称', batch.runId), field('规则版本', batch.ruleVersion),
     field('待测系统或版本', batch.systemVersion), field('执行时间', batch.testedAt),
     field('题目 ID', row.id), field('题目类型', row.type), field('当前问题', row.question),

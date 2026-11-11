@@ -20,7 +20,7 @@
     "verify:briefing": "node --test scripts/briefing/pipeline.test.mjs scripts/briefing/aihot-watch.test.mjs scripts/briefing/wechat-feed.test.mjs scripts/briefing/wechat-check.test.mjs scripts/briefing/wechat-crosscheck.test.mjs scripts/briefing/wechat-source-audit.test.mjs scripts/briefing/run-guard.test.mjs scripts/briefing/selection.test.mjs scripts/briefing/review-page.test.mjs scripts/briefing/review-client.test.mjs scripts/briefing/draft-records.test.mjs scripts/briefing/draft-page.test.mjs scripts/briefing/remark-client.test.mjs",
     "verify:briefing-export": "node --test scripts/briefing/export.test.mjs",
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node scripts/flatten-prefetch.mjs",
     "verify:content": "node --experimental-strip-types scripts/verify-content-integrity.mjs",
     "verify:practice-pack": "node scripts/verify-rule-knowledge-pack.mjs",
     "verify:rule-review": "node --experimental-strip-types --test scripts/verify-rule-review.test.mjs",
@@ -36,11 +36,11 @@
     "verify:release": "npm run lint && npm run typecheck && npm run verify:content && npm run verify:practice-pack && npm run verify:rule-review && npm run verify:multimodal-evaluation && npm run verify:agent-trace && npm run verify:dataset-release && npm run verify:prompt-preflight && npm run verify:experiment-export && npm run build && npm run verify:pages && npm run verify:navigation && npm run verify:briefing && npm run verify:briefing-export && npm run verify:pages:repository",
     "verify:upload": "npm run verify:release && npm run verify:upload-readiness",
     "typecheck": "tsc --noEmit --incremental false",
-    "lint": "eslint . --ignore-pattern out --ignore-pattern .next"
+    "lint": "eslint . --ignore-pattern out --ignore-pattern .next",
+    "og": "node --experimental-strip-types scripts/generate-og.mjs",
+    "acceptance": "node scripts/acceptance-report.mjs"
   },
   "dependencies": {
-    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
-    "@fontsource/ibm-plex-mono": "^5.3.0",
     "@fontsource/manrope": "^5.3.0",
     "gray-matter": "^4.0.3",
     "next": "16.2.6",

@@ -9,28 +9,9 @@ cover: "tips-mint"
 featured: true
 tags: ["AI VIDEO", "LIGHTING", "CONTINUITY", "COLOR"]
 readingTime: "16 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Image to Video / Google Veo Prompt Guide / Adobe Premiere Color Match"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide"
-sourceNote: "源图承担光线与风格起点、视频 Prompt 可描述光线、Premiere 比较视图与示波器的用途依据 Runway、Google Cloud、Adobe 和 ARRI 当前官方资料核对；五层光线账本、四镜最小测试和失败标签是本站编辑整理，不包含真实模型输出或模型能力结论。"
 relatedNotes: ["ai-video-scene-consistency", "ai-video-shot-continuity", "first-last-frame-motion-prompt"]
-connections:
-  - label: "TOOL"
-    title: "场景锚点卡生成器"
-    description: "把真实光源位置、方向、软硬、色温和天气写进场景母版与单镜接口。"
-    href: "/tools/scene-anchor/"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "相邻镜头连续性检查器"
-    description: "把镜头 A 的离开状态和镜头 B 的进入状态并排检查，包括光线与场景事实。"
-    href: "/tools/continuity-checker/"
-    tone: "coral"
-  - label: "STORY"
-    title: "七码头没有船"
-    description: "用明亮蓝雾、暖黄值班室和珊瑚围巾测试夜景换机位后的光线关系。"
-    href: "/stories/no-boat-at-pier-seven/"
-    tone: "mint"
 ---
 
 镜头 A 里，窗光从人物左后方进入，脸的左侧有一道冷色轮廓；镜头 B 换成反打，窗户还在同一面墙，脸却突然从另一侧被照亮；镜头 C 只切了一个手部特写，桌面灯又从暖黄变成惨白。

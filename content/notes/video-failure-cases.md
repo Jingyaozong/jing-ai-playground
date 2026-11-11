@@ -9,33 +9,9 @@ cover: "eval-sky"
 featured: false
 tags: ["AI VIDEO", "EVALUATION", "BAD CASE", "TROUBLESHOOTING"]
 readingTime: "18 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "VBench / VBench 2.0 / T2V-CompBench / PhyGenBench"
 sourceUrl: "https://github.com/Vchitect/VBench"
-sourceNote: "失败维度与研究背景依据原始论文和官方项目核对；中文名称、排错顺序和处理建议是本站面向创作者的编辑转译。它们是复测方向，不是未经实验即可确认的因果结论。"
 relatedNotes: ["bad-case-review-loop", "ai-video-evaluation", "video-vs-image-prompt"]
-connections:
-  - label: "PROMPT"
-    title: "失败镜头返修诊断"
-    description: "带着可见证据提出复测假设；没有样本时不填写虚构的失败结论。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-failure-revision"
-    tone: "coral"
-  - label: "METHOD"
-    title: "AI 视频到底应该怎么评？"
-    description: "先建立验收门槛、分层观察和严重度，再使用这本词典给问题命名。"
-    href: "/notes/ai-video-evaluation/"
-    tone: "sky"
-  - label: "EXPERIMENT"
-    title: "同一个她，四十个镜头"
-    description: "在本地记录板中保存真实样本、失败标签、评分和观察原句。"
-    href: "/experiments/forty-shots-one-character/#record-desk"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "分镜整理器"
-    description: "生成前整理核心动作、时长、运镜和声音，让每条失败都有明确的验收参照。"
-    href: "/tools/shot-list-cleaner/"
-    tone: "mint"
 ---
 
 “这条视频崩了”只表达感受，没有告诉我们下一轮该改什么。脸变了、纹理在闪、动作绑错了对象、摄影机没有移动，看起来都可以叫“崩”，但它们属于不同层级，也需要不同的复测方式。
@@ -224,10 +200,10 @@ T2V-CompBench 将属性绑定、动作绑定、空间关系、物体互动和数
 处理结果：保留 / 剪切 / 后期 / 重生成
 ```
 
-本站的[四十镜实验记录板](/experiments/forty-shots-one-character/#record-desk)已经提供模型、文件、四项评分、失败标签和观察备注。开始真实测试后，应保留失败样本，而不是只展示最好看的结果。
+我的[四十镜实验记录板](/experiments/forty-shots-one-character/#record-desk)提供模型、文件、四项评分、失败标签和观察备注。测试时要保留失败样本，而不是只展示最好看的结果。
 
 > [!JING'S NOTE]
-> 待荆确认：坏例库真正积累的不是“AI 又失败了一次”，而是某类任务在什么条件下容易失败，以及我们下一次怎样更快避开它。
+> 坏例库真正积累的不是“AI 又失败了一次”，而是某类任务在什么条件下容易失败，以及我们下一次怎样更快避开它。
 
 ## 参考来源
 
@@ -237,5 +213,3 @@ T2V-CompBench 将属性绑定、动作绑定、空间关系、物体互动和数
 - [VBench 2.0：人体、物理与常识等内在可信度评测](https://arxiv.org/abs/2503.21755)
 - [T2V-CompBench：属性、动作、空间与互动绑定评测（CVPR 2025）](https://openaccess.thecvf.com/content/CVPR2025/html/Sun_T2V-CompBench_A_Comprehensive_Benchmark_for_Compositional_Text-to-video_Generation_CVPR_2025_paper.html)
 - [PhyGenBench：物理常识视频生成评测](https://arxiv.org/abs/2410.05363)
-
-本文是 **资料文章**。失败分类与排错顺序可以直接用于记录；没有经过控制变量复测的“原因”，仍然只是假设。

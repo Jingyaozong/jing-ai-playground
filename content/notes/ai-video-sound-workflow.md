@@ -9,38 +9,9 @@ cover: "tips-blue"
 featured: true
 tags: ["AI VIDEO", "AUDIO", "DIALOGUE", "TOOLS"]
 readingTime: "14 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Google Veo Audio / Adobe Firefly Sound Effects / Runway Act-Two"
 sourceUrl: "https://cloud.google.com/blog/products/ai-machine-learning/ultimate-prompting-guide-for-veo-3-1/"
-sourceNote: "产品能力、输入要求和限制依据 Google Cloud、Adobe 与 Runway 官方文档核对；三条路线的选择方法、声音分层卡与验收表是本站的编辑整理，不代表所有模型共享同一套功能、语法或稳定性。"
 relatedNotes: ["first-last-frame-motion-prompt", "ninety-second-storyboard", "ai-video-evaluation"]
-connections:
-  - label: "PROMPT"
-    title: "单镜声音分层 Brief"
-    description: "按对白、环境、动作音与音乐拆开填写；没有真实声音时只生成计划。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-sound-layer-brief"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "声音分层卡生成器"
-    description: "为单个镜头选择声音路线，生成可复制的声音 Brief、轨道卡和验收清单。"
-    href: "/tools/sound-layer-card/"
-    tone: "sky"
-  - label: "STORY"
-    title: "她碰过的东西，会记住最后一句话"
-    description: "用 60 秒四轨声音时间线，把接触声、物品回声和静默放到准确触发点。"
-    href: "/stories/objects-remember-the-last-sentence/#sound-map"
-    tone: "coral"
-  - label: "TOOL"
-    title: "分镜整理器"
-    description: "把每镜的对白、环境声和音效写回镜头表，和画面、运镜一起检查。"
-    href: "/tools/shot-list-cleaner/"
-    tone: "mint"
-  - label: "NOTE"
-    title: "九十秒故事怎么拆成分镜？"
-    description: "先决定哪些信息必须由对白承担，哪些应该让画面和声音自己说明。"
-    href: "/notes/ninety-second-storyboard/"
-    tone: "yellow"
 ---
 
 AI 视频里的“有声音”，不是一个开关，而是至少五件不同的事：角色说了什么、声音怎样表演、嘴型是否对上、空间里一直有什么声音，以及某个动作发生时响了什么。

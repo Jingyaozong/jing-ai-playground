@@ -9,33 +9,9 @@ cover: "tips-yellow"
 featured: true
 tags: ["AI VIDEO", "PROMPT", "SHOT DESIGN", "WORKFLOW"]
 readingTime: "15 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Image to Video Prompting Guide / Google Cloud Video Generation Prompt Guide"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide"
-sourceNote: "平台提示方式依据 Runway 与 Google Cloud 官方文档核对；九层镜头事实、三份输出和返修流程是本站的编辑制作框架，不代表不同模型共享相同语法，也不代表示例已经通过真实生成。"
 relatedNotes: ["first-last-frame-motion-prompt", "ai-video-generation-version-log", "video-failure-cases"]
-connections:
-  - label: "TOOL"
-    title: "AI 视频 Prompt 组装器"
-    description: "填写九层镜头事实，生成单镜 Prompt、验收清单与返修记录。"
-    href: "/tools/shot-prompt-builder/"
-    tone: "yellow"
-  - label: "PROMPTS"
-    title: "单镜动作指令"
-    description: "直接打开起点、动作顺序、摄影机和结束状态的可复制模板。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-single-shot-motion"
-    tone: "sky"
-  - label: "TOOL"
-    title: "镜头风险预检器"
-    description: "在生成前检查动作数量、时长、运镜和首尾差异是否需要减项。"
-    href: "/tools/shot-risk-checker/"
-    tone: "coral"
-  - label: "TOOL"
-    title: "镜头版本记录器"
-    description: "生成以后记录候选版本、失败时间、保留原因与下一轮变量。"
-    href: "/tools/shot-version-recorder/"
-    tone: "mint"
 ---
 
 很多 AI 视频 Prompt 看起来很完整：人物、场景、风格、镜头、光线、动作、情绪、质量词和一长串禁止项都塞进了同一个段落。真正生成以后，却很难回答一个简单问题：**模型到底漏掉了哪一项？**
@@ -53,7 +29,7 @@ connections:
 
 两份官方文档的写法并不完全相同，也不能互相替代平台说明。但它们支持一个共同的制作原则：**先把想法拆成清楚的视觉组成，再决定哪些信息需要进入这一轮生成。**
 
-本站的九层结构是在这个原则上增加了制作管理需要的起点、终点、保持项和失败边界。它不是某个模型的固定语法，而是一张镜头任务卡。
+我的九层结构是在这个原则上增加了制作管理需要的起点、终点、保持项和失败边界。它不是某个模型的固定语法，而是一张镜头任务卡。
 
 ## 一条镜头，先拆成九层事实
 
@@ -250,5 +226,3 @@ Prompt 不是所有失败的唯一入口。遇到以下情况，继续加词通�
 - [Runway：Introduction to Prompting](https://help.runwayml.com/hc/en-us/articles/46182941379347-Introduction-to-Prompting)
 - [Runway：Gen-4 Video Prompting Guide](https://help.runwayml.com/hc/en-us/articles/39789879462419-Gen-4-Video-Prompting-Guide)
 - [Google Cloud：Video generation prompt guide](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/video-gen-prompt-guide)
-
-本文是**资料方法文章**。九层镜头事实、三份输出和示例均为待实际制作验证的编辑框架，不代表任何模型已经通过测试，也不冒充荆的个人实测结论。

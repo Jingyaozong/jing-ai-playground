@@ -9,28 +9,9 @@ cover: "tips-yellow"
 featured: true
 tags: ["AI VIDEO", "MOTION", "SHADOW", "COMPOSITING"]
 readingTime: "15 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Image to Video / Google Veo Reference Images / Adobe Compositing"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide"
-sourceNote: "输入图、运动提示、顺序提示与减少摄影机运动的说明依据 Runway 当前官方指南；参考图的主体保持能力依据 Google Cloud 当前文档；透明度、遮罩、键控与混合模式依据 Adobe 官方合成说明。双时间线账本、九格测试与失败标签是本站编辑方法，不代表任何模型已经通过测试。"
 relatedNotes: ["first-last-frame-motion-prompt", "ai-video-lighting-continuity", "video-failure-cases"]
-connections:
-  - label: "EXPERIMENT"
-    title: "影子能否在人物静止时独立行动？"
-    description: "三种制作条件、三个固定任务和九个空白测试格，等待真实输出。"
-    href: "/experiments/can-a-shadow-move-on-its-own/"
-    tone: "coral"
-  - label: "STORY"
-    title: "影子比她早到五分钟"
-    description: "把影子提前行动的概念拆成十二镜故事草案与高风险测试镜头。"
-    href: "/stories/shadow-arrives-five-minutes-early/"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "影子动作拆分卡"
-    description: "把实体、影子、光线和摄影机拆成四轨，再生成九格测试与五点验收表。"
-    href: "/tools/shadow-motion-card/"
-    tone: "mint"
 ---
 
 人物站在墙前，双手垂下，摄影机锁定。她不动，墙上的影子却先抬起右手，停顿一秒，再把手放回原位。

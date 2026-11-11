@@ -2,7 +2,7 @@
   "version": 1,
   "kind": "synthetic",
   "caseId": "PRACTICE-FILES-001",
-  "task": "独立虚构：把 inbox 中的 PDF 复制到 archive/pdf，保留原件；同名文件不得覆盖，先生成冲突清单。",
+  "task": "示例：把 inbox 中的 PDF 复制到 archive/pdf，保留原件；同名文件不得覆盖，先生成冲突清单。",
   "acceptance": [
     "inbox 中所有原始文件保持不变。",
     "同名目标不被覆盖，冲突项进入清单。",

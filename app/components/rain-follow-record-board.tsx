@@ -181,15 +181,15 @@ export function RainFollowRecordBoard() {
   return (
     <section className="experiment-record-board rain-record-board" id="record-desk" aria-label="九格局部雨跟随实验记录台">
       <div className="experiment-record-top">
-        <div><p className="eyebrow mono">04 / Record desk</p><h2>九格先空着，<br />只记雨怎么失控。</h2></div>
+        <div><h2>九格先空着，<br />只记雨怎么失控。</h2></div>
         <div className="experiment-record-intro"><p>每格对应一种提示条件和一个固定镜头任务。评分、文件名与备注只保存在当前浏览器，不上传任何素材。</p><LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} /></div>
       </div>
 
       <div className="experiment-record-summary">
-        <article><span className="mono">COMPLETE</span><strong>{completed}<i>/9</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
-        <article><span className="mono">GENERATED</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
-        <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
-        <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
+        <article><span className="mono">已完成</span><strong>{completed}<i>/9</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
+        <article><span className="mono">已生成</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
+        <article><span className="mono">平均分</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
+        <article><span className="mono">已标记</span><strong>{flagged}</strong><p>记录了失败标签</p></article>
       </div>
 
       <LocalRecordBoundary loaded={loaded} markedCount={generated} />
@@ -220,7 +220,7 @@ export function RainFollowRecordBoard() {
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>先分组，再比较；空白不算结果。</strong><p>复制完整 Markdown 时，未执行样本保留为“—”；分组平均只使用实际填写的分数。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制局部雨实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">本地导出</span><strong>先分组，再比较；空白不算结果。</strong><p>复制完整 Markdown 时，未执行样本保留为“—”；分组平均只使用实际填写的分数。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制实验记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 记录 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>清空本地记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制局部雨实验记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

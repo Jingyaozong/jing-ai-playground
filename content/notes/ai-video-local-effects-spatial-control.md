@@ -9,28 +9,9 @@ cover: "tips-blue"
 featured: true
 tags: ["AI VIDEO", "VFX", "SPATIAL", "EVALUATION"]
 readingTime: "15 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Image to Video / Google Veo References / Adobe Firefly Frames"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide"
-sourceNote: "首帧、参考图、运动提示与首尾关键帧的输入职责依据 Runway、Google Cloud 与 Adobe 当前官方资料核对；三层空间账本、九格测试和逐帧验收方法是本站编辑整理，尚未写入真实模型结果，也不代表任何模型能稳定实现局部特效。"
 relatedNotes: ["first-last-frame-motion-prompt", "ai-video-scene-consistency", "video-failure-cases"]
-connections:
-  - label: "EXPERIMENT"
-    title: "局部雨区能否稳定跟随人物？"
-    description: "三种条件 × 三个相同镜头，九格空白记录台；目前 0 / 9，等待真实输出。"
-    href: "/experiments/can-local-rain-follow-a-character/"
-    tone: "coral"
-  - label: "STORY"
-    title: "雨停以前"
-    description: "用同一人物和四张概念关键帧，把局部雨设定拆成可以测试的镜头。"
-    href: "/stories/before-the-rain-ends/"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "局部特效约束卡生成器"
-    description: "把锚点、边界、区外状态和时间规则整理成 Prompt、九格测试与逐帧验收表。"
-    href: "/tools/local-effect-card/"
-    tone: "mint"
 ---
 
 “只让她头顶下雨，街道其他地方保持干燥。”
@@ -131,7 +112,7 @@ stay dry and matte. Only a short trail of wet footprints remains behind her.
 The locked camera stays still for one continuous shot.
 ```
 
-这是一条**待测试的编辑模板**，不是已经验证的万能 Prompt。它把同一个关系拆成：人物运动、雨区尺寸、同步规则、外部状态、允许留下的痕迹和摄影机状态。
+这是一条**待测试的模板**，不是万能 Prompt。它把同一个关系拆成：人物运动、雨区尺寸、同步规则、外部状态、允许留下的痕迹和摄影机状态。
 
 ## 首帧能画出边界，但不能替你写时间规则
 
@@ -161,7 +142,7 @@ The locked camera stays still for one continuous shot.
 
 三个镜头分别测试不同压力：厨房里横向走三步、隧道里持续向前走、近景中收伞。每组都做这三个镜头，共九格。
 
-本站已经为这个问题建立了[“局部雨区能否稳定跟随人物？”实验记录台](/experiments/can-local-rain-follow-a-character/)。目前仍是 **0 / 9**，所有格子等待真实生成结果，没有写入任何模型结论。
+我为这个问题设计了[“局部雨区能否稳定跟随人物？”实验记录台](/experiments/can-local-rain-follow-a-character/)，按九格对照记录结果。
 
 ## 不要只看成片，要逐帧看关系
 

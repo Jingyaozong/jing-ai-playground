@@ -52,7 +52,7 @@ export function blankReleaseRecord(): ReleaseRecord {
 // first QC failure. No file, sample or verification below exists in real life.
 export function paperBoatB02Practice(): ReleaseRecord {
   return {
-    dataset: '纸舟 · 合成客服意图标注（虚构演练）',
+    dataset: '纸舟 · 合成客服意图标注（示例）',
     batch: 'B02 · 首检冻结版（模拟）',
     ruleVersion: 'v0.2（模拟）',
     synthetic: true,
@@ -74,7 +74,7 @@ export function paperBoatB02Practice(): ReleaseRecord {
 // review count, not another random-sample numerator; no final files exist.
 export function paperBoatB02RetestPractice(): ReleaseRecord {
   return {
-    dataset: '纸舟 · 合成客服意图标注（虚构演练）',
+    dataset: '纸舟 · 合成客服意图标注（示例）',
     batch: 'B02 · 返修后重新冻结（模拟）',
     ruleVersion: 'v0.2（模拟）',
     synthetic: true,
@@ -84,7 +84,7 @@ export function paperBoatB02RetestPractice(): ReleaseRecord {
       relations: { status: 'unchecked', evidence: '模拟时点：变更后的对话、证据与标签关联仍需对最终文件核对。' },
       quarantine: { status: 'unchecked', evidence: '模拟时点：隔离与争议样本去向仍需对冻结清单逐项核查。' },
       reconcile: { status: 'unchecked', evidence: '模拟时点：B02 为 500 条；18 条模拟修正包含首检 4 条，需用 ID 对账，不是 18/500 的抽检不合格率。' },
-      review: { status: 'verified', evidence: '仅在虚构情境中：重新冻结后另抽 100 条，普通不合格 1 条、关键错误 0；达到本案例的抽检门槛，不代表全批无误。' },
+      review: { status: 'verified', evidence: '仅在示例情境中：重新冻结后另抽 100 条，普通不合格 1 条、关键错误 0；达到本案例的抽检门槛，不代表全批无误。' },
       retest: { status: 'unchecked', evidence: '模拟复检发现的 1 条已修正；尚无修正后的独立复验与关闭记录，不能写成全部闭环。' },
       versions: { status: 'unchecked', evidence: '模拟时点：规则为 v0.2；生产、复验与验收时间仍待记录。' },
       manifest: { status: 'unchecked', evidence: '模拟时点：最终文件未提供，清单、样本数量与校验值不能预填。' },
@@ -114,10 +114,10 @@ export function releaseReport(record: ReleaseRecord) {
   const result = assessRelease(record);
   const state = result.readyForHumanApproval ? '记录齐备 · 待人工批准' : result.blocked.length ? '暂勿交付 · 有待处理项' : '待核实 · 不可据此交付';
   return [
-    record.synthetic ? '# 虚构演练 · 数据交付四关自检记录' : '# 数据交付四关自检记录', '',
+    record.synthetic ? '# 示例演练 · 数据交付四关自检记录' : '# 数据交付四关自检记录', '',
     '状态：' + state,
     record.synthetic
-      ? '说明：纸舟 B02 是完全虚构的练习。所有“已核实”只是情境设定，没有真实文件、抽检或客户验收；不得作为实际交付记录。'
+      ? '说明：纸舟 B02 是示例练习。所有“已核实”只是情境设定，没有真实文件、抽检或客户验收；不得作为实际交付记录。'
       : '说明：这是人工填写的自检记录；工具不读取数据文件、不验证证据真伪、不代表客户验收或批准发布。', '',
     ...(record.practiceStage === 'retest' ? [
       '首检（旧冻结版）：随机抽检 100 条，普通不合格 4 条、关键错误 0；当时暂缓。',

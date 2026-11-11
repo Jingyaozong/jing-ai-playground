@@ -1,23 +1,24 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../../lib/seo';
 import Link from 'next/link';
 import { ReviewPaceCalculator } from '../../components/review-pace-calculator';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 
-export const metadata: Metadata = {
-  title: '评测排期计算器 — JING AI PLAYGROUND',
+export const metadata: Metadata = pageMeta({ og: 'tool-review-pace', robots: { index: false, follow: true },
+  title: '评测排期计算器',
   description: '分开估算常规与高风险样本的耗时、返工缓冲，并对照目标条数与可用工作日。',
-};
+});
 
 export default function ReviewPacePage() {
   return (
     <main>
       <SiteHeader active="Tools" />
       <header className="tool-detail-hero">
-        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link><span>JING TOOL / 001</span></div>
+        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link></div>
         <div className="tool-detail-title">
           <div>
-            <p className="eyebrow mono">Review pace / 评测排期</p>
+            
             <h1>先算清楚，<br /><em>再答应交付。</em></h1>
           </div>
           <p>把常规与高风险样本分开估时，再为意外返工留缓冲。可对照目标条数，也可比较试标与正式批次的不同样本结构。结果是计划估算，不是已完成的评测量。</p>
@@ -37,7 +38,7 @@ export default function ReviewPacePage() {
             <p>需要先记下逐条耗时，可<Link href="/downloads/trial-review-time-log-v1.csv" download>下载空白 CSV 模板 ↓</Link>。模板不含项目数据；完成人工核对后，可在上方本地导入、预览汇总，再确认填入。不同批次或规则版本须分开汇总，原始记录不会上传。</p>
             <p>风险怎样分层、随机抽检与定向复核为什么分账，可读 <Link href="/notes/dataset-release-gates/">数据交付四关与分流依据 ↗</Link>。排期讨论完，还可到<Link href="/tools/dataset-release/">四关检查台留下交付前的人工核对记录 ↗</Link>；处理容量不等于通过验收。</p>
           </div>
-          <div className="pace-method-note"><strong>编辑候选 · 待荆确认</strong><p>先试跑一小批，再用实际耗时修正比例、单条时间与返工缓冲。不要把八小时工作日当成八小时净评测时间，也不要把处理量写成验收通过量。</p></div>
+          <div className="pace-method-note"><strong>使用建议</strong><p>先试跑一小批，再用实际耗时修正比例、单条时间与返工缓冲。不要把八小时工作日当成八小时净评测时间，也不要把处理量写成验收通过量。</p></div>
         </section>
       </div>
       <SiteFooter />

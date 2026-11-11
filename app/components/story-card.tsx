@@ -6,7 +6,7 @@ export function StoryCard({ story }: { story: Story }) {
   return (
     <article className="story-card" id={story.id}>
       <ProjectVisual variant={story.visual} label={story.title} />
-      <span className={`project-truth-badge ${story.status.includes('编辑候选') ? 'truth-editorial' : `truth-${story.stage}`} mono`}>{story.stage === 'documented' ? story.status : '概念候选 · 未制作'}</span>
+      <span className={`project-truth-badge ${`truth-${story.stage}`} mono`}>{story.stage === 'documented' ? story.status : '概念候选 · 未制作'}</span>
       <div className="card-topline mono">
         <span>AI STORY {story.number}</span>
         <span>{story.date}</span>

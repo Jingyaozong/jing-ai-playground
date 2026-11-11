@@ -216,7 +216,7 @@ export function ShotListCleaner() {
         </div>
 
         <aside className="shot-input-note">
-          <span className="mono">LOCAL / 本地处理</span>
+          <span className="mono">本地处理</span>
           <strong>先写清楚，<br />不必写漂亮。</strong>
           <p>本地规则会识别景别、时长、运镜、对白和声音，内容不会上传。整理以后，每一格都可以继续修改。</p>
           <div className="shot-input-counts"><span><b>{rows.length}</b><small>个镜头</small></span><span><b>{formatDuration(totalDuration)}</b><small>总时长</small></span></div>
@@ -225,13 +225,13 @@ export function ShotListCleaner() {
 
       <div className="shot-output-section">
         <div className="shot-output-heading">
-          <div><span className="mono">02 / SHOT LIST</span><h2>可以继续修改的镜头表。</h2></div>
+          <div><span className="mono">02</span><h2>可以继续修改的镜头表。</h2></div>
           <div className="shot-output-actions"><button type="button" onClick={addRow}>＋ 新增镜头</button><button type="button" className="shot-copy-button" onClick={copyTable} disabled={rows.length === 0}>{copied === 'table' ? '已复制表格 ✓' : manualCopy?.kind === 'table' ? '请在下方手动复制 ↓' : '复制镜头表 ↗'}</button><button type="button" className="shot-prompt-button" onClick={copyPrompts} disabled={rows.length === 0}>{copied === 'prompt' ? '已复制 Prompt ✓' : manualCopy?.kind === 'prompt' ? '请在下方手动复制 ↓' : '复制 Prompt 骨架 ↗'}</button></div>
         </div>
 
-        {manualCopy && <aside className="shot-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>当前浏览器禁止自动写入剪贴板。点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy.value} aria-label={manualCopy.kind === 'table' ? '手动复制镜头表' : '手动复制 Prompt 骨架'} /></aside>}
+        {manualCopy && <aside className="shot-copy-fallback"><div><span className="mono">浏览器限制</span><p>当前浏览器禁止自动写入剪贴板。点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy.value} aria-label={manualCopy.kind === 'table' ? '手动复制镜头表' : '手动复制 Prompt 骨架'} /></aside>}
 
-        {rows.length > 0 && <div className="shot-health" aria-label="分镜完整度概览"><article><span className="mono">SHOTS</span><strong>{rows.length}</strong><p>{readyRows} 镜资料完整</p></article><article><span className="mono">TOTAL TIME</span><strong>{formatDuration(totalDuration)}</strong><p>{totalDuration} 秒时间账本</p></article><article><span className="mono">COMPLETENESS</span><strong>{completeness}%</strong><p>{missingCount === 0 ? '所有字段已填写' : `还缺 ${missingCount} 个字段`}</p></article></div>}
+        {rows.length > 0 && <div className="shot-health" aria-label="分镜完整度概览"><article><span className="mono">镜头</span><strong>{rows.length}</strong><p>{readyRows} 镜资料完整</p></article><article><span className="mono">TOTAL TIME</span><strong>{formatDuration(totalDuration)}</strong><p>{totalDuration} 秒时间账本</p></article><article><span className="mono">COMPLETENESS</span><strong>{completeness}%</strong><p>{missingCount === 0 ? '所有字段已填写' : `还缺 ${missingCount} 个字段`}</p></article></div>}
 
         {rows.length > 0 ? <div className="shot-sheet">
           <div className="shot-sheet-head mono"><span>镜号</span><span>景别</span><span>时长</span><span>画面与动作</span><span>运镜</span><span>对白与声音</span><span>调整</span></div>
@@ -248,7 +248,7 @@ export function ShotListCleaner() {
           </article>;})}
         </div> : <div className="shot-empty"><strong>镜头表还是空的。</strong><p>在上方每行写一个镜头，然后点击“整理成镜头表”。</p></div>}
 
-        {rows.length > 0 && <section className="shot-prompt-export"><div className="shot-prompt-heading"><div><span className="mono">03 / PROMPT SKELETON</span><h2>把分镜翻译成生成骨架。</h2></div><button type="button" onClick={copyPrompts}>{copied === 'prompt' ? '已复制全部 Prompt ✓' : manualCopy?.kind === 'prompt' ? '请在上方手动复制 ↑' : '复制全部 Prompt ↗'}</button></div><p>骨架只整理镜头动作、运镜和声音，不会擅自补写人物长相或模型参数。使用时还需要加入项目自己的身份锚点、风格约束和负面词。</p><pre><code>{promptSkeleton}</code></pre></section>}
+        {rows.length > 0 && <section className="shot-prompt-export"><div className="shot-prompt-heading"><div><span className="mono">03</span><h2>把分镜翻译成生成骨架。</h2></div><button type="button" onClick={copyPrompts}>{copied === 'prompt' ? '已复制全部 Prompt ✓' : manualCopy?.kind === 'prompt' ? '请在上方手动复制 ↑' : '复制全部 Prompt ↗'}</button></div><p>骨架只整理镜头动作、运镜和声音，不会擅自补写人物长相或模型参数。使用时还需要加入项目自己的身份锚点、风格约束和负面词。</p><pre><code>{promptSkeleton}</code></pre></section>}
       </div>
     </section>
   );

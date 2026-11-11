@@ -169,7 +169,7 @@ export function LocalEffectBuilder() {
     <section className="effect-workbench" aria-label="局部特效约束卡生成器">
       <div className="effect-editor">
         <div className="effect-panel-heading">
-          <div><span className="mono">01 / DEFINE THE RELATION</span><h2>不是加一个效果，<br />是锁住一段关系。</h2></div>
+          <div><span className="mono">01</span><h2>不是加一个效果，<br />是锁住一段关系。</h2></div>
           <div><button type="button" onClick={() => setValues(exampleValues)}>载入示例</button><button type="button" onClick={() => setValues(emptyValues)}>清空</button></div>
         </div>
 
@@ -190,7 +190,7 @@ export function LocalEffectBuilder() {
           <EffectField label="允许留下的痕迹" note="湿脚印、余光、烟迹或无残留" value={values.trace} placeholder="例如：只保留一小段湿脚印" onChange={(value) => update('trace', value)} />
           <EffectField label="摄影机" note="固定、跟随或其他单一主要路径" value={values.camera} placeholder="例如：固定中景，一个连续镜头" onChange={(value) => update('camera', value)} />
           <div className="effect-compact-grid">
-            <label><span><strong>镜头时长</strong><small>同组保持一致</small></span><div><input type="number" min="2" max="20" value={values.duration} onChange={(event) => update('duration', Math.max(2, Math.min(20, Number(event.target.value) || 2)))} /><b className="mono">SEC</b></div></label>
+            <label><span><strong>镜头时长</strong><small>同组保持一致</small></span><div><input type="number" min="2" max="20" value={values.duration} onChange={(event) => update('duration', Math.max(2, Math.min(20, Number(event.target.value) || 2)))} /><b className="mono">秒</b></div></label>
             <label><span><strong>C 组视觉输入</strong><small>按当前平台能力选择</small></span><select value={values.visualInput} onChange={(event) => update('visualInput', event.target.value as VisualInput)}><option value="first-frame">首帧边界证据</option><option value="reference">参考图</option><option value="none">不增加视觉输入</option></select></label>
           </div>
         </section>
@@ -226,7 +226,7 @@ export function LocalEffectBuilder() {
         </div>
       </section>
 
-      {manualCopy && <aside className="effect-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制局部特效约束内容" /></aside>}
+      {manualCopy && <aside className="effect-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制局部特效约束内容" /></aside>}
     </section>
   );
 }

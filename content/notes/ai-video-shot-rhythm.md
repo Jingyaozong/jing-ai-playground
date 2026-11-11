@@ -9,28 +9,9 @@ cover: "tips-mint"
 featured: true
 tags: ["AI VIDEO", "EDITING", "RHYTHM", "STORYBOARD"]
 readingTime: "15 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "BFI Editing Memoir / Adobe Trim Mode / Cinemetrics"
 sourceUrl: "https://www.bfi.org.uk/features/tales-film-editor-making-olivier-hamlet"
-sourceNote: "剪辑时机、逐帧修剪、跳切与镜头长度统计依据 BFI、Adobe、Frame.io 和 Cinemetrics 资料核对；五只时钟、镜头职责卡和节奏草剪流程是本站的编辑整理，不是适用于所有作品的固定秒数标准。"
 relatedNotes: ["ninety-second-storyboard", "ai-video-shot-continuity", "ai-video-sound-workflow"]
-connections:
-  - label: "TOOL"
-    title: "镜头节奏规划器"
-    description: "为每镜分配职责和秒数，用可伸缩时间带检查段落超时、留白与过度平均。"
-    href: "/tools/shot-rhythm-planner/"
-    tone: "mint"
-  - label: "TOOL"
-    title: "相邻镜头连续性检查器"
-    description: "节奏不只发生在镜头内部；检查 A 的出口和 B 的入口能否在切点顺利交接。"
-    href: "/tools/continuity-checker/"
-    tone: "coral"
-  - label: "NOTE"
-    title: "九十秒故事怎么拆成分镜？"
-    description: "先把故事拆成可见的动作与转折，再给每个镜头分配时间。"
-    href: "/notes/ninety-second-storyboard/"
-    tone: "yellow"
 ---
 
 AI 视频很容易出现一种特殊的“整齐”：每段素材都差不多长，每镜都从人物静止开始，动作在中间发生，最后再停住等待下一镜。单独看没有明显错误，连起来却像一排长度相同的演示卡片。

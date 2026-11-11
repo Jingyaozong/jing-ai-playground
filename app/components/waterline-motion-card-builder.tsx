@@ -194,26 +194,26 @@ export function WaterlineMotionCardBuilder() {
     <section className="waterline-card-workbench" aria-label="水线动作卡生成器">
       <div className="waterline-card-editor">
         <div className="waterline-builder-heading">
-          <div><span className="mono">01 / CAUSAL BRIEF</span><h2>先锁住不动的，<br />再写唯一变化。</h2></div>
+          <div><span className="mono">01</span><h2>先锁住不动的，<br />再写唯一变化。</h2></div>
           <div><button type="button" onClick={() => replaceValues(exampleValues)}>载入《退水以前》</button><button type="button" onClick={() => replaceValues(emptyValues)}>清空草稿</button></div>
         </div>
 
         <section className="waterline-field-group waterline-group-shot">
-          <div className="waterline-group-heading"><span className="mono">SHOT / 镜头常量</span><p>一个主体、一把伞、一个固定机位。</p></div>
+          <div className="waterline-group-heading"><span className="mono">镜头常量</span><p>一个主体、一把伞、一个固定机位。</p></div>
           <label className="waterline-card-field"><span><strong>镜头名称</strong><small>用于导出文件标题</small></span><input value={values.shotName} onChange={(event) => update('shotName', event.target.value)} placeholder="例如：Shot 11 / 撑伞退水" /></label>
           <label className="waterline-card-field"><span><strong>人物与道具</strong><small>身份、手位与唯一道具</small></span><textarea value={values.subject} onChange={(event) => update('subject', event.target.value)} placeholder="谁站在哪里，用哪只手操作哪一把伞" /></label>
           <label className="waterline-card-field"><span><strong>机位锁</strong><small>构图、焦段、曝光与镜头连续性</small></span><textarea value={values.cameraLock} onChange={(event) => update('cameraLock', event.target.value)} placeholder="固定机位；不切镜、不变焦" /></label>
         </section>
 
         <section className="waterline-field-group waterline-group-umbrella">
-          <div className="waterline-group-heading"><span className="mono">GATE / 红伞闸门</span><p>锁定完成以前，水面必须完全静止。</p></div>
+          <div className="waterline-group-heading"><span className="mono">红伞闸门</span><p>锁定完成以前，水面必须完全静止。</p></div>
           <label className="waterline-card-field"><span><strong>伞的起点</strong><small>0% 可以直接看见的状态</small></span><textarea value={values.umbrellaStart} onChange={(event) => update('umbrellaStart', event.target.value)} placeholder="合拢、手位、伞尖方向" /></label>
           <label className="waterline-card-field"><span><strong>伞的锁定状态</strong><small>允许水线启动的必要条件</small></span><textarea value={values.umbrellaLock} onChange={(event) => update('umbrellaLock', event.target.value)} placeholder="伞盖展开，伞骨锁定并保持" /></label>
           <label className="waterline-range-field"><span><strong>伞锁定时刻</strong><small>占整条镜头的百分比</small></span><div><input type="range" min="15" max="70" step="5" value={values.umbrellaLockAt} onChange={(event) => update('umbrellaLockAt', Number(event.target.value))} /><output>{values.umbrellaLockAt}% · F{derived.lockFrame}</output></div></label>
         </section>
 
         <section className="waterline-field-group waterline-group-water">
-          <div className="waterline-group-heading"><span className="mono">PATH / 水线轨道</span><p>起点、方向和终点必须能在画面里定位。</p></div>
+          <div className="waterline-group-heading"><span className="mono">水线轨道</span><p>起点、方向和终点必须能在画面里定位。</p></div>
           <label className="waterline-card-field"><span><strong>水线起点</strong><small>启动前始终保持</small></span><textarea value={values.waterStart} onChange={(event) => update('waterStart', event.target.value)} placeholder="水深、边界和画面坐标" /></label>
           <label className="waterline-card-field"><span><strong>单一方向</strong><small>用画面或空间端点描述</small></span><textarea value={values.waterDirection} onChange={(event) => update('waterDirection', event.target.value)} placeholder="从左前方连续退向右后方" /></label>
           <label className="waterline-card-field"><span><strong>水线终点</strong><small>100% 的可验收状态</small></span><textarea value={values.waterEnd} onChange={(event) => update('waterEnd', event.target.value)} placeholder="水线越过出口，地面显露" /></label>
@@ -221,7 +221,7 @@ export function WaterlineMotionCardBuilder() {
         </section>
 
         <section className="waterline-field-group waterline-group-world">
-          <div className="waterline-group-heading"><span className="mono">WORLD / 环境锁</span><p>退水不是让整个世界一起改变。</p></div>
+          <div className="waterline-group-heading"><span className="mono">环境锁</span><p>退水不是让整个世界一起改变。</p></div>
           <label className="waterline-card-field"><span><strong>环境常量</strong><small>坐标、材质、光线与必须不动的物体</small></span><textarea value={values.environmentLock} onChange={(event) => update('environmentLock', event.target.value)} placeholder="书架、书页、地板和出口保持不变" /></label>
           <div className="waterline-number-pair">
             <label><span>镜头时长</span><div><input type="number" min="2" max="20" step=".5" value={values.duration} onChange={(event) => update('duration', Math.max(2, Number(event.target.value) || 2))} /><b>秒</b></div></label>
@@ -237,14 +237,14 @@ export function WaterlineMotionCardBuilder() {
           <div className="waterline-ruler-labels"><span style={{ left: `${values.umbrellaLockAt}%` }}>LOCK<br />F{derived.lockFrame}</span><span style={{ left: `${values.waterStartAt}%` }}>MOVE<br />F{derived.waterFrame}</span></div>
           <div className="waterline-ruler-points">{checkpoints.map((point) => <span key={point}><i style={{ '--water-progress': `${derived.rows.find((row) => row.percent === point)?.waterProgress ?? 0}%` } as React.CSSProperties} /><b>{point}%</b></span>)}</div>
         </div>
-        <span className="mono">CAUSAL STATUS / 因果检查</span><h2>{statusCopy.label}</h2><p>{statusCopy.note}</p>
+        <span className="mono">因果检查</span><h2>{statusCopy.label}</h2><p>{statusCopy.note}</p>
         <dl className="waterline-gate-metrics"><div><dt>伞锁定</dt><dd>F{derived.lockFrame}</dd></div><div><dt>水首动</dt><dd>F{derived.waterFrame}</dd></div><div><dt>可见间隔</dt><dd>{derived.gapFrames}f</dd></div></dl>
         <div className="waterline-mini-ledger">{derived.rows.map((row) => <article key={row.percent}><span className="mono">{row.percent}%</span><div><strong>{row.percent < values.umbrellaLockAt ? '伞展开中' : '伞已锁定'}</strong><small>{row.waterProgress ? `水线 ${row.waterProgress}%` : '水线保持'}</small></div><b>F{row.frame}</b></article>)}</div>
         <small>这里只显示计划时序。生成后请用真实视频重新记录帧号。</small>
       </aside>
 
       <section className="waterline-card-outputs">
-        <div className="waterline-output-heading"><div><span className="mono">03 / TEST PACK</span><h2>一条因果链，<br />交出三份文件。</h2></div><p>五点账本负责计划，完整 Prompt 负责生成，负面约束与验收表负责回到真实画面。三份内容都会跟随上方字段同步更新。</p></div>
+        <div className="waterline-output-heading"><div><span className="mono">03</span><h2>一条因果链，<br />交出三份文件。</h2></div><p>五点账本负责计划，完整 Prompt 负责生成，负面约束与验收表负责回到真实画面。三份内容都会跟随上方字段同步更新。</p></div>
         <div className="waterline-output-grid">
           {([
             ['ledger', '五点动作账本', '把百分比换算为时间和计划帧号，保留伞与水的双轨状态。'],

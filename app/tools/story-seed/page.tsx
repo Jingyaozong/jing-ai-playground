@@ -1,23 +1,24 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../../lib/seo';
 import Link from 'next/link';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 import { StorySeedGenerator } from '../../components/story-seed-generator';
 
-export const metadata: Metadata = {
-  title: '故事种子生成器 — JING AI PLAYGROUND',
+export const metadata: Metadata = pageMeta({ og: 'tool-story-seed', robots: { index: false, follow: true },
+  title: '故事种子生成器',
   description: '抽取人物、意外、地点和规则，组合成一个可以继续写下去的故事种子。',
-};
+});
 
 export default function StorySeedPage() {
   return (
     <main>
       <SiteHeader active="Tools" />
       <header className="tool-detail-hero seed-detail-hero">
-        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link><span>JING TOOL / 002</span></div>
+        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link></div>
         <div className="tool-detail-title">
           <div>
-            <p className="eyebrow mono">Random story seed / 故事种子</p>
+            
             <h1>先抽四张，<br /><em>再把意外写下去。</em></h1>
           </div>
           <p>人物让我们在乎，意外迫使故事开始，地点决定它的气味，规则则让选择变得困难。</p>

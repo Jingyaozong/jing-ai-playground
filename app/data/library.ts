@@ -222,7 +222,7 @@ export const libraryItems: LibraryItem[] = [
     topic: 'Prompt',
     description: '这段教程用视觉风格、镜头、主体、动作、地点、光线与调色、美学质感七项要素组织视频 Prompt，并分别举例说明。',
     whyISavedIt: '适合边看边补全一张镜头卡：先描述主体做什么，再补充景别、机位、运镜与环境信息。',
-    jingTake: '编辑候选：可以用七项要素查漏补缺，再用实际生成结果检验描述是否有效；教程中的方法仍需要在自己的镜头里试用。',
+    jingTake: '可以用七项要素查漏补缺，再用实际生成结果检验描述是否有效；教程中的方法仍需要在自己的镜头里试用。',
     takeStatus: 'draft', sourceStatus: 'excerpt-reviewed',
     videoReview: {
       checkedOn: '2026-10-02',
@@ -247,7 +247,7 @@ export const libraryItems: LibraryItem[] = [
     topic: 'Consistency',
     description: '教程演示先用角色参考图生成候选图片，再选图用于视频；后段展示分别上传角色、场景和道具图片的多图参考流程。',
     whyISavedIt: '适合观察“先准备角色素材，再进入视频”的操作顺序，并把参考图选择与提示描述一起记录。',
-    jingTake: '编辑候选：参考强度是需要试验的变量。原片示例可用于理解流程，跨镜头身份是否稳定仍需逐镜检查。',
+    jingTake: '参考强度是需要试验的变量。原片示例可用于理解流程，跨镜头身份是否稳定仍需逐镜检查。',
     takeStatus: 'draft', sourceStatus: 'excerpt-reviewed',
     videoReview: {
       checkedOn: '2026-10-02',

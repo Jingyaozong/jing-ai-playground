@@ -198,17 +198,17 @@ export function ShotRhythmPlanner() {
     <section className="rhythm-workbench" aria-label="镜头节奏规划器">
       <div className="rhythm-editor">
         <div className="rhythm-panel-heading">
-          <div><span className="mono">01 / ROUGH CUT</span><h2>先分时间，<br />再生成素材。</h2></div>
+          <div><span className="mono">01</span><h2>先分时间，<br />再生成素材。</h2></div>
           <div><button type="button" onClick={loadExample}>载入示例</button><button type="button" onClick={clearPlanner}>清空</button></div>
         </div>
 
         <div className="rhythm-project-fields">
-          <label><span className="mono">SEQUENCE / 段落名称</span><input value={projectTitle} onChange={(event) => setProjectTitle(event.target.value)} /></label>
-          <label><span className="mono">TARGET / 目标时长</span><div><input type="number" min="1" max="600" step="0.5" value={targetDuration} onChange={(event) => setTargetDuration(Math.max(1, Number(event.target.value) || 1))} /><b>秒</b></div></label>
+          <label><span className="mono">段落名称</span><input value={projectTitle} onChange={(event) => setProjectTitle(event.target.value)} /></label>
+          <label><span className="mono">目标时长</span><div><input type="number" min="1" max="600" step="0.5" value={targetDuration} onChange={(event) => setTargetDuration(Math.max(1, Number(event.target.value) || 1))} /><b>秒</b></div></label>
         </div>
 
         <div className="rhythm-timeline-wrap">
-          <div className="rhythm-timeline-heading"><span className="mono">TIMELINE / 按秒伸缩</span><strong>{formatTime(analysis.total)}</strong></div>
+          <div className="rhythm-timeline-heading"><span className="mono">按秒伸缩</span><strong>{formatTime(analysis.total)}</strong></div>
           <div className="rhythm-timeline" aria-label="镜头节奏时间带">
             {timelineShots.length ? timelineShots.map((shot, index) => <div className={`rhythm-segment rhythm-role-${shot.role}`} style={{ flexGrow: shot.duration }} key={shot.id}><span>{String(index + 1).padStart(2, '0')}</span><strong>{shot.duration.toFixed(1)}s</strong><small>{roleName(shot.role)}</small></div>) : <p>先添加镜头，时间带会按每镜秒数自动展开。</p>}
           </div>
@@ -217,7 +217,7 @@ export function ShotRhythmPlanner() {
 
         <div className="rhythm-shot-list">
           {shots.map((shot, index) => <article className={`rhythm-shot-row rhythm-role-${shot.role}`} key={shot.id}>
-            <div className="rhythm-shot-index"><span className="mono">SHOT</span><strong>{String(index + 1).padStart(2, '0')}</strong><small>{formatTime(timelineShots[index].start)}</small></div>
+            <div className="rhythm-shot-index"><span className="mono">镜头</span><strong>{String(index + 1).padStart(2, '0')}</strong><small>{formatTime(timelineShots[index].start)}</small></div>
             <label className="rhythm-shot-title"><span>镜头任务</span><input value={shot.title} onChange={(event) => updateShot(shot.id, { title: event.target.value })} aria-label={`镜头 ${index + 1} 的任务`} /></label>
             <label className="rhythm-shot-role"><span>主要职责</span><select value={shot.role} onChange={(event) => updateShot(shot.id, { role: event.target.value as ShotRole })} aria-label={`镜头 ${index + 1} 的职责`}>{roleOptions.map((role) => <option value={role.value} key={role.value}>{role.label} · {role.short}</option>)}</select></label>
             <label className="rhythm-shot-duration"><span>时长</span><div><input type="range" min="0.5" max="15" step="0.5" value={shot.duration} onChange={(event) => updateShot(shot.id, { duration: Number(event.target.value) })} aria-label={`镜头 ${index + 1} 时长`} /><output>{shot.duration.toFixed(1)}s</output></div></label>
@@ -239,7 +239,7 @@ export function ShotRhythmPlanner() {
         <p className="rhythm-disclaimer">只在浏览器本地计算，不上传内容；提示是透明启发式规则，不是固定剪辑公式。</p>
       </aside>
 
-      {manualCopy && <aside className="rhythm-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制镜头时间表" /></aside>}
+      {manualCopy && <aside className="rhythm-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制镜头时间表" /></aside>}
     </section>
   );
 }

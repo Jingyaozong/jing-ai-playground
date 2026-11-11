@@ -5,8 +5,8 @@ import { createSyntheticPromptPreflight, diffPromptText, emptyPromptPreflight, f
 
 test('fictional walkthrough has one added rule and no invented model result', () => {
   const record = createSyntheticPromptPreflight();
-  assert.match(record.task, /虚构演练/);
-  assert.match(record.testInput, /虚构会议记录/);
+  assert.match(record.task, /示例演练/);
+  assert.match(record.testInput, /示例会议记录/);
   assert.ok(record.revisedPrompt.startsWith(record.originalPrompt));
   assert.match(record.revisedPrompt.slice(record.originalPrompt.length), /待确认/);
   assert.equal(inspectPromptPreflight(record).readyToTest, true);
@@ -28,7 +28,7 @@ test('blank card keeps outputs pending and never claims a test result', () => {
   const copy = formatPromptPreflight(emptyPromptPreflight);
   assert.match(copy, /原版实际输出：待执行/);
   assert.match(copy, /新版实际输出：待执行/);
-  assert.match(copy, /待荆确认/);
+  assert.match(copy, /以下内容由使用者填写/);
   assert.match(copy, /新版 Prompt：未填写/);
 });
 
@@ -56,7 +56,7 @@ test('local save round-trips only bounded versioned fields', () => {
 });
 
 test('portable JSON backup keeps the current schema and accepts older browser saves', () => {
-  const record = { ...emptyPromptPreflight, task: '虚构演练\n只用于测试', originalPrompt: '含有换行\n与引号"', checks: [{ id: 'test-one', criterion: '缺项标记', originalVerdict: '未评', originalEvidence: '', revisedVerdict: '未评', revisedEvidence: '' }] };
+  const record = { ...emptyPromptPreflight, task: '示例演练\n只用于测试', originalPrompt: '含有换行\n与引号"', checks: [{ id: 'test-one', criterion: '缺项标记', originalVerdict: '未评', originalEvidence: '', revisedVerdict: '未评', revisedEvidence: '' }] };
   const backup = serializePromptPreflight(record);
   assert.deepEqual(JSON.parse(backup).format, 'jing-prompt-preflight');
   assert.deepEqual(parsePromptPreflight(JSON.stringify(JSON.parse(backup), null, 2)), record);
@@ -72,7 +72,7 @@ test('synthetic import fixture remains valid and has no fabricated output', () =
   const fixture = readFileSync(new URL('./fixtures/prompt-preflight-import-v3.json', import.meta.url), 'utf8');
   const record = parsePromptPreflight(fixture);
   assert.ok(record);
-  assert.match(record.task, /虚构演练/);
+  assert.match(record.task, /示例演练/);
   assert.equal(inspectPromptPreflight(record).resultStatus, '待执行 · 无输出');
   assert.equal(record.checks[0].originalVerdict, '未评');
 });

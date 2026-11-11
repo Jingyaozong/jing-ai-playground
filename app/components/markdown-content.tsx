@@ -19,9 +19,13 @@ function stripCalloutPrefix(node: ReactNode, type: string): ReactNode {
   return node;
 }
 
+export const headingId = (text: string) => text.replace(/[*`_]/g, '').trim().replace(/\s+/g, '-');
+
+const calloutLabels: Record<string, string> = { 'KEY POINT': '要点', TIP: '提示', 'BAD CASE': 'Bad Case', "JING'S NOTE": '我的看法' };
+
 const components: Components = {
   h1: ({ children }) => <h1 className="article-h1">{children}</h1>,
-  h2: ({ children }) => <h2>{children}</h2>,
+  h2: ({ children }) => <h2 id={headingId(textFromNode(children))}>{children}</h2>,
   h3: ({ children }) => <h3>{children}</h3>,
   strong: ({ children }) => <mark>{children}</mark>,
   blockquote: ({ children }) => {
@@ -29,7 +33,7 @@ const components: Components = {
     const match = text.match(/^\[!(KEY POINT|TIP|BAD CASE|JING'S NOTE)\]/);
     if (!match) return <blockquote className="article-quote">{children}</blockquote>;
     const type = match[1];
-    return <aside className={`article-callout callout-${type.toLowerCase().replaceAll(' ', '-').replace("'", '')}`}><span className="mono">{type}</span><div>{stripCalloutPrefix(children, type)}</div></aside>;
+    return <aside className={`article-callout callout-${type.toLowerCase().replaceAll(' ', '-').replace("'", '')}`}><span className="callout-label">{calloutLabels[type]}</span><div>{stripCalloutPrefix(children, type)}</div></aside>;
   },
   pre: ({ children }) => <>{children}</>,
   code: ({ className, children }) => {
@@ -40,8 +44,8 @@ const components: Components = {
   table: ({ children }) => <div className="article-table-wrap"><table>{children}</table></div>,
   a: ({ href = '#', children }) => {
     const label = textFromNode(children);
-    if (label.startsWith('VIDEO:')) return <a className="article-video" href={href} target="_blank" rel="noreferrer"><span className="video-play">▶</span><span><small className="mono">External video</small><b>{label.replace('VIDEO:', '').trim()}</b></span><i>打开来源 ↗</i></a>;
-    if (label.startsWith('DOWNLOAD:') && href.startsWith('/')) return <Link className="article-download" href={href} download><span className="download-mark">↓</span><span><small className="mono">Synthetic practice pack / 虚构演练包</small><b>{label.replace('DOWNLOAD:', '').trim()}</b><em>ZIP · v1.0 · 7 个文件 · 未执行</em></span><i>下载到本地</i></Link>;
+    if (label.startsWith('VIDEO:')) return <a className="article-video" href={href} target="_blank" rel="noreferrer"><span className="video-play">▶</span><span><small>外部视频</small><b>{label.replace('VIDEO:', '').trim()}</b></span><i>打开来源 ↗</i></a>;
+    if (label.startsWith('DOWNLOAD:') && href.startsWith('/')) return <Link className="article-download" href={href} download><span className="download-mark">↓</span><span><small>示例练习包</small><b>{label.replace('DOWNLOAD:', '').trim()}</b><em>ZIP · v1.0 · 7 个文件 · 未执行</em></span><i>下载到本地</i></Link>;
     if (href.startsWith('/')) return <Link href={href}>{children}</Link>;
     return <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noreferrer' : undefined}>{children}</a>;
   },

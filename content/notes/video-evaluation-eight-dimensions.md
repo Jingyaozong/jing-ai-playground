@@ -10,25 +10,10 @@ cover: "evaluation-checksheet"
 featured: false
 tags: ["AI VIDEO", "EVALUATION", "八维评测", "评测方法"]
 readingTime: "8 分钟"
-demo: false
-editorialStatus: "draft"
-sourceTitle: "荆提供的 AI 生视频八维框架与多模态评测方法"
-sourceNote: "八维框架与评测集、方法、报告三部分来自荆的工作方法说明。记录模板、适用性处理与示例由 AI 整理扩展，属于编辑候选，待荆确认；不包含客户资料、实际评测结果或业绩。"
 relatedNotes: ["bad-case-review-loop", "dataset-release-gates", "ai-video-evaluation"]
-connections:
-  - label: "METHOD"
-    title: "发现问题以后"
-    description: "把现象、原因假设和复验分开记录。"
-    href: "/notes/bad-case-review-loop/"
-    tone: "yellow"
-  - label: "REFERENCE"
-    title: "对照公开评测资料"
-    description: "阅读已有的基准资料笔记，区分工作框架与研究指标。"
-    href: "/notes/ai-video-evaluation/"
-    tone: "sky"
 ---
 
-> 方法骨架由荆提供；本文的组织、模板和补充说明是 AI 编辑候选，待荆确认。这里是一套工作检查框架，不是行业统一标准，也没有实际视频评分或模型排名。
+> 这是我做 AI 生视频评测时用的工作检查框架。它不是行业统一标准，不同项目可以按任务裁剪维度。
 
 一段视频可能很好看，却没有执行指定动作；也可能主体稳定，但动作接不上。把这些问题压成一个总分，后续就很难判断应该改 Prompt、补数据，还是重新定义验收标准。
 

@@ -18,33 +18,33 @@
 .tool-detail-shell .version-copy-fallback p { max-width: 64ch; font-size: 13px; line-height: 1.8; }
 .tool-detail-shell .local-record-copy { width: 100%; min-width: 0; margin-block: 24px; }
 .local-record-copy-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-.tool-detail-shell .local-record-copy button { padding: 11px 16px; border: 1.5px solid var(--ink); border-radius: 99px; background: var(--white); color: var(--ink); font: 700 12px var(--body); box-shadow: 3px 3px 0 var(--ink); cursor: pointer; }
-.tool-detail-shell .local-record-copy-actions button:first-child { background: var(--blue); color: var(--white); }
+.tool-detail-shell .local-record-copy button { padding: 11px 16px; border: 1px solid var(--line); border-radius: 99px; background: var(--white); color: var(--ink); font: 700 13px var(--body); box-shadow: none; cursor: pointer; }
+.tool-detail-shell .local-record-copy-actions button:first-child { background: var(--tint); color: var(--ink); }
 .tool-detail-shell .local-record-copy button:disabled { cursor: wait; opacity: .7; }
 .tool-detail-shell .local-record-copy p { max-width: 64ch; margin: 14px 0; font-size: 13px; line-height: 1.8; }
-.tool-detail-shell .local-record-copy-manual { margin-top: 22px; padding: 22px; border: 2px solid var(--ink); border-radius: 22px; background: var(--sky); }
+.tool-detail-shell .local-record-copy-manual { margin-top: 22px; padding: 22px; border: 1px solid var(--line); border-radius: 22px; background: var(--sky); }
 .tool-detail-shell .local-record-copy-manual label { display: block; font-size: 13px; line-height: 1.8; }
-.tool-detail-shell .local-record-copy-manual textarea { display: block; width: 100%; min-height: 220px; margin-top: 14px; border: 1.5px solid var(--ink); border-radius: 14px; background: var(--white); color: var(--ink); resize: vertical; }
+.tool-detail-shell .local-record-copy-manual textarea { display: block; width: 100%; min-height: 220px; margin-top: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); color: var(--ink); resize: vertical; }
 .tool-detail-shell label { min-width: 0; }
 .tool-detail-shell label :is(strong, small) { line-height: 1.6; }
-.tool-detail-shell label small { font-size: 11px; }
+.tool-detail-shell label small { font-size: 13px; }
 .tool-detail-shell :is(input, select, textarea, button):focus-visible {
-  outline: 3px solid var(--blue);
+  outline: 1px solid var(--line);
   outline-offset: 4px;
 }
 .tool-detail-shell label:has(input:is([type='checkbox'], [type='radio']):focus-visible) {
-  outline: 3px solid var(--blue);
+  outline: 1px solid var(--line);
   outline-offset: 4px;
 }
 .tool-detail-shell button { min-height: 44px; }
-.tool-detail-shell pre { font-size: 12px; line-height: 1.8; }
+.tool-detail-shell pre { font-size: 13px; line-height: 1.8; }
 .tool-detail-shell h2 {
   font-size: clamp(1.8rem, 2.6vw, 2.5rem);
   line-height: 1.3;
   letter-spacing: -.025em;
   text-wrap: balance;
 }
-.release-detail-hero .tool-detail-title h1 { font-size: clamp(2.6rem, 4.5vw, 4.6rem); line-height: 1.2; }
+.release-detail-hero .tool-detail-title h1 { font-size: clamp(2.6rem, 4.5vw, 2.75rem); line-height: 1.2; }
 
 /* Long creative briefs get their own writing line. Labels stay above the text. */
 .tool-detail-shell :is(.waterline-card-field, .waterline-range-field,
@@ -92,7 +92,7 @@
   padding-bottom: 20px;
 }
 .tool-detail-shell :is(.waterline-group-heading, .contact-group-heading, .shadow-group-heading, .effect-group-heading) p {
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.7;
   text-align: left;
 }
@@ -108,14 +108,14 @@
   padding: 16px;
 }
 .tool-detail-shell :is(.waterline-number-pair, .lighting-basic-grid,
-  .lighting-shot-fields, .release-fields) label > span { font-size: 12px; line-height: 1.6; }
+  .lighting-shot-fields, .release-fields) label > span { font-size: 13px; line-height: 1.6; }
 .tool-detail-shell :is(.shadow-timeline-row, .contact-stage-row) { gap: 12px; padding-block: 12px; }
 .tool-detail-shell :is(.waterline-output-grid, .shadow-output-grid,
   .contact-output-grid, .effect-output-grid, .shot-output-grid) { gap: 24px; }
 .tool-detail-shell :is(.waterline-output-card, .shadow-output-card,
   .contact-output-card, .effect-output-card) h3 { font-size: 1.5rem; line-height: 1.4; text-wrap: balance; }
 .tool-detail-shell :is(.waterline-output-card, .shadow-output-card,
-  .contact-output-card, .effect-output-card) > p { font-size: 12px; line-height: 1.8; }
+  .contact-output-card, .effect-output-card) > p { font-size: 13px; line-height: 1.8; }
 
 @media (max-width: 1120px) {
   /* Keep absolute seals inside their cards when sticky positioning is removed. */
@@ -125,7 +125,7 @@
 @media (max-width: 760px) {
   /* 16px prevents focus zoom on iOS; smaller display type does not mean tiny inputs. */
   .tool-detail-shell { --tool-field-size: 16px; --tool-field-gap: 24px; }
-  .tool-detail-hero .tool-detail-title h1 { font-size: clamp(1.85rem, 8.2vw, 3rem); line-height: 1.25; }
+  .tool-detail-hero .tool-detail-title h1 { font-size: clamp(1.85rem, 8.2vw, 2.75rem); line-height: 1.25; }
   .tool-detail-shell :is(.waterline-field-group, .contact-field-group,
     .effect-field-group, .shadow-card-fields) { padding: 22px 20px; }
   .tool-detail-shell :is(.waterline-card-field, .shadow-card-field,

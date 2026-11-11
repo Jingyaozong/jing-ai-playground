@@ -1,22 +1,23 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../../lib/seo';
 import Link from 'next/link';
 import { LightingLedgerBuilder } from '../../components/lighting-ledger-builder';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 
-export const metadata: Metadata = {
-  title: '光线连续性账本 — JING AI PLAYGROUND',
+export const metadata: Metadata = pageMeta({ og: 'tool-lighting-ledger', robots: { index: false, follow: true },
+  title: '光线连续性账本',
   description: '固定现实空间里的灯位，根据人物朝向与摄影机位置换算逐镜预期受光方向，并核对真实画面是否发生翻面。',
-};
+});
 
 export default function LightingLedgerPage() {
   return (
     <main>
       <SiteHeader active="Tools" />
       <header className="tool-detail-hero lighting-ledger-hero">
-        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link><span>JING TOOL / 015</span></div>
+        <div className="tool-detail-topline mono"><Link href="/tools/">← 返回工具箱</Link></div>
         <div className="tool-detail-title">
-          <div><p className="eyebrow mono">Lighting ledger / 光位换算</p><h1>灯留在现实里，<br /><em>画面左右可以变。</em></h1></div>
+          <div><h1>灯留在现实里，<br /><em>画面左右可以变。</em></h1></div>
           <p>先固定灯在房间的哪一侧，再为每个机位换算画面受光方向。填入真实观察后，检查是正常反打，还是主光真的换了边。</p>
         </div>
       </header>

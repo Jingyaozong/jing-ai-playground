@@ -9,33 +9,9 @@ cover: "tips-blue"
 featured: true
 tags: ["AI VIDEO", "WORKFLOW", "VERSIONING", "METADATA"]
 readingTime: "16 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Sessions / Frame.io Comparison / Adobe Metadata / Vertex AI Veo"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/33545310653203-Generating-with-Sessions"
-sourceNote: "生成记录、资产组织、版本比较、镜头元数据与 Veo 请求参数依据 Runway、Frame.io、Adobe 和 Google Cloud 官方资料核对；三层账本、状态漏斗、淘汰原因编码和文件命名规则是本站的编辑整理，不代表不同平台或模型都能依靠 Seed 完全复现结果。"
 relatedNotes: ["ai-video-prompt-comparison", "ai-video-evaluation", "ai-video-shot-continuity"]
-connections:
-  - label: "PROMPT"
-    title: "候选样本验收表"
-    description: "给真实候选逐条留证；无样本时仅生成空表，不代填评分。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-candidate-review-table"
-    tone: "sky"
-  - label: "TOOL"
-    title: "镜头版本记录器"
-    description: "填写批次输入、候选状态、可用区间与淘汰原因，导出 Markdown 完整记录和 CSV 候选行。"
-    href: "/tools/shot-version-recorder/"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "镜头风险检查器"
-    description: "生成前记录本镜的高风险项，生成后再检查淘汰原因是否真的集中在这些位置。"
-    href: "/tools/shot-risk-checker/"
-    tone: "coral"
-  - label: "NOTE"
-    title: "AI 视频到底应该怎么评？"
-    description: "把候选版本放回叙事、可用性、一致性、运动与声音等维度，而不是只看单帧是否漂亮。"
-    href: "/notes/ai-video-evaluation/"
-    tone: "mint"
 ---
 
 AI 视频生成最容易丢失的，往往不是文件，而是**这个文件为什么出现、与上一版差在哪里、为什么没有被采用**。

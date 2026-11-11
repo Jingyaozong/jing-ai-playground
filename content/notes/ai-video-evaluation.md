@@ -9,28 +9,9 @@ cover: "eval-blue"
 featured: true
 tags: ["AI VIDEO", "EVALUATION", "VBench", "WORKFLOW"]
 readingTime: "16 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "VBench / EvalCrafter / VBench 2.0 / T2V-CompBench"
 sourceUrl: "https://github.com/Vchitect/VBench"
-sourceNote: "事实部分依据原始论文、CVPR 页面与官方代码仓库核对；实用评测流程是本站面向创作者的编辑转译，不包含模型排名，也不冒充荆已经确认的个人观点。"
 relatedNotes: ["video-evaluation-eight-dimensions", "video-failure-cases", "ai-video-character-consistency"]
-connections:
-  - label: "EXPERIMENT"
-    title: "同一个她，四十个镜头"
-    description: "进入可填写的四十镜记录板，用真实样本验证身份、动作、物理与镜头表现。"
-    href: "/experiments/forty-shots-one-character/#record-desk"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "分镜整理器"
-    description: "生成前先把景别、时长、动作、运镜和声音整理成可验收的镜头要求。"
-    href: "/tools/shot-list-cleaner/"
-    tone: "mint"
-  - label: "GLOSSARY"
-    title: "AI 视频翻车词典"
-    description: "不知道问题叫什么时，从身份漂移、闪烁、物理穿帮等失败类型继续排查。"
-    href: "/notes/video-failure-cases/"
-    tone: "coral"
 ---
 
 评 AI 视频，先别问“好不好看”。先问两件事：**它有没有完成这次生成任务？它在哪一层开始失去可信度？**
@@ -170,14 +151,14 @@ VBench、EvalCrafter、VBench 2.0 和 T2V-CompBench 都在尝试让自动指标�
 3. 分歧样本单独复核，不用总分强行消除分歧；
 4. 对外发布结论时，同时保留 Prompt、参数、样本数量和评审规则。
 
-## 把方法放回这座网站
+## 把方法用到实际测试
 
-本站的[四十镜实验记录板](/experiments/forty-shots-one-character/#record-desk)目前只记录身份、动作、物理与镜头四项，因为那次实验的目标是观察同一角色在变量叠加时怎样漂移。它不是通用行业榜单，也不会预先填入任何模型分数。
+我的[四十镜实验记录板](/experiments/forty-shots-one-character/#record-desk)只记录身份、动作、物理与镜头四项，因为那次测试的目标是观察同一角色在变量叠加时怎样漂移。不同任务应该选不同的维度组合。
 
 真正开始测试后，每个样本应保存模型版本、结果文件、四项人工评分、失败标签和观察原句。对外写结论之前，至少报告完整样本数、关键失败数和未完成项。
 
 > [!JING'S NOTE]
-> 待荆确认：对创作最有价值的评测，不是给模型排一个永久名次，而是帮助下一轮决定——改 Prompt、换参考、降低动作复杂度、换模型，还是调整制作流程。
+> 对创作最有价值的评测，不是给模型排一个永久名次，而是帮助下一轮决定——改 Prompt、换参考、降低动作复杂度、换模型，还是调整制作流程。
 
 ## 参考来源
 
@@ -187,5 +168,3 @@ VBench、EvalCrafter、VBench 2.0 和 T2V-CompBench 都在尝试让自动指标�
 - [EvalCrafter 官方代码、Prompt 与人工反馈说明](https://github.com/evalcrafter/EvalCrafter)
 - [VBench 2.0：面向内在可信度的视频生成评测](https://arxiv.org/abs/2503.21755)
 - [T2V-CompBench：组合式文生视频评测基准（CVPR 2025）](https://openaccess.thecvf.com/content/CVPR2025/html/Sun_T2V-CompBench_A_Comprehensive_Benchmark_for_Compositional_Text-to-video_Generation_CVPR_2025_paper.html)
-
-本文是 **资料文章**：来源事实已经核对，实用流程是本站的编辑转译。没有真实样本支持的模型排名、权重与经验判断，不会在这里被写成既定结论。

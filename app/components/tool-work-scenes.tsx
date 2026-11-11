@@ -49,7 +49,7 @@ export function ToolWorkScenes() {
     <section className="tool-work-scenes archive-shell" id="work-scenes" aria-labelledby="tool-work-scenes-title">
       <div className="tool-work-scenes-heading">
         <div>
-          <p className="eyebrow mono">WORK DESKS / 工作场景</p>
+          
           <h2 id="tool-work-scenes-title" tabIndex={-1}>先从手头的事，<br />找到工具。</h2>
         </div>
         <p>从规则、画面、Agent 动作到交接文件，先选眼前要核对的事，再打开对应的记录台。</p>
@@ -71,7 +71,7 @@ export function ToolWorkScenes() {
           );
         })}
       </div>
-      <p className="tool-work-scenes-footnote">工具在浏览器本地运行；相关方法笔记为编辑稿，待荆确认。</p>
+      <p className="tool-work-scenes-footnote">工具在浏览器本地运行，输入不会上传。</p>
     </section>
   );
 }

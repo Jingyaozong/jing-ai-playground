@@ -9,7 +9,7 @@ const source = sources[0];
 const entry = (url = 'https://huggingface.co/blog/test', date = 'Mon, 07 Sep 2026 01:00:00 GMT') => `<item><title>Test &amp; tools</title><link>${url}</link><pubDate>${date}</pubDate><description><![CDATA[<p>Offline <b>fixture</b>.</p>]]></description></item>`;
 const feed = (items) => `<rss version="2.0"><channel>${items}</channel></rss>`;
 const candidates = parseFeed(feed(entry()), source, now);
-const output = () => ({ items: [{ sourceId: candidates[0].id, title: '离线测试', summary: '虚构样例，不是新闻。', relevance: '编辑推测，待核对。', uncertainty: '未核对全文。' }] });
+const output = () => ({ items: [{ sourceId: candidates[0].id, title: '离线测试', summary: '示例，不是新闻。', relevance: '编辑推测，待核对。', uncertainty: '未核对全文。' }] });
 
 test('candidate reading list keeps evidence limits, source links and empty state', () => {
   const rendered = renderCandidates(candidates, now.toISOString());
@@ -113,7 +113,7 @@ test('truncated and malformed API output fails closed', async () => {
 });
 test('review template is explicit about draft, demo and evidence limits', () => {
   const markdown = renderDraft(validateDraft(output(), candidates), '2026-09-07', true);
-  for (const value of ['离线虚构样例', '待荆确认', '未发布', '未核对全文', '配图：无', candidates[0].url]) assert.ok(markdown.includes(value));
+  for (const value of ['离线示例', '草稿', '未发布', '未核对全文', '配图：无', candidates[0].url]) assert.ok(markdown.includes(value));
   assert.ok(!markdown.startsWith('---')); // Not a publishable Notes frontmatter document.
   assert.ok(renderDraft([], '2026-09-07').includes('不凑数'));
 });

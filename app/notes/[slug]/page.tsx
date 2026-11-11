@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../../lib/seo';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { MarkdownContent } from '../../components/markdown-content';
+import { MarkdownContent, headingId } from '../../components/markdown-content';
 import { NoteCard } from '../../components/note-card';
-import { NoteVisual } from '../../components/note-visual';
 import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
-import { noteCategories } from '../../data/note-config';
+import { methodNoteSlugs } from '../../data/note-config';
 import { getAllNotes, getNoteBySlug, getRelatedNotes } from '../../../lib/notes';
 
 export const dynamicParams = false;
@@ -19,12 +19,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const note = getNoteBySlug(slug);
   if (!note) return {};
-  return {
-    title: `${note.title} — JING NOTES`,
+  return pageMeta({
+    title: note.title,
     description: note.description,
-    openGraph: { title: note.title, description: note.description, images: [] },
-    twitter: { title: note.title, description: note.description, images: [] },
-  };
+    og: `note-${note.slug}`,
+    robots: methodNoteSlugs.includes(note.slug) ? undefined : { index: false, follow: true },
+  });
 }
 
 export default async function NoteDetailPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -32,35 +32,31 @@ export default async function NoteDetailPage({ params }: { params: Promise<{ slu
   const note = getNoteBySlug(slug);
   if (!note) notFound();
   const related = getRelatedNotes(note);
-  const categoryName = noteCategories.find((category) => category.id === note.category)?.chinese ?? note.category;
-  const categoryHref = `/notes/?category=${encodeURIComponent(note.category)}#all-notes`;
-  const isLongTitle = note.title.length >= 24;
-  const titleBreakToken = note.titleBreakAfter ?? (isLongTitle ? '：' : '');
-  const titleDivider = titleBreakToken ? note.title.indexOf(titleBreakToken) : -1;
-  const titleLead = titleDivider >= 0 ? note.title.slice(0, titleDivider + titleBreakToken.length) : note.title;
-  const titleTail = titleDivider >= 0 ? note.title.slice(titleDivider + titleBreakToken.length) : '';
+  const isMethod = methodNoteSlugs.includes(note.slug);
+  const backHref = isMethod ? '/method/' : '/notes/';
+  const backLabel = isMethod ? '评测方法' : '归档';
+  const headings = [...note.content.matchAll(/^## (.+)$/gm)].map((match) => match[1].trim());
 
   return (
-    <main>
-      <SiteHeader active="Notes" />
-      <header className="note-detail-hero">
-        <div className="note-detail-rail mono"><Link href={categoryHref}>← 返回{categoryName}栏目</Link><span>JING NOTES · {note.date.slice(0, 7).replace('-', ' / ')}</span></div>
-        <div className="note-detail-grid">
-          <div className={`note-detail-title ${isLongTitle ? 'is-long-title' : ''}`}><div className="note-detail-labels"><span>{note.category}</span><span>ISSUE {note.issue}</span>{note.demo && <b>DEMO</b>}{note.editorialStatus === 'draft' && <b>EDITING DRAFT</b>}{note.editorialStatus === 'source-backed' && <b>SOURCE-BACKED</b>}</div><h1>{titleLead}{titleTail && <><br /><span>{titleTail}</span></>}</h1><p>{note.description}</p><div className="note-detail-meta mono"><span>{note.date.replaceAll('-', ' / ')}</span><span>{note.readingTime}</span><span>{note.editorialStatus === 'draft' ? 'EDITED FOR JING' : note.editorialStatus === 'source-backed' ? 'SOURCE EDITION' : 'BY JING'}</span></div></div>
-          <NoteVisual variant={note.cover} label={note.title} />
-        </div>
+    <main className="pf">
+      <SiteHeader active={isMethod ? 'Method' : ''} />
+      <header className="pf-page-head pf-shell">
+        <Link className="pf-breadcrumb" href={backHref}>← 返回{backLabel}</Link>
+        <h1>{note.title}</h1>
+        {note.synthetic && <p className="note-demo-line">方法演示，非真实项目数据</p>}
+        <p>{note.description}</p>
+        <p className="pf-note">{note.date.replaceAll('-', ' / ')} · {note.readingTime}</p>
       </header>
 
-      <div className="article-layout">
-        <aside className="article-sidebar"><span className="mono">这篇笔记</span><div>{note.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>{note.demo && <p><b>Demo 提醒</b>当前正文用于展示内容系统和文章版式，不代表正式发布内容。</p>}{note.synthetic && <p><b>虚构项目演练</b>背景、样本与数字均为独立虚构，不对应真实客户或项目成果。</p>}{note.editorialStatus === 'draft' && <p><b>编辑稿 · 待荆确认</b>{note.synthetic ? '请确认方法表达；无需提供真实项目资料。' : '框架、权重和判断仍是编辑候选，尚未确认为荆的个人观点。'}</p>}{note.editorialStatus === 'source-backed' && <p><b>资料文章 · 来源已核对</b>事实部分来自原始论文、官方文档或项目页面；实用框架是本站编辑转译，不代表荆已确认的个人经验。</p>}</aside>
-        <article><MarkdownContent content={note.content} />
-          <section className="article-source"><span className="mono">来源信息 / Sources</span><h2>{note.sourceTitle ?? 'JING NOTES'}</h2><p>{note.sourceNote ?? '本页为荆的原创笔记。'}</p>{note.sourceUrl && <a href={note.sourceUrl} target="_blank" rel="noreferrer">查看原始来源 ↗</a>}</section>
-        </article>
+      <div className="pf-shell pf-article-layout">
+        <nav className="pf-toc" aria-label="本文目录">
+          <strong>目录</strong>
+          <ol>{headings.map((heading) => <li key={heading}><a href={`#${headingId(heading)}`}>{heading.replace(/[*`_]/g, '')}</a></li>)}</ol>
+        </nav>
+        <article><MarkdownContent content={note.content} />{note.sourceUrl && !note.content.includes('## 参考来源') && <p className="article-source-line">参考来源：<a href={note.sourceUrl} target="_blank" rel="noreferrer">{note.sourceTitle ?? note.sourceUrl}</a></p>}</article>
       </div>
 
-      {note.connections.length > 0 && <section className="note-connections section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Connected work / 从这里继续</p><h2>一篇笔记，<br />连回创作现场。</h2></div><p>方法不是孤立结论。继续查看它对应的故事、实验与可执行 Prompt。</p></div><div className="note-connection-grid">{note.connections.map((item) => <Link className={`note-connection-card tone-${item.tone}`} href={item.href} key={`${item.label}-${item.href}`}><span className="mono">{item.label}</span><h3>{item.title}</h3><p>{item.description}</p><i>继续查看 ↗</i></Link>)}</div></section>}
-
-      <section className="related-notes section-shell"><div className="section-title-row compact"><div><p className="eyebrow mono">Related notes</p><h2>接着往下看。</h2></div><Link className="text-link" href={categoryHref}>继续浏览{categoryName} ↗</Link></div><div className="related-note-grid">{related.map((item) => <NoteCard note={item} size="small" key={item.slug} />)}</div></section>
+      <section className="pf-shell pf-section"><div className="pf-section-head"><h2>相关阅读</h2><Link className="pf-text-link" href={backHref}>返回{backLabel}</Link></div><div className="pf-grid-3">{related.map((item) => <NoteCard note={item} key={item.slug} />)}</div></section>
       <SiteFooter />
     </main>
   );

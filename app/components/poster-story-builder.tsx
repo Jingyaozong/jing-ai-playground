@@ -97,7 +97,7 @@ function buildOutputs(values: BuilderValues) {
   ].join('\n');
 
   const prompt = [
-    `你将根据一张名为《${name}》的虚构海报发展一个短故事。`, '',
+    `你将根据一张名为《${name}》的自拟海报发展一个短故事。`, '',
     ledger, '',
     `类型与边界：${values.storyLimit.trim() || '未限定'}`,
     `主动避开：${values.excluded.trim() || '未限定'}`, '',
@@ -202,7 +202,7 @@ export function PosterStoryBuilder() {
   return (
     <section className="poster-story-workbench" aria-label="海报反推故事组装器">
       <header className="poster-story-controls">
-        <div><span className="mono">01 / SOURCE FRAME</span><h2>先固定这次<br />创作的边界。</h2></div>
+        <div><span className="mono">01</span><h2>先固定这次<br />创作的边界。</h2></div>
         <div className="poster-story-actions"><button type="button" onClick={() => replaceValues(exampleValues)}>载入示例</button><button type="button" onClick={() => replaceValues(emptyValues)}>清空草稿</button></div>
         <label><span><strong>海报或画面名称</strong><small>只用于标记当前任务</small></span><input value={values.posterName} placeholder="例如：退潮电影院" onChange={(event) => updateText('posterName', event.target.value)} /></label>
         <label><span><strong>类型与边界</strong><small>先限定体裁、时长或明确不用的机制</small></span><textarea rows={2} value={values.storyLimit} placeholder="例如：近未来寓言；不使用穿越或失忆" onChange={(event) => updateText('storyLimit', event.target.value)} /></label>
@@ -211,7 +211,7 @@ export function PosterStoryBuilder() {
 
       <div className="poster-story-ledger">
         <section className="poster-ledger-column ledger-evidence">
-          <div className="poster-ledger-heading"><span className="poster-ledger-letter">E</span><div><span className="mono">EVIDENCE / 最多 6 条</span><h3>画面确实<br />给了什么？</h3><p>只写能指给别人看的事实，不解释、不猜原因。</p></div></div>
+          <div className="poster-ledger-heading"><span className="poster-ledger-letter">E</span><div><span className="mono">最多 6 条</span><h3>画面确实<br />给了什么？</h3><p>只写能指给别人看的事实，不解释、不猜原因。</p></div></div>
           <div className="poster-ledger-rows">
             {values.evidence.map((item, index) => <label key={`e-${index}`}><span className="mono">E{index + 1}</span><textarea rows={2} value={item} placeholder="一条可见事实" onChange={(event) => updateEvidence(index, event.target.value)} />{values.evidence.length > 1 && <button type="button" aria-label={`删除证据 E${index + 1}`} onClick={() => removeRow('evidence', index)}>×</button>}</label>)}
           </div>
@@ -219,7 +219,7 @@ export function PosterStoryBuilder() {
         </section>
 
         <section className="poster-ledger-column ledger-inference">
-          <div className="poster-ledger-heading"><span className="poster-ledger-letter">I</span><div><span className="mono">INFERENCE / 最多 3 条</span><h3>证据允许<br />怎样推测？</h3><p>使用“可能 / 也许”，并写清它依赖哪些 E。</p></div></div>
+          <div className="poster-ledger-heading"><span className="poster-ledger-letter">I</span><div><span className="mono">最多 3 条</span><h3>证据允许<br />怎样推测？</h3><p>使用“可能 / 也许”，并写清它依赖哪些 E。</p></div></div>
           <div className="poster-ledger-rows">
             {values.inferences.map((item, index) => <label key={`i-${index}`}><span className="mono">I{index + 1}</span><textarea rows={2} value={item.text} placeholder="一条克制的推测" onChange={(event) => updateLinked('inferences', index, 'text', event.target.value)} /><input value={item.refs} aria-label={`推测 I${index + 1} 的证据编号`} placeholder="依据：E1, E3" onChange={(event) => updateLinked('inferences', index, 'refs', event.target.value)} />{values.inferences.length > 1 && <button type="button" aria-label={`删除推测 I${index + 1}`} onClick={() => removeRow('inferences', index)}>×</button>}</label>)}
           </div>
@@ -227,7 +227,7 @@ export function PosterStoryBuilder() {
         </section>
 
         <section className="poster-ledger-column ledger-choice">
-          <div className="poster-ledger-heading"><span className="poster-ledger-letter">C</span><div><span className="mono">CHOICE / 最多 3 条</span><h3>你决定<br />加入什么？</h3><p>承认这是创作选择，并让它回应已有证据。</p></div></div>
+          <div className="poster-ledger-heading"><span className="poster-ledger-letter">C</span><div><span className="mono">最多 3 条</span><h3>你决定<br />加入什么？</h3><p>承认这是创作选择，并让它回应已有证据。</p></div></div>
           <div className="poster-ledger-rows">
             {values.choices.map((item, index) => <label key={`c-${index}`}><span className="mono">C{index + 1}</span><textarea rows={2} value={item.text} placeholder="一个主动加入的设定" onChange={(event) => updateLinked('choices', index, 'text', event.target.value)} /><input value={item.refs} aria-label={`选择 C${index + 1} 的证据编号`} placeholder="回应：E2, E4" onChange={(event) => updateLinked('choices', index, 'refs', event.target.value)} />{values.choices.length > 1 && <button type="button" aria-label={`删除选择 C${index + 1}`} onClick={() => removeRow('choices', index)}>×</button>}</label>)}
           </div>
@@ -236,16 +236,16 @@ export function PosterStoryBuilder() {
       </div>
 
       <aside className="poster-story-trace" aria-label="证据链覆盖情况">
-        <div className="poster-trace-stage trace-e"><span className="mono">VISIBLE</span><strong>E</strong><b>{counts.evidence} / 6</b><small>可见证据</small></div>
+        <div className="poster-trace-stage trace-e"><span className="mono">可见</span><strong>E</strong><b>{counts.evidence} / 6</b><small>可见证据</small></div>
         <i aria-hidden="true">→</i>
-        <div className="poster-trace-stage trace-i"><span className="mono">POSSIBLE</span><strong>I</strong><b>{counts.inferences} / 3</b><small>合理推测</small></div>
+        <div className="poster-trace-stage trace-i"><span className="mono">可能</span><strong>I</strong><b>{counts.inferences} / 3</b><small>合理推测</small></div>
         <i aria-hidden="true">→</i>
-        <div className="poster-trace-stage trace-c"><span className="mono">CREATED</span><strong>C</strong><b>{counts.choices} / 3</b><small>创作选择</small></div>
+        <div className="poster-trace-stage trace-c"><span className="mono">创作</span><strong>C</strong><b>{counts.choices} / 3</b><small>创作选择</small></div>
         <div className="poster-trace-status"><span className="mono">TASK READINESS {readyCount} / 4</span><h2>{readyCount === 4 ? '来源分层已经可以交接。' : '先补齐最短证据链。'}</h2><p>这里检查信息是否齐全，不判断推测是否正确，也不把生成结果当作荆已经确认的故事。</p></div>
       </aside>
 
       <section className="poster-story-outputs" id="poster-story-output">
-        <div className="poster-story-output-heading"><div><span className="mono">02 / HANDOFF PACK</span><h2>同一条证据链，<br />交出三种文件。</h2></div><p>短账本负责守住来源，任务卡负责定义交付，完整 Prompt 才负责把两者交给模型。工具不会上传海报，也不会自动生成故事。</p></div>
+        <div className="poster-story-output-heading"><div><span className="mono">02</span><h2>同一条证据链，<br />交出三种文件。</h2></div><p>短账本负责守住来源，任务卡负责定义交付，完整 Prompt 才负责把两者交给模型。工具不会上传海报，也不会自动生成故事。</p></div>
         <div className="poster-story-output-grid">
           {([
             ['ledger', '短证据账本', '适合贴进实验记录，说明哪些是看见、推测和创作。'],

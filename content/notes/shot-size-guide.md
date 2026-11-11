@@ -9,28 +9,9 @@ cover: "tips-mint"
 featured: false
 tags: ["AI VIDEO", "CAMERA", "PROMPT", "COMPOSITION"]
 readingTime: "16 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Adobe Firefly Shot Size / Google Veo Prompt Guide"
 sourceUrl: "https://helpx.adobe.com/firefly/web/work-with-audio-and-video/work-with-video/generate-videos-using-text-prompts.html"
-sourceNote: "景别名称与产品选项依据官方指南核对；中文边界描述、选择方法和验收流程是本站的编辑转译，不把任何一种景别写成固定情绪公式。"
 relatedNotes: ["camera-movement-guide", "image-prompt-guide", "ninety-second-storyboard"]
-connections:
-  - label: "CAMERA"
-    title: "AI 视频运镜词典"
-    description: "景别决定这一刻看多少，运镜决定这个范围怎样在时间里变化。"
-    href: "/notes/camera-movement-guide/"
-    tone: "blue"
-  - label: "TOOL"
-    title: "分镜整理器"
-    description: "把景别、画面和运镜拆成独立字段，逐镜检查构图要求是否互相冲突。"
-    href: "/tools/shot-list-cleaner/"
-    tone: "mint"
-  - label: "STORY"
-    title: "十四镜故事生成包"
-    description: "查看极特写、近景、中景、双人中景和远景怎样承担不同叙事任务。"
-    href: "/stories/she-forgets-yesterday/#generation-pack"
-    tone: "yellow"
 ---
 
 景别不是给 Prompt 增加“专业感”的标签。它决定画面把多少空间交给人物、动作、道具和环境，也决定观众在这一秒应该先读到什么。
@@ -212,7 +193,7 @@ Locked camera; only her eyes and fingers move.
 - 关键道具位于前景时，要写清它是否完整、是否清晰，以及和人物的空间关系；
 - 计划横移或拉远时，起始构图必须给运动路径留出可生成空间。
 
-这些是编辑检查方法，不是保证模型服从的魔法词。结果出来后仍要看画面实际是否完成了信息任务。
+这些是检查方法，不是保证模型服从的魔法词。结果出来后仍要看画面实际是否完成了信息任务。
 
 ## 六种常见构图冲突
 
@@ -278,7 +259,7 @@ Locked camera; only her eyes and fingers move.
 [十四镜故事生成包](/stories/she-forgets-yesterday/#generation-pack)目前同时使用极特写、近景、中景、双人中景和远景，让每一镜只承担有限的信息任务。这些仍是待测试制作设计，不代表已经生成出合格样片。
 
 > [!JING'S NOTE]
-> 待荆确认：景别不是“离人物多远”，而是这一秒愿意舍弃多少信息，换取观众对某件事更集中的注意。
+> 景别不是“离人物多远”，而是这一秒愿意舍弃多少信息，换取观众对某件事更集中的注意。
 
 ## 参考来源
 
@@ -287,5 +268,3 @@ Locked camera; only her eyes and fingers move.
 - [Adobe Firefly：Writing effective text prompts for video generation](https://helpx.adobe.com/firefly/web/work-with-audio-and-video/work-with-video/writing-effective-text-prompts-for-video-generation.html)
 - [Runway：Camera Terms, Prompts, & Examples](https://help.runwayml.com/hc/en-us/articles/47313504791059-Camera-Terms-Prompts-Examples)
 - [Google Cloud：Veo 视频生成提示指南](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/video/video-gen-prompt-guide?hl=zh-CN)
-
-本文是 **资料文章**：景别定义与产品选项已经核对，中文边界模板、构图判断和验收流程是本站的编辑转译。示例均为待测试设计，不冒充真实生成结果，也不代表荆已经确认的个人经验。

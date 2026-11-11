@@ -212,7 +212,7 @@ export function ContinuityChecker() {
     <section className="continuity-workbench" aria-label="相邻镜头连续性检查器">
       <div className="continuity-input-panel">
         <div className="continuity-panel-heading">
-          <div><span className="mono">01 / CUT INTERFACE</span><h2>先看出口，<br />再看入口。</h2></div>
+          <div><span className="mono">01</span><h2>先看出口，<br />再看入口。</h2></div>
           <div><button type="button" onClick={() => setState(exampleState)}>载入示例</button><button type="button" onClick={() => setState(emptyState)}>清空</button></div>
         </div>
 
@@ -250,7 +250,7 @@ export function ContinuityChecker() {
         <p className="continuity-disclaimer">所有判断都来自上方可见条件，不上传内容，也不预测模型成功率。</p>
       </aside>
 
-      {manualCopy && <aside className="continuity-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制连续性报告" /></aside>}
+      {manualCopy && <aside className="continuity-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制连续性报告" /></aside>}
     </section>
   );
 }

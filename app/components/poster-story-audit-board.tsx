@@ -68,7 +68,7 @@ const boardConfigs: Record<AuditMode, BoardConfig> = {
     posters: ['水中图书馆', '果园电梯', '海中洗衣机'],
     records: posterStoryRetestRecords,
     exportTitle: '短证据账本能否跨题材工作｜9 格复测审计',
-    exportNote: '三张新生成虚构海报分别保留三份故事候选；九份都使用同一短证据账本，但来自同一次 Codex 会话，不视为独立重复实验。',
+    exportNote: '三张新生成自拟海报分别保留三份故事候选；九份都使用同一短证据账本，但来自同一次 Codex 会话，不视为独立重复实验。',
     heading: '三张新海报各写三次，\n九份短账本已经保存。',
     intro: '三张新海报、九份原始输出与暂定编辑审计随页面公开。候选来自同一次 Codex 会话，用来检查跨题材表现，不冒充独立会话复测。',
     localLabel: '公开复测 + 当前浏览器草稿',
@@ -233,15 +233,15 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
   return (
     <section className="experiment-record-board poster-story-audit-board" id="record-desk" aria-label="九格海报反推故事审计台">
       <div className="experiment-record-top">
-        <div><p className="eyebrow mono">04 / Audit desk</p><h2>{config.heading.split('\n').map((line, index, lines) => <span key={line}>{line}{index < lines.length - 1 && <br />}</span>)}</h2></div>
+        <div><h2>{config.heading.split('\n').map((line, index, lines) => <span key={line}>{line}{index < lines.length - 1 && <br />}</span>)}</h2></div>
         <div className="experiment-record-intro"><p>{config.intro}</p><LocalRecordSaveStatus loaded={loaded} blocked={recoverySource !== null} {...saveStatus} savedLabel={`${config.localLabel} · 已保存`} /></div>
       </div>
 
       <div className="experiment-record-summary">
-        <article><span className="mono">AUDITED</span><strong>{completed}<i>/9</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
-        <article><span className="mono">STORIES</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
-        <article><span className="mono">AVG SCORE</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
-        <article><span className="mono">FLAGGED</span><strong>{flagged}</strong><p>记录了错误标签</p></article>
+        <article><span className="mono">已审</span><strong>{completed}<i>/9</i></strong><p>已复核 · 评分与素材栏齐全</p></article>
+        <article><span className="mono">故事</span><strong>{generated}<i>/9</i></strong><p>本机标记为已有输出</p></article>
+        <article><span className="mono">平均分</span><strong>{overall}<i>/5</i></strong><p>{allScores.length ? `${allScores.length} 个有效分数` : '尚无真实评分'}</p></article>
+        <article><span className="mono">已标记</span><strong>{flagged}</strong><p>记录了错误标签</p></article>
       </div>
 
       <LocalRecordBoundary loaded={loaded} markedCount={generated} />
@@ -270,7 +270,7 @@ export function PosterStoryAuditBoard({ mode = 'comparison' }: { mode?: AuditMod
         </form>
       </div>
 
-      <div className="experiment-record-export"><div><span className="mono">LOCAL EXPORT</span><strong>输入海报、推理边界和故事结果分开保存。</strong><p>复制 Markdown 时保留九格编号、输出标题、字数、四项评分、错误标签与证据备注。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>恢复公开记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制海报故事审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
+      <div className="experiment-record-export"><div><span className="mono">本地导出</span><strong>输入海报、推理边界和故事结果分开保存。</strong><p>复制 Markdown 时保留九格编号、输出标题、字数、四项评分、错误标签与证据备注。</p></div><div className="experiment-export-actions"><button type="button" onClick={copyMarkdown}>{copyState === 'copied' ? '已复制审计记录 ✓' : copyState === 'manual' ? '请在下方手动复制 ↓' : '复制 Markdown 审计 ↗'}</button><button type="button" className="experiment-reset-button" onClick={resetRecords}>恢复公开记录</button></div><LocalRecordRecovery source={recoverySource} />{copyState === 'manual' && <textarea readOnly value={markdown} aria-label="手动复制海报故事审计记录" onFocus={(event) => event.currentTarget.select()} />}</div>
     </section>
   );
 }

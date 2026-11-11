@@ -123,7 +123,7 @@ export function CharacterAnchorBuilder() {
       <div className="anchor-input-panel">
         <div className="anchor-panel-heading">
           <div>
-            <span className="mono">01 / DEFINE THE CHARACTER</span>
+            <span className="mono">01</span>
             <h2>先写不会变的，<br />再写允许改变的。</h2>
           </div>
           <div className="anchor-panel-actions">

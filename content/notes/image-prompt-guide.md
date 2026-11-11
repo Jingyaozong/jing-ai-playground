@@ -9,28 +9,9 @@ cover: "tips-yellow"
 featured: false
 tags: ["PROMPT", "IMAGE", "AIGC", "COMPOSITION"]
 readingTime: "16 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Adobe Firefly / Google Imagen 官方图片提示指南"
 sourceUrl: "https://helpx.adobe.com/firefly/web/work-with-images/generate-images/writing-effective-text-prompts.html"
-sourceNote: "事实部分依据官方产品指南核对；模板与迭代流程是本站面向创作者的编辑转译，不代表所有模型共享同一语法或参考图能力。"
 relatedNotes: ["ai-video-character-consistency", "shot-size-guide", "video-vs-image-prompt"]
-connections:
-  - label: "COMPOSITION"
-    title: "AI 视频景别与构图指南"
-    description: "把中景、近景或远景进一步写成明确的可见边界和信息任务。"
-    href: "/notes/shot-size-guide/"
-    tone: "mint"
-  - label: "VIDEO"
-    title: "图生视频和文生视频，到底差在哪？"
-    description: "起始画面完成后，决定哪些静态信息交给图片，哪些时间变化写进视频 Prompt。"
-    href: "/notes/video-vs-image-prompt/"
-    tone: "coral"
-  - label: "STORY"
-    title: "十四镜故事生成包"
-    description: "把角色锚点、场景色彩和逐镜构图带进一个真实的待测试故事制作流程。"
-    href: "/stories/she-forgets-yesterday/#generation-pack"
-    tone: "yellow"
 ---
 
 图片 Prompt 不是形容词清单，也不是越长越接近“成片”。它首先是一份画面决策：**谁最重要、正在做什么、身处哪里、观众从哪里看，以及哪些信息必须保持不变。**
@@ -240,7 +221,7 @@ Google Imagen 的官方编辑与定制示例同样使用“改变某个对象”
 3. 品牌名、正文、日期和法律信息在排版软件中后期完成；
 4. 不把模型看似可读的文字直接当成最终交付。
 
-对本站故事里的手写信，可以让图片生成纸张、手势、墨迹和留白，具体中文句子后期合成。这样也避免把文字正确性和人物稳定性混在同一轮测试里。
+对我的短片里的手写信，可以让图片生成纸张、手势、墨迹和留白，具体中文句子后期合成。这样也避免把文字正确性和人物稳定性混在同一轮测试里。
 
 ## 七种常见 Prompt 问题
 
@@ -326,7 +307,7 @@ Google Imagen 的官方编辑与定制示例同样使用“改变某个对象”
 [十四镜故事生成包](/stories/she-forgets-yesterday/#generation-pack)已经列出角色锚点、色彩规则和逐镜 Prompt，可用这套流程逐步制作关键帧。但那些内容目前仍是待测试制作设计，不代表已经生成出合格素材。
 
 > [!JING'S NOTE]
-> 待荆确认：好的图片 Prompt 不是把所有想象一次塞完，而是让这一轮生成只回答一个清楚的画面问题。
+> 好的图片 Prompt 不是把所有想象一次塞完，而是让这一轮生成只回答一个清楚的画面问题。
 
 ## 参考来源
 
@@ -335,5 +316,3 @@ Google Imagen 的官方编辑与定制示例同样使用“改变某个对象”
 - [Google Cloud：Imagen 图片属性与 Prompt 指南](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/image/img-gen-prompt-guide?hl=zh-CN)
 - [Google Cloud：Imagen Subject customization](https://cloud.google.com/vertex-ai/generative-ai/docs/image/subject-customization)
 - [Google Cloud：Imagen Instruction customization](https://docs.cloud.google.com/vertex-ai/generative-ai/docs/image/instruct-customization?hl=zh-CN)
-
-本文是 **资料文章**：官方产品结构与建议已经核对，模板、分层方法和迭代流程是本站的编辑转译。示例均为待测试设计，不冒充真实生成结果，也不代表荆已经确认的个人经验。

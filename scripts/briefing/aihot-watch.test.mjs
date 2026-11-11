@@ -5,7 +5,7 @@ import { discoverWatch, renderWatch, watchRecord } from './aihot-watch.mjs';
 const now = new Date('2026-09-23T10:00:00.000Z');
 const item = {
   source: { name: '公众号：数字生命卡兹克' },
-  title: '虚构测试标题',
+  title: '示例测试标题',
   publishedAt: '2026-09-22T02:02:03.000Z',
   links: {
     original: 'https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA%3D%3D&mid=123&idx=1&sn=test',

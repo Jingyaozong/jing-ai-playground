@@ -7,7 +7,7 @@ test('list, detail and empty state preserve review-only boundaries', () => {
   const detail=renderDraftPage([],{text:'# 测试\n\n**核对边界**\n\n- [ ] 核对原文'});
   assert.ok(detail.includes('<h2>测试</h2>'));
   assert.ok(detail.includes('<h3>核对边界</h3>'));
-  assert.ok(detail.includes('待荆确认 · 未发布'));
+  assert.ok(detail.includes('草稿 · 未发布'));
   assert.ok(!detail.includes('<input'));
 });
 test('draft HTML and foreign links remain inert while known sources are clickable', () => {

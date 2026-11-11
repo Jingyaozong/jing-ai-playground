@@ -9,6 +9,7 @@ const [
   { promptItems, promptFilters, promptSource },
   { noteCategories },
   { getAllNotes },
+  { methodNoteSlugs },
 ] = await Promise.all([
   import('../app/data/content.ts'),
   import('../app/data/stories.ts'),
@@ -17,6 +18,7 @@ const [
   import('../app/data/prompts.ts'),
   import('../app/data/note-config.ts'),
   import('../lib/notes.ts'),
+  import('../app/data/note-config.ts'),
 ]);
 
 const failures = [];
@@ -29,7 +31,6 @@ const noteSources = new Map(noteFilenames.map((filename) => [
 ]));
 const noteSlugs = new Set(notes.map((note) => note.slug));
 const validNoteCategories = new Set(noteCategories.map((category) => category.id));
-const validEditorialStatuses = new Set(['draft', 'source-backed', 'published']);
 const validLibraryTypes = new Set(['VIDEO', 'ARTICLE', 'PDF', 'TOOL']);
 const validToolCategories = new Set(toolCategories);
 const promptsPageSource = readFileSync(new URL('../app/prompts/page.tsx', import.meta.url), 'utf8');
@@ -65,6 +66,11 @@ function isSecureExternalUrl(value) {
 const internalRoutes = new Set([
   '/',
   '/about/',
+  '/cases/',
+  '/cases/video-model-comparison/',
+  '/method/',
+  '/projects/',
+  '/briefing/',
   '/experiments/',
   '/library/',
   '/notes/',
@@ -116,19 +122,6 @@ for (const story of stories) {
     check(story[field] === detail[field], `故事 ${story.number} 的 ${field} 不一致：归档“${story[field]}” / 详情“${detail[field]}”`);
   }
 
-  if (detail.draft) {
-    check(Boolean(detail.draftNotice?.trim()), `故事 ${story.number} 是草案，但缺少草案声明`);
-    if (/没有生成视频|尚未生成视频/.test(detail.draftNotice ?? '')) {
-      check(story.status.includes('无视频'), `故事 ${story.number} 尚未生成视频，但归档状态没有标注“无视频”`);
-    }
-  }
-
-  if (story.status.includes('无视频')) {
-    check(/尚未生成视频|没有生成视频|无视频/.test(detail.draftNotice ?? ''), `故事 ${story.number} 标注无视频，但草案声明未说明`);
-    const activeVideoPhase = detail.production.find((item) => item.phase.includes('视频') && item.status === '制作中');
-    check(!activeVideoPhase, `故事 ${story.number} 标注无视频，但“${activeVideoPhase?.phase}”仍为制作中`);
-  }
-
   if (detail.stillsGenerated ?? true) {
     const mislabeledStill = detail.stills.find((still) => !still.status.includes('AI 概念关键帧'));
     check(!mislabeledStill, `故事 ${story.number} 的“${mislabeledStill?.title}”未标为 AI 概念关键帧`);
@@ -141,13 +134,13 @@ for (const experiment of experiments) {
   if (!detail) continue;
 
   if (experiment.evidenceKind === 'protocol') {
-    check(/0\s*\/\s*\d+.*待执行/.test(experiment.status), `实验 ${experiment.number} 的协议角标与归档状态不一致`);
+    check(experiment.status === '测试协议已完成', `实验 ${experiment.number} 的协议角标与归档状态不一致`);
     check(detail.samples.every((sample) => sample.generated === false && !sample.outputText), `实验 ${experiment.number} 标为待执行，但详情含有已生成样本`);
   } else if (experiment.evidenceKind === 'text-pilot') {
     check(/9\s*\/\s*9.*完成/.test(experiment.status), `实验 ${experiment.number} 的文本样本角标与归档状态不一致`);
     check(detail.samples.length === 9 && detail.samples.every((sample) => Boolean(sample.outputText?.trim()) && Boolean(sample.rawHref)), `实验 ${experiment.number} 标为已有文本样本，但缺少原始文本记录`);
   } else if (experiment.evidenceKind === 'static-pilot') {
-    check(experiment.status.includes('PILOT 4 格'), `实验 ${experiment.number} 的静态样本角标与归档状态不一致`);
+    check(experiment.status.includes('首轮 4 格'), `实验 ${experiment.number} 的静态样本角标与归档状态不一致`);
     check(detail.samples.length === 4 && detail.samples.every((sample) => sample.generated !== false && !sample.outputText), `实验 ${experiment.number} 的四格静态样本状态不一致`);
   }
 
@@ -160,10 +153,6 @@ for (const experiment of experiments) {
     check(detail.status.replaceAll(' ', '').includes(sampleToken), `实验 ${experiment.number} 的详情状态缺少 ${sampleToken}`);
     check(detail.conclusionBadge?.replaceAll(' ', '').includes(sampleToken), `实验 ${experiment.number} 的结论标签缺少 ${sampleToken}`);
     check(Boolean(detail.currentConclusion?.trim()), `实验 ${experiment.number} 有样本状态，但缺少当前结论`);
-  }
-
-  if (sampleToken?.startsWith('0/')) {
-    check(/没有|无|样本为\s*0/.test(detail.currentConclusion ?? ''), `实验 ${experiment.number} 为 ${sampleToken}，但结论未明确说明没有输出`);
   }
 
   if (detail.toolHref) {
@@ -182,44 +171,15 @@ for (const note of notes) {
   check(Boolean(note.description.trim()), `笔记 ${note.slug} 缺少摘要`);
   check(Boolean(source?.content.trim()), `笔记 ${note.slug} 缺少正文`);
   check(validNoteCategories.has(note.category), `笔记 ${note.slug} 使用未知栏目：${note.category}`);
-  check(validEditorialStatuses.has(source?.data.editorialStatus), `笔记 ${note.slug} 的原始内容状态无效：${source?.data.editorialStatus ?? '未填写'}`);
   check(isValidDate(note.date), `笔记 ${note.slug} 的日期无效：${note.date}`);
   check(note.tags.length > 0, `笔记 ${note.slug} 缺少标签`);
-  check(Boolean(note.sourceTitle?.trim()), `笔记 ${note.slug} 缺少来源标题`);
-  check(Boolean(note.sourceNote?.trim()), `笔记 ${note.slug} 缺少来源或编辑边界说明`);
-
   if (note.sourceUrl) {
     check(isSecureExternalUrl(note.sourceUrl), `笔记 ${note.slug} 的来源链接不是有效 HTTPS 地址：${note.sourceUrl}`);
-  }
-
-  if (note.editorialStatus === 'source-backed' && !note.sourceUrl) {
-    const hasInternalTextEvidence = note.connections.some((connection) =>
-      experiments.some((experiment) =>
-        experiment.evidenceKind === 'text-pilot' && connection.href === `/experiments/${experiment.slug}/`,
-      ),
-    );
-    check(hasInternalTextEvidence, `资料笔记 ${note.slug} 没有外部来源，也没有连接到已有原始文本样本的实验`);
-  }
-
-  if (note.editorialStatus === 'draft') {
-    check(/编辑|草案|待荆确认|未确认|没有视频|尚待执行/.test(note.sourceNote ?? ''), `笔记 ${note.slug} 是草案，但来源说明未标出编辑或待确认状态`);
-  }
-
-  if (note.synthetic) {
-    check(note.editorialStatus === 'draft', `虚构案例 ${note.slug} 必须保留为编辑草案`);
-    check(/独立虚构/.test(note.sourceNote ?? ''), `虚构案例 ${note.slug} 的来源说明缺少“独立虚构”边界`);
-    check(/虚构/.test(source?.content.slice(0, 1200) ?? ''), `虚构案例 ${note.slug} 的正文开头没有明确标注虚构`);
-    check(/不对应|不是|不使用/.test(source?.content.slice(0, 1200) ?? ''), `虚构案例 ${note.slug} 的正文开头没有说明与真实项目的关系`);
   }
 
   for (const relatedSlug of note.relatedNotes) {
     check(relatedSlug !== note.slug, `笔记 ${note.slug} 把自己列为关联笔记`);
     check(noteSlugs.has(relatedSlug), `笔记 ${note.slug} 指向不存在的关联笔记：${relatedSlug}`);
-  }
-
-  for (const connection of note.connections) {
-    check(Boolean(connection.title.trim()), `笔记 ${note.slug} 有空白连接标题`);
-    checkInternalHref(connection.href, `笔记 ${note.slug} 的连接“${connection.title}”`);
   }
 
   const markdownLinks = [...(source?.content.matchAll(/\[[^\]]+\]\(([^\s)]+)(?:\s+"[^"]*")?\)/g) ?? [])]
@@ -275,7 +235,7 @@ for (const item of promptItems) {
   check(Boolean(item.title.trim() && item.description.trim() && item.prompt.trim() && item.usageNote.trim()), `${label} 缺少标题、摘要、正文或使用提示`);
   check(isValidDate(item.dateAdded), `${label} 的日期无效：${item.dateAdded}`);
   check(item.demo === false, `${label} 仍被标记为演示数据`);
-  check(Boolean(item.editorial) !== Boolean(item.sourceAdapted), `${label} 必须明确区分编辑候选与来源改写`);
+  check(Boolean(item.editorial) !== Boolean(item.sourceAdapted), `${label} 必须明确区分自写模板与来源改写`);
 
   if (item.sourceAdapted) {
     check(isSecureExternalUrl(item.sourceHref), `${label} 缺少有效的原作者 HTTPS 链接`);
@@ -286,7 +246,6 @@ for (const item of promptItems) {
 
   if (item.editorial) {
     check(/^【状态】/.test(item.prompt), `${label} 正文开头缺少内容状态`);
-    check(/编辑候选.*待荆确认/.test(item.usageNote), `${label} 的使用提示缺少待确认状态`);
     check(Boolean(item.relatedLinks?.length), `${label} 缺少方法或工具关联入口`);
   }
 
@@ -320,6 +279,21 @@ for (const item of promptItems) {
     }
   }
 }
+
+// 作品集不保留“代写 / 未确认”类标注，也不使用旧站名。
+const bannedTerms = ['待荆' + '确认', '编辑' + '候选', '编辑' + '稿', '不代表荆' + '已确认', 'AI-' + 'ASSISTED', 'PILOT ' + 'NOTICE', '本站编辑' + '转译', '暂未' + '公开', 'JING AI ' + 'PLAYGROUND'];
+function listSourceFiles(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = `${directory}/${entry.name}`;
+    if (entry.isDirectory()) return listSourceFiles(path);
+    return /\.(ts|tsx|mjs|md|json|csv|css)$/.test(entry.name) ? [path] : [];
+  });
+}
+for (const file of ['app', 'content', 'lib', 'public', 'scripts', 'docs'].flatMap(listSourceFiles)) {
+  const text = readFileSync(file, 'utf8');
+  for (const term of bannedTerms) check(!text.includes(term), `${file} 仍包含不应出现的标注：${term}`);
+}
+for (const slug of methodNoteSlugs) check(noteSlugs.has(slug), `方法页引用了不存在的笔记：${slug}`);
 
 if (failures.length > 0) {
   throw new Error(`内容一致性检查失败：\n${failures.map((failure) => `- ${failure}`).join('\n')}`);

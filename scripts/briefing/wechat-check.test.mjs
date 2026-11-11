@@ -7,7 +7,7 @@ import { readWechatCheck, saveWechatCheck, validateWechatCheck } from './wechat-
 
 const now = new Date('2026-09-23T03:00:00.000Z');
 const url = 'https://mp.weixin.qq.com/s?__biz=MzIyMzA5NjEyMA==&mid=123&idx=1&sn=abc';
-const article = { title: '虚构测试文章', publishedAt: '2026-09-22T02:02:00.000Z', url, body: '测试正文'.repeat(150) };
+const article = { title: '示例测试文章', publishedAt: '2026-09-22T02:02:00.000Z', url, body: '测试正文'.repeat(150) };
 const crossCheck = { status: 'matched', checkedAt: now.toISOString(), index: 'https://aihot.news/items/example' };
 
 test('source-only preview record contains metadata, not article body or model claims', async () => {
@@ -17,7 +17,7 @@ test('source-only preview record contains metadata, not article body or model cl
     const raw = await readFile(resolve(directory, 'wechat-latest-check.json'), 'utf8');
     assert.equal(saved.status, 'source-only');
     assert.equal(saved.crossCheck.status, 'matched');
-    assert.ok(raw.includes('虚构测试文章'));
+    assert.ok(raw.includes('示例测试文章'));
     assert.ok(!raw.includes('测试正文'));
     assert.ok(!raw.includes('DEEPSEEK_API_KEY'));
     assert.equal((await readWechatCheck(directory, now)).article.bodyChars, article.body.length);

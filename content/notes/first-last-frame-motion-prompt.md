@@ -9,33 +9,9 @@ cover: "tips-mint"
 featured: true
 tags: ["AI VIDEO", "KEYFRAME", "MOTION", "PROMPT"]
 readingTime: "13 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Runway Image to Video / Google Veo First and Last Frames / Adobe Firefly Frames"
 sourceUrl: "https://help.runwayml.com/hc/en-us/articles/48324313115155-Image-to-Video-Prompting-Guide"
-sourceNote: "产品能力与限制依据 Runway、Google Cloud 和 Adobe 官方文档核对；责任分工、镜头模板与验收表是本站的编辑整理，不代表不同模型共享同一套语法或稳定性。"
 relatedNotes: ["video-vs-image-prompt", "camera-movement-guide", "video-failure-cases"]
-connections:
-  - label: "PROMPT"
-    title: "首尾帧过渡指令"
-    description: "把端点事实、中间路径与不能漂移的状态写进同一份制作模板。"
-    href: "/prompts/all/?category=AI%20%E8%A7%86%E9%A2%91%E5%88%B6%E4%BD%9C#prompt-video-first-last-frame-bridge"
-    tone: "sky"
-  - label: "TOOL"
-    title: "AI 视频镜头风险预检器"
-    description: "填写时长、动作、运镜与首尾差异，在生成前找出需要减项或拆镜的位置。"
-    href: "/tools/shot-risk-checker/"
-    tone: "coral"
-  - label: "TOOL"
-    title: "分镜整理器"
-    description: "把首帧画面、主体动作、摄影机运动和声音拆成一张可编辑的镜头表。"
-    href: "/tools/shot-list-cleaner/"
-    tone: "mint"
-  - label: "TOOL"
-    title: "角色锚点卡生成器"
-    description: "先固定人物身份，再决定每一镜的起点、终点与允许变化。"
-    href: "/tools/character-anchor/"
-    tone: "yellow"
 ---
 
 首帧和尾帧不是两张“参考氛围图”。它们分别提出两个明确要求：**镜头从哪里开始，镜头必须在哪里结束。** 运动提示词则要回答更难的问题：从起点到终点，中间到底发生什么。

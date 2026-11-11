@@ -195,7 +195,7 @@ export function MultimodalEvaluationDesk() {
 
   return <section className="evaluation-desk" aria-label="多模态评测记录台">
     <div className="evaluation-toolbar">
-      <div><span className="mono">LOCAL ONLY / 当前浏览器</span><h2>先建一条<br />空白记录。</h2><p>每批最多 30 个样本。CSV 一行对应一个样本的一个维度，可导回本页继续填写。</p></div>
+      <div><span className="mono">当前浏览器</span><h2>先建一条<br />空白记录。</h2><p>每批最多 30 个样本。CSV 一行对应一个样本的一个维度，可导回本页继续填写。</p></div>
       <div className="evaluation-actions"><button type="button" onClick={addSample}>新增空白样本</button><button type="button" disabled={loading || !!pendingImport} onClick={() => fileInput.current?.click()}>{loading ? '正在读取…' : '导入记录 CSV'}</button><button type="button" onClick={downloadCsv}>导出记录 CSV</button></div>
       <input ref={fileInput} type="file" accept=".csv,text/csv" aria-label="选择评测记录 CSV" hidden onChange={(event) => void importFile(event.target.files?.[0])} />
       <p className="evaluation-local-note">不会读取或上传视频；CSV 只在浏览器内解析。关闭页面前请导出并确认文件保存。{dirty && ' 当前修改尚未确认保存，离页提醒仍开启。'}</p>
@@ -204,7 +204,7 @@ export function MultimodalEvaluationDesk() {
 
     {exportedBatch && <section className="evaluation-save-confirmation" aria-labelledby="evaluation-save-title"><div><h3 id="evaluation-save-title">先确认文件，再离开。</h3><p>{exportedBatch === batch ? '在浏览器下载记录中找到 multimodal-evaluation-records.csv，确认文件保存成功后，再解除当前修改的离页提醒。取消或未找到下载时，请重新导出。' : '导出后记录又有修改，旧文件不包含这些新内容。请重新导出，不能用旧下载解除当前提醒。'}</p></div><div className="evaluation-actions"><button type="button" onClick={downloadCsv}>重新导出 CSV</button><button type="button" disabled={exportedBatch !== batch || !!pendingImport || loading} onClick={confirmSavedExport}>已确认文件保存</button></div></section>}
 
-    {pendingImport && <div className="evaluation-replace"><div><span className="mono">REPLACE / 替换确认</span><h3>用导入文件<br />替换当前记录？</h3><p>导入文件包含 {pendingImport.samples.length} 个样本。需要保留当前修改时，请先取消并导出。</p></div><div className="evaluation-actions"><button type="button" onClick={() => setPendingImport(null)}>保留当前记录</button><button type="button" onClick={() => applyImport(pendingImport)}>确认替换</button></div></div>}
+    {pendingImport && <div className="evaluation-replace"><div><span className="mono">替换确认</span><h3>用导入文件<br />替换当前记录？</h3><p>导入文件包含 {pendingImport.samples.length} 个样本。需要保留当前修改时，请先取消并导出。</p></div><div className="evaluation-actions"><button type="button" onClick={() => setPendingImport(null)}>保留当前记录</button><button type="button" onClick={() => applyImport(pendingImport)}>确认替换</button></div></div>}
 
     <div className="evaluation-batch-fields">
       <label>批次名称<input maxLength={200} value={batch.batchName} onChange={(event) => updateBatch('batchName', event.target.value)} placeholder="例如：候选版内部试评" /></label>
@@ -219,13 +219,13 @@ export function MultimodalEvaluationDesk() {
     </div>
 
     <div className="evaluation-workspace">
-      <aside className="evaluation-samples"><div><span className="mono">SAMPLES / 样本</span><b>{batch.samples.length} 条</b></div><nav aria-label="选择评测样本">{batch.samples.map((item, index) => {
+      <aside className="evaluation-samples"><div><span className="mono">样本</span><b>{batch.samples.length} 条</b></div><nav aria-label="选择评测样本">{batch.samples.map((item, index) => {
         const recorded = item.dimensions.filter((entry) => entry.result !== 'not_reviewed').length;
         return <button type="button" key={`${item.sampleId}-${index}`} aria-current={selectedSample === index ? 'step' : undefined} onClick={() => { setSelectedSample(index); setSelectedDimension(0); setRemovePending(false); }}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{item.sampleId || '未命名样本'}</strong><small>{recorded} / 8 · {reviewStateLabels[item.reviewState]}</small></div></button>;
       })}</nav><button type="button" className="evaluation-add-sample" onClick={addSample}>＋ 新增空白样本</button></aside>
 
       <div className="evaluation-sheet">
-        <div className="evaluation-sheet-heading"><div><span className="mono">CURRENT SAMPLE / 当前样本</span><h2>{sample.sampleId || '未命名样本'}</h2></div><span className={`evaluation-review-state is-${sample.reviewState}`}>{reviewStateLabels[sample.reviewState]}</span></div>
+        <div className="evaluation-sheet-heading"><div><span className="mono">当前样本</span><h2>{sample.sampleId || '未命名样本'}</h2></div><span className={`evaluation-review-state is-${sample.reviewState}`}>{reviewStateLabels[sample.reviewState]}</span></div>
         <div className="evaluation-identity">
           <label>样本 ID<input maxLength={80} value={sample.sampleId} onChange={(event) => updateSample({ sampleId: event.target.value })} /></label>
           <label>输出文件 ID<input maxLength={200} value={sample.outputId} onChange={(event) => updateSample({ outputId: event.target.value })} placeholder="只填真实文件或候选编号" /></label>
@@ -239,7 +239,7 @@ export function MultimodalEvaluationDesk() {
         })}</div>
 
         <section className={`evaluation-dimension-card is-${dimension.result}`} role="tabpanel" aria-label={`${definition.label}记录`}>
-          <div className="evaluation-dimension-heading"><span>{String(selectedDimension + 1).padStart(2, '0')}</span><div><p className="mono">DIMENSION / 当前维度</p><h3>{definition.label}</h3><small>{definition.hint}</small></div></div>
+          <div className="evaluation-dimension-heading"><span>{String(selectedDimension + 1).padStart(2, '0')}</span><div><p className="mono">当前维度</p><h3>{definition.label}</h3><small>{definition.hint}</small></div></div>
           <fieldset><legend>观看结果</legend><div className="evaluation-result-options">{Object.entries(resultLabels).map(([value, label]) => <button type="button" aria-pressed={dimension.result === value} key={value} onClick={() => chooseResult(value as EvaluationResult)}>{label}</button>)}</div></fieldset>
           <div className="evaluation-field-pair"><label>严重度<select value={dimension.severity} disabled={!['fail', 'uncertain'].includes(dimension.result)} onChange={(event) => updateDimension({ severity: event.target.value as EvaluationSeverity })}>{Object.entries(severityLabels).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label><label>证据时间段<input maxLength={200} value={dimension.timeRange} onChange={(event) => updateDimension({ timeRange: event.target.value })} placeholder="例如：00:02.4–00:03.1" /></label></div>
           <label>可复核证据<textarea rows={5} maxLength={8000} value={dimension.evidence} onChange={(event) => updateDimension({ evidence: event.target.value })} placeholder="只写可见、可听或可定位的现象；没有把握时选择“无法判断”" /></label>
@@ -248,7 +248,7 @@ export function MultimodalEvaluationDesk() {
 
         <div className="evaluation-resolution">
           <div className="evaluation-resolution-fields"><label>原因层<select value={sample.rootCause} onChange={(event) => updateSample({ rootCause: event.target.value as RootCause })}>{Object.entries(rootCauseLabels).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select><small>先排除数据、规则、执行和工具流程；“模型能力”只能作为待验证假设。</small></label><label>复验状态<select value={sample.retestStatus} onChange={(event) => updateSample({ retestStatus: event.target.value as RetestStatus })}>{Object.entries(retestLabels).map(([value, label]) => <option value={value} key={value}>{label}</option>)}</select></label><label>人工复核说明<textarea rows={3} maxLength={8000} value={sample.reviewerNote} onChange={(event) => updateSample({ reviewerNote: event.target.value })} placeholder="记录争议、裁决依据或下一步" /></label></div>
-          <aside className="evaluation-gate"><span className="mono">HUMAN GATE / 人工关口</span><h3>{issues.length ? '还不能收口。' : '证据已经齐了。'}</h3>{issues.length ? <ul>{issues.map((issue) => <li key={issue}>{issue}</li>)}</ul> : <p>八维状态与必要证据完整。仍需由你确认，不会自动判定样本优劣。</p>}<label>当前流程状态<select value={sample.reviewState} disabled={sample.reviewState === 'reviewed'} onChange={(event) => updateSample({ reviewState: event.target.value as SampleReviewState }, true)}><option value="draft">填写中</option><option value="ready_for_review">待人工复核</option><option value="needs_discussion">待讨论</option>{sample.reviewState === 'reviewed' && <option value="reviewed">已完成人工复核</option>}</select></label><button type="button" onClick={completeReview}>由我确认完成人工复核</button></aside>
+          <aside className="evaluation-gate"><span className="mono">人工关口</span><h3>{issues.length ? '还不能收口。' : '证据已经齐了。'}</h3>{issues.length ? <ul>{issues.map((issue) => <li key={issue}>{issue}</li>)}</ul> : <p>八维状态与必要证据完整。仍需由你确认，不会自动判定样本优劣。</p>}<label>当前流程状态<select value={sample.reviewState} disabled={sample.reviewState === 'reviewed'} onChange={(event) => updateSample({ reviewState: event.target.value as SampleReviewState }, true)}><option value="draft">填写中</option><option value="ready_for_review">待人工复核</option><option value="needs_discussion">待讨论</option>{sample.reviewState === 'reviewed' && <option value="reviewed">已完成人工复核</option>}</select></label><button type="button" onClick={completeReview}>由我确认完成人工复核</button></aside>
         </div>
 
         <div className="evaluation-sheet-actions"><div>{removePending ? <><p>将移除当前样本 {sample.sampleId || '未命名样本'}。继续编辑前可撤销一次；刷新后无法撤销。</p><button type="button" onClick={() => setRemovePending(false)}>取消移除</button><button type="button" onClick={removeSample}>确认移除</button></> : <button type="button" onClick={() => setRemovePending(true)}>移除当前样本</button>}{removedSnapshot && <><p>可恢复 {removedSnapshot.batch.samples[removedSnapshot.sampleIndex].sampleId || '未命名样本'}；继续编辑、新增或确认导入后，撤销失效。</p><button type="button" disabled={!!pendingImport || loading} onClick={undoRemoval}>撤销上次移除</button></>}</div><button type="button" onClick={downloadCsv}>导出全部记录 CSV</button></div>
@@ -257,7 +257,7 @@ export function MultimodalEvaluationDesk() {
 
     <section className="evaluation-insights" aria-labelledby="evaluation-insights-title">
       <header className="evaluation-insights-heading">
-        <div><span className="mono">READ ONLY / 批次观察窗</span><h2 id="evaluation-insights-title">八条轨道，<br />看清哪里卡住。</h2></div>
+        <div><span className="mono">批次观察窗</span><h2 id="evaluation-insights-title">八条轨道，<br />看清哪里卡住。</h2></div>
         <div><p>来源：当前页面中的本地人工记录。粒度：样本 × 维度。面板随填写或 CSV 导入即时更新。</p><strong>未记录不等于满足；这里不计算模型总分。</strong></div>
       </header>
 
@@ -283,7 +283,7 @@ export function MultimodalEvaluationDesk() {
           })}</div>
           {summary.recordedDimensionRecords === 0 && <p className="evaluation-chart-empty">当前只有空白记录。轨道里的“待记录”不是评测结果，而是需要补齐的人工观察。</p>}
           <section className="evaluation-issue-locator" aria-labelledby="evaluation-issue-locator-title">
-            <div className="evaluation-issue-heading"><div><span className="mono">FIND THE RECORD / 本地定位</span><h4 id="evaluation-issue-locator-title">异常记录，<br />逐条可达。</h4></div><small>{summary.issues.length} 条</small></div>
+            <div className="evaluation-issue-heading"><div><span className="mono">本地定位</span><h4 id="evaluation-issue-locator-title">异常记录，<br />逐条可达。</h4></div><small>{summary.issues.length} 条</small></div>
             {summary.issues.length > 0 && <><div className="evaluation-issue-filters" role="group" aria-label="筛选异常记录">{issueFilterOptions.map(({ id, label, count }) => <button type="button" key={id} aria-pressed={issueFilter === id} onClick={() => setIssueFilter(id)}>{label}<span>{count}</span></button>)}</div><p className="evaluation-filter-note">按异常维度筛选；“样本待复验”取所在样本的人工状态。</p></>}
             {visibleIssues.length ? <ul>{visibleIssues.map((issue) => <li key={`${issue.sampleIndex}-${issue.dimensionIndex}`}><button type="button" onClick={() => locateIssue(issue.sampleIndex, issue.dimensionIndex)} aria-label={`定位到${issue.sampleId || '未命名样本'}的${issue.dimensionLabel}，${resultLabels[issue.result]}${issue.evidenceGap ? '，证据有缺口' : ''}${issue.retestStatus === 'pending' ? '，所在样本待复验' : ''}`}><span className={`evaluation-issue-result is-${issue.result}`}>{resultLabels[issue.result]}</span><span className="evaluation-issue-name"><strong>{issue.sampleId || '未命名样本'} · {issue.dimensionLabel}</strong><small>{issue.evidenceGap ? '证据缺口 · 需补全' : issue.timeRange ? `时间段 ${issue.timeRange}` : '证据已记录'}{issue.retestStatus === 'pending' && ' · 样本待复验'}</small></span><span aria-hidden="true">↗</span></button></li>)}</ul> : <p className="evaluation-issue-empty" aria-live="polite">{summary.issues.length === 0 ? '目前没有标为“不满足”或“无法判断”的维度。开始人工评测后，相关记录会出现在这里。' : issueFilter === 'evidence_gap' ? '当前没有证据缺口。切回“全部异常”可查看其他记录。' : '当前没有所在样本标为“待复验”的异常记录。切回“全部异常”可查看其他记录。'}</p>}
           </section>
@@ -298,7 +298,7 @@ export function MultimodalEvaluationDesk() {
       </div>
     </section>
 
-    <section className="evaluation-export" aria-labelledby="evaluation-export-title"><div><span className="mono">READABLE COPY / 可读副本</span><h2 id="evaluation-export-title">一份给表格，<br />一份给人读。</h2><p>CSV 保存整批八维字段；下方文字只汇总当前样本。两者都来自你填写的记录，不补写结论。</p><LocalRecordCopy key={selectedSample} value={markdown} label="复制当前记录" success="已复制当前样本的人工记录。" /></div><textarea aria-label="当前样本可读记录" readOnly value={markdown} rows={18} onFocus={(event) => event.currentTarget.select()} /></section>
+    <section className="evaluation-export" aria-labelledby="evaluation-export-title"><div><span className="mono">可读副本</span><h2 id="evaluation-export-title">一份给表格，<br />一份给人读。</h2><p>CSV 保存整批八维字段；下方文字只汇总当前样本。两者都来自你填写的记录，不补写结论。</p><LocalRecordCopy key={selectedSample} value={markdown} label="复制当前记录" success="已复制当前样本的人工记录。" /></div><textarea aria-label="当前样本可读记录" readOnly value={markdown} rows={18} onFocus={(event) => event.currentTarget.select()} /></section>
   </section>;
 }
 

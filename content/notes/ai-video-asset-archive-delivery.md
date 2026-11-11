@@ -9,33 +9,9 @@ cover: "making-coral"
 featured: false
 tags: ["AI VIDEO", "ARCHIVE", "DELIVERY", "WORKFLOW"]
 readingTime: "18 分钟"
-demo: false
-editorialStatus: "source-backed"
 sourceTitle: "Adobe Premiere Media Management / Frame.io Version Stacking / Backblaze 3-2-1 Backup"
 sourceUrl: "https://helpx.adobe.com/uk/premiere/desktop/organize-media/create-projects/move-project-to-another-computer.html"
-sourceNote: "项目收集、文件结构与元数据依据 Adobe 官方资料核对；版本堆叠依据 Frame.io 官方支持文档；3-2-1 备份原则依据 Backblaze 资料。目录模板、命名字段、交付清单和恢复测试是本站面向个人 AI 视频制作的编辑整理，不是唯一行业标准，也不代表荆已经确认的个人工作流。"
 relatedNotes: ["ai-video-generation-version-log", "ai-video-production-budget", "ai-video-shot-continuity"]
-connections:
-  - label: "TOOL"
-    title: "交付清单生成器"
-    description: "选择交付目录，逐项确认母版、字幕、声音、工程与授权，并生成 README、CSV 与 SHA-256 命令。"
-    href: "/tools/delivery-pack/"
-    tone: "yellow"
-  - label: "TOOL"
-    title: "镜头版本记录器"
-    description: "把候选素材的模型、参数、结果、决定与淘汰原因保存成可复制的镜头记录。"
-    href: "/tools/shot-version-recorder/"
-    tone: "mint"
-  - label: "TOOL"
-    title: "生成预算计算器"
-    description: "归档前回看生成秒数、返工预留与后期投入，补齐项目的实际成本线索。"
-    href: "/tools/generation-budget/"
-    tone: "coral"
-  - label: "TOOL"
-    title: "多平台发布规格规划器"
-    description: "从母版拆出横版、竖版、方版与短版，并记录安全区、字幕、音频和规则核对日期。"
-    href: "/tools/release-matrix/"
-    tone: "sky"
 ---
 
 AI 视频项目最容易在“看起来快做完”的时候失控。

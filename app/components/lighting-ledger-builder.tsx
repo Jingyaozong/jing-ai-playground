@@ -225,7 +225,7 @@ export function LightingLedgerBuilder() {
     <section className="lighting-ledger-workbench" aria-label="光线连续性账本工具">
       <div className="lighting-ledger-editor">
         <div className="lighting-panel-heading">
-          <div><span className="mono">01 / FIX THE WORLD</span><h2>先钉住一盏灯，<br />再移动摄影机。</h2></div>
+          <div><span className="mono">01</span><h2>先钉住一盏灯，<br />再移动摄影机。</h2></div>
           <div><button type="button" onClick={() => setState(exampleState)}>载入四镜示例</button><button type="button" onClick={() => setState(emptyState)}>清空</button></div>
         </div>
 
@@ -248,7 +248,7 @@ export function LightingLedgerBuilder() {
               const expected = screenRelation(state.keyDirection, shot.camera);
               const verdict = !shot.observed ? 'pending' : shot.observed === expected ? 'match' : 'issue';
               return <article className={`lighting-shot-row verdict-${verdict}`} key={shot.id}>
-                <div className="lighting-shot-index"><span className="mono">SHOT</span><strong>{String(index + 1).padStart(2, '0')}</strong><button type="button" disabled={state.shots.length <= 2} onClick={() => removeShot(shot.id)} aria-label={`删除${shot.name}`}>×</button></div>
+                <div className="lighting-shot-index"><span className="mono">镜头</span><strong>{String(index + 1).padStart(2, '0')}</strong><button type="button" disabled={state.shots.length <= 2} onClick={() => removeShot(shot.id)} aria-label={`删除${shot.name}`}>×</button></div>
                 <div className="lighting-shot-fields">
                   <label className="lighting-shot-name"><span>镜头名称</span><input value={shot.name} onChange={(event) => updateShot(shot.id, { name: event.target.value })} /></label>
                   <label><span>景别</span><input value={shot.size} onChange={(event) => updateShot(shot.id, { size: event.target.value })} placeholder="中景" /></label>
@@ -286,7 +286,7 @@ export function LightingLedgerBuilder() {
         <small className="lighting-output-local">所有输入与观察只保存在当前浏览器，不上传图片或视频。SCREEN FLIPS 只表示坐标预期发生改变，不代表错误。</small>
       </aside>
 
-      {manualCopy && <aside className="lighting-copy-fallback"><div><span className="mono">MANUAL COPY / 浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制光线连续性账本内容" onFocus={(event) => event.currentTarget.select()} /></aside>}
+      {manualCopy && <aside className="lighting-copy-fallback"><div><span className="mono">浏览器限制</span><p>点击文本框后按 Ctrl+A，再按 Ctrl+C。</p></div><button type="button" onClick={() => setManualCopy(null)}>关闭 ×</button><textarea readOnly value={manualCopy} aria-label="手动复制光线连续性账本内容" onFocus={(event) => event.currentTarget.select()} /></aside>}
     </section>
   );
 }

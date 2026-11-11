@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '../../lib/seo';
 import Link from 'next/link';
 import { ArchiveFilterHashFocus } from '../../components/archive-filter-hash-focus';
 import { PromptBrowser } from '../../components/prompt-browser';
@@ -6,10 +7,11 @@ import { SiteFooter } from '../../components/site-footer';
 import { SiteHeader } from '../../components/site-header';
 import { promptItems } from '../../data/prompts';
 
-export const metadata: Metadata = {
-  title: '全部 Prompt — JING AI PLAYGROUND',
+export const metadata: Metadata = pageMeta({
+  title: '全部 Prompt',
+  robots: { index: false, follow: true },
   description: '浏览、筛选和复制 Prompt 工作台中的通用思考 Prompt 与 AI 视频制作模板。',
-};
+});
 
 export default function AllPromptsPage() {
   return (
@@ -22,7 +24,7 @@ export default function AllPromptsPage() {
       </section>
       <section className="prompt-collection section-shell" id="prompt-collection">
         <ArchiveFilterHashFocus hash="#prompt-collection" headingId="prompt-collection-title" />
-        <div className="section-title-row compact"><div><p className="eyebrow mono">Find a starting point / 按场景找</p><h2 id="prompt-collection-title" tabIndex={-1}>按需要找，<br />不用逐张翻。</h2></div><p>分类和搜索可以一起使用。首批 12 条是本站改写短版，卡片链接通往原作者的整篇合集；AI 制作模板另标编辑状态。</p></div>
+        <div className="section-title-row compact"><div><h2 id="prompt-collection-title" tabIndex={-1}>按需要找，<br />不用逐张翻。</h2></div><p>分类和搜索可以一起使用。首批 12 条是本站改写短版，卡片链接通往原作者的整篇合集；AI 制作模板另标编辑状态。</p></div>
         <PromptBrowser items={promptItems} />
       </section>
       <SiteFooter />
