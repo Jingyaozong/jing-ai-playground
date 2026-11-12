@@ -12,11 +12,6 @@ export const profile = {
   email: 'jingyaozong0512@gmail.com',
   // 想加其他平台时在这里加：{ label: '平台名', href: '主页链接' }
   links: [] as Array<{ label: string; href: string }>,
-  stats: [
-    { value: '{30+ 人}', label: '带过的评测与标注团队规模' },
-    { value: '{+x%}', label: 'Prompt-Image Match 指标提升' },
-    { value: '{样本量}', label: '累计评测 / 标注样本' },
-  ],
 };
 
 export const capabilities = [

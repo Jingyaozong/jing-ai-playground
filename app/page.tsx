@@ -7,23 +7,16 @@ import { ContactList } from './components/contact-links';
 import { CaseCard, DimensionGrid, EvaluationFlow } from './components/portfolio-blocks';
 import { SiteFooter } from './components/site-footer';
 import { SiteHeader } from './components/site-header';
-import { isPlaceholder, profile } from './data/profile';
+import { profile } from './data/profile';
 import { blindTest } from './data/blind-test';
 
 export default function Home() {
-  // 没填的数字不显示
-  const stats = profile.stats.filter((stat) => !isPlaceholder(stat.value));
   return (
     <main className="pf">
       <SiteHeader />
       <section className="pf-hero pf-shell">
         <p className="pf-hero-role">{profile.roleLine}</p>
         <h1>{profile.tagline}</h1>
-        {stats.length > 0 && (
-          <ul className="pf-stats">
-            {stats.map((stat) => <li className="pf-stat" key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></li>)}
-          </ul>
-        )}
         <div className="pf-actions">
           <Link className="pf-button" href="/cases/">看评测案例</Link>
           <Link className="pf-button is-ghost" href="/about/#contact">联系我</Link>
