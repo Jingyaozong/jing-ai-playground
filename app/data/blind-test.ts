@@ -54,9 +54,9 @@ export const blindTest = {
   // 对比墙：每题固定取第 1 次生成，不挑最好的。
   walls: [1, 5, 8],
   badCases: [
-    { id: '01', image: '/videos/blind/badcases/q5-hailuo.webp', model: '海螺', question: '题 5 · 中文文字渲染', timecode: '00:03', type: '指令遗漏与绑定错误', seen: '招牌是红底白字，但五个字都是不存在的假字，没有一个是“幸福奶茶”。画面其余部分干净自然。', hypothesis: '模型能画出“像汉字的招牌”，但没有把指定文字绑定到招牌上。', retest: '同一题面只改字数（两个字、四个字、六个字），看正确率是否随字数下降。' },
-    { id: '02', image: '/videos/blind/badcases/q10-vidu.webp', model: 'Vidu', question: '题 10 · 音画同出', timecode: '00:03', type: '指令遗漏与绑定错误', seen: '题面没有要求字幕，画面底部自动出现了一条中英混杂的乱码字幕。', hypothesis: '口播类题面触发了模型的“口播视频带字幕”模式，而文字渲染能力不足。', retest: '在题面里加“不要字幕”，对比字幕是否消失、口型是否受影响。' },
-    { id: '03', image: '/videos/blind/badcases/q8-vidu.webp', model: 'Vidu', question: '题 8 · 长指令遵循', timecode: '00:03', type: '外观与道具变异', seen: '抖水时狗的毛色变成高饱和的橙红色，尾巴比例偏大，与“金毛犬”不符。', hypothesis: '清晨逆光加剧烈抖动，使主体颜色和形体在运动中漂移。', retest: '保留动作，把“清晨”改成“正午”，看毛色是否稳定。' },
+    { id: '01', image: '/videos/blind/badcases/q5-hailuo.webp', model: '海螺', question: '题 5 · 中文文字渲染', timecode: '00:03', type: '指令遗漏与绑定错误', seen: '招牌是红底白字，但五个字都是不存在的假字，没有一个是“幸福奶茶”。画面其余部分干净自然。', hypothesis: '主维度是语义遵循。招牌位置与样式已出现，指定字形未正确呈现。需区分文字内容遵循与字形渲染，当前素材无法判定根因。', retest: '固定招牌位置、字号和输出设置，用字形难度相近的二字、四字、六字文本分别重复生成，记录逐字正确率与整词完全匹配率。' },
+    { id: '02', image: '/videos/blind/badcases/q10-vidu.webp', model: 'Vidu', question: '题 10 · 音画同出', timecode: '00:03', type: '指令遗漏与绑定错误', seen: '题面没有要求字幕，画面底部自动出现了一条中英混杂的乱码字幕。', hypothesis: '主现象是额外字幕，附带文字不可读。题面没有明确禁字幕。先核对生成结果与导出设置，排除后处理叠字，再查口播条件是否影响字幕出现。', retest: '固定台词、画面与导出设置，只对照是否明确写“不要字幕”。重复生成并记录字幕出现率、文字可读性和口型同步。' },
+    { id: '03', image: '/videos/blind/badcases/q8-vidu.webp', model: 'Vidu', question: '题 8 · 长指令遵循', timecode: '00:03', type: '外观与道具变异', seen: '抖水时狗的毛色变成高饱和的橙红色，尾巴比例偏大，与“金毛犬”不符。', hypothesis: '主维度是主体一致性。先对照入画、抖水前后与背景颜色，区分主体变化和全局光色变化。逆光与剧烈动作都是待验证变量。', retest: '保持镜头与抖水动作，只改光线条件并重复生成，记录毛色和尾巴比例的变化。再固定光线，单独对照动作幅度。' },
     { id: '04', image: '/videos/blind/badcases/q3-jimeng.webp', model: '即梦', question: '题 3 · 动漫风格', timecode: '00:02', type: '样本错配（执行问题）', seen: '三条视频都是雨夜霓虹街道，与题面“樱花树下的短发少女”无关。', hypothesis: '负责这款的组员记错了题面，提交了用别的 Prompt 生成的视频。这不是模型的问题。', retest: '按原题面补跑 3 条再评；补跑前这一格应从均分中剔除。' },
   ],
   limitations: [

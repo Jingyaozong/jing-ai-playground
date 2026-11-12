@@ -1,12 +1,12 @@
 export const evaluationDimensions = [
-  { id: 'semantic', label: '语义遵循', hint: '主体、数量、属性、动作、场景、风格、情绪、镜头与限制' },
-  { id: 'quality', label: '基础画质', hint: '清晰度、模糊、噪点、伪影、边缘与局部纹理' },
-  { id: 'aesthetics', label: '美学表现', hint: '构图、焦点、色彩、光影、层次、质感与完成度' },
-  { id: 'consistency', label: '主体与场景', hint: '人物身份、服装、物体结构与背景连续性' },
-  { id: 'temporal', label: '时序与动作', hint: '动作断裂、瞬移、轨迹、重复与前后状态' },
+  { id: 'semantic', label: '语义遵循', hint: '主体、动作、环境、空间方向、指代、指定文字、否定条件与镜头顺序' },
+  { id: 'quality', label: '基础画质', hint: '清晰度、压缩伪影、曝光与色偏、边缘、纹理和文字可读性' },
+  { id: 'aesthetics', label: '美学表现', hint: '构图与空间层次、焦点、光色、布景与材质。创意和氛围按交付要求评' },
+  { id: 'consistency', label: '主体与场景', hint: '先看首帧与参考图是否对齐，再看身份、服装、道具、方位与风格有无漂移' },
+  { id: 'temporal', label: '时序与动作', hint: '动作与表演的连续性、异常速度、轨迹、重复与前后状态' },
   { id: 'physics', label: '结构与物理', hint: '肢体、接触、穿模、碰撞、重力、流体与倒影' },
-  { id: 'camera', label: '镜头与叙事', hint: '景别、机位、运镜、切换、信息顺序与节奏' },
-  { id: 'audio_safety', label: '音画与安全', hint: '嘴型、音效、环境音、音乐连续性与合规风险' },
+  { id: 'camera', label: '镜头与叙事', hint: '景别、机位、运镜节奏、切点、转场、镜头顺序与结尾信息' },
+  { id: 'audio_safety', label: '音画与安全', hint: '分别检查音频质量、口型和声画同步、声音与事件是否匹配、人声与配乐连续性，再检查合规' },
 ] as const;
 
 export const evaluationResults = ['not_reviewed', 'pass', 'fail', 'uncertain', 'not_applicable'] as const;

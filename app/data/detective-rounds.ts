@@ -47,7 +47,7 @@ export const detectiveRounds: DetectiveRound[] = [
     options: ['招牌上是认不出的假字，不是“幸福奶茶”', '店门口一个顾客都没有', '镜头一直在剧烈晃动', NO_ISSUE],
     answer: '招牌上是认不出的假字，不是“幸福奶茶”',
     type: '指令遗漏与绑定错误',
-    explanation: '招牌上有五个像汉字的字形，没有一个是“幸福奶茶”。画面其余部分干净自然，所以这个问题很容易被一眼带过。',
+    explanation: '招牌上有五个像汉字的字形，没有一个是“幸福奶茶”。画面其余部分干净自然，所以这个问题很容易被一眼带过。这里核对的是指定文字是否写对。',
     frame: { src: '/videos/blind/badcases/q5-hailuo.webp', timecode: '00:03', alt: '红框标出招牌上的五个假字' },
   },
   {
@@ -67,7 +67,7 @@ export const detectiveRounds: DetectiveRound[] = [
     options: ['画面底部出现了题面没要求的乱码字幕', '博主从头到尾没有张嘴', '背后的书架在说话时变形', NO_ISSUE],
     answer: '画面底部出现了题面没要求的乱码字幕',
     type: '指令遗漏与绑定错误',
-    explanation: '题面没有要求字幕，画面底部却一直挂着一条字幕：前半段是拼不出意思的英文，后半段混进了残缺的中文。',
+    explanation: '题面没有要求字幕，画面底部却一直挂着一条字幕：前半段是拼不出意思的英文，后半段混进了残缺的中文。额外字幕和字形不可读可分别记录，光看片段无法判断字幕来自生成还是导出流程。',
     frame: { src: '/videos/blind/badcases/q10-vidu.webp', timecode: '00:03', alt: '红框标出画面底部的乱码字幕' },
     note: '这道题原本考音画同步。游戏里视频静音，这一关只看画面。',
   },
@@ -108,7 +108,7 @@ export const detectiveRounds: DetectiveRound[] = [
     options: ['毛色是高饱和的橙红色，尾巴偏大，不像金毛犬', '狗一开始就站在画面中央，没有入画', '天色是正午，不是清晨', NO_ISSUE],
     answer: '毛色是高饱和的橙红色，尾巴偏大，不像金毛犬',
     type: '外观与道具变异',
-    explanation: '狗的毛色是很饱和的橙红色，抖水时最明显，尾巴比例也偏大。动作步骤基本都在，问题出在主体外观。',
+    explanation: '狗的毛色是很饱和的橙红色，抖水时最明显，尾巴比例也偏大。动作步骤基本都在。对照抖水前后，先记录主体外观变化，光线和动作幅度留待单独复测。',
     frame: { src: '/videos/blind/badcases/q8-vidu.webp', timecode: '00:03', alt: '红框标出毛色异常的狗' },
   },
 ];
