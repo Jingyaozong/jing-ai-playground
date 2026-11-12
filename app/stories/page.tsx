@@ -34,7 +34,22 @@ export default function PracticePage() {
   return (
     <main className="pf">
       <SiteHeader active="Practice" />
-      <PageHead title="创作实践" description="我自己做 AI 短片的前期开发：写分镜、定人物锚点、拆动作风险。知道生产端哪里容易出问题，评测时才知道该看哪里。" />
+      <PageHead title="创作实践" description="我用 AI 做了两类东西：一个用真实评测视频做的小游戏，和几部 AI 短片的前期开发。知道生产端哪里容易出问题，评测时才知道该看哪里。" />
+
+      <section className="pf-shell pf-section" aria-labelledby="practice-game">
+        <div className="pf-grid-2">
+          <div className="pf-media is-rounded">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/videos/blind/badcases/q7-hailuo.webp`} alt="AI 生成的颠勺视频截帧：红框标出掉在灶台上的食材" width={1280} height={720} loading="lazy" />
+          </div>
+          <div>
+            <div className="pf-section-head"><h2 id="practice-game">Bad Case 侦探</h2></div>
+            <p className="pf-lead">一个网页小游戏：看 8 条真实的 AI 生成视频，限时找出每条最主要的问题，再打分和评审团对比。其中有几条其实没有问题。</p>
+            <p className="pf-note">素材来自五款国产视频模型的交叉盲评。</p>
+            <div className="pf-actions" style={{ marginTop: 20 }}><Link className="pf-button" href="/play/bad-case-detective/">开始玩</Link></div>
+          </div>
+        </div>
+      </section>
 
       <section className="pf-shell pf-section" aria-labelledby="practice-main">
         <div className="pf-grid-2">
@@ -69,21 +84,6 @@ export default function PracticePage() {
           </table>
         </div>
         <p className="pf-note">这些失败表现对应<Link className="pf-text-link" href="/notes/video-failure-cases/">十类 AI 视频失败词典</Link>里的类型，评测时直接用同一套标签。</p>
-      </section>
-
-      <section className="pf-shell pf-section" aria-labelledby="practice-game">
-        <div className="pf-grid-2">
-          <div className="pf-media is-rounded">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/videos/blind/badcases/q7-hailuo.webp`} alt="AI 生成的颠勺视频截帧：红框标出掉在灶台上的食材" width={1280} height={720} loading="lazy" />
-          </div>
-          <div>
-            <div className="pf-section-head"><h2 id="practice-game">Bad Case 侦探</h2></div>
-            <p className="pf-lead">一个网页小游戏：看 8 条真实的 AI 生成视频，限时找出每条最主要的问题，再打分和评审团对比。其中有几条其实没有问题。</p>
-            <p className="pf-note">素材来自五款国产视频模型的交叉盲评。</p>
-            <div className="pf-actions" style={{ marginTop: 20 }}><Link className="pf-button" href="/play/bad-case-detective/">开始玩</Link></div>
-          </div>
-        </div>
       </section>
 
       <section className="pf-shell pf-section" aria-labelledby="practice-others">

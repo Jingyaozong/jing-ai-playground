@@ -30,6 +30,21 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="pf-section pf-shell" aria-labelledby="home-game">
+        <div className="pf-feature">
+          <div>
+            <p className="pf-card-tag">网页小游戏 · 约 3 分钟</p>
+            <h2 id="home-game">先自己试一次：Bad Case 侦探</h2>
+            <p className="pf-lead">看 8 条真实的 AI 生成视频，限时找出每条最主要的问题，再打个分，和 7 位评审的盲评结果对比。其中有几条其实没有问题。</p>
+            <div className="pf-actions"><Link className="pf-button" href="/play/bad-case-detective/">开始试玩</Link><Link className="pf-button is-ghost" href={`/cases/${blindTest.slug}/`}>看这次盲评</Link></div>
+          </div>
+          <Link className="pf-media is-rounded" href="/play/bad-case-detective/" aria-label="开始试玩 Bad Case 侦探">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}/videos/blind/badcases/q5-hailuo.webp`} alt="AI 生成的奶茶店视频截帧：红框标出招牌上的假字" width={1280} height={720} />
+          </Link>
+        </div>
+      </section>
+
       <section className="pf-section pf-shell" aria-labelledby="home-cases">
         <div className="pf-section-head"><h2 id="home-cases">精选评测案例</h2><Link className="pf-text-link" href="/cases/">全部案例</Link></div>
         <div className="pf-grid-3">
