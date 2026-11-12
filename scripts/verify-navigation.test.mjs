@@ -557,6 +557,25 @@ test('blind test case page shows role, task card, real videos, scores, bad cases
   for (const src of videos) assert.ok(existsSync(join(process.cwd(), 'out', src)), `Missing video file: ${src}`);
 });
 
+test('bad case detective exports, links back to the case, and every round has its media', async () => {
+  const html = page('play/bad-case-detective/index.html');
+  for (const text of ['Bad Case 侦探', '怎么玩', '开始', '不限时']) assert.ok(html.includes(text), `Missing: ${text}`);
+  assert.ok(internalPaths('play/bad-case-detective/index.html').includes('/cases/five-model-blind-test/'));
+  for (const file of ['stories/index.html', 'cases/five-model-blind-test/index.html']) {
+    assert.ok(internalPaths(file).includes('/play/bad-case-detective/'), `${file} does not link to the game`);
+  }
+  const { detectiveRounds, detectiveVideo, detectivePoster, NO_ISSUE } = await import('../app/data/detective-rounds.ts');
+  assert.ok(detectiveRounds.length >= 6 && detectiveRounds.length <= 8, 'Expected 6–8 rounds');
+  assert.ok(detectiveRounds.filter((round) => round.answer === NO_ISSUE).length >= 2, 'Expected at least two clean rounds');
+  for (const round of detectiveRounds) {
+    assert.equal(round.options.length, 4, `${round.id} should have four options`);
+    assert.ok(round.options.includes(NO_ISSUE) && round.options.includes(round.answer), `${round.id} options are inconsistent`);
+    for (const src of [detectiveVideo(round), detectivePoster(round), round.frame?.src].filter(Boolean)) {
+      assert.ok(existsSync(join(process.cwd(), 'out', src)), `Missing media file: ${src}`);
+    }
+  }
+});
+
 // 组员姓名只存在于本地的原始素材文件夹（已被 git 忽略）。有这个文件夹时检查导出页面里没有出现任何姓名；CI 上没有就跳过。
 test('team members stay anonymous on every exported page', (t) => {
   const rawDirectory = join(process.cwd(), '视频评测');

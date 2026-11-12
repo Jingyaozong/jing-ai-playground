@@ -17,6 +17,7 @@ const routes = [
   '/projects/',
   '/stories/',
   '/stories/she-forgets-yesterday/',
+  '/play/bad-case-detective/',
   '/about/',
   '/tools/multimodal-evaluation/',
   '/tools/continuity-checker/',

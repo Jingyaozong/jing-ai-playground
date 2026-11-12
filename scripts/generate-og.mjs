@@ -16,6 +16,7 @@ const pages = [
   ['default', profile.tagline.replace(/，并把.*$/, '')],
   ['cases', '评测案例'],
   ['five-model-blind-test', caseTitle],
+  ['bad-case-detective', 'Bad Case 侦探'],
   ['method', '评测方法'],
   ['projects', '项目经历'],
   ['practice', '创作实践'],

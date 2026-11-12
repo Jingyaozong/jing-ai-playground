@@ -153,6 +153,7 @@ export default function BlindTestCasePage() {
         <div className="pf-grid-2">
           {blindTest.badCases.map((item) => <BadCaseCard item={{ ...item, model: `${item.model} · ${item.question}` }} key={item.id} />)}
         </div>
+        <p className="pf-note">想自己试试找问题：<Link className="pf-text-link" href="/play/bad-case-detective/">Bad Case 侦探</Link>，用这次盲评的 8 条视频做成的小游戏。</p>
       </section>
 
       <section className="pf-shell pf-section" aria-labelledby="case-limits">
