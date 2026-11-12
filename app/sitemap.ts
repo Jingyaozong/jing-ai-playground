@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { methodNoteSlugs } from './data/note-config';
-import { videoCase } from './data/video-case';
+import { blindTest } from './data/blind-test';
 
 export const dynamic = 'force-static';
 
@@ -10,7 +10,7 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').re
 const routes = [
   '/',
   '/cases/',
-  `/cases/${videoCase.slug}/`,
+  `/cases/${blindTest.slug}/`,
   '/experiments/forty-shots-one-character/',
   '/method/',
   ...methodNoteSlugs.map((slug) => `/notes/${slug}/`),

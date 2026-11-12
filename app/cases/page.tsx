@@ -6,11 +6,11 @@ import pilotSamples from '../assets/generated/forty-shots-pilot-samples.webp';
 import { CaseCard, PageHead } from '../components/portfolio-blocks';
 import { SiteFooter } from '../components/site-footer';
 import { SiteHeader } from '../components/site-header';
-import { videoCase } from '../data/video-case';
+import { blindTest } from '../data/blind-test';
 
 export const metadata: Metadata = pageMeta({ og: 'cases',
   title: '评测案例',
-  description: 'AI 视频与多模态评测案例：多模型视频对比、人物一致性评测与画面审美判断。',
+  description: 'AI 视频与多模态评测案例：五款视频模型的交叉盲评、人物一致性评测与画面审美判断。',
 });
 
 const evidenceTools = [
@@ -23,10 +23,10 @@ export default function CasesPage() {
   return (
     <main className="pf">
       <SiteHeader active="Cases" />
-      <PageHead title="评测案例" description="每个案例都从验收合同开始，用时间码和可见事实写证据，再给严重度结论。" />
+      <PageHead title="评测案例" description="每个案例都先定规则再看结果，用可见事实写证据，并写明样本范围和局限。" />
       <section className="pf-shell pf-section">
         <div className="pf-grid-3">
-          <CaseCard href={`/cases/${videoCase.slug}/`} tag="视频评测 · 多模型对比" title={videoCase.title} description={videoCase.summary} pending={videoCase.models[0].poster} />
+          <CaseCard href={`/cases/${blindTest.slug}/`} tag="视频评测 · 五模型交叉盲评" title={blindTest.title} description={blindTest.summary} poster="/videos/blind/posters/q1-happyhorse.webp" alt="盲评题 1 的一帧：雨天窗边木桌上一杯冒着热气的咖啡" />
           <CaseCard href="/experiments/forty-shots-one-character/" tag="视频评测 · 人物一致性" title="同一个角色，换景别、光线、情绪和动作后还是她吗" description="固定角色锚点，逐步叠加变量，记录身份特征在哪一步开始漂移。" image={pilotSamples} alt="同一角色在四种条件下的样本：正面近景、侧逆光、哭泣特写、奔跑回头" />
           <CaseCard href="/method/#aesthetic" tag="画面审美判断" title="晨光里，先看见谁" description="同一张静帧的三版调色对比：用视觉焦点和明暗层次说明为什么保留其中一版。" image={aestheticFrame} alt="知夏穿芥末黄外套坐在冷蓝卧室的床边，左侧窗户透进晨光" />
         </div>

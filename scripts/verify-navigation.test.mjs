@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import test from 'node:test';
 import { readUrlFilter, writeUrlFilter } from '../lib/filter-url.ts';
@@ -533,7 +533,7 @@ test('primary navigation has at most five items and the archive lives in the foo
 
 test('homepage leads to cases, method, projects, practice and contact', () => {
   const paths = internalPaths('index.html');
-  for (const route of ['/cases/', '/cases/video-model-comparison/', '/method/', '/projects/', '/stories/', '/about/']) {
+  for (const route of ['/cases/', '/cases/five-model-blind-test/', '/method/', '/projects/', '/stories/', '/about/']) {
     assert.ok(paths.includes(route), `Homepage does not link to ${route}`);
   }
   const home = page('index.html');
@@ -549,9 +549,32 @@ test('method page lists the six core method notes and the aesthetic case', () =>
   assert.match(page('method/index.html'), /id="aesthetic"/);
 });
 
-test('video case page has task card, contract, score table, bad cases and scoped conclusion', () => {
-  const html = page('cases/video-model-comparison/index.html');
-  for (const text of ['任务卡', '验收合同', '同步播放', '八维评分', '严重度结论', 'Bad Case', '结论仅限本测试集']) assert.ok(html.includes(text), `Missing: ${text}`);
+test('blind test case page shows role, task card, real videos, scores, bad cases and limits', () => {
+  const html = page('cases/five-model-blind-test/index.html');
+  for (const text of ['我做了什么', '任务卡', '10 道测试题', '盲评结果', '同步播放', 'Bad Case', '局限与复盘', '结论只适用于这套题']) assert.ok(html.includes(text), `Missing: ${text}`);
+  const videos = [...html.matchAll(/<video\b[^>]*\bsrc="([^"]+)"/g)].map((match) => routeWithoutBase(match[1]));
+  assert.equal(videos.length, 15, 'Expected three walls of five videos');
+  for (const src of videos) assert.ok(existsSync(join(process.cwd(), 'out', src)), `Missing video file: ${src}`);
+});
+
+// 组员姓名只存在于本地的原始素材文件夹（已被 git 忽略）。有这个文件夹时检查导出页面里没有出现任何姓名；CI 上没有就跳过。
+test('team members stay anonymous on every exported page', (t) => {
+  const rawDirectory = join(process.cwd(), '视频评测');
+  if (!existsSync(rawDirectory)) return t.skip('raw material folder is not present');
+  const names = readdirSync(rawDirectory).map((entry) => entry.match(/（(.+)）/)?.[1]).filter(Boolean);
+  assert.ok(names.length > 0, 'Expected member names in the raw material folder');
+  const files = [];
+  const walk = (directory) => {
+    for (const entry of readdirSync(join(process.cwd(), 'out', directory), { withFileTypes: true })) {
+      const path = directory ? `${directory}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) walk(path); else if (/\.(html|txt|js)$/.test(entry.name)) files.push(path);
+    }
+  };
+  walk('');
+  for (const file of files) {
+    const text = readFileSync(join(process.cwd(), 'out', file), 'utf8');
+    for (const name of names) assert.ok(!text.includes(name), `${file} exposes a team member name`);
+  }
 });
 
 test('every exported page resolves its internal links', () => {

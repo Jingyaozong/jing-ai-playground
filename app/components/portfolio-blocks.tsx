@@ -19,12 +19,15 @@ export function Severity({ level }: { level: string }) {
   return <span className="pf-severity" data-level={level}>{level}</span>;
 }
 
-export function CaseCard({ href, tag, title, description, image, alt, pending }: { href: string; tag: string; title: string; description: string; image?: StaticImageData; alt?: string; pending?: string }) {
+export function CaseCard({ href, tag, title, description, image, poster, alt, pending }: { href: string; tag: string; title: string; description: string; image?: StaticImageData; poster?: string; alt?: string; pending?: string }) {
   return (
     <Link className="pf-card" href={href}>
       {image
         ? <div className="pf-media"><Image src={image} alt={alt ?? ''} sizes="(max-width: 900px) 100vw, 360px" /></div>
-        : <div className="pf-media pf-media-pending">{pending}</div>}
+        : poster
+          // eslint-disable-next-line @next/next/no-img-element
+          ? <div className="pf-media"><img src={withBase(poster)} alt={alt ?? ''} width={1280} height={720} loading="lazy" /></div>
+          : <div className="pf-media pf-media-pending">{pending}</div>}
       <div className="pf-card-body">
         <span className="pf-card-tag">{tag}</span>
         <h3>{title}</h3>

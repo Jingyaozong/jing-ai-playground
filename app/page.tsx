@@ -8,7 +8,7 @@ import { CaseCard, DimensionGrid, EvaluationFlow, ProjectCard } from './componen
 import { SiteFooter } from './components/site-footer';
 import { SiteHeader } from './components/site-header';
 import { profile, projects } from './data/profile';
-import { videoCase } from './data/video-case';
+import { blindTest } from './data/blind-test';
 
 export default function Home() {
   return (
@@ -29,7 +29,7 @@ export default function Home() {
       <section className="pf-section pf-shell" aria-labelledby="home-cases">
         <div className="pf-section-head"><h2 id="home-cases">精选评测案例</h2><Link className="pf-text-link" href="/cases/">全部案例</Link></div>
         <div className="pf-grid-3">
-          <CaseCard href={`/cases/${videoCase.slug}/`} tag="视频评测 · 多模型对比" title={videoCase.title} description={videoCase.summary} pending={videoCase.models[0].poster} />
+          <CaseCard href={`/cases/${blindTest.slug}/`} tag="视频评测 · 五模型交叉盲评" title={blindTest.title} description={blindTest.summary} poster="/videos/blind/posters/q1-happyhorse.webp" alt="盲评题 1 的一帧：雨天窗边木桌上一杯冒着热气的咖啡" />
           <CaseCard href="/experiments/forty-shots-one-character/" tag="视频评测 · 人物一致性" title="同一个角色，换景别、光线、情绪和动作后还是她吗" description="固定角色锚点，逐步叠加变量，记录身份特征在哪一步开始漂移。" image={pilotSamples} alt="同一角色在四种条件下的样本：正面近景、侧逆光、哭泣特写、奔跑回头" />
           <CaseCard href="/method/#aesthetic" tag="画面审美判断" title="晨光里，先看见谁" description="同一张静帧的三版调色对比：用视觉焦点和明暗层次说明为什么保留其中一版。" image={aestheticFrame} alt="知夏穿芥末黄外套坐在冷蓝卧室的床边，左侧窗户透进晨光" />
         </div>

@@ -10,12 +10,12 @@ const [{ stories, experiments, tools }, { getAllNotes }, { profile }] = await Pr
   import('../lib/notes.ts'),
   import('../app/data/profile.ts'),
 ]);
-const videoCaseTitle = readFileSync(join(process.cwd(), 'app/data/video-case.ts'), 'utf8').match(/title: '([^']+)'/)[1];
+const caseTitle = readFileSync(join(process.cwd(), 'app/data/blind-test.ts'), 'utf8').match(/title: '([^']+)'/)[1];
 
 const pages = [
   ['default', profile.tagline.replace(/，并把.*$/, '')],
   ['cases', '评测案例'],
-  ['video-model-comparison', videoCaseTitle],
+  ['five-model-blind-test', caseTitle],
   ['method', '评测方法'],
   ['projects', '项目经历'],
   ['practice', '创作实践'],

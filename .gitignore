@@ -37,3 +37,9 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# 原始评测素材（体积大，含组员信息），只把压缩后的精选片段放进 public/videos
+/视频评测/
+
+# 本地预览配置
+/.claude/
