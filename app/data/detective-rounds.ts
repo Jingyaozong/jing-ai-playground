@@ -21,6 +21,7 @@ export type DetectiveRound = {
   frame?: { src: string; timecode: string; alt: string };
   /** 补充说明（可选） */
   note?: string;
+  teachingOnly?: boolean;
 };
 
 export const NO_ISSUE = '没有明显问题';
@@ -92,6 +93,7 @@ export const detectiveRounds: DetectiveRound[] = [
   },
   {
     id: 'q3-jimeng',
+    teachingOnly: true,
     question: 3,
     product: 'jimeng',
     options: ['画面与题面无关：没有少女和樱花，也不是动漫风格', '画面从头到尾是黑白的', '镜头一直在快速旋转', NO_ISSUE],
@@ -99,7 +101,6 @@ export const detectiveRounds: DetectiveRound[] = [
     type: '样本错配（执行问题）',
     explanation: '画面是写实风格的雨夜霓虹街道。原因不在模型：负责这款的组员用错了题面。评测里遇到这种情况，要先剔除再补跑，不能算成模型的分。',
     frame: { src: '/videos/blind/badcases/q3-jimeng.webp', timecode: '00:02', alt: '雨夜霓虹街道，与题面不符' },
-    note: '这一格的评审分数不可靠：小组约定按 0 分处理，但 7 位评审里只有 3 位填了 0。',
   },
   {
     id: 'q8-vidu',

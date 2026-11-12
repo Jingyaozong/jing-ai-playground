@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { blindScores } from '../../data/blind-test-scores';
+import { detectiveRounds, type DetectiveProduct } from '../../data/detective-rounds';
 import { BadCaseDetective } from '../../components/bad-case-detective';
 import { PageHead } from '../../components/portfolio-blocks';
 import { SiteFooter } from '../../components/site-footer';
@@ -16,6 +18,11 @@ export const metadata: Metadata = pageMeta({
 });
 
 export default function BadCaseDetectivePage() {
+  const byQuestion: Record<string, Record<DetectiveProduct, number>> = blindScores.byQuestion;
+  const juryScores = Object.fromEntries(detectiveRounds.map((round) => [
+    round.id, round.teachingOnly ? null : byQuestion[round.question][round.product],
+  ]));
+
   return (
     <main className="pf">
       <SiteHeader active="Practice" />
@@ -25,7 +32,7 @@ export default function BadCaseDetectivePage() {
         back={{ href: '/stories/', label: '创作实践' }}
       />
       <div className="pf-shell" style={{ paddingBottom: 72 }}>
-        <BadCaseDetective />
+        <BadCaseDetective juryScores={juryScores} />
         <p className="pf-note" style={{ marginTop: 40 }}>
           视频和分数都来自<Link className="pf-text-link" href="/cases/five-model-blind-test/">五款国产视频模型的交叉盲评</Link>，每条取该产品这道题的第 1 次生成。失败类型沿用<Link className="pf-text-link" href="/notes/video-failure-cases/">十类 AI 视频失败词典</Link>。
         </p>

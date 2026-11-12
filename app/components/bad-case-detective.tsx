@@ -3,15 +3,12 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { blindTest } from '../data/blind-test';
-import { blindScores } from '../data/blind-test-scores';
 import { NO_ISSUE, detectiveConfig, detectivePoster, detectiveRounds, detectiveVideo, type DetectiveRound } from '../data/detective-rounds';
 
 type Phase = 'intro' | 'answer' | 'reveal' | 'summary';
-type Result = { round: DetectiveRound; choice: string | null; correct: boolean; rating: number; jury: number };
+type Result = { round: DetectiveRound; choice: string | null; correct: boolean; rating: number; jury: number | null };
 
 const withBase = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${path}`;
-const byQuestion = blindScores.byQuestion as Record<string, Record<DetectiveRound['product'], number>>;
-const juryScore = (round: DetectiveRound) => byQuestion[String(round.question)][round.product];
 const productName = (round: DetectiveRound) => blindTest.products.find((item) => item.id === round.product)?.name ?? round.product;
 const promptOf = (round: DetectiveRound) => blindTest.questions.find((item) => item.no === round.question)!;
 
@@ -47,7 +44,7 @@ function verdict(correct: number, total: number, deviation: number, falseAlarms:
   return [eye, alarm, scale].filter(Boolean).join('');
 }
 
-export function BadCaseDetective() {
+export function BadCaseDetective({ juryScores }: { juryScores: Record<string, number | null> }) {
   const [phase, setPhase] = useState<Phase>('intro');
   const [rounds, setRounds] = useState<DetectiveRound[]>(detectiveRounds);
   const [index, setIndex] = useState(0);
@@ -59,6 +56,7 @@ export function BadCaseDetective() {
   const [results, setResults] = useState<Result[]>([]);
   const heading = useRef<HTMLHeadingElement>(null);
   const slider = useRef<HTMLInputElement>(null);
+  const revealButton = useRef<HTMLButtonElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const started = useRef(false);
 
@@ -88,7 +86,7 @@ export function BadCaseDetective() {
   }, [phase, locked, untimed, timeLeft]);
 
   useEffect(() => {
-    if (locked && phase === 'answer') slider.current?.focus();
+    if (locked && phase === 'answer') (slider.current ?? revealButton.current)?.focus();
   }, [locked, phase]);
 
   function start() {
@@ -114,7 +112,7 @@ export function BadCaseDetective() {
   }
 
   function reveal() {
-    setResults((list) => [...list, { round, choice, correct: choice === round.answer, rating, jury: juryScore(round) }]);
+    setResults((list) => [...list, { round, choice, correct: choice === round.answer, rating, jury: juryScores[round.id] }]);
     setPhase('reveal');
   }
 
@@ -132,7 +130,7 @@ export function BadCaseDetective() {
         <ol className="pf-det-steps">
           <li><b>看</b><span>每关一条 AI 生成的视频和当时给模型的题面，不告诉你是哪款产品。</span></li>
           <li><b>找</b><span>{detectiveConfig.seconds} 秒内从四个选项里选出最主要的问题。也可能没有问题。</span></li>
-          <li><b>打分</b><span>给这条视频打 0–10 分，再和 7 位评审的均分对比。</span></li>
+          <li><b>打分</b><span>可评分关卡打 0–10 分，再和 7 位评审的均分对比。样本错配教学关只判断答题是否正确。</span></li>
         </ol>
         <p className="pf-note">素材来自五款国产视频模型的交叉盲评，共 {detectiveRounds.length} 关。视频静音播放，可以重播。</p>
         <div className="pf-det-start">
@@ -148,14 +146,15 @@ export function BadCaseDetective() {
 
   if (phase === 'summary') {
     const correct = results.filter((item) => item.correct).length;
-    const deviation = results.reduce((sum, item) => sum + Math.abs(item.rating - item.jury), 0) / Math.max(results.length, 1);
+    const differences = results.flatMap((item) => item.jury === null ? [] : [Math.abs(item.rating - item.jury)]);
+    const deviation = differences.reduce((sum, difference) => sum + difference, 0) / differences.length;
     const falseAlarms = results.filter((item) => item.round.answer === NO_ISSUE && item.choice !== null && item.choice !== NO_ISSUE).length;
     return (
       <section className="pf-det-summary" aria-labelledby="det-summary">
         <h2 id="det-summary" ref={heading} tabIndex={-1}>结果</h2>
         <div className="pf-det-stats">
           <div><strong>{correct} / {results.length}</strong><span>找对的条数</span></div>
-          <div><strong>{deviation.toFixed(2)}</strong><span>你的打分与评审团均分的平均偏差</span></div>
+          <div><strong>{deviation.toFixed(2)}</strong><span>你的打分与评审团均分的平均偏差（{differences.length} 关）</span></div>
         </div>
         <p className="pf-det-verdict">{verdict(correct, results.length, deviation, falseAlarms)}</p>
         <ol className="pf-det-review">
@@ -166,7 +165,7 @@ export function BadCaseDetective() {
                 <b>第 {order + 1} 关 · 题 {item.round.question} {promptOf(item.round).name} · {productName(item.round)}</b>
                 <span>{item.round.answer === NO_ISSUE ? NO_ISSUE : item.round.type}</span>
               </span>
-              <span className="pf-det-review-score">你 {item.rating} · 评审团 {item.jury.toFixed(2)}</span>
+              <span className="pf-det-review-score">{item.jury === null ? '教学关 · 无评分对比' : `你 ${item.rating} · 评审团 ${item.jury.toFixed(2)}`}</span>
             </li>
           ))}
         </ol>
@@ -179,7 +178,7 @@ export function BadCaseDetective() {
   }
 
   const question = promptOf(round);
-  const jury = juryScore(round);
+  const jury = juryScores[round.id];
   const correct = choice === round.answer;
   const urgent = !untimed && !locked && timeLeft <= 5;
 
@@ -240,23 +239,25 @@ export function BadCaseDetective() {
             {locked && (
               <div className="pf-det-rate">
                 {!choice && <p className="pf-det-timeout">时间到，这一关按未作答计。</p>}
-                <label htmlFor="det-rating">给这条视频的综合印象打分</label>
-                <div className="pf-det-slider">
-                  <input
-                    ref={slider}
-                    id="det-rating"
-                    type="range"
-                    min={0}
-                    max={10}
-                    step={1}
-                    value={rating}
-                    onChange={(event) => setRating(Number(event.target.value))}
-                    aria-valuetext={`${rating} 分`}
-                  />
-                  <output htmlFor="det-rating">{rating}</output>
-                </div>
-                <div className="pf-det-scale" aria-hidden="true"><span>0 不可用</span><span>10 可以直接用</span></div>
-                <button className="pf-button" type="button" onClick={reveal}>揭晓答案</button>
+                {jury !== null && <>
+                  <label htmlFor="det-rating">给这条视频的综合印象打分</label>
+                  <div className="pf-det-slider">
+                    <input
+                      ref={slider}
+                      id="det-rating"
+                      type="range"
+                      min={0}
+                      max={10}
+                      step={1}
+                      value={rating}
+                      onChange={(event) => setRating(Number(event.target.value))}
+                      aria-valuetext={`${rating} 分`}
+                    />
+                    <output htmlFor="det-rating">{rating}</output>
+                  </div>
+                  <div className="pf-det-scale" aria-hidden="true"><span>0 不可用</span><span>10 可以直接用</span></div>
+                </>}
+                <button className="pf-button" type="button" ref={revealButton} onClick={reveal}>揭晓答案</button>
               </div>
             )}
           </div>
@@ -274,7 +275,7 @@ export function BadCaseDetective() {
               <div><dt>产品</dt><dd>{productName(round)}</dd></div>
               <div>
                 <dt>打分</dt>
-                <dd>你 <b>{rating}</b>　评审团均分 <b>{jury.toFixed(2)}</b>　相差 {Math.abs(rating - jury).toFixed(2)}</dd>
+                <dd>{jury === null ? '样本错配教学关 · 无评分对比' : <>你 <b>{rating}</b>　评审团均分 <b>{jury.toFixed(2)}</b>　相差 {Math.abs(rating - jury).toFixed(2)}</>}</dd>
               </div>
             </dl>
             {round.frame && (
@@ -287,7 +288,7 @@ export function BadCaseDetective() {
               </figure>
             )}
             {round.note && <p className="pf-note">{round.note}</p>}
-            <p className="pf-note">评审团均分是 7 位评审对这款产品在这道题上 3 次生成的综合印象平均分。</p>
+            {jury !== null && <p className="pf-note">评审团均分是 7 位评审对这款产品在这道题上 3 次生成的综合印象平均分。</p>}
             <button className="pf-button" type="button" onClick={next}>{index + 1 >= total ? '看结果' : '下一关'}</button>
           </div>
         )}
