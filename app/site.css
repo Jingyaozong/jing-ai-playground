@@ -45,10 +45,7 @@
 .pf-hero { padding-block: 88px 72px; }
 .pf-hero-role { font-size: 15px; font-weight: 600; color: var(--pf-muted); margin-bottom: 20px; }
 .pf-hero h1 { font-size: clamp(1.75rem, 4vw, 2.75rem); line-height: 1.45; font-weight: 700; max-width: 24em; }
-.pf-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-block: 40px; }
-.pf-stat { padding: 20px 24px; border: 1px solid var(--pf-line); border-radius: var(--pf-radius); background: var(--pf-surface); }
-.pf-stat strong { display: block; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.3; color: var(--pf-accent-text); font-weight: 700; overflow-wrap: anywhere; }
-.pf-stat span { font-size: 14px; color: var(--pf-muted); }
+.pf-hero .pf-actions { margin-top: 40px; }
 
 /* 卡片 */
 .pf-card { display: flex; flex-direction: column; border: 1px solid var(--pf-line); border-radius: var(--pf-radius); background: var(--pf-surface); overflow: hidden; min-width: 0; }
@@ -206,8 +203,7 @@ a.pf-card:hover { border-color: var(--pf-text); }
 }
 @media (max-width: 640px) {
   .pf-shell { width: calc(100% - 32px); }
-  .pf-stats, .pf-wall { grid-template-columns: 1fr; }
-  .pf-stats { gap: 12px; }
+  .pf-wall { grid-template-columns: 1fr; }
   .pf-method-item { grid-template-columns: 2.5em minmax(0, 1fr); }
   .pf-method-item > span { display: none; }
   .pf-conclusions li, .pf-facts div { grid-template-columns: 1fr; gap: 4px; }
@@ -335,8 +331,7 @@ main :is(a, button, summary, select, input:not([type='checkbox']):not([type='rad
   .pf-section { padding-block: 40px; }
   .pf-section-head { margin-bottom: 20px; }
   .pf-hero { padding-block: 40px 32px; }
-  .pf-stats { margin-block: 24px; }
-  .pf-stat { padding: 14px 18px; }
+  .pf-hero .pf-actions { margin-top: 24px; }
   .pf-grid-3, .pf-grid-2 { gap: 16px; }
   .pf-card-body { padding: 18px; }
   .pf-dimension { padding: 14px; }
