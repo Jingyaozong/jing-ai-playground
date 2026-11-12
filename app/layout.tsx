@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import '@fontsource/manrope/400.css';
 import '@fontsource/manrope/500.css';
 import '@fontsource/manrope/600.css';
@@ -41,7 +42,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="zh-CN" data-scroll-behavior="smooth">
-      <body>{children}</body>
+      <body>
+        {children}
+        {siteUrl === 'https://jingyaozong.github.io/jing-ai-playground/' && (
+          <Script
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            type="module"
+            strategy="afterInteractive"
+            data-cf-beacon={JSON.stringify({ token: 'b14fa44fddb8479a973b00d7ee3ba114' })}
+          />
+        )}
+      </body>
     </html>
   );
 }
