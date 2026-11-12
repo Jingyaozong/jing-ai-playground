@@ -3,26 +3,30 @@ import aestheticFrame from './assets/generated/she-forgets-yesterday-frame-01-v2
 import pilotSamples from './assets/generated/forty-shots-pilot-samples.webp';
 import anchor from './assets/generated/she-forgets-yesterday-character-anchor.webp';
 import keyframes from './assets/generated/she-forgets-yesterday-keyframes.webp';
-import { ContactList, ResumeButton } from './components/contact-links';
+import { ContactList } from './components/contact-links';
 import { CaseCard, DimensionGrid, EvaluationFlow, ProjectCard } from './components/portfolio-blocks';
 import { SiteFooter } from './components/site-footer';
 import { SiteHeader } from './components/site-header';
-import { profile, projects } from './data/profile';
+import { isPlaceholder, profile, projects } from './data/profile';
 import { blindTest } from './data/blind-test';
 
 export default function Home() {
+  // 没填的数字不显示
+  const stats = profile.stats.filter((stat) => !isPlaceholder(stat.value));
   return (
     <main className="pf">
       <SiteHeader />
       <section className="pf-hero pf-shell">
         <p className="pf-hero-role">{profile.roleLine}</p>
         <h1>{profile.tagline}</h1>
-        <ul className="pf-stats">
-          {profile.stats.map((stat) => <li className="pf-stat" key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></li>)}
-        </ul>
+        {stats.length > 0 && (
+          <ul className="pf-stats">
+            {stats.map((stat) => <li className="pf-stat" key={stat.label}><strong>{stat.value}</strong><span>{stat.label}</span></li>)}
+          </ul>
+        )}
         <div className="pf-actions">
           <Link className="pf-button" href="/cases/">看评测案例</Link>
-          <ResumeButton className="pf-button is-ghost" />
+          <Link className="pf-button is-ghost" href="/about/#contact">联系我</Link>
         </div>
       </section>
 

@@ -57,20 +57,26 @@ export function EvaluationFlow() {
 }
 
 export function ProjectCard({ project, compact = false }: { project: Project; compact?: boolean }) {
+  // 没填的项（占位符）不显示。
+  const filled = (value: string) => !isPlaceholder(value);
+  const meta = [project.org, project.period, compact ? '' : project.role].filter((value) => value && filled(value));
+  const results = project.results.filter((result) => filled(result.value));
   return (
     <article className="pf-project" id={compact ? undefined : project.id}>
       <div>
-        <p className="pf-project-meta">{project.org} · {project.period}{compact ? '' : ` · ${project.role}`}</p>
+        {meta.length > 0 && <p className="pf-project-meta">{meta.join(' · ')}</p>}
         <h3>{project.title}</h3>
       </div>
       <dl className="pf-star">
-        <div><dt>背景</dt><dd>{project.situation}</dd></div>
+        {filled(project.situation) && <div><dt>背景</dt><dd>{project.situation}</dd></div>}
         <div><dt>任务</dt><dd>{project.task}</dd></div>
         <div><dt>行动</dt><dd><ul>{(compact ? project.actions.slice(0, 2) : project.actions).map((action) => <li key={action}>{action}</li>)}</ul></dd></div>
       </dl>
-      <ul className="pf-results" aria-label="结果">
-        {(compact ? project.results.slice(0, 2) : project.results).map((result) => <li key={result.label}><strong>{result.value}</strong><span>{result.label}</span></li>)}
-      </ul>
+      {results.length > 0 && (
+        <ul className="pf-results" aria-label="结果">
+          {(compact ? results.slice(0, 2) : results).map((result) => <li key={result.label}><strong>{result.value}</strong><span>{result.label}</span></li>)}
+        </ul>
+      )}
       {compact
         ? <Link className="pf-text-link" href={`/projects/#${project.id}`}>查看完整经历</Link>
         : project.methodLinks.length > 0 && <p className="pf-project-links"><span>对应方法：</span>{project.methodLinks.map((link) => <Link className="pf-text-link" href={link.href} key={link.href}>{link.label}</Link>)}</p>}

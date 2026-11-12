@@ -1,5 +1,5 @@
 // 全站需要本人填写的内容集中在这个文件。
-// 形如 `{……}` 的值是占位符：填入真实内容后，页面会自动把它们渲染为正式文字、链接或视频。
+// 形如 `{……}` 的值是占位符：没填的项页面上不显示，填入真实内容后会自动出现。
 
 export const isPlaceholder = (value: string) => /^\{.*\}$/.test(value.trim());
 
@@ -9,12 +9,9 @@ export const profile = {
   roleLine: 'AI 视频 / 多模态评测 · 数据质量 · 项目交付',
   tagline: '我关注多模态生成的视觉质量，并把对构图、光色、人物和时序的判断，写成可以复核的评测记录。',
   narrative: '雕塑本科给了我造型和审美训练，UI 设计让我习惯把判断落到细节。2023 年起我进入 AI 数据行业，从多模态数据标注做到项目管理，再到 AIGC 与视频评测。',
-  email: '{邮箱}',
-  // 把简历放到 public/ 下，例如 public/resume.pdf，然后这里填 '/resume.pdf'
-  resumeHref: '{简历 PDF 路径}',
-  links: [
-    { label: '{LinkedIn 或其他平台}', href: '{平台主页链接}' },
-  ],
+  email: 'jingyaozong0512@gmail.com',
+  // 想加其他平台时在这里加：{ label: '平台名', href: '主页链接' }
+  links: [] as Array<{ label: string; href: string }>,
   stats: [
     { value: '{30+ 人}', label: '带过的评测与标注团队规模' },
     { value: '{+x%}', label: 'Prompt-Image Match 指标提升' },

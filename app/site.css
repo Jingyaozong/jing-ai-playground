@@ -378,3 +378,4 @@ small, sub, sup { font-size: 13px; }
 .pf-limits span { color: var(--pf-muted); font-size: 15px; }
 @media (max-width: 900px) { .pf-wall.is-three { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pf-role { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .pf-wall.is-three { grid-template-columns: 1fr; } }
+.pf-project > .pf-text-link { margin-top: auto; }

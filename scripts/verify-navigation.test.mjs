@@ -538,7 +538,7 @@ test('homepage leads to cases, method, projects, practice and contact', () => {
   }
   const home = page('index.html');
   assert.match(home, /我关注多模态生成的视觉质量/);
-  assert.match(home, /下载简历/);
+  assert.match(home, /mailto:/);
 });
 
 test('method page lists the six core method notes and the aesthetic case', () => {

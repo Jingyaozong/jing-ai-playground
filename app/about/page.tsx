@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { pageMeta } from '../lib/seo';
 import Link from 'next/link';
-import { ContactList, ResumeButton } from '../components/contact-links';
+import { ContactList } from '../components/contact-links';
 import { PageHead } from '../components/portfolio-blocks';
 import { SiteFooter } from '../components/site-footer';
 import { SiteHeader } from '../components/site-header';
@@ -9,7 +9,7 @@ import { capabilities, profile } from '../data/profile';
 
 export const metadata: Metadata = pageMeta({ og: 'about',
   title: '关于与联系',
-  description: '荆：AI 视频与多模态评测，兼具艺术审美、评测方法与项目交付能力。联系方式与简历下载。',
+  description: '荆：AI 视频与多模态评测，兼具艺术审美、评测方法与项目交付能力。附联系方式。',
 });
 
 const path = ['雕塑本科', 'UI 设计', 'AI 数据', '多模态数据', '项目管理', 'AIGC / 视频评测'];
@@ -42,7 +42,6 @@ export default function AboutPage() {
           <div>
             <div className="pf-section-head"><h2 id="about-contact">联系我</h2></div>
             <p className="pf-lead">目前在看 AI 视频主观评测、多模态评测、AIGC 质量、AI 数据 PM 与交付运营方向的机会。</p>
-            <div className="pf-actions" style={{ marginTop: 24 }}><ResumeButton /></div>
           </div>
           <ContactList />
         </div>

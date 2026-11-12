@@ -85,7 +85,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
             <h1>{experiment.titleLines ? experiment.titleLines.map((line) => <span key={line}>{line}</span>) : experiment.title}</h1>
             <p>{experiment.summary}</p>
             <p className="experiment-evidence-note">{evidenceKind === 'static-pilot'
-              ? '首轮完成四格静态样本，用来验证角色锚点和记录方法。视频样本：{人物一致性视频路径}'
+              ? '首轮完成四格静态样本，用来验证角色锚点和记录方法。'
               : evidenceKind === 'text-pilot'
                 ? '现有九份故事文本输出与初审评分；海报是视觉输入。评分还需要第二位评审复核。'
                 : `已完成测试协议，共 ${testCount} 个测试位置。`}</p>
