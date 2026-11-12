@@ -8,7 +8,7 @@ export const profile = {
   name: '荆',
   roleLine: 'AI 视频 / 多模态评测 · 数据质量 · 项目交付',
   tagline: '我关注多模态生成的视觉质量，并把对构图、光色、人物和时序的判断，写成可以复核的评测记录。',
-  narrative: '雕塑本科给了我造型和审美训练，UI 设计让我习惯把判断落到细节。2023 年起我进入 AI 数据行业，从多模态数据标注做到项目管理，再到 AIGC 与视频评测。',
+  narrative: '雕塑本科给了我造型和审美训练，视觉设计让我习惯把判断落到细节。2023 年起我进入 AI 数据行业，从多模态数据标注做到项目管理，再到 AIGC 与视频评测。',
   email: 'jingyaozong0512@gmail.com',
   // 想加其他平台时在这里加：{ label: '平台名', href: '主页链接' }
   links: [] as Array<{ label: string; href: string }>,

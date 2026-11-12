@@ -12,7 +12,7 @@ export const metadata: Metadata = pageMeta({ og: 'about',
   description: '荆：AI 视频与多模态评测，兼具艺术审美、评测方法与项目交付能力。附联系方式。',
 });
 
-const path = ['雕塑本科', 'UI 设计', 'AI 数据', '多模态数据', '项目管理', 'AIGC / 视频评测'];
+const path = ['雕塑本科', '视觉设计', 'AI 数据', '多模态数据', '项目管理', 'AIGC / 视频评测'];
 
 export default function AboutPage() {
   return (
