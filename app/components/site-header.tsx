@@ -3,7 +3,6 @@ import Link from 'next/link';
 export const navItems = [
   ['Cases', '评测案例', '/cases/'],
   ['Method', '方法', '/method/'],
-  ['Projects', '项目经历', '/projects/'],
   ['Practice', '创作实践', '/stories/'],
   ['About', '关于与联系', '/about/'],
 ] as const;

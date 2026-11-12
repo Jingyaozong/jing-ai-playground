@@ -526,14 +526,14 @@ test('primary navigation has at most five items and the archive lives in the foo
   const home = page('index.html');
   const nav = home.match(/<nav class="desktop-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1] ?? '';
   const labels = [...nav.matchAll(/<a\b[^>]*>([^<]+)<\/a>/g)].map((match) => match[1]);
-  assert.deepEqual(labels, ['评测案例', '方法', '项目经历', '创作实践', '关于与联系']);
+  assert.deepEqual(labels, ['评测案例', '方法', '创作实践', '关于与联系']);
   const footer = home.match(/<footer[\s\S]*<\/footer>/)?.[0] ?? '';
   assert.match(footer, />归档<\/a>/);
 });
 
-test('homepage leads to cases, method, projects, practice and contact', () => {
+test('homepage leads to cases, method, practice and contact', () => {
   const paths = internalPaths('index.html');
-  for (const route of ['/cases/', '/cases/five-model-blind-test/', '/method/', '/projects/', '/stories/', '/about/']) {
+  for (const route of ['/cases/', '/cases/five-model-blind-test/', '/method/', '/stories/', '/about/']) {
     assert.ok(paths.includes(route), `Homepage does not link to ${route}`);
   }
   const home = page('index.html');

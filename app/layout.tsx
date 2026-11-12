@@ -15,7 +15,7 @@ const siteUrl = `${(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000')
 const metadataBase = new URL(siteUrl);
 const socialImage = new URL('og.png', metadataBase);
 const siteTitle = 'JING · AI 视频与多模态评测';
-const siteDescription = '荆的作品集：AI 视频与多模态评测案例、评测方法、项目经历与创作实践。';
+const siteDescription = '荆的作品集：AI 视频与多模态评测案例、评测方法与创作实践。';
 
 export const metadata: Metadata = {
   metadataBase,

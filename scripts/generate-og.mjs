@@ -18,7 +18,6 @@ const pages = [
   ['five-model-blind-test', caseTitle],
   ['bad-case-detective', 'Bad Case 侦探'],
   ['method', '评测方法'],
-  ['projects', '项目经历'],
   ['practice', '创作实践'],
   ['about', '关于与联系'],
   ['archive', '归档'],

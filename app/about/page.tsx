@@ -34,7 +34,7 @@ export default function AboutPage() {
             <article className="pf-card" key={item.title}><div className="pf-card-body"><h3>{item.title}</h3><p>{item.copy}</p></div></article>
           ))}
         </div>
-        <p className="pf-note"><Link className="pf-text-link" href="/projects/">查看项目经历</Link>　<Link className="pf-text-link" href="/method/">查看评测方法</Link></p>
+        <p className="pf-note"><Link className="pf-text-link" href="/method/">查看评测方法</Link></p>
       </section>
 
       <section className="pf-shell pf-section" id="contact" aria-labelledby="about-contact" style={{ scrollMarginTop: 96 }}>

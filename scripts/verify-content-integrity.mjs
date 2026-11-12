@@ -69,7 +69,6 @@ const internalRoutes = new Set([
   '/cases/',
   '/cases/five-model-blind-test/',
   '/method/',
-  '/projects/',
   '/briefing/',
   '/experiments/',
   '/library/',

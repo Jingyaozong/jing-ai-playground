@@ -14,7 +14,6 @@ const routes = [
   '/experiments/forty-shots-one-character/',
   '/method/',
   ...methodNoteSlugs.map((slug) => `/notes/${slug}/`),
-  '/projects/',
   '/stories/',
   '/stories/she-forgets-yesterday/',
   '/play/bad-case-detective/',

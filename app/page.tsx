@@ -4,10 +4,10 @@ import pilotSamples from './assets/generated/forty-shots-pilot-samples.webp';
 import anchor from './assets/generated/she-forgets-yesterday-character-anchor.webp';
 import keyframes from './assets/generated/she-forgets-yesterday-keyframes.webp';
 import { ContactList } from './components/contact-links';
-import { CaseCard, DimensionGrid, EvaluationFlow, ProjectCard } from './components/portfolio-blocks';
+import { CaseCard, DimensionGrid, EvaluationFlow } from './components/portfolio-blocks';
 import { SiteFooter } from './components/site-footer';
 import { SiteHeader } from './components/site-header';
-import { isPlaceholder, profile, projects } from './data/profile';
+import { isPlaceholder, profile } from './data/profile';
 import { blindTest } from './data/blind-test';
 
 export default function Home() {
@@ -59,13 +59,6 @@ export default function Home() {
         <DimensionGrid />
         <EvaluationFlow />
         <p className="pf-note"><Link className="pf-text-link" href="/method/">查看完整方法</Link></p>
-      </section>
-
-      <section className="pf-section pf-shell" aria-labelledby="home-projects">
-        <div className="pf-section-head"><h2 id="home-projects">项目经历</h2><Link className="pf-text-link" href="/projects/">全部项目</Link></div>
-        <div className="pf-grid-3">
-          {projects.slice(0, 3).map((project) => <ProjectCard project={project} compact key={project.id} />)}
-        </div>
       </section>
 
       <section className="pf-section pf-shell" aria-labelledby="home-practice">
