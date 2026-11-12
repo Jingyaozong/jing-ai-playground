@@ -44,7 +44,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="zh-CN" data-scroll-behavior="smooth">
       <body>
         {children}
-        {siteUrl === 'https://jingyaozong.github.io/jing-ai-playground/' && (
+        {metadataBase.href === 'https://jingyaozong.github.io/jing-ai-playground/' && (
           <Script
             src="https://static.cloudflareinsights.com/beacon.min.js"
             type="module"
