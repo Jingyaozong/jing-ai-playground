@@ -1,11 +1,10 @@
-// 真实项目：五款国产视频模型的交叉盲评（2026 年 6 月，7 人小组）。
+// 真实项目：五款国产视频模型的交叉盲评（7 人小组）。
 // 得分来自 blind-test-scores.ts（由盲评打分表汇总生成）；评审与组员一律匿名。
 
 export const blindTest = {
   slug: 'five-model-blind-test',
   title: '五款国产视频模型的交叉盲评',
   summary: '我牵头 7 人小组，用统一参数和 10 道测试题评测五款视频生成产品，再把 148 条视频去标识、打乱编号，由全组盲评打分。',
-  period: '2026 年 6 月',
   role: [
     '写评测方案并迭代三版：从“每人自评一款”改为“个人执行 + 交叉盲评”',
     '定 7 项强制生成参数，保证分数差异来自模型而不是参数',
@@ -16,7 +15,6 @@ export const blindTest = {
   ],
   taskCard: [
     { label: '评测对象', value: '可灵、即梦、海螺、HappyHorse、Vidu' },
-    { label: '测试日期', value: '2026 年 6 月 11 日' },
     { label: '测试题', value: '10 题，每题每款生成 3 次，全部保留，不取最佳' },
     { label: '视频数量', value: '计划 150 条，实际 148 条（即梦题 6、题 10 各缺 1 条）' },
     { label: '评审', value: '7 人，对去标识视频独立打分' },
@@ -33,11 +31,11 @@ export const blindTest = {
     { name: '风格滤镜', value: '不加预设', note: '动漫风由 Prompt 文字驱动' },
   ],
   products: [
-    { id: 'happyhorse', name: 'HappyHorse', vendor: '阿里（灰测）', version: 'beta', plan: '标准会员', resolution: '1080p', success: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3], featureScore: 8, uxScore: 8, easeScore: 9, cameraScore: 8 },
-    { id: 'jimeng', name: '即梦', vendor: '字节跳动', version: 'v2.2.2', plan: '基础会员', resolution: '720p', success: [3, 3, 3, 3, 3, 2, 3, 3, 3, 2], featureScore: 8, uxScore: 7, easeScore: 8, cameraScore: 8 },
-    { id: 'kling', name: '可灵', vendor: '快手', version: '1.3.18', plan: '铂金会员', resolution: '1080p', success: [3, 3, 2, 0, 0, 3, 0, 3, 1, 3], featureScore: 6, uxScore: 5, easeScore: 6, cameraScore: 6 },
-    { id: 'vidu', name: 'Vidu', vendor: '生数科技', version: 'Vidu Q3', plan: '基础会员', resolution: '1080p', success: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3], featureScore: 7, uxScore: 8, easeScore: 9, cameraScore: 6.5 },
-    { id: 'hailuo', name: '海螺', vendor: 'MiniMax', version: '2.0', plan: '基础会员', resolution: '768p', success: [3, 3, 3, 3, 3, 3, 3, 3, 1, 3], featureScore: 4, uxScore: 4, easeScore: 5, cameraScore: 0 },
+    { id: 'happyhorse', name: 'HappyHorse', vendor: '阿里（灰测）', plan: '标准会员', resolution: '1080p', success: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3], featureScore: 8, uxScore: 8, easeScore: 9, cameraScore: 8 },
+    { id: 'jimeng', name: '即梦', vendor: '字节跳动', plan: '基础会员', resolution: '720p', success: [3, 3, 3, 3, 3, 2, 3, 3, 3, 2], featureScore: 8, uxScore: 7, easeScore: 8, cameraScore: 8 },
+    { id: 'kling', name: '可灵', vendor: '快手', plan: '铂金会员', resolution: '1080p', success: [3, 3, 2, 0, 0, 3, 0, 3, 1, 3], featureScore: 6, uxScore: 5, easeScore: 6, cameraScore: 6 },
+    { id: 'vidu', name: 'Vidu', vendor: '生数科技', plan: '基础会员', resolution: '1080p', success: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3], featureScore: 7, uxScore: 8, easeScore: 9, cameraScore: 6.5 },
+    { id: 'hailuo', name: '海螺', vendor: 'MiniMax', plan: '基础会员', resolution: '768p', success: [3, 3, 3, 3, 3, 3, 3, 3, 1, 3], featureScore: 4, uxScore: 4, easeScore: 5, cameraScore: 0 },
   ],
   dimensions: ['画质细节', '运动真实感', 'Prompt 遵循度', '综合印象'],
   questions: [
@@ -75,5 +73,5 @@ export const blindTest = {
     '陷阱题和专项题拉开了差距：基础题的最高分与最低分相差 1.6–3.3 分，文字渲染、手部运动、长指令、音画同出四题相差 4.2–5.1 分。',
     '海螺在简单氛围画面上评价不低，但文字渲染、手部运动和音画题明显落后，四维均值 6.04。',
   ],
-  scope: '10 题 × 5 款 × 3 次，7 位评审；结论只适用于这套题和 2026 年 6 月的产品版本。',
+  scope: '10 题 × 5 款 × 3 次，7 位评审。结果仅适用于本次测试样本和当时使用的版本。',
 };

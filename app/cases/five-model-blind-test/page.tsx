@@ -27,7 +27,7 @@ export default function BlindTestCasePage() {
       <PageHead title={blindTest.title} description={blindTest.summary} back={{ href: '/cases/', label: '评测案例' }} />
 
       <section className="pf-shell pf-section" aria-labelledby="case-role">
-        <div className="pf-section-head"><h2 id="case-role">我做了什么</h2><p>{blindTest.period}，7 人小组，我是总负责人。五位组员各负责一款产品的生成，一位负责市场调研。</p></div>
+        <div className="pf-section-head"><h2 id="case-role">我做了什么</h2><p>7 人小组，我是总负责人。五位组员各负责一款产品的生成，一位负责市场调研。</p></div>
         <ol className="pf-role">{blindTest.role.map((item) => <li key={item}>{item}</li>)}</ol>
       </section>
 
@@ -64,13 +64,13 @@ export default function BlindTestCasePage() {
         <div className="pf-section-head"><h2 id="case-scores">盲评结果</h2><p>每个数字是 7 位评审在 10 道题上的平均分，满分 10 分。</p></div>
         <div className="pf-table-wrap" tabIndex={0} role="region" aria-label="各模型四维均分表，可横向滚动">
           <table className="pf-table">
-            <thead><tr><th scope="col">产品</th><th scope="col">版本</th><th scope="col">实际分辨率</th>{blindTest.dimensions.map((dimension) => <th scope="col" className="is-num" key={dimension}>{dimension}</th>)}<th scope="col" className="is-num">四维均值</th></tr></thead>
+            <thead><tr><th scope="col">产品</th><th scope="col">实际分辨率</th>{blindTest.dimensions.map((dimension) => <th scope="col" className="is-num" key={dimension}>{dimension}</th>)}<th scope="col" className="is-num">四维均值</th></tr></thead>
             <tbody>
               {products.map((product) => {
                 const id = product.id as ProductId;
                 return (
                   <tr key={product.id}>
-                    <th scope="row">{product.name}</th><td><span>{product.version}</span></td><td><span>{product.resolution}</span></td>
+                    <th scope="row">{product.name}</th><td><span>{product.resolution}</span></td>
                     {blindScores.dimMeans[id].map((value, index) => <td className="is-num" key={index}>{fixed(value)}</td>)}
                     <td className="is-num is-top">{fixed(blindScores.overall[id])}</td>
                   </tr>
@@ -79,7 +79,7 @@ export default function BlindTestCasePage() {
             </tbody>
           </table>
         </div>
-        <p className="pf-note">即梦剔除交错素材的题 3 后，四维均值为 {fixed(blindScores.jimengOverallExcludingQ3)}。版本号按组员当时记录的填写。</p>
+        <p className="pf-note">即梦剔除交错素材的题 3 后，四维均值为 {fixed(blindScores.jimengOverallExcludingQ3)}。</p>
 
         <h3 style={{ margin: '40px 0 12px', fontSize: '1.15rem' }}>每道题的综合印象</h3>
         <div className="pf-table-wrap" tabIndex={0} role="region" aria-label="每题综合印象得分表，可横向滚动">

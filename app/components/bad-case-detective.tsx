@@ -134,7 +134,7 @@ export function BadCaseDetective() {
           <li><b>找</b><span>{detectiveConfig.seconds} 秒内从四个选项里选出最主要的问题。也可能没有问题。</span></li>
           <li><b>打分</b><span>给这条视频打 0–10 分，再和 7 位评审的均分对比。</span></li>
         </ol>
-        <p className="pf-note">素材来自 2026 年 6 月五款国产视频模型的交叉盲评，共 {detectiveRounds.length} 关。视频静音播放，可以重播。</p>
+        <p className="pf-note">素材来自五款国产视频模型的交叉盲评，共 {detectiveRounds.length} 关。视频静音播放，可以重播。</p>
         <div className="pf-det-start">
           <button className="pf-button" type="button" onClick={start}>开始</button>
           <label className="pf-det-check">

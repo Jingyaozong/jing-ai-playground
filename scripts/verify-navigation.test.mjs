@@ -551,7 +551,7 @@ test('method page lists the six core method notes and the aesthetic case', () =>
 
 test('blind test case page shows role, task card, real videos, scores, bad cases and limits', () => {
   const html = page('cases/five-model-blind-test/index.html');
-  for (const text of ['我做了什么', '任务卡', '10 道测试题', '盲评结果', '同步播放', 'Bad Case', '局限与复盘', '结论只适用于这套题']) assert.ok(html.includes(text), `Missing: ${text}`);
+  for (const text of ['我做了什么', '任务卡', '10 道测试题', '盲评结果', '同步播放', 'Bad Case', '局限与复盘', '结果仅适用于本次测试样本和当时使用的版本']) assert.ok(html.includes(text), `Missing: ${text}`);
   const videos = [...html.matchAll(/<video\b[^>]*\bsrc="([^"]+)"/g)].map((match) => routeWithoutBase(match[1]));
   assert.equal(videos.length, 15, 'Expected three walls of five videos');
   for (const src of videos) assert.ok(existsSync(join(process.cwd(), 'out', src)), `Missing video file: ${src}`);
