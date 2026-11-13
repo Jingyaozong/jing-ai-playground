@@ -3,10 +3,14 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import type { StoryDetail } from '../data/stories';
+import { storyTestModel, testOutput, testVideo } from '../data/story-test-outputs';
 
-type PromptPackProps = Pick<StoryDetail, 'promptGuide' | 'prompts' | 'motionTests' | 'promptTemplate'>;
+const withBase = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ''}${path}`;
 
-export function StoryPromptPack({ promptGuide, prompts, motionTests, promptTemplate }: PromptPackProps) {
+type PromptPackProps = Pick<StoryDetail, 'slug' | 'promptGuide' | 'prompts' | 'motionTests' | 'promptTemplate'>;
+
+export function StoryPromptPack({ slug, promptGuide, prompts, motionTests, promptTemplate }: PromptPackProps) {
+  const tested = motionTests.filter((test) => testOutput(slug, test.shot)).length;
   const [copiedShot, setCopiedShot] = useState<string | null>(null);
   const [copyErrorShot, setCopyErrorShot] = useState<string | null>(null);
 
@@ -79,14 +83,24 @@ export function StoryPromptPack({ promptGuide, prompts, motionTests, promptTempl
       <section className="story-motion-tests section-shell">
         <div className="story-section-heading"><div><h2>先测高风险镜头，<br />再决定要不要做完。</h2></div><p>先用少量动作验证人物、道具和空间连续性，尽早暴露问题，再决定是否生成完整镜头表。</p></div>
         <div className="story-test-grid">
-          {motionTests.map((test, index) => <article key={test.shot}>
-            <div className="story-test-top"><b>{test.shot}</b><span className="mono">TEST {String(index + 1).padStart(2, '0')} · {test.duration}</span><em>{test.status}</em></div>
+          {motionTests.map((test, index) => {
+            const output = testOutput(slug, test.shot);
+            const clip = testVideo(slug, test.shot);
+            return <article key={test.shot}>
+            <div className="story-test-top"><b>{test.shot}</b><span className="mono">TEST {String(index + 1).padStart(2, '0')} · {test.duration}</span><em>{output ? '已记录' : test.status}</em></div>
             <h3>{test.title}</h3>
             <p>{test.purpose}</p>
             <dl><div><dt className="mono">ACTION</dt><dd>{test.action}</dd></div><div><dt className="mono">PASS</dt><dd>{test.pass}</dd></div><div><dt className="mono">FAIL</dt><dd>{test.fail}</dd></div></dl>
-          </article>)}
+            {output && <div className="story-test-output">
+              <video muted controls loop playsInline preload="none" poster={withBase(clip.poster)} src={withBase(clip.video)} aria-label={`镜头 ${test.shot} 的实测视频`} />
+              <p><span className="story-test-result" data-result={output.result}>{output.result}</span>{output.finding}</p>
+            </div>}
+          </article>;
+          })}
         </div>
-        <aside className="story-test-notice"><span className="mono">NO OUTPUT YET</span><p>这里只展示测试设计，尚未调用任何外部视频模型。出现真实输出后，才会补充模型名称、参数、原片和观察结论。</p></aside>
+        {tested > 0
+          ? <aside className="story-test-notice"><span className="mono">TESTED {tested} / {motionTests.length}</span><p>已实测 {tested} 条：{storyTestModel}。提示词为上面的镜头 Prompt 加人物与风格锁定。每条只生成一次，结论只说明这一次的表现。</p></aside>
+          : <aside className="story-test-notice"><span className="mono">NO OUTPUT YET</span><p>这里只展示测试设计，尚未调用任何外部视频模型。出现真实输出后，才会补充模型名称、参数、原片和观察结论。</p></aside>}
       </section>
     </>
   );

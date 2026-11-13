@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { VideoWall } from '../components/video-wall';
+import { storyTestModel, testOutput, testVideo } from '../data/story-test-outputs';
 import { pageMeta } from '../lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -75,14 +77,23 @@ export default function PracticePage() {
         <div className="pf-section-head"><h2 id="practice-risk">从分镜到动作风险拆解</h2><p>十四个镜头里，我先挑出三个最容易生成失败的动作，提前写好通过和失败的判断标准。</p></div>
         <div className="pf-table-wrap" tabIndex={0} role="region" aria-label="动作风险拆解表，可横向滚动">
           <table className="pf-table">
-            <thead><tr><th scope="col">镜头</th><th scope="col">动作</th><th scope="col">检验什么</th><th scope="col">通过标准</th><th scope="col">失败表现</th></tr></thead>
+            <thead><tr><th scope="col">镜头</th><th scope="col">动作</th><th scope="col">检验什么</th><th scope="col">通过标准</th><th scope="col">失败表现</th><th scope="col">实测结果</th></tr></thead>
             <tbody>
               {main?.motionTests.map((test) => (
-                <tr key={test.shot}><th scope="row">{test.shot} {test.title}</th><td>{test.action}</td><td>{test.purpose}</td><td>{test.pass}</td><td>{test.fail}</td></tr>
+                <tr key={test.shot}><th scope="row">{test.shot} {test.title}</th><td>{test.action}</td><td>{test.purpose}</td><td>{test.pass}</td><td>{test.fail}</td><td>{(() => { const output = main && testOutput(main.slug, test.shot); return output ? <><span className="pf-severity" data-level={output.result === '通过' ? 'PASS' : output.result === '失败' ? 'MAJOR' : 'MINOR'}>{output.result}</span><br />{output.finding}</> : '待生成'; })()}</td></tr>
               ))}
             </tbody>
           </table>
         </div>
+        {main && main.motionTests.some((test) => testOutput(main.slug, test.shot)) && (
+          <div style={{ marginTop: 24 }}>
+            <VideoWall
+              columns={3}
+              note={`实测：${storyTestModel}。`}
+              items={main.motionTests.filter((test) => testOutput(main.slug, test.shot)).map((test) => ({ id: test.shot, name: `${test.shot} ${test.title}`, verdict: testOutput(main.slug, test.shot)!.result === '通过' ? 'PASS' : testOutput(main.slug, test.shot)!.result === '失败' ? 'MAJOR' : 'MINOR', ...testVideo(main.slug, test.shot) }))}
+            />
+          </div>
+        )}
         <p className="pf-note">这些失败表现对应<Link className="pf-text-link" href="/notes/video-failure-cases/">十类 AI 视频失败词典</Link>里的类型，评测时直接用同一套标签。</p>
       </section>
 

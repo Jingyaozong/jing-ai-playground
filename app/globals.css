@@ -5853,3 +5853,12 @@ h2:lang(zh-CN), h3:lang(zh-CN) { line-height: var(--zh-heading-leading); }
 .prompt-acceptance-status > span { color: var(--blue); font-size: 13px; }
 .prompt-acceptance-status ul { display: grid; gap: 6px; max-height: 250px; overflow: auto; margin: 10px 0 0; padding-left: 18px; color: var(--muted); font-size: 13px; line-height: 1.7; }
 @media(max-width:760px) { .prompt-acceptance-matrix { padding: 22px; } .prompt-acceptance-heading { align-items: start; flex-direction: column; } .prompt-acceptance-pair { grid-template-columns: 1fr; } .prompt-acceptance-card { padding: 15px; } }
+
+/* 动作测试实测结果 */
+.story-test-output { margin-top: 18px; }
+.story-test-output video { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; background: #ece8dd; }
+.story-test-output p { margin-top: 10px; font-size: 14px; line-height: 1.7; }
+.story-test-result { display: inline-block; margin-right: 8px; padding: 1px 10px; border-radius: 999px; border: 1px solid currentColor; font-size: 13px; font-weight: 700; }
+.story-test-result[data-result='通过'] { color: #1f7a4d; }
+.story-test-result[data-result='部分通过'] { color: #b8650a; }
+.story-test-result[data-result='失败'] { color: #b3261e; }
