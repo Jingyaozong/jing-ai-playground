@@ -2,7 +2,18 @@ import type { Metadata } from 'next';
 import { pageMeta } from '../../lib/seo';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import experimentPilotSamples from '../../assets/generated/forty-shots-pilot-samples.webp';
+import pilotFrame01 from '../../assets/generated/forty-shots-pilot-01.webp';
+import pilotFrame02 from '../../assets/generated/forty-shots-pilot-02.webp';
+import pilotFrame03 from '../../assets/generated/forty-shots-pilot-03.webp';
+import pilotFrame04 from '../../assets/generated/forty-shots-pilot-04.webp';
+
+// 每格单独一张图，用 cover 保持原始比例，不再把 2×2 拼图拉伸进竖长卡片。
+const pilotFrames = {
+  'left top': { image: pilotFrame01, focus: '55% center' },
+  'right top': { image: pilotFrame02, focus: '35% center' },
+  'left bottom': { image: pilotFrame03, focus: '50% center' },
+  'right bottom': { image: pilotFrame04, focus: '50% center' },
+} as const;
 import fictionalPosterInputs from '../../assets/generated/fictional-poster-inputs.webp';
 import floodedLibraryPoster from '../../assets/generated/poster-pilot-02-flooded-library.webp';
 import orchardElevatorPoster from '../../assets/generated/poster-pilot-02-orchard-elevator.webp';
@@ -171,7 +182,7 @@ export default async function ExperimentDetailPage({ params }: { params: Promise
         <div className="experiment-sample-grid">
           {experiment.samples.map((sample, index) => (
             <article className="experiment-sample-card" key={sample.shot}>
-              <div className={`experiment-sample-visual tone-${sample.tone} ${sample.outputText ? 'has-text-output' : sample.generated === false ? 'is-planned-frame' : 'has-generated-frame'}`} aria-label={sample.generated === false ? `${sample.title}，${sample.status}` : sample.outputText ? `${sample.title} AI 生成故事文本` : `${sample.title} AI 生成静态图，非视频`} style={sample.generated === false || sample.outputText ? undefined : { backgroundImage: `url("${experimentPilotSamples.src}")`, backgroundPosition: sample.framePosition }}>
+              <div className={`experiment-sample-visual tone-${sample.tone} ${sample.outputText ? 'has-text-output' : sample.generated === false ? 'is-planned-frame' : 'has-generated-frame'}`} aria-label={sample.generated === false ? `${sample.title}，${sample.status}` : sample.outputText ? `${sample.title} AI 生成故事文本` : `${sample.title} AI 生成静态图，非视频`} style={sample.generated === false || sample.outputText ? undefined : { backgroundImage: `url("${pilotFrames[sample.framePosition].image.src}")`, backgroundPosition: pilotFrames[sample.framePosition].focus, backgroundSize: 'cover' }}>
                 <span className="sample-crosshair" />
                 {sample.outputText && <p>{sample.outputText}</p>}
                 <b className="mono">{sample.generated === false ? sample.status : sample.outputText ? '文本样本 · 已初审' : 'AI 静态图'}</b>
