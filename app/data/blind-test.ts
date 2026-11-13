@@ -31,7 +31,7 @@ export const blindTest = {
     { name: '风格滤镜', value: '不加预设', note: '动漫风由 Prompt 文字驱动' },
   ],
   products: [
-    { id: 'happyhorse', name: 'HappyHorse', vendor: '阿里（灰测）', plan: '标准会员', resolution: '1080p', success: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3], featureScore: 8, uxScore: 8, easeScore: 9, cameraScore: 8 },
+    { id: 'happyhorse', name: 'HappyHorse', vendor: '阿里', plan: '标准会员', resolution: '1080p', success: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3], featureScore: 8, uxScore: 8, easeScore: 9, cameraScore: 8 },
     { id: 'jimeng', name: '即梦', vendor: '字节跳动', plan: '基础会员', resolution: '720p', success: [3, 3, 3, 3, 3, 2, 3, 3, 3, 2], featureScore: 8, uxScore: 7, easeScore: 8, cameraScore: 8 },
     { id: 'kling', name: '可灵', vendor: '快手', plan: '铂金会员', resolution: '1080p', success: [3, 3, 2, 0, 0, 3, 0, 3, 1, 3], featureScore: 6, uxScore: 5, easeScore: 6, cameraScore: 6 },
     { id: 'vidu', name: 'Vidu', vendor: '生数科技', plan: '基础会员', resolution: '1080p', success: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3], featureScore: 7, uxScore: 8, easeScore: 9, cameraScore: 6.5 },

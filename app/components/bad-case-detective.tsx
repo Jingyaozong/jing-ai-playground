@@ -132,7 +132,7 @@ export function BadCaseDetective({ juryScores }: { juryScores: Record<string, nu
           <li><b>找</b><span>{detectiveConfig.seconds} 秒内从四个选项里选出最主要的问题。也可能没有问题。</span></li>
           <li><b>打分</b><span>可评分关卡打 0–10 分，再和 7 位评审的均分对比。样本错配教学关只判断答题是否正确。</span></li>
         </ol>
-        <p className="pf-note">素材来自五款国产视频模型的交叉盲评，共 {detectiveRounds.length} 关。视频静音播放，可以重播。</p>
+        <p className="pf-note">素材来自五款国产视频模型的交叉盲评，共 {detectiveRounds.length} 关。视频静音播放，可以重播。部分视频右下角的模糊块是原始素材里已有的水印遮挡，不算生成问题。</p>
         <div className="pf-det-start">
           <button className="pf-button" type="button" onClick={start}>开始</button>
           <label className="pf-det-check">

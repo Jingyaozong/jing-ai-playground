@@ -124,7 +124,7 @@ export default function BlindTestCasePage() {
       </section>
 
       <section className="pf-shell pf-section" aria-labelledby="case-wall">
-        <div className="pf-section-head"><h2 id="case-wall">视频对比</h2><p>选了三道题。每款产品固定展示第 1 次生成的结果，不挑最好的一条。分数是这道题的综合印象均分。</p></div>
+        <div className="pf-section-head"><h2 id="case-wall">视频对比</h2><p>选了三道题。每款产品固定展示第 1 次生成的结果，不挑最好的一条。分数是这道题的综合印象均分。HappyHorse 片段右下角的模糊块是原始素材里已有的水印遮挡，不属于生成内容，评分时不计入。</p></div>
         {blindTest.walls.map((no) => {
           const question = blindTest.questions.find((item) => item.no === no)!;
           const row = byQuestion[String(no)];
