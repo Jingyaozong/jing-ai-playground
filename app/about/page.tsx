@@ -35,6 +35,7 @@ export default function AboutPage() {
           ))}
         </div>
         <p className="pf-note"><Link className="pf-text-link" href="/method/">查看评测方法</Link></p>
+        <p className="pf-note">我也持续跟进行业动态，把值得关注的新能力整理成可以验证的问题：<Link className="pf-text-link" href="/briefing/">多模态观察</Link></p>
       </section>
 
       <section className="pf-shell pf-section" id="contact" aria-labelledby="about-contact" style={{ scrollMarginTop: 96 }}>
