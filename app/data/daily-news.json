@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T03:57:35.521Z",
+  "updatedAt": "2026-11-13T05:15:47.232Z",
   "days": [
     {
       "date": "2026-11-13",
@@ -7,7 +7,7 @@
         {
           "id": "c7a410ad3b86",
           "title": "谷歌发布 Gemini 4 Hydrogen 模型",
-          "summary": "Google DeepMind 宣布推出 Gemini 4 Hydrogen，官方称其为新一代模型，并将用于搜索等产品。",
+          "summary": "谷歌 DeepMind 宣布推出 Gemini 4 Hydrogen，官方称其为新一代模型，具体能力与参数未在输入中说明。",
           "category": "模型",
           "source": "Google DeepMind",
           "url": "https://deepmind.google/blog/introducing-gemini-4-hydrogen/",
@@ -15,8 +15,8 @@
         },
         {
           "id": "f19cddd04797",
-          "title": "谷歌搜索全球升级 Gemini 4 Hydrogen",
-          "summary": "谷歌称将 Gemini 4 Hydrogen 引入全球 Google 搜索，提供更有帮助、更直观的可视化回答。",
+          "title": "谷歌搜索全球接入 Gemini 4 Hydrogen",
+          "summary": "谷歌称将 Gemini 4 Hydrogen 引入全球搜索，提供更有帮助、更视觉化和直观的回复。",
           "category": "产品",
           "source": "Google AI",
           "url": "https://blog.google/products-and-platforms/products/search/gemini-4-hydrogen-search-upgrade/",
@@ -24,8 +24,8 @@
         },
         {
           "id": "76f0f9d265ce",
-          "title": "谷歌搜索 AI Mode 复杂问题能力提升",
-          "summary": "报道称由 Gemini 4 Hydrogen 驱动的 AI Mode 更擅长理解复杂查询、呈现相关链接和更丰富的视觉回答。",
+          "title": "谷歌搜索 AI Mode 升级复杂问题回答",
+          "summary": "报道称由 Gemini 4 Hydrogen 驱动的 AI Mode 在理解复杂查询、呈现相关链接和视觉回答方面有所提升。",
           "category": "产品",
           "source": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/12/googles-latest-search-upgrade-promises-better-answers-to-your-most-complicated-questions/",
@@ -33,25 +33,16 @@
         },
         {
           "id": "9ce01a17e019",
-          "title": "MiniMax 开源 SOTA 生图模型",
-          "summary": "量子位报道，MiniMax 开源一款多模态生图模型，支持原生 4K，并称单张成本约两毛。",
+          "title": "MiniMax 开源 SOTA 生图模型支持原生4K",
+          "summary": "量子位报道 MiniMax 开源一款生图模型，称其达到 SOTA、支持原生 4K，单张成本约两毛。",
           "category": "模型",
           "source": "量子位",
           "url": "https://www.qbitai.com/2026/11/509440.html",
           "publishedAt": "2026-11-12T11:36:20.000Z"
         },
         {
-          "id": "c06fca3b9549",
-          "title": "谷歌推出 Gemini Decisions API",
-          "summary": "谷歌发布 Gemini Decisions API，官方称由 Gemini Decision 模型驱动，可快速完成校准的多模态决策。",
-          "category": "产品",
-          "source": "Google AI",
-          "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
-          "publishedAt": "2026-11-11T18:00:00.000Z"
-        },
-        {
           "id": "84ec87286cb3",
-          "title": "LLMON 标记语言登陆 Granite 小模型",
+          "title": "LLMON 标记语言进入 Granite 4.1 小模型",
           "summary": "Hugging Face 发布 LLMON，一种面向大模型的原生标记语言，现已用于 Granite 4.1 的 3B 和 8B 模型。",
           "category": "研究",
           "source": "Hugging Face",
@@ -59,9 +50,18 @@
           "publishedAt": "2026-11-12T19:07:35.000Z"
         },
         {
+          "id": "c06fca3b9549",
+          "title": "谷歌推出 Gemini Decisions API",
+          "summary": "谷歌发布 Gemini Decisions API，由 Gemini Decision 模型驱动，官方称可快速完成校准的多模态决策。",
+          "category": "产品",
+          "source": "Google AI",
+          "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/",
+          "publishedAt": "2026-11-11T18:00:00.000Z"
+        },
+        {
           "id": "eeb3027690b2",
-          "title": "英伟达私下确认可追踪芯片防走私",
-          "summary": "报道称英伟达代表向议员表示技术上可实现《芯片安全法案》要求的防走私措施，而行业团体称其可能不可行。",
+          "title": "英伟达私下确认芯片可追踪防走私",
+          "summary": "报道称英伟达代表向议员表示技术上可实现《芯片安全法案》要求的防走私措施，而行业组织称其可能不可行。",
           "category": "行业",
           "source": "MIT Technology Review",
           "url": "https://www.technologyreview.com/2026/11/12/1148483/nvidia-chip-tracking/",
@@ -70,7 +70,7 @@
         {
           "id": "9969dce6b540",
           "title": "Anthropic 启动 IPO 路演估值缩水",
-          "summary": "量子位报道，Anthropic 启动 IPO 路演，报道称其估值已缩水 6000 亿美元。",
+          "summary": "量子位报道 Anthropic 启动 IPO 路演，称其估值已缩水 6000 亿美元。",
           "category": "行业",
           "source": "量子位",
           "url": "https://www.qbitai.com/2026/11/509381.html",
@@ -78,21 +78,21 @@
         },
         {
           "id": "376c8ad1ba6d",
-          "title": "Anthropic 玻璃翼计划被质疑修复不足",
-          "summary": "量子位报道，Anthropic 玻璃翼计划被质疑：近 4 万个候补漏洞中仅修复 217 条。",
+          "title": "Anthropic 玻璃翼计划被质疑漏洞修复少",
+          "summary": "量子位报道 Anthropic 玻璃翼计划遭质疑，称近 4 万个候补漏洞中仅修复 217 条。",
           "category": "行业",
           "source": "量子位",
           "url": "https://www.qbitai.com/2026/11/509291.html",
           "publishedAt": "2026-11-12T07:55:11.000Z"
         },
         {
-          "id": "d7c1da8cb7dc",
-          "title": "OpenAI 投入 200 万美元研究儿童安全",
-          "summary": "OpenAI 宣布投入 200 万美元支持 AI 与儿童安全研究，用于共享衡量青少年风险与机会的工具。",
-          "category": "行业",
-          "source": "OpenAI",
-          "url": "https://openai.com/index/children-first-declaration",
-          "publishedAt": "2026-11-12T00:00:00.000Z"
+          "id": "ca2f28331a6d",
+          "title": "Muse 可付费拨打美国企业电话",
+          "summary": "报道称 Muse 的 AI 现可向美国企业拨打外呼电话，但该功能并非免费。",
+          "category": "产品",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/12/muse-can-now-place-calls-to-u-s-businesses-if-you-pay/",
+          "publishedAt": "2026-11-12T22:22:28.000Z"
         }
       ]
     }
