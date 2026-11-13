@@ -390,3 +390,42 @@ small, sub, sup { font-size: 13px; }
   .pf-news-item { grid-template-columns: 2em minmax(0, 1fr); gap: 12px; }
   .pf-news-link { grid-column: 2; padding-top: 0; }
 }
+
+/* Prompt 迭代案例 */
+.pf-pi-index { display: grid; gap: 12px; list-style: none; padding: 0; margin: 0; }
+.pf-pi-index a { display: grid; grid-template-columns: 2.5em minmax(0, 1fr); gap: 12px; padding: 16px 20px; border: 1px solid var(--pf-line); border-radius: 12px; background: var(--pf-surface); font-size: 15px; color: var(--pf-muted); }
+.pf-pi-index a:hover { border-color: var(--pf-text); }
+.pf-pi-index b { color: var(--pf-accent-text); font-size: 1.05rem; }
+.pf-pi-index strong { display: block; color: var(--pf-text); }
+.pf-pi-title { font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.35; font-weight: 700; margin-block: 8px 12px; }
+.pf-pi-step { display: flex; align-items: center; gap: 10px; margin: 40px 0 16px; font-size: 1.15rem; font-weight: 700; }
+.pf-pi-step span { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--pf-accent); font-size: 14px; }
+.pf-prompt-diff { border: 1px solid var(--pf-line); border-radius: var(--pf-radius); background: var(--pf-surface); overflow: hidden; }
+.pf-prompt-row { display: grid; grid-template-columns: 6.5em minmax(0, 1fr) minmax(0, 1fr); border-bottom: 1px solid var(--pf-line); font-size: 15px; }
+.pf-prompt-row:last-child { border-bottom: 0; }
+.pf-prompt-row > * { padding: 12px 16px; }
+.pf-prompt-row > p + p { border-left: 1px solid var(--pf-line); }
+.pf-prompt-row.is-head { background: var(--pf-bg); color: var(--pf-muted); font-size: 14px; font-weight: 600; }
+.pf-prompt-row.is-head span + span { border-left: 1px solid var(--pf-line); }
+.pf-prompt-row [role='rowheader'] { font-weight: 700; }
+.pf-prompt-row em { display: block; margin-top: 4px; font-style: normal; font-size: 12px; font-weight: 600; color: var(--pf-accent-text); }
+.pf-prompt-row.is-changed { background: var(--pf-accent-soft); }
+.pf-prompt-row.is-changed p:last-child { color: var(--pf-text); font-weight: 500; }
+.pf-prompt-row p { color: var(--pf-muted); overflow-wrap: anywhere; }
+.pf-prompt-row i { font-style: normal; color: var(--pf-muted); opacity: .8; }
+.pf-findings { min-width: 620px; }
+.pf-findings tbody th { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pf-pi-diagnosis, .pf-pi-lesson { margin-top: 16px; padding: 16px 20px; border-radius: 12px; font-size: 15px; max-width: 52em; }
+.pf-pi-diagnosis { border: 1px solid var(--pf-line); background: var(--pf-surface); }
+.pf-pi-lesson { background: var(--pf-accent-soft); }
+.pf-pi-diagnosis b, .pf-pi-lesson b { display: block; margin-bottom: 4px; }
+.pf-pi-frames { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+.pf-pi-frames figcaption { padding: 10px 4px 0; font-size: 14px; color: var(--pf-muted); }
+.pf-pi-limits { display: grid; gap: 8px; padding-left: 1.2em; color: var(--pf-muted); max-width: 48em; }
+@media (max-width: 760px) {
+  .pf-prompt-row { grid-template-columns: 1fr; }
+  .pf-prompt-row.is-head { display: none; }
+  .pf-prompt-row > p + p { border-left: 0; border-top: 1px dashed var(--pf-line); }
+  .pf-prompt-row p::before { content: attr(data-label); display: block; font-size: 12px; font-weight: 600; color: var(--pf-muted); margin-bottom: 2px; }
+  .pf-pi-frames { grid-template-columns: 1fr; }
+}

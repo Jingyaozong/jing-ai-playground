@@ -11,6 +11,7 @@ const routes = [
   '/',
   '/cases/',
   `/cases/${blindTest.slug}/`,
+  '/cases/prompt-iteration/',
   '/experiments/forty-shots-one-character/',
   '/method/',
   ...methodNoteSlugs.map((slug) => `/notes/${slug}/`),

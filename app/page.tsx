@@ -69,7 +69,7 @@ export default function Home() {
         <div className="pf-grid-3">
           <CaseCard href="/stories/she-forgets-yesterday/" tag="AI 短片" title="她每天醒来都会忘记昨天" description="90 秒短片的剧本、十四镜分镜与生成 Prompt 包。" image={keyframes} alt="短片《她每天醒来都会忘记昨天》的四张概念关键帧" />
           <CaseCard href="/stories/#anchor" tag="人物一致性" title="四个视觉锚点固定一个角色" description="短发、蓝色发夹、红色三角耳饰、芥末黄外套，贯穿所有镜头。" image={anchor} alt="角色知夏的人物锚点图" />
-          <CaseCard href="/stories/#storyboard" tag="分镜开发" title="从分镜到动作风险拆解" description="把每个镜头的动作拆开，提前标出最容易生成失败的位置。" image={aestheticFrame} alt="短片第一场的概念关键帧：清晨醒来" />
+          <CaseCard href="/cases/prompt-iteration/" tag="Prompt 编排" title="三条 AI 视频提示词的两轮迭代" description="写六要素 Prompt，逐帧找 Bad Case，只改出问题的字段，再生成对比。" poster="/videos/prompt-cases/c2-v2.webp" alt="海边步道上踩滑板的少年侧身滑行，背后是夕阳下的大海" />
         </div>
       </section>
 
