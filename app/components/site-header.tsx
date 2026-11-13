@@ -4,6 +4,7 @@ export const navItems = [
   ['Cases', '评测案例', '/cases/'],
   ['Method', '方法', '/method/'],
   ['Practice', '创作实践', '/stories/'],
+  ['News', 'AI 日报', '/news/'],
   ['About', '关于与联系', '/about/'],
 ] as const;
 

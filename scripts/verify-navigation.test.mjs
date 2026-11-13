@@ -526,7 +526,7 @@ test('primary navigation has at most five items and the archive lives in the foo
   const home = page('index.html');
   const nav = home.match(/<nav class="desktop-nav"[^>]*>([\s\S]*?)<\/nav>/)?.[1] ?? '';
   const labels = [...nav.matchAll(/<a\b[^>]*>([^<]+)<\/a>/g)].map((match) => match[1]);
-  assert.deepEqual(labels, ['评测案例', '方法', '创作实践', '关于与联系']);
+  assert.deepEqual(labels, ['评测案例', '方法', '创作实践', 'AI 日报', '关于与联系']);
   const footer = home.match(/<footer[\s\S]*<\/footer>/)?.[0] ?? '';
   assert.match(footer, />归档<\/a>/);
 });

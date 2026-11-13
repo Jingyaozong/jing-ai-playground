@@ -17,6 +17,7 @@ const routes = [
   '/stories/',
   '/stories/she-forgets-yesterday/',
   '/play/bad-case-detective/',
+  '/news/',
   '/about/',
   '/tools/multimodal-evaluation/',
   '/tools/continuity-checker/',
@@ -24,5 +25,5 @@ const routes = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map((route) => ({ url: `${siteUrl}${route}`, changeFrequency: 'monthly', priority: route === '/' ? 1 : 0.7 }));
+  return routes.map((route) => ({ url: `${siteUrl}${route}`, changeFrequency: route === '/news/' ? 'daily' : 'monthly', priority: route === '/' ? 1 : 0.7 }));
 }

@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # 每天北京时间 08:30 刷新「AI 日报」并重新发布
+    - cron: '30 0 * * *'
 
 permissions:
   contents: read
@@ -17,6 +20,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io${{ endsWith(github.event.repository.name, '.github.io') && '' || format('/{0}', github.event.repository.name) }}
     steps:
@@ -31,6 +36,21 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Install dependencies
         run: npm ci
+      - name: Refresh daily AI news
+        if: github.event_name != 'push'
+        # 抓取或模型失败时保留上一版数据，照常发布
+        continue-on-error: true
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          node scripts/news/daily.mjs
+          if ! git diff --quiet -- app/data/daily-news.json; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898813+github-actions[bot]@users.noreply.github.com"
+            git add app/data/daily-news.json
+            git commit -m "Update daily AI news"
+            git push
+          fi
       - name: Check code
         run: npm run lint
       - name: Check types

@@ -9,8 +9,11 @@ import { SiteFooter } from './components/site-footer';
 import { SiteHeader } from './components/site-header';
 import { profile } from './data/profile';
 import { blindTest } from './data/blind-test';
+import { NewsList } from './components/daily-news';
+import { dailyNews, dayLabel } from './data/daily-news';
 
 export default function Home() {
+  const today = dailyNews.days[0];
   return (
     <main className="pf">
       <SiteHeader />
@@ -46,6 +49,13 @@ export default function Home() {
           <CaseCard href="/method/#aesthetic" tag="画面审美判断" title="晨光里，先看见谁" description="同一张静帧的三版调色对比：用视觉焦点和明暗层次说明为什么保留其中一版。" image={aestheticFrame} alt="知夏穿芥末黄外套坐在冷蓝卧室的床边，左侧窗户透进晨光" />
         </div>
       </section>
+
+      {today && (
+        <section className="pf-section pf-shell" aria-labelledby="home-news">
+          <div className="pf-section-head"><h2 id="home-news">今日 AI 新闻 · {dayLabel(today.date)}</h2><Link className="pf-text-link" href="/news/">查看全部 {today.items.length} 条</Link></div>
+          <NewsList items={today.items.slice(0, 5)} compact />
+        </section>
+      )}
 
       <section className="pf-section pf-shell" aria-labelledby="home-method">
         <div className="pf-section-head"><h2 id="home-method">评测方法</h2><p>我用八个维度看一条视频，每个判断都对应时间码和可见事实，最后给严重度结论。</p></div>
