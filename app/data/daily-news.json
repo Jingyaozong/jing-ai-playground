@@ -1,6 +1,101 @@
 {
-  "updatedAt": "2026-11-13T05:15:47.232Z",
+  "updatedAt": "2026-11-14T06:56:28.528Z",
   "days": [
+    {
+      "date": "2026-11-14",
+      "items": [
+        {
+          "id": "3ae02220e06c",
+          "title": "黄仁勋辞职，英伟达33年来首次换帅",
+          "summary": "报道称黄仁勋辞去英伟达职务，公司33年来首次更换掌门人，市值蒸发超3万亿元。",
+          "category": "行业",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/509995.html",
+          "publishedAt": "2026-11-13T09:02:39.000Z"
+        },
+        {
+          "id": "73b823aa24f5",
+          "title": "黄仁勋辞职风波时间线梳理",
+          "summary": "报道称黄仁勋因绯闻从英伟达辞职，此事可能对中美AI基础设施竞争中的国家安全产生影响。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/13/nvidia-ceo-jensen-huangs-affair-with-alleged-chinese-spy-a-timeline/",
+          "publishedAt": "2026-11-13T15:58:00.000Z"
+        },
+        {
+          "id": "6669a4d19d8d",
+          "title": "研究称中国最强模型使用被禁英伟达芯片训练",
+          "summary": "新研究显示，中国最先进的AI模型是在被出口禁令限制的英伟达芯片上训练完成的。",
+          "category": "研究",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/13/export-banned-nvidia-chips-are-behind-chinas-most-powerful-ai-models-uh-oh-jensen/",
+          "publishedAt": "2026-11-13T18:40:30.000Z"
+        },
+        {
+          "id": "cd336cbdb796",
+          "title": "ChatGPT Wallet让AI代理代用户购物结账",
+          "summary": "ChatGPT Wallet允许AI代理代用户购物并完成结账，先面向美国Pro订阅用户限量推出。",
+          "category": "产品",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/13/chatgpts-new-wallet-lets-ai-agents-shop-and-check-out-for-you/",
+          "publishedAt": "2026-11-13T16:00:12.000Z"
+        },
+        {
+          "id": "7d4d71d056da",
+          "title": "OpenAI正式推出ChatGPT Wallet",
+          "summary": "OpenAI称ChatGPT Wallet让ChatGPT Work、Codex等中的代理在用户批准下完成购买，并沿用现有卡片保护。",
+          "category": "产品",
+          "source": "OpenAI",
+          "url": "https://openai.com/index/introducing-chatgpt-wallet",
+          "publishedAt": "2026-11-13T15:00:00.000Z"
+        },
+        {
+          "id": "b96c8f1ce3ea",
+          "title": "AI代理公司LangChain估值达30亿美元",
+          "summary": "LangChain称其模型与平台无关的代理管理工具LangSmith已拥有7000家客户。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation/",
+          "publishedAt": "2026-11-13T19:37:57.000Z"
+        },
+        {
+          "id": "a53b6d6797d1",
+          "title": "风投称黄仁勋离职冲击AI初创融资",
+          "summary": "创始人和风投表示，黄仁勋离任后，AI初创企业可能面临更小的投资额和更低的估值。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/13/jensen-huangs-departure-blasts-big-hole-in-ai-startup-funding-vcs-and-founders-say/",
+          "publishedAt": "2026-11-13T22:43:00.000Z"
+        },
+        {
+          "id": "fde788c71c9e",
+          "title": "无界前沿开源生命科学模型Fx-Bio-1031",
+          "summary": "报道称该开源模型在高难盲测中超过GPT-6-Astra与Opus-5，支持数据不出域、本地部署。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/509663.html",
+          "publishedAt": "2026-11-13T07:06:32.000Z"
+        },
+        {
+          "id": "6841e619fcd7",
+          "title": "llama.cpp发布v1.0.0版本",
+          "summary": "llama.cpp推出v1.0.0，官方称其为本地AI生态提供更坚实的基础。",
+          "category": "工具",
+          "source": "Hugging Face",
+          "url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
+          "publishedAt": "2026-11-13T14:05:22.000Z"
+        },
+        {
+          "id": "a2a8cf2deb3e",
+          "title": "中国AI用于复杂肺癌诊疗获医生评测",
+          "summary": "报道称该AI突破复杂肺癌诊疗，250名国内三甲医院医生参与联合评测。",
+          "category": "研究",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/509796.html",
+          "publishedAt": "2026-11-13T07:43:03.000Z"
+        }
+      ]
+    },
     {
       "date": "2026-11-13",
       "items": [
