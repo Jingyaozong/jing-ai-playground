@@ -1,6 +1,92 @@
 {
-  "updatedAt": "2026-11-14T06:56:28.528Z",
+  "updatedAt": "2026-11-15T07:02:56.701Z",
   "days": [
+    {
+      "date": "2026-11-15",
+      "items": [
+        {
+          "id": "47fd92794b58",
+          "title": "DeepSeek开放全家桶API",
+          "summary": "DeepSeek宣布开放API，官方App功能均可自由组合调用。",
+          "category": "产品",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/510003.html",
+          "publishedAt": "2026-11-14T02:39:56.000Z"
+        },
+        {
+          "id": "b96c8f1ce3ea",
+          "title": "LangChain估值达30亿美元",
+          "summary": "AI智能体创业公司LangChain称其模型与平台无关的智能体管理工具LangSmith已有7000家客户，公司估值达到30亿美元。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation/",
+          "publishedAt": "2026-11-13T19:37:57.000Z"
+        },
+        {
+          "id": "cd9e3aa4df66",
+          "title": "十余家机构发布最严湿实验预测基准",
+          "summary": "斯坦福、哈佛、康奈尔等十余家顶尖团队联合发布湿实验预测基准，报道称即使推理拉满、算力翻5倍也难以通过。",
+          "category": "研究",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/510232.html",
+          "publishedAt": "2026-11-14T09:58:22.000Z"
+        },
+        {
+          "id": "a53b6d6797d1",
+          "title": "黄仁勋离职或冲击AI创业融资",
+          "summary": "风投和创始人称，黄仁勋离开后英伟达对AI创业公司的巨额投资可能收缩，融资规模与估值或下降。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/13/jensen-huangs-departure-blasts-big-hole-in-ai-startup-funding-vcs-and-founders-say/",
+          "publishedAt": "2026-11-13T22:43:00.000Z"
+        },
+        {
+          "id": "8097820885cc",
+          "title": "亚洲多国政府回应黄仁勋离职",
+          "summary": "部分政府着手确认芯片供应承诺，另一些则在评估对本地项目的影响或应对相关调查。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/14/asian-governments-react-to-nvidia-ceo-jensen-huangs-exit/",
+          "publishedAt": "2026-11-14T16:34:15.000Z"
+        },
+        {
+          "id": "e86112d5f873",
+          "title": "马斯克等科技高管请愿要求复职黄仁勋",
+          "summary": "请愿呼吁英伟达让黄仁勋回归，截至周六下午签名数已超过11.5万。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/14/elon-musk-other-tech-execs-sign-petition-calling-on-nvidia-to-reinstate-jensen-huang/",
+          "publishedAt": "2026-11-14T21:41:22.000Z"
+        },
+        {
+          "id": "0dac5bc8bd77",
+          "title": "AI项目失败清单持续更新",
+          "summary": "TechCrunch整理了一份AI项目和创业公司失败清单，涵盖苹果多次延期的Siri AI与OpenAI的“超级应用”发布等。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/14/the-ai-graveyard-a-running-list-of-projects-and-startups-that-didnt-make-it/",
+          "publishedAt": "2026-11-14T17:30:00.000Z"
+        },
+        {
+          "id": "ae856804135b",
+          "title": "联想提出绿电进Token出的词元工厂",
+          "summary": "联想发布词元工厂方案，称年产2000万亿Token、成本降低70%。",
+          "category": "产品",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/510094.html",
+          "publishedAt": "2026-11-14T09:41:02.000Z"
+        },
+        {
+          "id": "f42fc98312a5",
+          "title": "中专生AI作品获好莱坞点赞",
+          "summary": "一名中专生制作的《哈利·波特》相关视频播放量达3000万，获欧美明星与好莱坞制片人点赞。",
+          "category": "行业",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/510013.html",
+          "publishedAt": "2026-11-14T02:59:35.000Z"
+        }
+      ]
+    },
     {
       "date": "2026-11-14",
       "items": [
