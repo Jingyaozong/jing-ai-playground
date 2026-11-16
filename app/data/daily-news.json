@@ -1,6 +1,83 @@
 {
-  "updatedAt": "2026-11-15T07:02:56.701Z",
+  "updatedAt": "2026-11-16T07:10:13.291Z",
   "days": [
+    {
+      "date": "2026-11-16",
+      "items": [
+        {
+          "id": "2e8f421d2ee2",
+          "title": "OpenAI称GPT-6 Astra协助完成标准模型格点证明",
+          "summary": "OpenAI发布文章，探讨标准模型的非微扰格点定义，并称GPT-6 Astra帮助将该想法转化为详细证明。",
+          "category": "研究",
+          "source": "OpenAI",
+          "url": "https://openai.com/index/step-toward-defining-the-standard-model",
+          "publishedAt": "2026-11-15T22:00:01.000Z"
+        },
+        {
+          "id": "33b95c2112c4",
+          "title": "OpenAI推出科学博客，分享AI科研发现与方法",
+          "summary": "OpenAI开设科学博客，发布新发现、实用方法以及研究人员用AI推进科学发现的第一手记录。",
+          "category": "行业",
+          "source": "OpenAI",
+          "url": "https://openai.com/index/our-new-blog-for-science",
+          "publishedAt": "2026-11-15T22:00:00.000Z"
+        },
+        {
+          "id": "a22318abd9f9",
+          "title": "苹果推出新应用，研究人们如何用AI处理健康问题",
+          "summary": "苹果推出一款用于研究的应用，报道称该应用将回答日常医疗问题。",
+          "category": "产品",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/15/apple-launches-new-app-to-study-how-people-use-ai-for-health/",
+          "publishedAt": "2026-11-16T01:30:00.000Z"
+        },
+        {
+          "id": "04196bef9b67",
+          "title": "印度芯片初创Bharat Semi获2400万美元种子轮",
+          "summary": "Bharat Semi称其AI传感器技术已获得包括General Atomics在内公司的设计订单，并瞄准全球AI传感器市场。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/15/indian-chip-startup-bharat-semi-lands-24m-seed-round-as-it-eyes-global-ai-sensor-market/",
+          "publishedAt": "2026-11-15T23:30:00.000Z"
+        },
+        {
+          "id": "a8381ccf0f4a",
+          "title": "报道质疑英伟达安全团队为何未能防范泄密",
+          "summary": "报道称英伟达安全主管于8月悄然离职，一名前情报官员表示此类泄密常藏于日常对话，多数企业安全团队难以发现。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/14/where-was-nvidias-security-team/",
+          "publishedAt": "2026-11-15T00:08:07.000Z"
+        },
+        {
+          "id": "e86112d5f873",
+          "title": "马斯克等科技高管联名请愿要求英伟达恢复黄仁勋",
+          "summary": "报道称该请愿截至周六下午已获得超过11.5万个签名，呼吁英伟达让黄仁勋复职。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/14/elon-musk-other-tech-execs-sign-petition-calling-on-nvidia-to-reinstate-jensen-huang/",
+          "publishedAt": "2026-11-14T21:41:22.000Z"
+        },
+        {
+          "id": "9bfb2ab66783",
+          "title": "报道讨论黄仁勋负面消息对AI行业的影响",
+          "summary": "TechCrunch发文探讨黄仁勋的不利消息是否也意味着AI行业的坏消息，并引述称整个经济很大程度上依赖英伟达。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/15/is-bad-news-for-jensen-huang-also-bad-news-for-the-ai-industry/",
+          "publishedAt": "2026-11-15T21:56:35.000Z"
+        },
+        {
+          "id": "7890886c0138",
+          "title": "首尔AI Day聚焦物理AI与AI智能体",
+          "summary": "英伟达称首尔AI Day在COEX举行两天，超过2000名参会者，聚焦物理AI和AI智能体，并提及韩国多家企业。",
+          "category": "行业",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/ai-day-seoul-wrapup/",
+          "publishedAt": "2026-11-16T00:00:28.000Z"
+        }
+      ]
+    },
     {
       "date": "2026-11-15",
       "items": [
