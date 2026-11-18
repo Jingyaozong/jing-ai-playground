@@ -1,6 +1,101 @@
 {
-  "updatedAt": "2026-11-17T08:23:34.459Z",
+  "updatedAt": "2026-11-18T07:52:54.987Z",
   "days": [
+    {
+      "date": "2026-11-18",
+      "items": [
+        {
+          "id": "8f6af8c44a4a",
+          "title": "OpenAI发布GPT-6.2 Astra与Sol",
+          "summary": "OpenAI推出GPT-6.2 Astra和Sol，官方称其在专业输出、编程、电脑操作和效率上有所提升，并在ChatGPT Work、Codex和API中降低成本。",
+          "category": "模型",
+          "source": "OpenAI",
+          "url": "https://openai.com/index/introducing-gpt-6-2-astra-sol",
+          "publishedAt": "2026-11-17T17:45:00.000Z"
+        },
+        {
+          "id": "dd09c1f84b47",
+          "title": "GPT-6.2 Astra和Sol双发，3D领域再受冲击",
+          "summary": "报道称GPT-6.2 Astra和Sol同时发布，其中Sol性能逼近旗舰水平，并提及3D领域再次受到冲击。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/510707.html",
+          "publishedAt": "2026-11-18T00:49:14.000Z"
+        },
+        {
+          "id": "b43ef08ac3ed",
+          "title": "OpenAI推出Astra for Law法律模型",
+          "summary": "OpenAI称Astra for Law在覆盖24个法律领域的发布评测中排名第一，ChatGPT Enterprise客户可申请使用。",
+          "category": "模型",
+          "source": "OpenAI",
+          "url": "https://openai.com/index/astra-law-6-2",
+          "publishedAt": "2026-11-17T00:00:00.000Z"
+        },
+        {
+          "id": "b451aff394ad",
+          "title": "Gemini Tasks在六国免费开放",
+          "summary": "谷歌称Gemini的Tasks功能已在六个国家免费提供，并在美国推出新功能、加深与Google Workspace的集成。",
+          "category": "产品",
+          "source": "Google AI",
+          "url": "https://blog.google/innovation-and-ai/products/gemini-app/tasks-in-gemini-free-new-features/",
+          "publishedAt": "2026-11-17T17:00:00.000Z"
+        },
+        {
+          "id": "8339a30c8d70",
+          "title": "英伟达称开源AI战略不变，拟收购Hugging Face",
+          "summary": "英伟达临时CEO重申开源AI战略保持不变，并计划收购Hugging Face，此前黄仁勋突然离职。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/17/nvidia-says-its-open-source-ai-strategy-remains-intact-after-jensen-huangs-exit/",
+          "publishedAt": "2026-11-17T23:04:35.000Z"
+        },
+        {
+          "id": "c55f92969fc4",
+          "title": "亚马逊和谷歌IPO后将共持Anthropic近30%",
+          "summary": "报道称Anthropic IPO后亚马逊持股略低于15%且可增持，谷歌持股近14%，两家合计接近30%。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/17/amazon-and-google-will-together-own-nearly-30-of-anthropic-after-its-ipo/",
+          "publishedAt": "2026-11-17T22:29:05.000Z"
+        },
+        {
+          "id": "b6962d021695",
+          "title": "李飞飞率队加入AMD，并购完成",
+          "summary": "报道称相关并购以82亿美元股票完成，46天闪电交割，李飞飞正式率队加入AMD，苏姿丰亲自欢迎。",
+          "category": "行业",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/510695.html",
+          "publishedAt": "2026-11-17T14:15:20.000Z"
+        },
+        {
+          "id": "66c30cf64667",
+          "title": "具身智能公司Genesis完成A轮融资",
+          "summary": "报道称具身全栈公司Genesis完成A轮融资，估值超230亿元，英伟达和AMD首次联手押注。",
+          "category": "行业",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/510821.html",
+          "publishedAt": "2026-11-18T04:28:57.000Z"
+        },
+        {
+          "id": "49e988fe9449",
+          "title": "英伟达在SC26发布科学智能体工具",
+          "summary": "英伟达在SC26宣布Nemotron for Science、Rubin HPC GPU及扩展的Vera CPU平台，提供可规划实验、运行代码并核验结果的智能体工具。",
+          "category": "工具",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/ian-buck-sc26/",
+          "publishedAt": "2026-11-17T14:00:10.000Z"
+        },
+        {
+          "id": "826bb3231e4f",
+          "title": "材料科学智能体MatOS正式开源",
+          "summary": "报道称材料科学智能体MatOS正式开源，可筛选材料、寻找配方和开发新模型，并称大幅提高材料研发任务成功率。",
+          "category": "工具",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/510652.html",
+          "publishedAt": "2026-11-17T06:09:40.000Z"
+        }
+      ]
+    },
     {
       "date": "2026-11-17",
       "items": [
