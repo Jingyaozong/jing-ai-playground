@@ -1,6 +1,101 @@
 {
-  "updatedAt": "2026-11-20T07:41:50.410Z",
+  "updatedAt": "2026-11-21T07:38:28.810Z",
   "days": [
+    {
+      "date": "2026-11-21",
+      "items": [
+        {
+          "id": "001e6b6e613b",
+          "title": "METR更新AI能力时间跨度图",
+          "summary": "AI评测机构METR发布报告更新其时间跨度图，称部分AI能力仍沿指数轨迹提升，但模型在需要判断力的任务上不如编程任务表现好。",
+          "category": "研究",
+          "source": "MIT Technology Review",
+          "url": "https://www.technologyreview.com/2026/11/20/1149399/the-most-misunderstood-graph-in-ai-just-got-a-major-update/",
+          "publishedAt": "2026-11-20T18:15:15.000Z"
+        },
+        {
+          "id": "81e856d23e6c",
+          "title": "AI与人类同时宣称解决黎曼猜想",
+          "summary": "报道称AI宣称给出了167年历史的黎曼猜想的解法，同时也有数学家提出人类解法，令数学界震惊。",
+          "category": "研究",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/20/ai-claimed-a-solution-to-the-167-year-old-riemann-hypothesis-and-a-human-did-too/",
+          "publishedAt": "2026-11-20T19:32:08.000Z"
+        },
+        {
+          "id": "7ad44f990f0c",
+          "title": "OpenAI介绍对抗蒸馏防护方案",
+          "summary": "OpenAI称其采用分层方法应对对抗蒸馏，结合模型训练、防护措施、检测与执法，防止模型能力被提取。",
+          "category": "模型",
+          "source": "OpenAI",
+          "url": "https://openai.com/index/combatting-adversarial-distillation",
+          "publishedAt": "2026-11-20T10:00:00.000Z"
+        },
+        {
+          "id": "8145fefb47ff",
+          "title": "Hebbia测试GPT-6 Astra金融研究表现",
+          "summary": "Hebbia对GPT-6 Astra进行金融研究测试，发布前评估显示其在来源覆盖、引用相关性和呈现质量上有提升。",
+          "category": "模型",
+          "source": "OpenAI",
+          "url": "https://openai.com/business/customer-stories/hebbia",
+          "publishedAt": "2026-11-20T00:00:00.000Z"
+        },
+        {
+          "id": "c1a2af93db54",
+          "title": "OpenAI推出药物发现评测基准",
+          "summary": "OpenAI介绍MedChemBench，用于评估AI模型解读分子结构、依据实验证据推理及在早期药物发现中筛选化合物的能力。",
+          "category": "研究",
+          "source": "OpenAI",
+          "url": "https://openai.com/index/introducing-medchembench",
+          "publishedAt": "2026-11-20T00:00:00.000Z"
+        },
+        {
+          "id": "d0a61d8eb89b",
+          "title": "华为云开放具身世界模型底座",
+          "summary": "报道称昇腾算力训练出双榜SOTA的具身世界模型，华为云计划将整套底座开放，竞争转向训练效率与落地速度。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/511610.html",
+          "publishedAt": "2026-11-20T08:04:58.000Z"
+        },
+        {
+          "id": "f3aa16032ced",
+          "title": "Agnes智能体提速最高14倍",
+          "summary": "报道称Agnes采用双系统决策与双层自进化，Agent效率最高提升14倍、成本降至1/27，并已开源Agnes Harness。",
+          "category": "工具",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/511582.html",
+          "publishedAt": "2026-11-20T05:24:11.000Z"
+        },
+        {
+          "id": "8288c457eabd",
+          "title": "苹果或研发可操控Mac的AI智能体",
+          "summary": "报道称苹果似乎在开发能运行于Mac的AI智能体，可与Meta Muse、Claude等产品竞争。",
+          "category": "产品",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/19/apple-may-be-developing-its-own-ai-agent-that-runs-your-mac/",
+          "publishedAt": "2026-11-20T00:56:01.000Z"
+        },
+        {
+          "id": "824c03b970f1",
+          "title": "Hugging Face发布Inkling 2 Mini",
+          "summary": "Hugging Face推出Inkling 2 Mini，称其为本地部署提供前沿性能。",
+          "category": "模型",
+          "source": "Hugging Face",
+          "url": "https://huggingface.co/blog/inkling2mini",
+          "publishedAt": "2026-11-20T00:00:00.000Z"
+        },
+        {
+          "id": "701a571706ec",
+          "title": "Hugging Face推出harness适配器",
+          "summary": "Hugging Face介绍harness适配器，可将常用模型适配到所选harness，以提升性能并降低成本。",
+          "category": "工具",
+          "source": "Hugging Face",
+          "url": "https://huggingface.co/blog/harness-adapters-at-scale",
+          "publishedAt": "2026-11-20T00:00:00.000Z"
+        }
+      ]
+    },
     {
       "date": "2026-11-20",
       "items": [
@@ -541,101 +636,6 @@
           "source": "量子位",
           "url": "https://www.qbitai.com/2026/11/510013.html",
           "publishedAt": "2026-11-14T02:59:35.000Z"
-        }
-      ]
-    },
-    {
-      "date": "2026-11-14",
-      "items": [
-        {
-          "id": "3ae02220e06c",
-          "title": "黄仁勋辞职，英伟达33年来首次换帅",
-          "summary": "报道称黄仁勋辞去英伟达职务，公司33年来首次更换掌门人，市值蒸发超3万亿元。",
-          "category": "行业",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/509995.html",
-          "publishedAt": "2026-11-13T09:02:39.000Z"
-        },
-        {
-          "id": "73b823aa24f5",
-          "title": "黄仁勋辞职风波时间线梳理",
-          "summary": "报道称黄仁勋因绯闻从英伟达辞职，此事可能对中美AI基础设施竞争中的国家安全产生影响。",
-          "category": "行业",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/13/nvidia-ceo-jensen-huangs-affair-with-alleged-chinese-spy-a-timeline/",
-          "publishedAt": "2026-11-13T15:58:00.000Z"
-        },
-        {
-          "id": "6669a4d19d8d",
-          "title": "研究称中国最强模型使用被禁英伟达芯片训练",
-          "summary": "新研究显示，中国最先进的AI模型是在被出口禁令限制的英伟达芯片上训练完成的。",
-          "category": "研究",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/13/export-banned-nvidia-chips-are-behind-chinas-most-powerful-ai-models-uh-oh-jensen/",
-          "publishedAt": "2026-11-13T18:40:30.000Z"
-        },
-        {
-          "id": "cd336cbdb796",
-          "title": "ChatGPT Wallet让AI代理代用户购物结账",
-          "summary": "ChatGPT Wallet允许AI代理代用户购物并完成结账，先面向美国Pro订阅用户限量推出。",
-          "category": "产品",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/13/chatgpts-new-wallet-lets-ai-agents-shop-and-check-out-for-you/",
-          "publishedAt": "2026-11-13T16:00:12.000Z"
-        },
-        {
-          "id": "7d4d71d056da",
-          "title": "OpenAI正式推出ChatGPT Wallet",
-          "summary": "OpenAI称ChatGPT Wallet让ChatGPT Work、Codex等中的代理在用户批准下完成购买，并沿用现有卡片保护。",
-          "category": "产品",
-          "source": "OpenAI",
-          "url": "https://openai.com/index/introducing-chatgpt-wallet",
-          "publishedAt": "2026-11-13T15:00:00.000Z"
-        },
-        {
-          "id": "b96c8f1ce3ea",
-          "title": "AI代理公司LangChain估值达30亿美元",
-          "summary": "LangChain称其模型与平台无关的代理管理工具LangSmith已拥有7000家客户。",
-          "category": "行业",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/13/ai-agent-startup-langchain-hits-3b-valuation/",
-          "publishedAt": "2026-11-13T19:37:57.000Z"
-        },
-        {
-          "id": "a53b6d6797d1",
-          "title": "风投称黄仁勋离职冲击AI初创融资",
-          "summary": "创始人和风投表示，黄仁勋离任后，AI初创企业可能面临更小的投资额和更低的估值。",
-          "category": "行业",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/13/jensen-huangs-departure-blasts-big-hole-in-ai-startup-funding-vcs-and-founders-say/",
-          "publishedAt": "2026-11-13T22:43:00.000Z"
-        },
-        {
-          "id": "fde788c71c9e",
-          "title": "无界前沿开源生命科学模型Fx-Bio-1031",
-          "summary": "报道称该开源模型在高难盲测中超过GPT-6-Astra与Opus-5，支持数据不出域、本地部署。",
-          "category": "模型",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/509663.html",
-          "publishedAt": "2026-11-13T07:06:32.000Z"
-        },
-        {
-          "id": "6841e619fcd7",
-          "title": "llama.cpp发布v1.0.0版本",
-          "summary": "llama.cpp推出v1.0.0，官方称其为本地AI生态提供更坚实的基础。",
-          "category": "工具",
-          "source": "Hugging Face",
-          "url": "https://huggingface.co/blog/ggml-org/llama-cpp-v1",
-          "publishedAt": "2026-11-13T14:05:22.000Z"
-        },
-        {
-          "id": "a2a8cf2deb3e",
-          "title": "中国AI用于复杂肺癌诊疗获医生评测",
-          "summary": "报道称该AI突破复杂肺癌诊疗，250名国内三甲医院医生参与联合评测。",
-          "category": "研究",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/509796.html",
-          "publishedAt": "2026-11-13T07:43:03.000Z"
         }
       ]
     }
