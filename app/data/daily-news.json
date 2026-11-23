@@ -1,6 +1,74 @@
 {
-  "updatedAt": "2026-11-22T07:20:59.643Z",
+  "updatedAt": "2026-11-23T08:04:59.117Z",
   "days": [
+    {
+      "date": "2026-11-23",
+      "items": [
+        {
+          "id": "90f985cfcc41",
+          "title": "Anthropic数学家用Claude证明另一千禧难题",
+          "summary": "报道称，Anthropic的数学家用Claude又证明了一个千禧难题，并引出一份写了12年的940页纯人类手稿。",
+          "category": "研究",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/511870.html",
+          "publishedAt": "2026-11-22T06:03:54.000Z"
+        },
+        {
+          "id": "1a10f1676d46",
+          "title": "OpenAI谈困惑度与AI能力评测",
+          "summary": "OpenAI发文介绍困惑度如何衡量AI模型进展，并称它可能帮助开发者建立评估新兴能力的共同方法。",
+          "category": "研究",
+          "source": "OpenAI",
+          "url": "https://openai.com/index/perplexity-and-intelligence",
+          "publishedAt": "2026-11-22T00:00:00.000Z"
+        },
+        {
+          "id": "90468db0d5a9",
+          "title": "OpenAI首席科学家谈如何限制AI发展",
+          "summary": "OpenAI首席科学家讨论限制AI开发速度的思路，指出要设定速度上限，需先就如何衡量速度达成一致。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/22/openais-chief-scientist-has-thoughts-on-how-to-limit-ai-development/",
+          "publishedAt": "2026-11-22T21:14:07.000Z"
+        },
+        {
+          "id": "04e5e033b799",
+          "title": "三家投资方谈IPO前重注Anthropic",
+          "summary": "Notable Capital、GIC和Baillie Gifford三家重要投资方分享为何有信念向Anthropic投入数十亿美元。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/22/how-notable-capital-gic-and-baillie-gifford-bet-big-on-anthropic-before-its-ipo/",
+          "publishedAt": "2026-11-23T01:25:53.000Z"
+        },
+        {
+          "id": "7289e21f33e2",
+          "title": "Signal限制手机截图应对AI监控威胁",
+          "summary": "Signal在安卓和iOS应用中限制用户截图功能，报道称其正应对AI监控带来的“生存威胁”。",
+          "category": "产品",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/21/signal-restricts-mobile-screenshots-as-it-confronts-existential-threat-of-ai-surveillance/",
+          "publishedAt": "2026-11-21T21:37:10.000Z"
+        },
+        {
+          "id": "8ed913cfa76c",
+          "title": "英伟达财报与高管呼声呈现两种图景",
+          "summary": "报道对比英伟达最新财报与科技高管公开呼吁黄仁勋回归，称两者呈现出两种不同的英伟达形象。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/21/a-tale-of-two-nvidias/",
+          "publishedAt": "2026-11-21T21:07:42.000Z"
+        },
+        {
+          "id": "b51af88d58d8",
+          "title": "数据中心为何成为大科技反弹焦点",
+          "summary": "记者Paris Marx结合新书《Hyperscale》分析数据中心为何处于针对大型科技公司反弹的中心。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/22/why-data-centers-are-at-the-center-of-the-big-tech-backlash/",
+          "publishedAt": "2026-11-22T18:08:43.000Z"
+        }
+      ]
+    },
     {
       "date": "2026-11-22",
       "items": [
@@ -550,83 +618,6 @@
           "source": "MIT Technology Review",
           "url": "https://www.technologyreview.com/2026/11/16/1148565/building-trustworthy-ai-by-fencing-it-in-not-predicting-it/",
           "publishedAt": "2026-11-16T16:04:28.000Z"
-        }
-      ]
-    },
-    {
-      "date": "2026-11-16",
-      "items": [
-        {
-          "id": "2e8f421d2ee2",
-          "title": "OpenAI称GPT-6 Astra协助完成标准模型格点证明",
-          "summary": "OpenAI发布文章，探讨标准模型的非微扰格点定义，并称GPT-6 Astra帮助将该想法转化为详细证明。",
-          "category": "研究",
-          "source": "OpenAI",
-          "url": "https://openai.com/index/step-toward-defining-the-standard-model",
-          "publishedAt": "2026-11-15T22:00:01.000Z"
-        },
-        {
-          "id": "33b95c2112c4",
-          "title": "OpenAI推出科学博客，分享AI科研发现与方法",
-          "summary": "OpenAI开设科学博客，发布新发现、实用方法以及研究人员用AI推进科学发现的第一手记录。",
-          "category": "行业",
-          "source": "OpenAI",
-          "url": "https://openai.com/index/our-new-blog-for-science",
-          "publishedAt": "2026-11-15T22:00:00.000Z"
-        },
-        {
-          "id": "a22318abd9f9",
-          "title": "苹果推出新应用，研究人们如何用AI处理健康问题",
-          "summary": "苹果推出一款用于研究的应用，报道称该应用将回答日常医疗问题。",
-          "category": "产品",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/15/apple-launches-new-app-to-study-how-people-use-ai-for-health/",
-          "publishedAt": "2026-11-16T01:30:00.000Z"
-        },
-        {
-          "id": "04196bef9b67",
-          "title": "印度芯片初创Bharat Semi获2400万美元种子轮",
-          "summary": "Bharat Semi称其AI传感器技术已获得包括General Atomics在内公司的设计订单，并瞄准全球AI传感器市场。",
-          "category": "行业",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/15/indian-chip-startup-bharat-semi-lands-24m-seed-round-as-it-eyes-global-ai-sensor-market/",
-          "publishedAt": "2026-11-15T23:30:00.000Z"
-        },
-        {
-          "id": "a8381ccf0f4a",
-          "title": "报道质疑英伟达安全团队为何未能防范泄密",
-          "summary": "报道称英伟达安全主管于8月悄然离职，一名前情报官员表示此类泄密常藏于日常对话，多数企业安全团队难以发现。",
-          "category": "行业",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/14/where-was-nvidias-security-team/",
-          "publishedAt": "2026-11-15T00:08:07.000Z"
-        },
-        {
-          "id": "e86112d5f873",
-          "title": "马斯克等科技高管联名请愿要求英伟达恢复黄仁勋",
-          "summary": "报道称该请愿截至周六下午已获得超过11.5万个签名，呼吁英伟达让黄仁勋复职。",
-          "category": "行业",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/14/elon-musk-other-tech-execs-sign-petition-calling-on-nvidia-to-reinstate-jensen-huang/",
-          "publishedAt": "2026-11-14T21:41:22.000Z"
-        },
-        {
-          "id": "9bfb2ab66783",
-          "title": "报道讨论黄仁勋负面消息对AI行业的影响",
-          "summary": "TechCrunch发文探讨黄仁勋的不利消息是否也意味着AI行业的坏消息，并引述称整个经济很大程度上依赖英伟达。",
-          "category": "行业",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/15/is-bad-news-for-jensen-huang-also-bad-news-for-the-ai-industry/",
-          "publishedAt": "2026-11-15T21:56:35.000Z"
-        },
-        {
-          "id": "7890886c0138",
-          "title": "首尔AI Day聚焦物理AI与AI智能体",
-          "summary": "英伟达称首尔AI Day在COEX举行两天，超过2000名参会者，聚焦物理AI和AI智能体，并提及韩国多家企业。",
-          "category": "行业",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/ai-day-seoul-wrapup/",
-          "publishedAt": "2026-11-16T00:00:28.000Z"
         }
       ]
     }
