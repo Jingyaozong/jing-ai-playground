@@ -1,6 +1,101 @@
 {
-  "updatedAt": "2026-11-24T10:20:48.119Z",
+  "updatedAt": "2026-11-25T09:01:25.086Z",
   "days": [
+    {
+      "date": "2026-11-25",
+      "items": [
+        {
+          "id": "ac2f786b30f6",
+          "title": "OpenAI称GPT-6展现蛋白质设计能力",
+          "summary": "OpenAI称GPT-6模型通过推理和代码设计蛋白质结构与序列，实验室测试发现其在五个靶点上存在结合证据。",
+          "category": "研究",
+          "source": "OpenAI",
+          "url": "https://openai.com/index/gpt-6-models-demonstrate-intrinsic-protein-design-capabilities",
+          "publishedAt": "2026-11-24T13:00:00.000Z"
+        },
+        {
+          "id": "729f0e2d8737",
+          "title": "Claude Opus 5.6灰测效果曝光",
+          "summary": "报道称Claude Opus 5.6灰测中整体效率约为此前Opus版本的2到3倍。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/512478.html",
+          "publishedAt": "2026-11-25T02:43:07.000Z"
+        },
+        {
+          "id": "65728d1027fc",
+          "title": "智谱发布全新架构GLM-5.4",
+          "summary": "智谱发布采用全新架构的GLM-5.4，报道称网友反馈超过预期，并展示了用其生成MV的案例。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/512423.html",
+          "publishedAt": "2026-11-24T09:21:55.000Z"
+        },
+        {
+          "id": "ddf5f5e1e3a0",
+          "title": "新基准显示AI智能体难胜任日常任务",
+          "summary": "一项新基准显示，即便最先进的AI模型在完成日常任务时也难以可靠、安全地执行，且可能引入新问题。",
+          "category": "研究",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/24/even-the-best-ai-agents-struggle-with-everyday-life/",
+          "publishedAt": "2026-11-24T21:33:29.000Z"
+        },
+        {
+          "id": "eb015dd0e3f9",
+          "title": "高德发布世界模型ABot-World 0.5",
+          "summary": "高德发布通用交互式世界模型ABot-World 0.5，官方称支持构建音画同步、可实时重塑的AI物理世界。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/512454.html",
+          "publishedAt": "2026-11-24T10:30:42.000Z"
+        },
+        {
+          "id": "1f6b987d01cf",
+          "title": "蚂蚁开源医疗健康预测模型",
+          "summary": "蚂蚁发布医疗健康模型全家桶并开源相关模型，称可根据睡眠数据预测未来六年150种疾病风险。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/512451.html",
+          "publishedAt": "2026-11-24T10:15:57.000Z"
+        },
+        {
+          "id": "90b21a652e41",
+          "title": "华人CV学者创业做空间与物理AI",
+          "summary": "报道称一位华人计算机视觉学者离开苹果后二次创业，专注下一代空间与物理AI，称复杂场景三维建模成本降至10美元以内。",
+          "category": "行业",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/512498.html",
+          "publishedAt": "2026-11-25T06:49:27.000Z"
+        },
+        {
+          "id": "b68502d162ee",
+          "title": "Anthropic股价跌破发行价",
+          "summary": "报道称Anthropic上市后股价跌破IPO发行价，这一走势可能给AI初创公司的估值带来压力。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/24/anthropic-shares-fall-below-ipo-price-a-worrying-sign-for-ai-startups/",
+          "publishedAt": "2026-11-24T18:30:42.000Z"
+        },
+        {
+          "id": "379973ff959a",
+          "title": "A社Tibo被曝加盟OpenAI",
+          "summary": "报道称Anthropic的Tibo已加盟OpenAI，与上市前离职的三人组在OpenAI重聚。",
+          "category": "行业",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/512515.html",
+          "publishedAt": "2026-11-25T07:46:52.000Z"
+        },
+        {
+          "id": "a15f266d5fa6",
+          "title": "英国警告AI驱动网络攻击风险",
+          "summary": "英国网络安全机构警告，AI黑客工具正利用简单安全漏洞，多年薄弱的安全基础因此暴露，强调打好基础的重要性。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/24/uk-warns-ai-driven-cyberattacks-are-exposing-years-of-weak-security/",
+          "publishedAt": "2026-11-24T18:02:59.000Z"
+        }
+      ]
+    },
     {
       "date": "2026-11-24",
       "items": [
@@ -523,101 +618,6 @@
           "source": "Google AI",
           "url": "https://blog.google/innovation-and-ai/products/gemini-app/gemini-lower-memory-devices/",
           "publishedAt": "2026-11-18T17:00:00.000Z"
-        }
-      ]
-    },
-    {
-      "date": "2026-11-18",
-      "items": [
-        {
-          "id": "8f6af8c44a4a",
-          "title": "OpenAI发布GPT-6.2 Astra与Sol",
-          "summary": "OpenAI推出GPT-6.2 Astra和Sol，官方称其在专业输出、编程、电脑操作和效率上有所提升，并在ChatGPT Work、Codex和API中降低成本。",
-          "category": "模型",
-          "source": "OpenAI",
-          "url": "https://openai.com/index/introducing-gpt-6-2-astra-sol",
-          "publishedAt": "2026-11-17T17:45:00.000Z"
-        },
-        {
-          "id": "dd09c1f84b47",
-          "title": "GPT-6.2 Astra和Sol双发，3D领域再受冲击",
-          "summary": "报道称GPT-6.2 Astra和Sol同时发布，其中Sol性能逼近旗舰水平，并提及3D领域再次受到冲击。",
-          "category": "模型",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/510707.html",
-          "publishedAt": "2026-11-18T00:49:14.000Z"
-        },
-        {
-          "id": "b43ef08ac3ed",
-          "title": "OpenAI推出Astra for Law法律模型",
-          "summary": "OpenAI称Astra for Law在覆盖24个法律领域的发布评测中排名第一，ChatGPT Enterprise客户可申请使用。",
-          "category": "模型",
-          "source": "OpenAI",
-          "url": "https://openai.com/index/astra-law-6-2",
-          "publishedAt": "2026-11-17T00:00:00.000Z"
-        },
-        {
-          "id": "b451aff394ad",
-          "title": "Gemini Tasks在六国免费开放",
-          "summary": "谷歌称Gemini的Tasks功能已在六个国家免费提供，并在美国推出新功能、加深与Google Workspace的集成。",
-          "category": "产品",
-          "source": "Google AI",
-          "url": "https://blog.google/innovation-and-ai/products/gemini-app/tasks-in-gemini-free-new-features/",
-          "publishedAt": "2026-11-17T17:00:00.000Z"
-        },
-        {
-          "id": "8339a30c8d70",
-          "title": "英伟达称开源AI战略不变，拟收购Hugging Face",
-          "summary": "英伟达临时CEO重申开源AI战略保持不变，并计划收购Hugging Face，此前黄仁勋突然离职。",
-          "category": "行业",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/17/nvidia-says-its-open-source-ai-strategy-remains-intact-after-jensen-huangs-exit/",
-          "publishedAt": "2026-11-17T23:04:35.000Z"
-        },
-        {
-          "id": "c55f92969fc4",
-          "title": "亚马逊和谷歌IPO后将共持Anthropic近30%",
-          "summary": "报道称Anthropic IPO后亚马逊持股略低于15%且可增持，谷歌持股近14%，两家合计接近30%。",
-          "category": "行业",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/17/amazon-and-google-will-together-own-nearly-30-of-anthropic-after-its-ipo/",
-          "publishedAt": "2026-11-17T22:29:05.000Z"
-        },
-        {
-          "id": "b6962d021695",
-          "title": "李飞飞率队加入AMD，并购完成",
-          "summary": "报道称相关并购以82亿美元股票完成，46天闪电交割，李飞飞正式率队加入AMD，苏姿丰亲自欢迎。",
-          "category": "行业",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/510695.html",
-          "publishedAt": "2026-11-17T14:15:20.000Z"
-        },
-        {
-          "id": "66c30cf64667",
-          "title": "具身智能公司Genesis完成A轮融资",
-          "summary": "报道称具身全栈公司Genesis完成A轮融资，估值超230亿元，英伟达和AMD首次联手押注。",
-          "category": "行业",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/510821.html",
-          "publishedAt": "2026-11-18T04:28:57.000Z"
-        },
-        {
-          "id": "49e988fe9449",
-          "title": "英伟达在SC26发布科学智能体工具",
-          "summary": "英伟达在SC26宣布Nemotron for Science、Rubin HPC GPU及扩展的Vera CPU平台，提供可规划实验、运行代码并核验结果的智能体工具。",
-          "category": "工具",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/ian-buck-sc26/",
-          "publishedAt": "2026-11-17T14:00:10.000Z"
-        },
-        {
-          "id": "826bb3231e4f",
-          "title": "材料科学智能体MatOS正式开源",
-          "summary": "报道称材料科学智能体MatOS正式开源，可筛选材料、寻找配方和开发新模型，并称大幅提高材料研发任务成功率。",
-          "category": "工具",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/510652.html",
-          "publishedAt": "2026-11-17T06:09:40.000Z"
         }
       ]
     }
