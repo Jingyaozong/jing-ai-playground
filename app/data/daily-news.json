@@ -1,6 +1,101 @@
 {
-  "updatedAt": "2026-11-26T08:49:44.772Z",
+  "updatedAt": "2026-11-27T08:59:41.736Z",
   "days": [
+    {
+      "date": "2026-11-27",
+      "items": [
+        {
+          "id": "efc4d8bbad49",
+          "title": "首个带跨任务空间记忆的原生基模开源",
+          "summary": "报道称，首个具备跨任务空间记忆的原生基础模型已开源，机器人端侧即可运行，地图可随时修正、记忆能跨任务复用。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513227.html",
+          "publishedAt": "2026-11-27T07:01:20.000Z"
+        },
+        {
+          "id": "579f53563251",
+          "title": "蚂蚁灵波发布LingBot-Map 2.0三维重建模型",
+          "summary": "11月27日，蚂蚁灵波科技发布流式三维重建模型LingBot-Map 2.0，官方称模型能自行修正空间记忆，使地图绘制更准确。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513211.html",
+          "publishedAt": "2026-11-27T04:05:18.000Z"
+        },
+        {
+          "id": "637318b7f1d1",
+          "title": "腾讯混元发布Hy3D 3.6 3D生成模型",
+          "summary": "腾讯混元发布Hy3D 3.6，官方称高模表面更整洁、结构更清晰、刻画更细腻，3D生成竞争重点正从能看转向能用。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513155.html",
+          "publishedAt": "2026-11-27T03:45:19.000Z"
+        },
+        {
+          "id": "3e1056431115",
+          "title": "20个AI Agents组队跑实验超越ClickBench最佳成绩",
+          "summary": "报道称，20个AI Agents组队，4天运行约350次实验，使Quickwit查询总耗时降31%、最高降87%，超越ClickBench最佳公开成绩。",
+          "category": "研究",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513163.html",
+          "publishedAt": "2026-11-27T03:53:49.000Z"
+        },
+        {
+          "id": "2b19d6bdf1e5",
+          "title": "DeepSeek APP更新账单显示 网友猜测收费",
+          "summary": "DeepSeek网页端与App端突然更新并显示聊天账单，网友因此猜测是否将要收费，报道未给出官方说明。",
+          "category": "产品",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513305.html",
+          "publishedAt": "2026-11-27T07:29:10.000Z"
+        },
+        {
+          "id": "a734da9d3a1d",
+          "title": "llama.cpp推出AMD Ryzen与Radeon基准面板",
+          "summary": "Hugging Face发布面向AMD Ryzen和Radeon的llama.cpp基准测试面板，便于查看相关硬件上的推理性能数据。",
+          "category": "工具",
+          "source": "Hugging Face",
+          "url": "https://huggingface.co/blog/ggml-org/llamacpp-amd-bench",
+          "publishedAt": "2026-11-26T11:37:17.000Z"
+        },
+        {
+          "id": "3d2697b636d7",
+          "title": "基于Nemotron 3.5 Parse的开放数据与微调实践",
+          "summary": "Hugging Face介绍在Nemotron 3.5 Parse上的开放数据、微调与更快推理的构建方法。",
+          "category": "模型",
+          "source": "Hugging Face",
+          "url": "https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin",
+          "publishedAt": "2026-11-26T05:05:36.000Z"
+        },
+        {
+          "id": "819f2bb8e324",
+          "title": "多智能体系统的构建、训练与评测方法",
+          "summary": "Hugging Face发布文章，介绍如何构建、训练和评测多智能体系统，涉及群体协作类系统。",
+          "category": "研究",
+          "source": "Hugging Face",
+          "url": "https://huggingface.co/blog/training-swarms",
+          "publishedAt": "2026-11-26T00:00:00.000Z"
+        },
+        {
+          "id": "979e22972f74",
+          "title": "英伟达暂停向东南亚发运芯片服务器",
+          "summary": "报道称，随着美国收紧限制AI芯片流入中国，英伟达已要求制造伙伴暂停向马来西亚、新加坡、泰国和印尼发运服务器。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/26/nvidia-hits-pause-on-chip-shipments-to-southeast-asia/",
+          "publishedAt": "2026-11-26T20:03:54.000Z"
+        },
+        {
+          "id": "d7b28b808e94",
+          "title": "标普考虑下调英伟达信用评级",
+          "summary": "报道称，标普因治理与关键人物风险，可能将英伟达信用评级下调至AA-，即第四高评级。",
+          "category": "行业",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/11/25/sp-considers-nvidia-credit-downgrade-over-governance-and-key-man-risks/",
+          "publishedAt": "2026-11-25T22:44:32.000Z"
+        }
+      ]
+    },
     {
       "date": "2026-11-26",
       "items": [
@@ -523,101 +618,6 @@
           "source": "Hugging Face",
           "url": "https://huggingface.co/blog/harness-adapters-at-scale",
           "publishedAt": "2026-11-20T00:00:00.000Z"
-        }
-      ]
-    },
-    {
-      "date": "2026-11-20",
-      "items": [
-        {
-          "id": "95da0fde7d56",
-          "title": "谷歌发布Gemini 4 Neon模型",
-          "summary": "Google DeepMind 宣布推出 Gemini 4 Neon，输入未提供更多细节。",
-          "category": "模型",
-          "source": "Google DeepMind",
-          "url": "https://deepmind.google/blog/introducing-gemini-4-neon/",
-          "publishedAt": "2026-11-18T21:35:43.000Z"
-        },
-        {
-          "id": "3a850c903b02",
-          "title": "Gemini新增操控Mac的AI代理功能",
-          "summary": "谷歌更新Gemini，为Mac加入AI代理，可整理文件、填写表单并处理多步骤工作流。",
-          "category": "产品",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/",
-          "publishedAt": "2026-11-19T18:09:11.000Z"
-        },
-        {
-          "id": "8288c457eabd",
-          "title": "苹果或研发可操控Mac的AI代理",
-          "summary": "报道称苹果似在开发可与Meta Muse、Claude等竞争的AI代理，具体细节尚未公布。",
-          "category": "产品",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/19/apple-may-be-developing-its-own-ai-agent-that-runs-your-mac/",
-          "publishedAt": "2026-11-20T00:56:01.000Z"
-        },
-        {
-          "id": "ee20d352f0da",
-          "title": "Meta Muse被指混淆对话或泄露隐私",
-          "summary": "报道称Meta的AI代理Muse出现对话混淆，员工称看到并非自己发起的消息和他人账户余额。",
-          "category": "产品",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/19/metas-ai-agent-muse-is-mixing-up-conversations-and-exposing-private-data-report-says/",
-          "publishedAt": "2026-11-19T17:38:40.000Z"
-        },
-        {
-          "id": "f3aa16032ced",
-          "title": "Agnes以双系统决策让Agent提速14倍",
-          "summary": "报道称Agnes采用双系统决策与双层自进化，Agent效率最高提升14倍、成本降至1/27，并已开源Agnes Harness。",
-          "category": "研究",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/511582.html",
-          "publishedAt": "2026-11-20T05:24:11.000Z"
-        },
-        {
-          "id": "1b3aafed7dd5",
-          "title": "Gemini API推出工具检索预览功能",
-          "summary": "谷歌称Gemini API新增工具检索，让代理可访问数百个工具并减少token消耗，目前处于预览阶段。",
-          "category": "工具",
-          "source": "Google AI",
-          "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemini-api-tool-retrieval/",
-          "publishedAt": "2026-11-19T18:00:00.000Z"
-        },
-        {
-          "id": "5e0460e77a3d",
-          "title": "商汤SenseNova U1 Pro图像榜中国第一",
-          "summary": "报道称商汤日日新SenseNova U1 Pro在图片生成与图片编辑两榜均列中国第一、全球第六。",
-          "category": "模型",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/511179.html",
-          "publishedAt": "2026-11-19T08:10:19.000Z"
-        },
-        {
-          "id": "992a8a1d57b5",
-          "title": "国产模型Kling Image 4.0可生成8K图",
-          "summary": "报道称Kling Image 4.0生成的8K图像放大后依然清晰，展示国产AI图像生成效果。",
-          "category": "模型",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/511092.html",
-          "publishedAt": "2026-11-19T07:01:05.000Z"
-        },
-        {
-          "id": "15bb46163c51",
-          "title": "华为云CloudRobo推动具身机器人真机落地",
-          "summary": "报道称华为云CloudRobo以算力共享和一次适配多团队复用的方式，助力具身机器人进入真机阶段。",
-          "category": "行业",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/511426.html",
-          "publishedAt": "2026-11-20T01:07:38.000Z"
-        },
-        {
-          "id": "36bc207225e9",
-          "title": "英伟达与微软扩展加速计算合作",
-          "summary": "双方将全栈合作从Azure延伸至Windows PC，并在Ignite上扩大Vera Rubin NVL72虚拟机访问。",
-          "category": "行业",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/microsoft-ignite-accelerated-computing-azure-windows-pcs/",
-          "publishedAt": "2026-11-19T20:00:15.000Z"
         }
       ]
     }
