@@ -1,6 +1,83 @@
 {
-  "updatedAt": "2026-11-27T08:59:41.736Z",
+  "updatedAt": "2026-11-28T08:20:42.037Z",
   "days": [
+    {
+      "date": "2026-11-28",
+      "items": [
+        {
+          "id": "efc4d8bbad49",
+          "title": "首个带跨任务空间记忆的原生基模开源",
+          "summary": "报道称，首个具备跨任务空间记忆的原生基础模型已开源，可在机器人端侧运行，地图可随时修正、记忆能跨任务复用。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513227.html",
+          "publishedAt": "2026-11-27T07:01:20.000Z"
+        },
+        {
+          "id": "579f53563251",
+          "title": "蚂蚁灵波发布LingBot-Map 2.0三维重建模型",
+          "summary": "11月27日，蚂蚁灵波科技发布流式三维重建模型LingBot-Map 2.0，报道称模型能自行修正“空间记忆”，让地图更准确。",
+          "category": "模型",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513211.html",
+          "publishedAt": "2026-11-27T04:05:18.000Z"
+        },
+        {
+          "id": "c2bd79531046",
+          "title": "LTX-2.5在Trainium3上生成视频",
+          "summary": "Hugging Face发布内容，介绍在Trainium3上使用LTX-2.5生成视频的实践。",
+          "category": "研究",
+          "source": "Hugging Face",
+          "url": "https://huggingface.co/blog/video-trainium3",
+          "publishedAt": "2026-11-27T00:00:00.000Z"
+        },
+        {
+          "id": "47e927e57960",
+          "title": "卡帕西用Claude做出“美国版《文明》”",
+          "summary": "报道称，卡帕西用Claude生成了一款即时交互工具，被网友玩成全球接力赛，引发对大模型现做交互工具的讨论。",
+          "category": "产品",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513428.html",
+          "publishedAt": "2026-11-28T05:54:46.000Z"
+        },
+        {
+          "id": "2b19d6bdf1e5",
+          "title": "DeepSeek APP更新账单引收费猜测",
+          "summary": "报道称，DeepSeek网页端与App端突然显示聊天账单，网友猜测是否将要收费。",
+          "category": "产品",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513305.html",
+          "publishedAt": "2026-11-27T07:29:10.000Z"
+        },
+        {
+          "id": "ca65119ba78f",
+          "title": "商汤大装置获Token工厂智算最高评级",
+          "summary": "报道称，商汤大装置Token工厂获中国信通院Token工厂智算能力评估“全栈服务型·领先级”认证，为全国首批首家。",
+          "category": "行业",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513346.html",
+          "publishedAt": "2026-11-27T11:18:24.000Z"
+        },
+        {
+          "id": "5bdd6335cec8",
+          "title": "众擎开放人形机器人大小脑与生态计划",
+          "summary": "众擎开放人形机器人大小脑，并推出10亿产业级生态支持计划，称团队真机验证成果可作为后续开发起点。",
+          "category": "行业",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513352.html",
+          "publishedAt": "2026-11-27T14:07:33.000Z"
+        },
+        {
+          "id": "27dfd36c46dd",
+          "title": "钛动科技与腾讯云达成战略合作",
+          "summary": "钛动科技与腾讯云宣布战略合作，称将用AI帮助企业拓展全球增长空间。",
+          "category": "行业",
+          "source": "量子位",
+          "url": "https://www.qbitai.com/2026/11/513194.html",
+          "publishedAt": "2026-11-27T04:05:56.000Z"
+        }
+      ]
+    },
     {
       "date": "2026-11-27",
       "items": [
@@ -523,101 +600,6 @@
           "source": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/11/21/a-tale-of-two-nvidias/",
           "publishedAt": "2026-11-21T21:07:42.000Z"
-        }
-      ]
-    },
-    {
-      "date": "2026-11-21",
-      "items": [
-        {
-          "id": "001e6b6e613b",
-          "title": "METR更新AI能力时间跨度图",
-          "summary": "AI评测机构METR发布报告更新其时间跨度图，称部分AI能力仍沿指数轨迹提升，但模型在需要判断力的任务上不如编程任务表现好。",
-          "category": "研究",
-          "source": "MIT Technology Review",
-          "url": "https://www.technologyreview.com/2026/11/20/1149399/the-most-misunderstood-graph-in-ai-just-got-a-major-update/",
-          "publishedAt": "2026-11-20T18:15:15.000Z"
-        },
-        {
-          "id": "81e856d23e6c",
-          "title": "AI与人类同时宣称解决黎曼猜想",
-          "summary": "报道称AI宣称给出了167年历史的黎曼猜想的解法，同时也有数学家提出人类解法，令数学界震惊。",
-          "category": "研究",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/20/ai-claimed-a-solution-to-the-167-year-old-riemann-hypothesis-and-a-human-did-too/",
-          "publishedAt": "2026-11-20T19:32:08.000Z"
-        },
-        {
-          "id": "7ad44f990f0c",
-          "title": "OpenAI介绍对抗蒸馏防护方案",
-          "summary": "OpenAI称其采用分层方法应对对抗蒸馏，结合模型训练、防护措施、检测与执法，防止模型能力被提取。",
-          "category": "模型",
-          "source": "OpenAI",
-          "url": "https://openai.com/index/combatting-adversarial-distillation",
-          "publishedAt": "2026-11-20T10:00:00.000Z"
-        },
-        {
-          "id": "8145fefb47ff",
-          "title": "Hebbia测试GPT-6 Astra金融研究表现",
-          "summary": "Hebbia对GPT-6 Astra进行金融研究测试，发布前评估显示其在来源覆盖、引用相关性和呈现质量上有提升。",
-          "category": "模型",
-          "source": "OpenAI",
-          "url": "https://openai.com/business/customer-stories/hebbia",
-          "publishedAt": "2026-11-20T00:00:00.000Z"
-        },
-        {
-          "id": "c1a2af93db54",
-          "title": "OpenAI推出药物发现评测基准",
-          "summary": "OpenAI介绍MedChemBench，用于评估AI模型解读分子结构、依据实验证据推理及在早期药物发现中筛选化合物的能力。",
-          "category": "研究",
-          "source": "OpenAI",
-          "url": "https://openai.com/index/introducing-medchembench",
-          "publishedAt": "2026-11-20T00:00:00.000Z"
-        },
-        {
-          "id": "d0a61d8eb89b",
-          "title": "华为云开放具身世界模型底座",
-          "summary": "报道称昇腾算力训练出双榜SOTA的具身世界模型，华为云计划将整套底座开放，竞争转向训练效率与落地速度。",
-          "category": "模型",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/511610.html",
-          "publishedAt": "2026-11-20T08:04:58.000Z"
-        },
-        {
-          "id": "f3aa16032ced",
-          "title": "Agnes智能体提速最高14倍",
-          "summary": "报道称Agnes采用双系统决策与双层自进化，Agent效率最高提升14倍、成本降至1/27，并已开源Agnes Harness。",
-          "category": "工具",
-          "source": "量子位",
-          "url": "https://www.qbitai.com/2026/11/511582.html",
-          "publishedAt": "2026-11-20T05:24:11.000Z"
-        },
-        {
-          "id": "8288c457eabd",
-          "title": "苹果或研发可操控Mac的AI智能体",
-          "summary": "报道称苹果似乎在开发能运行于Mac的AI智能体，可与Meta Muse、Claude等产品竞争。",
-          "category": "产品",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/11/19/apple-may-be-developing-its-own-ai-agent-that-runs-your-mac/",
-          "publishedAt": "2026-11-20T00:56:01.000Z"
-        },
-        {
-          "id": "824c03b970f1",
-          "title": "Hugging Face发布Inkling 2 Mini",
-          "summary": "Hugging Face推出Inkling 2 Mini，称其为本地部署提供前沿性能。",
-          "category": "模型",
-          "source": "Hugging Face",
-          "url": "https://huggingface.co/blog/inkling2mini",
-          "publishedAt": "2026-11-20T00:00:00.000Z"
-        },
-        {
-          "id": "701a571706ec",
-          "title": "Hugging Face推出harness适配器",
-          "summary": "Hugging Face介绍harness适配器，可将常用模型适配到所选harness，以提升性能并降低成本。",
-          "category": "工具",
-          "source": "Hugging Face",
-          "url": "https://huggingface.co/blog/harness-adapters-at-scale",
-          "publishedAt": "2026-11-20T00:00:00.000Z"
         }
       ]
     }
